@@ -40,8 +40,13 @@ public class ModifyMemberMoveServlet extends HttpServlet {
 		String fileName =  list.get(0).getFile_name();
 		
 		String page = "";
-		request.setAttribute("fileName", fileName);
-		page = "views/myPage/modifyMemberInfoMain.jsp";
+		if(fileName != null){
+			request.setAttribute("fileName", fileName);
+			page = "views/myPage/modifyMemberInfoMain.jsp";
+		}
+		else{
+			page="views/myPage/modifyMemberInfoMain.jsp";
+		}
 		RequestDispatcher view = request.getRequestDispatcher(page);
 		view.forward(request, response);
 		
