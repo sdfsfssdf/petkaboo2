@@ -8,9 +8,10 @@ public class Reservation {
 	private int user_no;			//회원번호
 	private String user_name;		//회원이름
 	private int pet_no;				//반려동물 번호
+	private String pet_name;		//반려동물 이름
 	private int pet_service_regno;	//펫시터서비스등록번호;
 	private Date contract_date;		//계약일시
-	private Date contract_start;	//계약시작일
+	private Date contract_start;	//계약시작일       
 	private Date contract_end;		//계약종료일
 	private String address;			//주소(위치)
 	private String user_type;		//회원구분
@@ -21,7 +22,7 @@ public class Reservation {
 
 	public Reservation(int contract_no, int user_no, String user_name, int pet_no, int pet_service_regno,
 			Date contract_date, Date contract_start, Date contract_end, String address, String user_type, String phone,
-			String contract_status) {
+			String contract_status, String pet_name) {
 		super();
 		this.contract_no = contract_no;
 		this.user_no = user_no;
@@ -35,7 +36,9 @@ public class Reservation {
 		this.user_type = user_type;
 		this.phone = phone;
 		this.contract_status = contract_status;
+		this.pet_name = pet_name;
 	}
+	
 
 	public int getContract_no() {
 		return contract_no;
@@ -84,6 +87,11 @@ public class Reservation {
 	public String getContract_status() {
 		return contract_status;
 	}
+	
+	public String getPet_name() {
+		return pet_name;
+	}
+
 
 	public void setContract_no(int contract_no) {
 		this.contract_no = contract_no;
@@ -133,13 +141,20 @@ public class Reservation {
 		this.contract_status = contract_status;
 	}
 
+	public void setPet_name(String pet_name) {
+		this.pet_name = pet_name;
+	}
+
 	@Override
 	public String toString() {
 		return "Reservation [contract_no=" + contract_no + ", user_no=" + user_no + ", user_name=" + user_name
-				+ ", pet_no=" + pet_no + ", pet_service_regno=" + pet_service_regno + ", contract_date=" + contract_date
-				+ ", contract_start=" + contract_start + ", contract_end=" + contract_end + ", address=" + address
-				+ ", user_type=" + user_type + ", phone=" + phone + ", contract_status=" + contract_status + "]";
+				+ ", pet_no=" + pet_no + ", pet_name=" + pet_name + ", pet_service_regno=" + pet_service_regno
+				+ ", contract_date=" + contract_date + ", contract_start=" + contract_start + ", contract_end="
+				+ contract_end + ", address=" + address + ", user_type=" + user_type + ", phone=" + phone
+				+ ", contract_status=" + contract_status + "]";
 	}
+	
+
 	
 	
 	
