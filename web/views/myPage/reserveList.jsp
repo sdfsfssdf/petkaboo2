@@ -100,7 +100,7 @@
 				<tr>
 					<td colspan="3"><button type="submit" class="btn btn-warning" data-toggle="modal" data-target="#myModal">예약보기</button>
 					<button type="submit" class="btn btn-success">바로예약</button>
-					<button type="submit" class="btn btn-info">리뷰남기기</button></td>
+					<button type="submit" class="btn btn-info" onclick="reviewWriting()"><a  href="/pkb/views/myPage/reviewWrite.jsp">리뷰남기기</a></button></td>
 				</tr>
 				
 				<%} %>
@@ -156,5 +156,12 @@
       </div>
     </div>
   </div>
+  
+  <script>
+  	function reviewWriting(){
+  		
+  		location.href = "<%=request.getContextPath()%>/review.wr";
+  	}
+  </script>
 </body>
 </html>
