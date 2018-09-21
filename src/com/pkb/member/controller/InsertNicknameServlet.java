@@ -2,6 +2,10 @@ package com.pkb.member.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -9,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.pkb.member.model.vo.ImgFile;
 import com.pkb.common.MyFileRenamePolicy;
 import com.pkb.member.model.service.FileService;
 import com.pkb.member.model.service.UserService;
@@ -45,31 +50,59 @@ public class InsertNicknameServlet extends HttpServlet {
 		String upload =  mr.getFilesystemName("profile");
 		String original = mr.getOriginalFileName("profile");
 		String nickname = mr.getParameter("nickname");
-		String email = (String)request.getSession().getAttribute("email");
-		
 		File file = mr.getFile("profile");
+		int result = 0;
 		
-		com.pkb.member.model.vo.File f = new com.pkb.member.model.vo.File();
-		User loginUser = new User();
-		loginUser.setNickname(nickname);
-		f.setFile_name(upload);
-		f.setFile_path(finalPath);
-		f.setUser_no(Integer.valueOf(((User) (request.getSession().getAttribute("loginUser"))).getUser_no()));
-		
-		int profileResult = new FileService().InsertProfile(f,nickname, email);
+		if(nickname == null && upload != null){
+			ImgFile f = new ImgFile();
+			f.setFile_name(upload);
+			f.setFile_path(finalPath);
+			f.setUser_no(Integer.valueOf(((User) (request.getSession().getAttribute("loginUser"))).getUser_no()));
 			
-		if(profileResult == 5 || profileResult == 3){
-				HttpSession session = request.getSession();
-				User u = (User)session.getAttribute("loginUser");
+			result = new FileService().InsertProfile(f);
+		}else if(nickname != null && upload ==null){
+			HttpSession session = request.getSession();
+			User u = (User)session.getAttribute("loginUser");
+			u.setNickname(nickname);
+			
+			result = new FileService().InsertProfile(u);
+		}else if(nickname != null && upload != null){
+			ImgFile f = new ImgFile();
+			f.setFile_name(upload);
+			f.setFile_path(finalPath);
+			f.setUser_no(Integer.valueOf(((User) (request.getSession().getAttribute("loginUser"))).getUser_no()));
+			
+			HttpSession session = request.getSession();
+			User u = (User)session.getAttribute("loginUser");
+			u.setNickname(nickname);
+			
+			result = new FileService().InsertProfile(f, u);
+			
+		}
+			HttpSession session = request.getSession();
+			User u = (User)session.getAttribute("loginUser");
+		
+			ArrayList<ImgFile> list= new UserService().selectlist(u);
+			
+			
+			String fileName =  list.get(0).getFile_name();
+			
+			
+			
+			System.out.println(fileName);
+			System.out.println(list);
+			String page = "";
+		if(result > 0){
 				u.setNickname(nickname);
 				// 키값은 중복이 안된다. 
 				session.setAttribute("loginUser", u);
-				response.sendRedirect("views/myPage/modifyMemberInfoMain.jsp");
-		}else if(profileResult == 2){
-				response.sendRedirect("views/myPage/modifyMemberInfoMain.jsp");			
-		}else{
-			System.out.println("실패");
+				request.setAttribute("fileName", fileName);
+				page = "views/myPage/modifyMemberInfoMain.jsp";
+		}else if(result == 0){
+			System.out.println("실패");		
 		}
+		RequestDispatcher view = request.getRequestDispatcher(page);
+		view.forward(request, response);
 	}
 	
 	/**

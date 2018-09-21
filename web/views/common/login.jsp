@@ -6,7 +6,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script src="https://apis.google.com/js/platform.js?onload=init" async defer></script>
+<script src="https://apis.google.com/js/platform.js" async defer></script>
+<meta name="google-signin-client_id" content="813464990898-qo4elebsbveqjcue4n774m7caep7g6gb.apps.googleusercontent.com">
 <!-- 합쳐지고 최소화된 최신 CSS -->
 <link rel="stylesheet"
    href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
@@ -18,29 +19,6 @@
 <!-- 합쳐지고 최소화된 최신 자바스크립트 -->
 <script
    src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-<script>
-	function init(){
-	console.log('init');
-	gapi.load('auth2', function(){
-		window.googleAuthObj = gapi.auth2.init({
-			client_id:'813464990898-qo4elebsbveqjcue4n774m7caep7g6gb.apps.googleusercontent.com'
-		});
-		googleAuthObj.then(function(){
-			checkLoginStatus();
-		})
-	});
-	}
-	function checkLoginStatus(){
-		var loginBtn = document.querySelector('#loginBtn');
-		console.log('checkLoginStatus');
-		if(googleAuthObj.isSignedIn.get()){
-			loginBtn.value= 'Logout';
-		}else{
-			loginBtn.value= 'Login';
-		}
-	}
-</script>
-
 <link rel="stylesheet" href="css/bootstrap.css"> 
 <title>펫카부 로그인</title>
 </head>
@@ -80,16 +58,17 @@
 				<form method="post" action="<%=request.getContextPath()%>/login.me">
 					<h3 style="text-align:center;">로그인 화면</h3>
 					<div class="form-group">
-						<input type="text" class="form-control" placeholder="아이디" name="email" maxlength="40">
+						<input type="text" class="form-control" placeholder="아이디" name="email" maxlength="100">
 					</div>
 					<div class="form-group">
-						<input type="password" class="form-control" placeholder="비밀번호" name="user_pwd" maxlength="20">
+						<input type="password" class="form-control" placeholder="비밀번호" name="user_pwd" maxlength="100">
 					</div>
 					<input type="submit" class="btn btn-primary form-control" value="로그인">
+					<a href="#" onclick="signOut();">Sign out</a>
 					<div class="form-group">
 					<br>				
-						<input type="button" class="btn btn-primary form-control" style="background-color:lightgray" id="loginBtn" value="구글 아이디 로그인"
-							onclick="
+						<div class="g-signin2" data-onsuccess="onSignIn"></div>
+					<!-- 	<script>
 						if(this.value === 'Login'){
 							googleAuthObj.signIn().then(function(){
 								checkLoginStatus();
@@ -97,9 +76,25 @@
 						}else{
 							googleAuthObj.signOut().then(function(){
 								checkLoginStatus();
+	
 							});
 						}
-						">
+						</script> -->
+						<script>
+							function onSignIn(googleUser) {
+							  var profile = googleUser.getBasicProfile();
+							  var id = profile.getId()); // Do not send to your backend! Use an ID token instead.
+							  var name = profile.getName());
+							  var email = profile.getEmail()); // This is null if the 'email' scope is not present.
+							}
+							
+							  function signOut() {
+							    var auth2 = gapi.auth2.getAuthInstance();
+							    auth2.signOut().then(function () {
+							      console.log('User signed out.');
+							    });
+							  }
+						</script>
 					</div>
 				</form>
 			</div>

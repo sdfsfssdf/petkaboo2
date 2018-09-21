@@ -10,9 +10,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Properties;
 
-import com.pkb.member.model.vo.File;
+import com.pkb.member.model.vo.ImgFile;
 import com.pkb.member.model.vo.User;
 import com.pkb.reservation.model.vo.Reservation;
 
@@ -112,16 +113,16 @@ public class UserDAO {
 		return result;
 	}
 
-	public int chageAdd(Connection con, User loginUser) {
+	public int chageAdd(Connection con, User loginUser, String address) {
 		PreparedStatement pstmt = null;
 
 		int result = 0;
 		String query = prop.getProperty("changeAdd");
-		System.out.println("change" + loginUser.getAddress());
+		System.out.println("change" + address);
 		System.out.println("email" + loginUser.getEmail());
 		try {
 			pstmt = con.prepareStatement(query);
-			pstmt.setString(1, loginUser.getAddress());
+			pstmt.setString(1, address);
 			pstmt.setString(2, loginUser.getEmail());
 			result = pstmt.executeUpdate();
 
@@ -198,7 +199,7 @@ public class UserDAO {
 		return result;
 	}
 
-	public int changeNickname(Connection con, String nickname, String email) {
+	public int changeNickname(Connection con, User u) {
 		PreparedStatement pstmt = null;
 
 		int result = 0;
@@ -207,8 +208,9 @@ public class UserDAO {
 
 		try {
 			pstmt = con.prepareStatement(query);
-			pstmt.setString(1, nickname);
-			pstmt.setString(2, email);
+
+			pstmt.setString(1, u.getNickname());
+			pstmt.setString(2, u.getEmail());
 
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
@@ -219,7 +221,7 @@ public class UserDAO {
 		return result;
 	}
 
-	public int insertIdentify(Connection con, File f) {
+	public int insertIdentify(Connection con, ImgFile f) {
 		PreparedStatement pstmt = null;
 
 		int result = 0;
@@ -241,7 +243,7 @@ public class UserDAO {
 		return result;
 	}
 
-	public int insertProfile(Connection con, File f) {
+	public int insertProfile(Connection con, ImgFile f) {
 		PreparedStatement pstmt = null;
 
 		int result = 0;
@@ -298,7 +300,7 @@ public class UserDAO {
 		return rsvList;
 	}
 
-	public int insertLicense(Connection con, File f) {
+	public int insertLicense(Connection con, ImgFile f) {
 		PreparedStatement pstmt = null;
 
 		int result = 0;
@@ -393,8 +395,37 @@ public class UserDAO {
 		} finally {
 			close(rs);
 			close(pstmt);
-		}
-
+    }
 		return mlist;
+  }
+
+	public ArrayList<ImgFile> selectList(Connection con, User u) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<ImgFile> list = null;
+		
+		System.out.println("uno들오옴"+u.getUser_no());
+		String query = prop.getProperty("selectList");
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, u.getUser_no());
+			rset = pstmt.executeQuery();
+			list = new ArrayList<ImgFile>();
+			
+			if(rset.next()){
+				ImgFile f= new ImgFile();
+				f.setFile_name(rset.getString("file_name"));
+				list.add(f);
+				System.out.println("list 들어옴/"+list);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally{
+			close(rset);
+			close(pstmt);
+		}
+		return list;
+
 	}
 }
