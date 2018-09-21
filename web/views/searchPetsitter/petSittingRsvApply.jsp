@@ -32,8 +32,36 @@
 		document.form.addrDetail.value = addrDetail;
 		document.form.zipNo.value = zipNo;
 	}
-</script>
+	</script>
+	
+	
+	<script>
+	
+	$(function(){
+		$('.allcheck').click(function(){
+			console.log("이건작동함");
+			 if($('.allcheck').prop("checked")){
+				console.log('트루')
+				$("input[type=checkbox]").prop("checked", true);
+			}else{
+				$("input[type=checkbox]").prop("checked", false);
+				
+			} 
+		})
+		
+	})
+	
+	</script>
+	
+	
+	
+	
+
 <title>펫시팅예약신청서</title>
+
+
+
+
 
 <!-- 합쳐지고 최소화된 최신 CSS -->
 <link rel="stylesheet"
@@ -162,9 +190,10 @@ a:hover {
 			</h2>
 		</div>
 		<br /> <br /> <br /> <br /> <br />
+		<form action="<%=request.getContextPath() %>/insertRsv.rv" method="post">
 		<div id="ip-style">
-			맡기기<input type="radio" name="howToPS" value="leavePet" /> 부르기 <input type="radio"
-				name="howToPS" value="callingPetsitter"/>
+			<label class=howToPs><input type="radio" name="howToPS" value="leavePet" /> 맡기기</label>
+			<label class=howToPs><input type="radio" name="howToPS" value="callingPetsitter"/>부르기 </label>
 		</div>
 		<br />
 		<div id="body-div">
@@ -276,23 +305,34 @@ a:hover {
 			<br />
 			<fieldset class="div1 f-style">
 				<br /> &nbsp;&nbsp;<label for="">약관을 확인해 주세요</label> <br /> <br />
-				&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox"
-					style="font-color: black" ; />모두 동의
-				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input
-					type="checkbox" /><a
+				&nbsp;&nbsp;&nbsp;&nbsp;
+				
+			
+				<input type="checkbox" style="font-color: black" id="policyall" name="policyall" class="allcheck"/>모두 동의
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				
+				    <input type="checkbox" id="policy" name="policy" class=checkone/><a
 					onclick="document.getElementById('modal1').style.display='block'">서비스
-					이용약관</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input
-					type="checkbox" /><a
+					이용약관</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					
+					<input type="checkbox" name=policy class=checkone /><a
 					onclick="document.getElementById('modal2').style.display='block'">
-					개인정보 약관</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input
-					type="checkbox" /><a
+					개인정보 약관</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+					
+					<input type="checkbox" name=policy class=checkone/><a
 					onclick="document.getElementById('modal3').style.display='block'">위치정보
-					활용약관</a> <br /> <br /> <br />
+					활용약관</a> 
+				
+					<br /> <br /> <br />
 			</fieldset>
 			<br /> <br />
 			<button class="btn btn-default" type="submit" id="submit">제출</button>
 			<button class="btn btn-default" type="reset" id="reset">취소</button>
 		</div>
+		
+		
+		</form>
+
 
 		<br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br />
 		<br /> <br /> <br /> <br /> <br /> <br />
@@ -755,12 +795,7 @@ a:hover {
 			</div>
 		</div>
 	</div>
-</body>
-<script>
-$(document).ready(function(){
-	var 
 	
-})
+</body>
 
-</script>
 </html>
