@@ -117,6 +117,7 @@ ul.sub li:hover > ul.sub-sub{display:block;}
 							<div class="title">서비스 관리</div>
 							<ul class="sub">
 								<li><a href="../myPa">예약현황</a></li>
+		
 								<li><a href="#">거래내역</a></li>
 								<li><a href="../myPage/onebyoneQNAWrite.jsp" >1:1 문의</a></li>
 								<li><a onclick="goOnebyOneQna()">내 질문 내역</a></li>
@@ -125,13 +126,13 @@ ul.sub li:hover > ul.sub-sub{display:block;}
 						<li class="group">
 							<div class="title">개인 정보</div>
 							<ul class="sub">
-								<li><a href="../myPage/modifyMemberInfoMain.jsp">개인정보 수정</a></li>
-								<li><a href="../myPage/modifyPassword.jsp">비밀번호 변경</a></li>
-								<li><a href="../myPage/modifyProfile.jsp">프로필 관리</a></li>
+								<li><a href="<%=request.getContextPath()%>/modify.mb">개인정보 수정</a></li>
+								<li><a href="/pkb/views/myPage/modifyPassword.jsp">비밀번호 변경</a></li>
+								<li><a href="/pkb/views/myPage/modifyProfile.jsp">프로필 관리</a></li>
 								<li><a>인증 관리</a>
 									<ul class="sub-sub">
-										<li><a href="../myPage/nameIdentify.jsp">실명 인증</a></li>
-										<li><a href="../myPage/licenseIdentify.jsp">자격증 인증</a></li>
+										<li><a href="/pkb/views/myPage/nameIdentify.jsp">실명 인증</a></li>
+										<li><a href="/pkb/views/myPage/licenseIdentify.jsp">자격증 인증</a></li>
 									</ul>
 								
 								</li>

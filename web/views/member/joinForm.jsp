@@ -59,16 +59,17 @@
 					<h3 style="text-align: center;">회원가입 화면</h3>
 					<div class="form-group">
 						<input type="email" id="email" class="form-control"
-							placeholder="아이디" name="email" maxlength="20">
+							placeholder="아이디" name="email" maxlength="100">
 						<input type="button" onclick="checkEmail()" value="중복체크">
 					</div>
 					<div class="form-group">
 						<input type="password" id="pwd" class="form-control"
-							placeholder="비밀번호" name="user_pwd" maxlength="20">
+							placeholder="비밀번호" name="user_pwd" maxlength="100">
 					</div>
 					<div class="form-group">
 						<input type="password" id="check" class="form-control"
-							placeholder="비밀번호를 확인해주세요" name="check" maxlength="20">
+	
+							placeholder="비밀번호를 확인해주세요" name="check" maxlength="100">
 					</div>
 					<input type="submit" id="join" onclick="join1()"
 						class="btn btn-primary form-control" value="회원가입">

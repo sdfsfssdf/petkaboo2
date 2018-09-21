@@ -1,7 +1,12 @@
+<%@page import="com.pkb.member.model.vo.ImgFile"%>
+<%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ page import="com.pkb.member.model.vo.User" %>
-<% User loginUser = (User)session.getAttribute("loginUser"); %>
+<% 
+	User loginUser = (User)session.getAttribute("loginUser");
+	String fileName = (String)request.getAttribute("fileName");
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -226,6 +231,11 @@ a:hover, a:active, a:focus {
 
 
 }
+.profileImg{
+	border-radius: 10px 20px;
+	height:150px;
+	width:130px;
+}
 </style>
 </head>
 <body>
@@ -284,8 +294,9 @@ a:hover, a:active, a:focus {
 								수정</p>
 							<br>
 							<!-- 사진부분 -->
-							<div class=circleimg></div>
-						
+							<div class=circleimg>
+								<Img class=profileImg  src="<%=request.getContextPath()%>/images/profileImagesUpload/<%=fileName%>">
+ 							</div>
 							<!-- 닉네임 -->
 							<div class=nicknamespan>
 								<span style="text-align: left">닉네임 : </span>&nbsp;<input
@@ -297,7 +308,7 @@ a:hover, a:active, a:focus {
 							</div>
 							<!-- 수정버튼 -->
 							<div class=modibutton>
-								<button id=modifyprofile onclick="location.href='modifyProfile.jsp'">수정하기</button>
+								<button id=modifyprofile onclick="moidfyProfile()">수정하기</button>
 							</div>
 						</div>
 						<!-- 개인정보수정 -->
@@ -341,7 +352,7 @@ a:hover, a:active, a:focus {
 							</div>
 							<!-- 수정버튼 -->
 							<div class=modibutton>
-								<button id=modifyprofile onclick="location.href='modifyMemberInfo.jsp'">수정하기</button>
+								<button id=modifyprofile onclick="location.href='/pkb/views/myPage/modifyMemberInfo.jsp'">수정하기</button>
 							</div>
 						</div>
 					</div>
@@ -355,7 +366,7 @@ a:hover, a:active, a:focus {
 								변경</p>
 
 							<div class="modipass">
-								<a href="modifyPassword.jsp">비밀번호 변경하기</a>
+								<a href="/pkb/views/myPage/modifyPassword.jsp">비밀번호 변경하기</a>
 
 							</div>
 
@@ -366,14 +377,14 @@ a:hover, a:active, a:focus {
 						
 							<div class=identify>
 								<div class=mlicense>
-									<a href="#">자격증 인증하기</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input
+									<a href="/pkb/views/myPage/licenseIdentify.jsp">자격증 인증하기</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input
 										type="text" name="license" size="80" maxlength="60"
 										style="width: 300px; color: black; margin: 0; padding: 0; height: 35px; border-width: 0; background-color: #eee;"
 										value="미인증" readonly="">
 								</div>
 								<br>
 								<div class=midentify>
-									<a href="#">실명 인증하기</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input
+									<a href="/pkb/views/myPage/nameIdentify.jsp">실명 인증하기</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input
 										type="text" name="identify" size="80" maxlength="60"
 										style="width: 300px; color: black; margin: 0; padding: 0; height: 35px; border-width: 0; background-color: #eee;"
 										value="미인증" readonly="">
@@ -389,6 +400,7 @@ a:hover, a:active, a:focus {
 	
 						</div>
 					</div>
+
 
 				</div>
 			<!-- 구분선 -->
@@ -420,6 +432,10 @@ a:hover, a:active, a:focus {
 			</div>
 		</div>
 	</div>
-
+	<script>
+		function moidfyProfile(){
+			location.href='/pkb/views/myPage/modifyProfile.jsp';
+		}
+	</script>
 </body>
 </html>
