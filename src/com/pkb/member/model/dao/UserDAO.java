@@ -10,9 +10,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Properties;
 
-import com.pkb.member.model.vo.File;
+import com.pkb.member.model.vo.ImgFile;
 import com.pkb.member.model.vo.User;
 
 public class UserDAO {
@@ -111,16 +112,16 @@ public class UserDAO {
 		return result;
 	}
 
-	public int chageAdd(Connection con, User loginUser) {
+	public int chageAdd(Connection con, User loginUser, String address) {
 		PreparedStatement pstmt = null;
 		
 		int result = 0;
 		String query = prop.getProperty("changeAdd");
-		System.out.println("change" + loginUser.getAddress());
+		System.out.println("change" + address);
 		System.out.println("email" + loginUser.getEmail());
 		try {
 			pstmt = con.prepareStatement(query);
-			pstmt.setString(1, loginUser.getAddress());
+			pstmt.setString(1, address);
 			pstmt.setString(2, loginUser.getEmail());
 			result = pstmt.executeUpdate();
 			
@@ -197,7 +198,7 @@ public class UserDAO {
 		return result;
 	}
 
-	public int changeNickname(Connection con, String nickname, String email) {
+	public int changeNickname(Connection con, User u) {
 		PreparedStatement pstmt = null;
 		
 		int result = 0;
@@ -206,8 +207,8 @@ public class UserDAO {
 		
 		try {
 			pstmt = con.prepareStatement(query);
-			pstmt.setString(1, nickname);
-			pstmt.setString(2, email);
+			pstmt.setString(1, u.getNickname());
+			pstmt.setString(2, u.getEmail());
 			
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
@@ -218,7 +219,7 @@ public class UserDAO {
 		return result;
 	}
 
-	public int insertIdentify(Connection con, File f) {
+	public int insertIdentify(Connection con, ImgFile f) {
 		PreparedStatement pstmt = null;
 		
 		int result = 0;
@@ -240,7 +241,7 @@ public class UserDAO {
 		return result;
 	}
 
-	public int insertProfile(Connection con, File f) {
+	public int insertProfile(Connection con, ImgFile f) {
 		PreparedStatement pstmt = null;
 		
 		int result = 0;
@@ -275,7 +276,7 @@ public class UserDAO {
 		return list;
 	}
 
-	public int insertLicense(Connection con, File f) {
+	public int insertLicense(Connection con, ImgFile f) {
 		PreparedStatement pstmt = null;
 
 		int result = 0;
@@ -374,50 +375,32 @@ public class UserDAO {
 		return mlist;
 	}
 
-	public User selectMemberOne(Connection con, int userNo) {
+	public ArrayList<ImgFile> selectList(Connection con, User u) {
 		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		User u = null;
-		String query = prop.getProperty("selectMemberOne");
+		ResultSet rset = null;
+		ArrayList<ImgFile> list = null;
 		
+		System.out.println("uno들오옴"+u.getUser_no());
+		String query = prop.getProperty("selectList");
 		try {
 			pstmt = con.prepareStatement(query);
-			pstmt.setInt(1, userNo);
+			pstmt.setInt(1, u.getUser_no());
+			rset = pstmt.executeQuery();
+			list = new ArrayList<ImgFile>();
 			
-			rs = pstmt.executeQuery();
-			
-			if(rs.next()){
-				u = new User();
-				
-				u.setUser_no(rs.getInt("user_no"));
-				u.setEmail(rs.getString("email"));
-				u.setUser_pwd(rs.getString("user_pwd"));
-				u.setUser_type(rs.getInt("user_type"));
-				u.setUser_name(rs.getString("user_name"));
-				u.setPhone(rs.getString("phone"));
-				u.setBirthday(rs.getDate("birthday"));
-				u.setGender(rs.getString("gender"));
-				u.setAddress(rs.getString("address"));
-				u.setSms_chk(rs.getString("sms_chk"));
-				u.setEmail_chk(rs.getString("email_chk"));
-				u.setEnrollDate(rs.getDate("enrolldate"));
-				u.setNickname(rs.getString("nickname"));
-				u.setUser_grade(rs.getInt("user_grade"));
-				u.setPet_auth(rs.getString("pet_auth"));
-				u.setUser_status(rs.getInt("user_status"));
-				u.setFile_no(rs.getInt("file_no"));
-				u.setEmail_hash(rs.getString("email_hash"));
-				u.setArticle_no(rs.getInt("article_no"));
-				
+			if(rset.next()){
+				ImgFile f= new ImgFile();
+				f.setFile_name(rset.getString("file_name"));
+				list.add(f);
+				System.out.println("list 들어옴/"+list);
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} finally {
-			close(rs);
+		} finally{
+			close(rset);
 			close(pstmt);
 		}
-		
-		return u;
+		return list;
 	}
 }
