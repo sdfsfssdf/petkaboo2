@@ -40,7 +40,7 @@
             <br>
             <div class="text">제재/차단목록</div>
             <br>
-            <div class="text">휴면회원관리</div>
+           <!--  <div class="text">휴면회원관리</div> -->
       </div>
    </div>
 </body>

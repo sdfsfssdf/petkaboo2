@@ -176,4 +176,31 @@ public class UserService {
 		return list;
 
 	}
+
+	public int[] deleteMember(int[] selectUserNos) {
+		// TODO Auto-generated method stub
+		Connection con = getConnection();
+		
+		int result[] = new UserDAO().deleteMember(con,selectUserNos);
+		
+		
+		if(result.length > 0){
+			commit(con);
+		} else {
+			rollback(con);
+		}
+		close(con);
+		return result;
+	}
+
+	public User selectMemberOne(int userNo) {
+		// TODO Auto-generated method stub
+		Connection con = getConnection();
+		
+		User user = new UserDAO().selectMemberOne(con,userNo);
+		
+		close(con);
+		
+		return user;
+	}
 }
