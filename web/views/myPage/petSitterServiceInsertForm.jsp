@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ page import="java.util.*, java.text.*, com.pkb.member.model.vo.User" %>
-<% User loginUser = (User)session.getAttribute("loginUser");%>
+<%@ page import="java.util.*, java.text.*" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -32,11 +31,16 @@ th, tr, td{
 </style>
 </head>
 <body>
-	<h1 align="center" id="logo">로고</h1>
-	<br>
 	<%@ include file="/views/common/menubar.jsp"%>
+	<%
+		if(loginUser == null){
+	%>
+	<script>
+		alert('로그인 회원만 이용할 수 있습니다!');
+		window.location.href = '<%=request.getContextPath()%>/index.jsp';
+	</script>
+	<% } else {%>
 	<%@ include file="/views/common/sidemenubar.jsp"%>
-
 	<div class="contentArea">
 		<h2><b>펫시터 서비스 등록</b></h2>
 		<p>펫시터 서비스를 등록할 수 있습니다.</p>
@@ -44,7 +48,7 @@ th, tr, td{
 			<form id="insertForm" method="post" action="<%=request.getContextPath()%>/insertPetService.do">
 				<table id="insertTable">
 					<tr>
-						<td rowspan="13">프로필 사진을 여기에</td>
+						<td rowspan="13">프로필 사진</td>
 					</tr>
 					<tr>
 						<td><label>이름 </label><input type="text" placeholder="<%=loginUser.getUser_name() %>" readonly></td>
@@ -121,6 +125,7 @@ th, tr, td{
 			$("#insertForm").submit();
 		}
 	</script>
+	<% } %>
 
 </body>
 </html>

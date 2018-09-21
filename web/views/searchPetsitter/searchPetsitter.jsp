@@ -230,9 +230,7 @@ table.listArea td {
 </script>
 <body>
 	<div id="container">
-		<div id="header"></div>
 		<%@include file="/views/common/menubar.jsp"%>
-
 		<h2 style="text-align: center; margin-top: 100px;">
 			<span style="color: rgb(228, 100, 18);"> <strong> 펫시터
 					찾기 </strong>

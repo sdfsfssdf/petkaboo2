@@ -226,9 +226,6 @@ th, td {
 
 
 	<div id="wrap">
-		<div id="header">
-			<h1 align="center">펫카부</h1>
-		</div>
 		<div id="container1">
 
 			<!-- 메뉴파일 -->
