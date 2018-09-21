@@ -3,6 +3,7 @@ package com.pkb.member.controller;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -11,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.pkb.member.model.service.UserService;
 import com.pkb.member.model.vo.User;
+import com.pkb.reservation.model.vo.Reservation;
 
 /**
  * Servlet implementation class ResevationServlet
@@ -34,7 +36,18 @@ public class ResevationServlet extends HttpServlet {
 		
 		User loginUser = (User) request.getSession().getAttribute("loginUser");
 		
-		ArrayList<User> petsitter = new UserService().getPetsitterInfo(loginUser);
+		ArrayList<Reservation> rsvList = new UserService().getReservation(loginUser);
+		
+		String page="";
+		page="views/myPage/reserveList.jsp";
+		request.setAttribute("rsvList", rsvList);
+//		request.setAttribute("pg", pg);//페이징처리에 쓸거임
+		System.out.println("sss" + loginUser);
+		
+		System.out.println("rsvList = " + rsvList );
+	RequestDispatcher view = request.getRequestDispatcher(page);
+	view.forward(request, response);
+	//방법 = 스트링,모델엔뷰,디스페처
 	}
 
 	/**

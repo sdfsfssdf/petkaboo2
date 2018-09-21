@@ -12,6 +12,7 @@ import com.pkb.commiAndAccount.model.vo.CommissionAndAccountList;
 import com.pkb.member.model.dao.UserDAO;
 import com.pkb.member.model.vo.User;
 import com.pkb.member.util.SHA256;
+import com.pkb.reservation.model.vo.Reservation;
 
 
 public class UserService {
@@ -129,13 +130,14 @@ public class UserService {
 		return result;
 	}
 
-	public ArrayList<User> getPetsitterInfo(User loginUser) {
+	public ArrayList<Reservation> getReservation(User loginUser) {
 		Connection con = getConnection();
 		
-		ArrayList<User> list = new UserDAO().getPetsitterInfo(loginUser, con);
+		ArrayList<Reservation> list = new UserDAO().getReservation(loginUser, con);
 		
 		close(con);
 		return list;
+		
 		
 		
 	}
@@ -158,16 +160,4 @@ public class UserService {
 		close(con);
 
 		return mlist;
-	}
-
-	public User selectMemberOne(int userNo) {
-		// TODO Auto-generated method stub
-		Connection con = getConnection();
-		
-		User user = new UserDAO().selectMemberOne(con, userNo);
-		
-		close(con);
-		
-		return user;
-	}
-}
+	}}
