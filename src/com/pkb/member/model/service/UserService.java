@@ -5,8 +5,11 @@ import static com.pkb.common.JDBCTemplate.commit;
 import static com.pkb.common.JDBCTemplate.getConnection;
 import static com.pkb.common.JDBCTemplate.rollback;
 
+import com.pkb.member.model.vo.ImgFile;
+
 import java.sql.Connection;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import com.pkb.commiAndAccount.model.vo.CommissionAndAccountList;
 import com.pkb.member.model.dao.UserDAO;
@@ -68,10 +71,10 @@ public class UserService {
 		return result;
 	}
 
-	public int changeAdd(User loginUser) {
+	public int changeAdd(User loginUser, String address) {
 		Connection con = getConnection();
 		
-		int result = new UserDAO().chageAdd(con, loginUser);
+		int result = new UserDAO().chageAdd(con, loginUser, address);
 		
 		if(result>0){
 			commit(con);
@@ -116,6 +119,7 @@ public class UserService {
 		return result;
 	}
 
+
 	public int changeNickname(String nickname, String email) {
 		Connection con = getConnection();
 		
@@ -131,15 +135,13 @@ public class UserService {
 	}
 
 	public ArrayList<Reservation> getReservation(User loginUser) {
+    
 		Connection con = getConnection();
 		
 		ArrayList<Reservation> list = new UserDAO().getReservation(loginUser, con);
 		
 		close(con);
 		return list;
-		
-		
-		
 	}
 
 	public int getListCount() {
@@ -160,4 +162,18 @@ public class UserService {
 		close(con);
 
 		return mlist;
-	}}
+	}
+
+
+	public ArrayList<ImgFile> selectlist(User u) {
+		Connection con = getConnection();
+		ArrayList<ImgFile> list = null;
+		
+		list = new UserDAO().selectList(con, u);
+		
+		close(con);
+		
+		return list;
+
+	}
+}

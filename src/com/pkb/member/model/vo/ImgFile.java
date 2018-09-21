@@ -2,7 +2,7 @@ package com.pkb.member.model.vo;
 
 import java.util.Date;
 
-public class File{
+public class ImgFile {
 	private int file_no;
 	private Date file_date;
 	private String file_name;
@@ -11,9 +11,9 @@ public class File{
 	private String file_path;
 	private String file_dalete;
 	
-	public File(){};
+	public ImgFile(){};
 	
-	public File(int file_no, Date file_date, String file_name, int file_use, int user_no, String file_path,
+	public ImgFile(int file_no, Date file_date, String file_name, int file_use, int user_no, String file_path,
 			String file_dalete) 
 	{
 		this.file_no = file_no;
