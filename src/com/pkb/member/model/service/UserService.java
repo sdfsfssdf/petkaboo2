@@ -15,6 +15,7 @@ import com.pkb.commiAndAccount.model.vo.CommissionAndAccountList;
 import com.pkb.member.model.dao.UserDAO;
 import com.pkb.member.model.vo.User;
 import com.pkb.member.util.SHA256;
+import com.pkb.reservation.model.vo.Reservation;
 
 
 public class UserService {
@@ -118,14 +119,29 @@ public class UserService {
 		return result;
 	}
 
-	public ArrayList<User> getPetsitterInfo(User loginUser) {
+
+	public int changeNickname(String nickname, String email) {
 		Connection con = getConnection();
 		
-		ArrayList<User> list = new UserDAO().getPetsitterInfo(loginUser, con);
+		int result = new UserDAO().changeNickname(con, nickname, email);
+		
+		if(result>0){
+			commit(con);
+		}else{
+			rollback(con);
+		}
+		close(con);
+		return result;
+	}
+
+	public ArrayList<Reservation> getReservation(User loginUser) {
+    
+		Connection con = getConnection();
+		
+		ArrayList<Reservation> list = new UserDAO().getReservation(loginUser, con);
 		
 		close(con);
 		return list;
-	
 	}
 
 	public int getListCount() {
@@ -158,4 +174,6 @@ public class UserService {
 		close(con);
 		
 		return list;
-	}}
+
+	}
+}

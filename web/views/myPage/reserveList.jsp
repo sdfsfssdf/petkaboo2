@@ -1,8 +1,8 @@
-<%@page import="com.pkb.member.model.vo.User"%>
+<%@page import="com.pkb.reservation.model.vo.Reservation"%>
+<%@page import="java.util.*"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%User loginUser = (User)session.getAttribute("loginUser"); 
-System.out.println("지혜 " + loginUser.getEmail()) ;
+<%ArrayList<Reservation> rsvList = (ArrayList<Reservation>)request.getAttribute("rsvList"); 
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -12,6 +12,7 @@ System.out.println("지혜 " + loginUser.getEmail()) ;
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
 <title>Insert title here</title>
+
 <style>
 .contentArea {
 	margin-left: 320px;
@@ -81,70 +82,32 @@ System.out.println("지혜 " + loginUser.getEmail()) ;
 			
 		
 			<table class="tableArea" >
-			<% for (lioginuse.lent) %>
+			<% for(int i=0;i<rsvList.size();i++){ %>
 				<tr>
 					<td class="imgArea" rowspan="4" width="150px">img</td>
-					<td>이름 : <%=loginUser.getEmail() %></td>
-					<td colspan="2"><label>주소 : </label><%=loginUser.getAddress()%></td>
+					<td>이름 : <%=rsvList.get(i).getUser_name() %></td>
+					<td colspan="2"><label>주소 : </label><%=rsvList.get(i).getAddress()%></td>
 					
 				</tr>
 				<tr>
-					<td><label>반려동물 이름 : </label><input type="text" value="<%=loginUser.getPet_auth()%>"></td>
-					<td><label>돌봄 시작일 : </label></td>
-					<td><label>돌봄 종료일 : </label> ~ </td>
+					<td><label>반려동물 이름 : </label><%=rsvList.get(i).getPet_name()%></td>
+					<td><label>돌봄 시작일 : </label><%=rsvList.get(i).getContract_start()%></td>
+					<td><label>돌봄 종료일 : </label><%=rsvList.get(i).getContract_end() %></td>
 				</tr>
 				<tr>
-					<td colspan="3"><label>에약번호 : </label></td>
+					<td colspan="3"><label>에약번호 : <%=rsvList.get(i).getContract_no() %> </label></td>
 				</tr>
 				<tr>
 					<td colspan="3"><button type="submit" class="btn btn-warning" data-toggle="modal" data-target="#myModal">예약보기</button>
 					<button type="submit" class="btn btn-success">바로예약</button>
 					<button type="submit" class="btn btn-info">리뷰남기기</button></td>
 				</tr>
+				
+				<%} %>
 			</table>
 			<!-- </form> -->
 			<br><br>
-			<table class="tableArea">
-				<tr>
-					<td class="imgArea" rowspan="4" width="150px">img</td>
-					<td><label>이름 : </label>리주혁</td>
-					<td colspan="2"><label>주소 : </label>경기도 광주시</td>
-				</tr>
-				<tr>
-					<td><label>반려동물 이름 : </label>내사랑쿠키</td>
-					<td><label>돌봄 시작일 : </label>2009-05-06</td>
-					<td><label>돌봄 종료일 : </label> ~ </td>
-				</tr>
-				<tr>
-					<td colspan="3"><label>에약번호 : </label></td>
-				</tr>
-				<tr>
-					<td colspan="3"><button type="submit" class="btn btn-warning" data-toggle="modal" data-target="#myModal">예약보기</button>
-					<button type="submit" class="btn btn-success">바로예약</button>
-					<button type="submit" class="btn btn-info">리뷰남기기</button></td>
-				</tr>
-			</table>
-			<br><br>
-			<table class="tableArea">
-				<tr>
-					<td class="imgArea" rowspan="4" width="150px">img</td>
-					<td><label>이름 : </label>리주혁</td>
-					<td colspan="2"><label>주소 : </label>경기도 광주시</td>
-				</tr>
-				<tr>
-					<td><label>반려동물 이름 : </label>내사랑쿠키</td>
-					<td><label>돌봄 시작일 : </label>2009-05-06</td>
-					<td><label>돌봄 종료일 : </label> ~ </td>
-				</tr>
-				<tr>
-					<td colspan="3"><label>에약번호 : </label></td>
-				</tr>
-				<tr>
-					<td colspan="3"><button type="submit" class="btn btn-warning" data-toggle="modal" data-target="#myModal">예약보기</button>
-					<button type="submit" class="btn btn-success">바로예약</button>
-					<button type="submit" class="btn btn-info">리뷰남기기</button></td>
-				</tr>
-			</table>
+			
 		</div>
 		
 	</div>
@@ -160,6 +123,7 @@ System.out.println("지혜 " + loginUser.getEmail()) ;
           <h4 class="modal-title">예약 상세 내역</h4>
           <button type="button" class="close" data-dismiss="modal">&times;</button>
         </div>
+        
         
         <!-- Modal body -->
         <div class="modal-body">
