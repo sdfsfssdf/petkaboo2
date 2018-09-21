@@ -1,89 +1,54 @@
+<%@ page import="com.pkb.member.model.vo.User"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%
+	User loginUser = (User)session.getAttribute("loginUser");
+%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>헤더 상단메뉴</title>
+<title>PETKABOO - Find Petsitter for your lovely pets</title>
 <style>
-.menubar>li>div>a:-webkit-any-link {
-	cursor: pointer;
-	text-decoration: none;
-	transition: top 1s ease-out;
-	color: black;
-	margin: 1px 1px 1px 1px;
+#upperLogo {
+	text-align:center;
 }
-
-.menubar>li>div>a:hover {
-	color: rgb(207, 183, 175);
-}
-
-.depth-02 {
-	position: relative;
-	/*   padding:20px; */
-}
-
-.menubar {
-	text-align: center;
-	font-size: 15px;
-}
-
-.menubar>li>div:hover {
-	border:1px solid black;
-   border-radius:30px;
-}
-
-.menubar>li>div {
-	border:1px solid rgba(0,0,0,0);
-   border-radius:30px;
-}
-
-.menubar>li {
-	margin: 1.5%;
-	display: inline-flex;
-	text-align: -webkit-match-parent;
-	font-size: 12px;
+#upperLoginArea {
+	text-align:right;
 }
 </style>
 </head>
 <body>
-
-	<div>
-
-
-		<div class="depth-02">
-
-			<ul class="menubar">
-				<li><div>
-						<a href="<%=request.getContextPath()%>/index.jsp">HOME</a>
-					</div></li>
-				<li><div>
-						<a href="/w.jsp">SERVICE</a>
-					</div></li>
-				<li><div>
-						<a href="<%=request.getContextPath()%>/PetSitter.all">PETSITTER</a>
-					</div></li>
-				<li><div>
-						<a href="/">STEP</a>
-					</div></li>
-				<li><div>
-						<a href="/">RESERVATION</a>
-					</div></li>
-				<li><div>
-						<a href="01_reviews.jsp">VOICE</a>
-					</div></li>
-				<li><div>
-						<a href="/">FAQ</a>
-					</div></li>
-				<li><div>
-						<a href="05_companyInfo.jsp">INTRODUCE</a>
-					</div></li>
-			</ul>
-
-
-
+	<div class="menubarOuter">
+		<div id="upperLoginArea">
+		  <%
+			if(loginUser == null){
+		   %>
+			<div class="beforeLoginArea">
+				<button name="login" onclick="location.href='<%=request.getContextPath()%>/views/common/login.jsp'">로그인</button>	
+				&nbsp;|&nbsp;
+				<button name="memberJoin" onclick="location.href='<%=request.getContextPath()%>/views/member/joinForm.jsp'">회원가입</button>
+				&nbsp;
+			</div>
+		<%
+			}else{
+		%>	
+			<div class="afterLoginArea">
+				<button name="myPage" onclick="location.href='<%=request.getContextPath()%>/views/myPage/mypagemain.jsp'">마이페이지</button>
+				&nbsp;|&nbsp;
+				<button name="logout" onclick="location.href='<%=request.getContextPath()%>/logout.me'">로그아웃</button>
+				&nbsp;
+			</div>
+		<%
+			}
+		%>
+		</div>
+		<div id="upperLogo">
+			<h1>PETKABOO - Find Petsitter for your lovely pets!</h1>
+		</div>
+		<div id="upperMenu">
+			<h3>실제 상단 메뉴1234 위치 여기</h3>
 		</div>
 	</div>
-
 </body>
 </html>

@@ -1,7 +1,5 @@
-<%@page import="com.pkb.member.model.vo.User"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" %>
-
 <!DOCTYPE html>
 <html><br>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
@@ -137,38 +135,6 @@
 
 </head>
 <body>
-		<%
-			String email =null;
-			User login = (User)session.getAttribute("loginUser");
-			if(session.getAttribute("loginUser")!=null){
-			email = login.getEmail();
-			}
-		%>
-	<div class="topArea">
-		<h1 align="center" id="logo">로고</h1>
-		
-		  <%
-			if(email == null){
-		   %>
-			<ul class="loginArea">
-				<li class="login"><a href="views/common/login.jsp">로그인</a></li>	
-			</ul>
-			<ul class="loginArea">
-				<li class="join"><a href="views/member/joinForm.jsp">회원가입</a></li>
-			</ul>	
-		<%
-			}else{
-		%>	
-			<div class=logined>
-				<button onclick="location.href='views/myPage/mypagemain.jsp'">마이페이지</button>
-				<ul class="loginArea">
-					<li class="logout"><a href="<%=request.getContextPath()%>/logout.me">로그아웃</a></li>
-				</ul>
-			</div>
-		<%
-			}
-		%>
-	</div>
 	<div id="menuBar">
 		<%@ include file="views/common/menubar.jsp"%>
 	</div>
