@@ -210,6 +210,27 @@ public class UserService {
 		
 	}
 
+	public int[] lockMember(int[] selectUserNos, String title, String content, int adminUserNo) {
+		Connection con = getConnection();
+		
+		int result[] = new UserDAO().lockMember(con,selectUserNos, title, content);
+		if(result.length > 0) {
+			int result2[] = new UserDAO().writeLockReason(con,selectUserNos,adminUserNo, title, content);
+			
+			if(result2.length > 0){
+				result = result2;
+				commit(con);
+			} else {
+				rollback(con);
+			}
+		} else {
+			rollback(con);
+		}
+  close(con);
+
+		return result;
+	}
+
 	public int insertSms(String smsNumber, String email) {
 		Connection con = getConnection();
 		
@@ -221,6 +242,7 @@ public class UserService {
 			rollback(con);
 		}
 		close(con);
+
 		
 		return result;
 	}

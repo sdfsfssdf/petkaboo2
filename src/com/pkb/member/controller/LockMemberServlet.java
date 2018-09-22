@@ -8,8 +8,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.pkb.member.model.service.UserService;
+import com.pkb.member.model.vo.User;
 
 /**
  * Servlet implementation class LockMemberServlet
@@ -31,15 +33,23 @@ public class LockMemberServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String selectUserNo = request.getParameter("selecUserNo");
+		String title = request.getParameter("title");
+		String content = request.getParameter("content");
 
+
+		
 		String[] tempUserNos = selectUserNo.split(",");
 		int[] selectUserNos = new int[tempUserNos.length];
 
 		for (int i = 0; i < selectUserNos.length; i++) {
 			selectUserNos[i] = Integer.parseInt(tempUserNos[i]);
+			System.out.println(selectUserNos[i]);
 		}
-
-		int[] result = new UserService().lockMember(selectUserNos);
+		
+		HttpSession session = request.getSession();
+		int adminUserNo = ((User)session.getAttribute("loginUser")).getUser_no();
+		
+		int[] result = new UserService().lockMember(selectUserNos,title,content,adminUserNo);
 
 		String page = "";
 		if (result.length > 0) {
