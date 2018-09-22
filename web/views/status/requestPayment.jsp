@@ -5,6 +5,12 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>진행상황_결제요청</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<!-- iamport.payment.js -->
+<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
+<script>
+var IMP = window.IMP; // 생략가능
+IMP.init('imp97048672');</script>
 <!-- 합쳐지고 최소화된 최신 CSS -->
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
@@ -104,7 +110,7 @@ img{
 <body>
 	<div id="container">
 		<div id="header"></div>
-		<%@include file="../common/menubar.jsp"%>
+		<%@include file="../common/oldMenubar.jsp"%>
 		<h2 style="text-align: center; margin-top: 100px;">
 			<span style="color: rgb(228, 100, 18);"> <strong>
 					수락확인</strong>
@@ -161,7 +167,8 @@ img{
 					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<p>-목록 : 20000 p</p>
 					<br />
 					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<hr />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>결제 포인트</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>보유 포인트 : 10000 p</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button background="yellow">충전하기</button>
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>결제 포인트</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>보유 포인트 : 10000 p</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label class=howToPs><input type="radio" name="howToPS" value="leavePet" />카드결제</label>
+			<label class=howToPs><input type="radio" name="howToPS" value="callingPetsitter"/>무통장입금 </label><button id="clickrecharge" background="yellow">충전하기</button>
 					<br />
 					<hr />
 				<br />
@@ -211,5 +218,68 @@ img{
 	<br />
 	<br />
 	<br />
+	
+	
+	<script>
+	$(function(){
+		
+		$('#clickcard').click(function(){
+
+			IMP.request_pay({
+		    pg : 'jtnet',
+		    pay_method : 'card',
+		    merchant_uid : 'merchant_' + new Date().getTime(),
+		    name : '펫카부 펫시팅 서비스',
+		    amount : 14000,
+		    buyer_email : 'iamport@siot.do',
+		    buyer_name : '구매자이름',
+		    buyer_tel : '010-1234-5678',
+		    buyer_addr : '서울특별시 강남구 삼성동',
+		    buyer_postcode : '123-456'
+		}, function(rsp) {
+		    if ( rsp.success ) {
+		    	//[1] 서버단에서 결제정보 조회를 위해 jQuery ajax로 imp_uid 전달하기
+		    	jQuery.ajax({
+		    		url: "/payments/complete", //cross-domain error가 발생하지 않도록 동일한 도메인으로 전송
+		    		type: 'POST',
+		    		dataType: 'json',
+		    		data: {
+			    		imp_uid : rsp.imp_uid
+			    		//기타 필요한 데이터가 있으면 추가 전달
+		    		}
+		    	}).done(function(data) {
+		    		//[2] 서버에서 REST API로 결제정보확인 및 서비스루틴이 정상적인 경우
+		    		if ( everythings_fine ) {
+		    			var msg = '결제가 완료되었습니다.';
+		    			msg += '\n고유ID : ' + rsp.imp_uid;
+		    			msg += '\n상점 거래ID : ' + rsp.merchant_uid;
+		    			msg += '\결제 금액 : ' + rsp.paid_amount;
+		    			msg += '카드 승인번호 : ' + rsp.apply_num;
+
+		    			alert(msg);
+		    		} else {
+		    			//[3] 아직 제대로 결제가 되지 않았습니다.
+		    			//[4] 결제된 금액이 요청한 금액과 달라 결제를 자동취소처리하였습니다.
+		    		}
+		    	});
+		    } else {
+		        var msg = '결제에 실패하였습니다.';
+		        msg += '에러내용 : ' + rsp.error_msg;
+
+		        alert(msg);
+		    }
+		});
+		});
+	});
+		
+	
+		
+	
+	
+	</script>
+	<script>
+	
+	
+	</script>
 </body>
 </html>
