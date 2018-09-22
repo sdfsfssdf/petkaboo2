@@ -4,7 +4,6 @@
 	pageEncoding="UTF-8"%>
 <%@ page import="com.pkb.member.model.vo.User" %>
 <% 
-	User loginUser = (User)session.getAttribute("loginUser");
 	String fileName = (String)request.getAttribute("fileName");
 %>
 <!DOCTYPE html>
