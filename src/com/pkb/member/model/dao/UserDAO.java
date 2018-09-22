@@ -497,4 +497,25 @@ public class UserDAO {
 		return u;
 		
 	}
+
+	public int insertSms(Connection con, String smsNumber, String email) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("insertSms");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, smsNumber);
+			pstmt.setString(2, email);
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally{
+			close(pstmt);
+		}
+		
+		return result;
+	}
 }

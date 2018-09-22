@@ -89,6 +89,7 @@
         String sphone3 = base64Encode(nullcheck(request.getParameter("sphone3"), ""));
         String rdate = base64Encode(nullcheck(request.getParameter("rdate"), ""));
         String rtime = base64Encode(nullcheck(request.getParameter("rtime"), ""));
+        String name =request.getParameter("name");
         String mode = base64Encode("1");
         String subject = "";
         if(nullcheck(request.getParameter("smsType"), "").equals("L")) {
@@ -189,12 +190,18 @@
         String Result= rMsg[0]; //발송결과
         String Count= ""; //잔여건수
         if(rMsg.length>1) {Count= rMsg[1]; }
-
+		
+        String page2 ="";
                         //발송결과 알림
         if(Result.equals("success")) {
-            alert = "성공적으로 발송하였습니다.";
-            alert += " 잔여건수는 "+ Count+"건 입니다.";
-			new UserService().phone(msg);
+        	 alert = "인증번호를 발송하였습니다.";
+             //alert += " 잔여건수는 "+ Count+"건 입니다."; */
+             page2 = "/phone.au";
+            
+            request.setAttribute("name", name);
+            RequestDispatcher view = request.getRequestDispatcher(page2);
+     		view.forward(request, response);
+ 			//new UserService().phone(msg);
         }
         else if(Result.equals("reserved")) {
             alert = "성공적으로 예약되었습니다";
@@ -215,7 +222,6 @@
         else if(!(nointeractive.equals("1"))) {
             out.println("<script>alert('" + alert + "')</script>");
         }
-
 
         out.println("<script>location.href='"+returnurl+"';</script>");
     }
