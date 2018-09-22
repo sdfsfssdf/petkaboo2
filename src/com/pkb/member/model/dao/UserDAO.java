@@ -497,4 +497,35 @@ public class UserDAO {
 		return u;
 		
 	}
+
+	public int[] lockMember(Connection con, int[] selectUserNos, String title, String content) {
+		// TODO Auto-generated method stub
+		PreparedStatement pstmt = null;
+		int result[] = null;
+		String query = prop.getProperty("lockMember");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			for (int i = 0; i < selectUserNos.length; i++) {
+				pstmt.setInt(1, selectUserNos[i]);
+				pstmt.addBatch();
+			}
+			result = pstmt.executeBatch();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally{
+			close(pstmt);
+		}
+		return result;
+	}
+
+	public int[] writeLockReason(Connection con, int[] selectUserNos, int adminUserNo, String title, String content) {
+		PreparedStatement pstmt = null;
+		int result[] = null;
+		String query = prop.getProperty("writeLockReason");
+		
+		return result;
+	}
 }
