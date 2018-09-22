@@ -83,6 +83,14 @@
 .searchTotal select{
 	width:15% !important;
 }
+
+.modal-backdrop.in {
+   	 	z-index: 100;
+	}
+	
+.modal-content{
+		z-index:9999999;
+}
 </style>
 </head>
 <body>
@@ -277,7 +285,30 @@
 				
 			
 				<button type="button" id="delete" class="btn btn-danger" name="delete" style="display:inline-block">회원 탈퇴</button>
-				<button type="button" id="lock" class="btn btn-warning" name="delete" style="display:inline-block">회원 제재</button>
+				<button type="button" data-toggle="modal" data-target="#myModal" class="btn btn-warning" name="delete" style="display:inline-block">회원 제재</button>
+			</div>
+			
+			<div class="modal fade" id="myModal" role="dialog">
+				<div class="modal-dialog modal-lg">
+			     	<div class="modal-content">
+			        	<div class="modal-header">
+			         	 <button type="button" class="close" data-dismiss="modal">&times;</button>
+			         	 <h4 class="modal-title">회원 제재하기</h4>
+			        	</div>
+			        <div class="modal-body">
+			         	 <select>
+			         	 	<option>신고누적</option>
+			         	 	<option>욕설</option>
+			         	 	<option>불필요한 게시글 도배</option>
+			         	 	<option>기타</option>
+			         	 </select>
+			        </div>
+			       		<div class="modal-footer">
+			         	 	<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			        	</div>
+			  		</div>
+					</div>
+			  	</div>
 			</div>
 			
 			<script>
