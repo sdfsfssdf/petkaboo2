@@ -226,6 +226,23 @@ public class UserService {
 		} else {
 			rollback(con);
 		}
+  close(con);
+
+		return result;
+	}
+
+	public int insertSms(String smsNumber, String email) {
+		Connection con = getConnection();
+		
+		int result = new UserDAO().insertSms(con, smsNumber, email);
+		
+		if(result>0){
+			commit(con);
+		}else{
+			rollback(con);
+		}
+		close(con);
+
 		
 		return result;
 	}

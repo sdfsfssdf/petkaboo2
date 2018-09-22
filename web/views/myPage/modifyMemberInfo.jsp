@@ -1,6 +1,8 @@
 <%@page import="com.pkb.member.model.vo.User"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+	
+	<% String name1 = (String)request.getAttribute("name"); %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -389,44 +391,42 @@ border: 1px solid black; */
 							<td width=300px; height=100px>휴대전화</td>
 
 							<td colspan="2" width=800px; height=200px>
-								<%@page import="WEB-INF/smssend.jsp" %>
 									<div class=phone>
 										 <%String name = (int)(Math.random()*(999999-100000+1))+100000+""; %>
-										    <form method="post" name="smsForm" action="<%@include file='/views/myPage/smssend.jsp' %>">
+										    <form method="post" name="smsForm" action="smssend.jsp">
 										        <input type="hidden" name="action" value="go">
 										        <input type="hidden" name="msg" value="인증번호는 <%=name%> 입니다. 인증번호를 입력해주세요"></textarea>
 										        <br />받는 번호
-										        <input type="text" name="rphone" placeholder="010-0000-0000형식으로 입력해주세요">
+										        <input type="text" id="ineedyou" name="rphone" placeholder="010-0000-0000형식으로 입력해주세요">
 										        <input type="hidden" name="sphone1" value="010">
 										        <input type="hidden" name="sphone2" value="6551">
 										        <input type="hidden" name="sphone3" value="5979">
+										        <input type="hidden" name="name" value="<%=name%>">
 										        <input type="submit" id="send" value="전송" >
-			
 										    </form>
-										
+										   <script>
+										   		var num = $('#ineedyou').val();
+										   		console.log("gㅎ아하이");
+										   		console.log(num);
+										   </script>
 										<!-- 수정완료 수정취소 -->
+										<form method="post" action="smsCheck.sc">
 										<div class="phone3">
 											<p style="font-size: 15px";>인증번호 입력</p>
-											<input type="text" id="code" name="inputphone" size='20' maxlength='20'; style="width: 300px; height: 30px; margin: 0; color: black; border-width: 1px">
+											<input type="text" id="code" name="inputNum" size='20' maxlength='20'; style="width: 300px; height: 30px; margin: 0; color: black; border-width: 1px">
+											<input type="hidden" id="newPhone"  name="newNumber" value="">;
 										</div>
-										
+									
 										<div class=modifyphone>
-											<button type="submit" id="submitphone" onclick="check();"
+											<button type="submit" id="submitphone" 
 												style="font-weight: lighter">수정완료</button>
 											&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 											<button type="submit" id="cancelphone" onclick="#"
 												style="font-weight: lighter">수정취소</button>
-										<script>
-										function(){
-											$('#send').click(){
-												
-											};
-										}
-										</script>
 										</div>
+										</form>
 									</div>
 
-								</form>
 							</td>
 						</tr>
 						<tr>

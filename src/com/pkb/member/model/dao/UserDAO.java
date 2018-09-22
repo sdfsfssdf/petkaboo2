@@ -498,6 +498,7 @@ public class UserDAO {
 		
 	}
 
+
 	public int[] lockMember(Connection con, int[] selectUserNos, String title, String content) {
 		// TODO Auto-generated method stub
 		PreparedStatement pstmt = null;
@@ -513,19 +514,38 @@ public class UserDAO {
 			result = pstmt.executeBatch();
 			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally{
 			close(pstmt);
 		}
+
+		return result;
+	}
+	public int insertSms(Connection con, String smsNumber, String email) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("insertSms");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, smsNumber);
+			pstmt.setString(2, email);
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally{
+			close(pstmt);
+		}
+
 		return result;
 	}
 
 	public int[] writeLockReason(Connection con, int[] selectUserNos, int adminUserNo, String title, String content) {
 		PreparedStatement pstmt = null;
 		int result[] = null;
-		String query = prop.getProperty("writeLockReason");
-		
+		String query = prop.getProperty("writeLockReason");	
 		return result;
 	}
 }
