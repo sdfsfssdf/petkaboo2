@@ -119,21 +119,6 @@ public class UserService {
 		return result;
 	}
 
-
-	public int changeNickname(String nickname, String email) {
-		Connection con = getConnection();
-		
-		int result = new UserDAO().changeNickname(con, nickname, email);
-		
-		if(result>0){
-			commit(con);
-		}else{
-			rollback(con);
-		}
-		close(con);
-		return result;
-	}
-
 	public ArrayList<Reservation> getReservation(User loginUser) {
     
 		Connection con = getConnection();
@@ -203,12 +188,6 @@ public class UserService {
 		
 		return user;
 	}
-	public String phone(String msg){
-		
-		
-		return msg;
-		
-	}
 
 	public int[] lockMember(int[] selectUserNos, String title, String content, int adminUserNo) {
 		Connection con = getConnection();
@@ -244,6 +223,25 @@ public class UserService {
 		close(con);
 
 		
+		return result;
+	}
+
+	public int updatePhone(String phone, String sms, User loginUser) {
+		Connection con = getConnection();
+		
+		int result = new UserDAO().updatePhone(con, phone, sms, loginUser);
+		
+		if(result>0){
+			int result1 = new UserDAO().authTBphone(con, loginUser);
+			if(result1>0){
+				commit(con);
+			}else{
+				rollback(con);
+			}
+		}else{
+			rollback(con);
+		}
+		close(con);
 		return result;
 	}
 }

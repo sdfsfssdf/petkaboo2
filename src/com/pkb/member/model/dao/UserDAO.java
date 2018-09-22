@@ -548,4 +548,81 @@ public class UserDAO {
 		String query = prop.getProperty("writeLockReason");	
 		return result;
 	}
+
+	public int updatePhone(Connection con, String phone, String sms, User loginUser) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("updatePhone");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, phone);
+			pstmt.setString(2, loginUser.getEmail());
+			pstmt.setString(3, sms);
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally{
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public int authTBidentify(Connection con, ImgFile f) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("authTbidentify");
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, f.getUser_no());
+			System.out.println("출력되지"+f.getUser_no());
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally{
+			close(pstmt);
+		}
+		return result;
+	}
+
+	public int authTBlicense(Connection con, ImgFile f) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("authTBlicense");
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, f.getUser_no());
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally{
+			close(pstmt);
+		}
+		return result;
+	}
+
+	public int authTBphone(Connection con, User loginUser) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("authTBphone");
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, loginUser.getUser_no());
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally{
+			close(pstmt);
+		}
+		return result;
+	}
 }
