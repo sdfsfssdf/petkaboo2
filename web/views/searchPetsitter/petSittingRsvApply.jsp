@@ -180,7 +180,7 @@ a:hover {
 <body>
 	<div id="container">
 		<div id="header"></div>
-		<%@include file="../common/menubar.jsp"%>
+		<%@include file="../common/oldMenubar.jsp"%>
 
 		<div>
 			<h2 style="text-align: center; margin-top: 100px;">
@@ -789,7 +789,7 @@ a:hover {
 <p>상호: 펫카부 주식회사</p>
 <p>주소: 경기도 성남시 분당구 불정로 6 네이버 그린팩토리 (463-867)</p>
 <p>전화번호: 1588-3820</p>
-<p>이메일 주소: navercc@naver.com</p>
+<p>이메일 주소:petkaboo@gmail.com</p>
 				
 				
 			</div>
