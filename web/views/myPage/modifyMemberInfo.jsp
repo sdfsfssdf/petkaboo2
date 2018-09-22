@@ -1,7 +1,6 @@
 <%@page import="com.pkb.member.model.vo.User"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<% User loginUser = (User)session.getAttribute("loginUser"); %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -335,7 +334,7 @@ border: 1px solid black; */
 }
 </style>
 </head>
-<body>
+<body onload="loadJSON()">
 
 
 	<div id="wrap">
@@ -386,65 +385,44 @@ border: 1px solid black; */
 				<div class="center-content1">
 
 					<table>
-
 						<tr>
 							<td width=300px; height=100px>휴대전화</td>
 
 							<td colspan="2" width=800px; height=200px>
-								<form action="#">
+								<%@page import="WEB-INF/smssend.jsp" %>
 									<div class=phone>
-										<div class="phone1">
-											<input type="text" name="name" size='20' maxlength='15'
-												style="width: 300px; color: black; margin: 0; padding: 0; height: 35px; border-width: 0"
-												value="010-7777-7777" readonly>
-										</div>
-										<div class="phone2">
-
-											<div class="phone2-1">
-												<form action="#">
-													<select style="height: 30px" name="cars">
-														<option value="fornum1">휴대폰 번호 선택</option>
-														<option value="fornum1">010</option>
-														<option value="fornum2"">011</option>
-														<option value="fornum3"">016</option>
-														<option value="fornum4"">017</option>
-														<option value="fornum5"">018</option>
-														<option value="fornum6"">019</option>
-													</select> <br>
-												</form>
-
-											</div>
-
-											<div class="phone2-2">
-
-												<input type="text" name="inputidenphone" size='20'
-													maxlength='20'
-													, style="width: 300px; height: 30px; margin: 0; color: black; border-width: 1px;"
-													value="번호를 입력해주세요">
-
-											</div>
-
-											<div class="phone2-3">
-												<button id="identify" onclick="#">인증</button>
-											</div>
-
-
-										</div>
-
-
+										 <%String name = (int)(Math.random()*(999999-100000+1))+100000+""; %>
+										    <form method="post" name="smsForm" action="<%@include file='/views/myPage/smssend.jsp' %>">
+										        <input type="hidden" name="action" value="go">
+										        <input type="hidden" name="msg" value="인증번호는 <%=name%> 입니다. 인증번호를 입력해주세요"></textarea>
+										        <br />받는 번호
+										        <input type="text" name="rphone" placeholder="010-0000-0000형식으로 입력해주세요">
+										        <input type="hidden" name="sphone1" value="010">
+										        <input type="hidden" name="sphone2" value="6551">
+										        <input type="hidden" name="sphone3" value="5979">
+										        <input type="submit" id="send" value="전송" >
+			
+										    </form>
+										
 										<!-- 수정완료 수정취소 -->
 										<div class="phone3">
 											<p style="font-size: 15px";>인증번호 입력</p>
-											<input type="text" name="inputphone" size='20' maxlength='20'; style="width: 300px; height: 30px; margin: 0; color: black; border-width: 1px">
+											<input type="text" id="code" name="inputphone" size='20' maxlength='20'; style="width: 300px; height: 30px; margin: 0; color: black; border-width: 1px">
 										</div>
-
+										
 										<div class=modifyphone>
-											<button type="submit" id="submitphone" onclick="#"
+											<button type="submit" id="submitphone" onclick="check();"
 												style="font-weight: lighter">수정완료</button>
 											&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 											<button type="submit" id="cancelphone" onclick="#"
 												style="font-weight: lighter">수정취소</button>
-
+										<script>
+										function(){
+											$('#send').click(){
+												
+											};
+										}
+										</script>
 										</div>
 									</div>
 
