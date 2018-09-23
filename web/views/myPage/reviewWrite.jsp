@@ -38,7 +38,7 @@
 		<p>돌봐준 펫시터에게 리뷰를 남겨주세요!</p>
 		<br>
 		
-		<form action="<%=request.getContextPath() %>/insertQna.bo" method="post">
+		<form action="<%=request.getContextPath() %>/" method="post">
 			
 			<div class="title">
 			<br /> 
