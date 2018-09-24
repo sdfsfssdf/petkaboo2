@@ -1,6 +1,8 @@
 package com.pkb.member.controller;
 
 import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -32,9 +34,10 @@ public class PhoneAuthServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String smsNumber = request.getParameter("name");
 		User loginUser = (User)request.getSession().getAttribute("loginUser");
+		String rphone = request.getParameter("rphone");
 		String email = loginUser.getEmail();
 		System.out.println("이값이 들어와야해"+smsNumber);
-		
+		System.out.println("번호..." + rphone);
 		int result = new UserService().insertSms(smsNumber, email);
 		
 		
@@ -44,8 +47,10 @@ public class PhoneAuthServlet extends HttpServlet {
 			u.setSms_number(smsNumber);;
 			// 키값은 중복이 안된다. 
 			session.setAttribute("loginUser", u);
+			session.setAttribute("rphone", rphone);
 			System.out.println("성공??");
-			response.sendRedirect("/pkb/views/myPage/modifyMemberInfo.jsp");
+			RequestDispatcher view = request.getRequestDispatcher("/views/myPage/modifyMemberInfo.jsp");
+     		view.forward(request, response);
 		}
 	}
 

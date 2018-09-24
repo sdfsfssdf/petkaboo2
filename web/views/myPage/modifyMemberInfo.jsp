@@ -3,6 +3,7 @@
 	pageEncoding="UTF-8"%>
 	
 	<% String name1 = (String)request.getAttribute("name"); %>
+	<%User u = (User)request.getSession().getAttribute("loginUser"); %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -389,43 +390,38 @@ border: 1px solid black; */
 					<table>
 						<tr>
 							<td width=300px; height=100px>휴대전화</td>
-
+							
 							<td colspan="2" width=800px; height=200px>
 									<div class=phone>
 										 <%String name = (int)(Math.random()*(999999-100000+1))+100000+""; %>
 										    <form method="post" name="smsForm" action="smssend.jsp">
 										        <input type="hidden" name="action" value="go">
 										        <input type="hidden" name="msg" value="인증번호는 <%=name%> 입니다. 인증번호를 입력해주세요"></textarea>
-										        <br />받는 번호
+										        <br>받는 번호
 										        <input type="text" id="ineedyou" name="rphone" placeholder="010-0000-0000형식으로 입력해주세요">
 										        <input type="hidden" name="sphone1" value="010">
 										        <input type="hidden" name="sphone2" value="6551">
 										        <input type="hidden" name="sphone3" value="5979">
 										        <input type="hidden" name="name" value="<%=name%>">
-										        <input type="submit" id="send" value="전송" >
+										        <input type="submit" id="send" value="전송">
 										    </form>
-										   <script>
-										   		var num = $('#ineedyou').val();
-										   		console.log("gㅎ아하이");
-										   		console.log(num);
-										   </script>
+										
 										<!-- 수정완료 수정취소 -->
-										<form method="post" action="smsCheck.sc">
+										<form method="post" action="<%=request.getContextPath()%>/smsCheck.sc">
 										<div class="phone3">
-											<p style="font-size: 15px";>인증번호 입력</p>
-											<input type="text" id="code" name="inputNum" size='20' maxlength='20'; style="width: 300px; height: 30px; margin: 0; color: black; border-width: 1px">
-											<input type="hidden" id="newPhone"  name="newNumber" value="">;
+											<p style="font-size: 15px">인증번호 입력</p>
+											<input type="text" id="code" name="inputNum" size='20' maxlength='20' style="width: 300px; height: 30px; margin: 0; color: black; border-width: 1px">
 										</div>
-									
 										<div class=modifyphone>
-											<button type="submit" id="submitphone" 
+											<button type="submit"
 												style="font-weight: lighter">수정완료</button>
 											&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-											<button type="submit" id="cancelphone" onclick="#"
+											<button type="button" id="cancelphone" onclick="#"
 												style="font-weight: lighter">수정취소</button>
 										</div>
 										</form>
 									</div>
+									
 
 							</td>
 						</tr>

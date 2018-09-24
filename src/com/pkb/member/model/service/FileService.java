@@ -16,7 +16,12 @@ public class FileService {
 		int result = new UserDAO().insertIdentify(con, f);
 		
 		if(result>0){
+			int result1 = new UserDAO().authTBidentify(con, f);
+			if(result1>0){
 			commit(con);
+			}else{
+				rollback(con);
+			}
 		}else{
 			rollback(con);
 		}
@@ -84,7 +89,12 @@ public class FileService {
 		int licenseResult = new UserDAO().insertLicense(con, f);
 		
 		if(licenseResult > 0){
-			commit(con);
+			int result = new UserDAO().authTBlicense(con, f);
+			if(result >0){
+				commit(con);				
+			}else{
+				rollback(con);
+			}
 		}else{
 			rollback(con);
 		}

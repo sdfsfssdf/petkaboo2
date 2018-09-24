@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.pkb.member.model.service.UserService;
 import com.pkb.member.model.vo.User;
 
 /**
@@ -28,16 +29,17 @@ public class ChangePhoneServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String inputNum = (String)request.getAttribute("inputNum");
-		String phone = (String)request.getSession().getAttribute("phone");
+		String phone = (String)request.getSession().getAttribute("rphone");
 		User loginUser = (User)request.getSession().getAttribute("loginUser");
-		String sms = loginUser.getSms_number();
-		
-		System.out.println(inputNum);
-		System.out.println(phone);
-		System.out.println(sms);
-		
-		int 
+		String sms = (String)request.getAttribute("inputNum");
+		System.out.println("dhzl"+sms);
+		int result = new UserService().updatePhone(phone, sms, loginUser);
+		System.out.println("dhzl"+sms);
+		if(result>0){
+			response.sendRedirect("/pkb/views/myPage/modifyMemberInfo.jsp");
+		}else{
+			response.sendRedirect("views/member/smsCheck.jsp");
+		}
 		
 	}
 

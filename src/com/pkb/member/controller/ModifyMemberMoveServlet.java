@@ -37,15 +37,17 @@ public class ModifyMemberMoveServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 		User u = (User)session.getAttribute("loginUser");
 		ArrayList<ImgFile> list= new UserService().selectlist(u);
-		String fileName =  list.get(0).getFile_name();
-		
 		String page = "";
-		request.setAttribute("fileName", fileName);
-		page = "views/myPage/modifyMemberInfoMain.jsp";
+		if(list.get(0).getFile_name()!=null){
+			String fileName = list.get(0).getFile_name();
+			request.setAttribute("fileName", fileName);
+			page = "views/myPage/modifyMemberInfoMain.jsp";
+		}else{
+			page = "views/myPage/modifyMemberInfoMain.jsp";
+		}
 		RequestDispatcher view = request.getRequestDispatcher(page);
 		view.forward(request, response);
-		
-		
+
 	}
 
 	/**

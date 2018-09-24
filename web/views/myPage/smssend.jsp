@@ -72,18 +72,19 @@
       Description        :  사용자 샘플코드
     ==============================================================**/
     String charsetType = "UTF-8"; //EUC-KR 또는 UTF-8
-
+    String phoneNum = request.getParameter("rphone");
     request.setCharacterEncoding(charsetType);
     response.setCharacterEncoding(charsetType);
     String  action     = nullcheck(request.getParameter("action"), "");
     if(action.equals("go")) {
-
+		
         String sms_url = "";
         sms_url = "https://sslsms.cafe24.com/sms_sender.php"; // SMS 전송요청 URL
+       
         String user_id = base64Encode("sji1123"); // SMS아이디
         String secure = base64Encode("80c6568cc9a64575abb1839fda78aa6b");//인증키
         String msg = base64Encode(nullcheck(request.getParameter("msg"), ""));
-        String rphone = base64Encode(nullcheck(request.getParameter("rphone"), ""));
+        String rphone = base64Encode(nullcheck(phoneNum, ""));
         String sphone1 = base64Encode(nullcheck(request.getParameter("sphone1"), ""));
         String sphone2 = base64Encode(nullcheck(request.getParameter("sphone2"), ""));
         String sphone3 = base64Encode(nullcheck(request.getParameter("sphone3"), ""));
@@ -197,8 +198,8 @@
         	 alert = "인증번호를 발송하였습니다.";
              //alert += " 잔여건수는 "+ Count+"건 입니다."; */
              page2 = "/phone.au";
-            
-            request.setAttribute("name", name);
+            //request.setAttribute("name", name);
+            //request.setAttribute("phoneNum", phoneNum);
             RequestDispatcher view = request.getRequestDispatcher(page2);
      		view.forward(request, response);
  			//new UserService().phone(msg);
