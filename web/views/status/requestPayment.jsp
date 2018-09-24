@@ -11,8 +11,9 @@
 <script type="text/javascript"
 	src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 <script>
-var IMP = window.IMP; // 생략가능
-IMP.init('imp97048672');</script>
+	var IMP = window.IMP; // 생략가능
+	IMP.init('imp97048672');
+</script>
 <!-- 합쳐지고 최소화된 최신 CSS -->
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
@@ -36,9 +37,9 @@ IMP.init('imp97048672');</script>
 #header {
 	float: left;
 	width: 100%;
-	height: 250px;
+	height: 150px;
 	_border: 1px solid blue;
-	background-color: rgb(207, 183, 175);
+	background-color: white;
 }
 
 .body {
@@ -112,9 +113,17 @@ img {
 </style>
 </head>
 <body>
+
 	<div id="container">
 		<div id="header"></div>
-		<%@include file="../common/oldMenubar.jsp"%>
+		<%@ include file="../common/menubar.jsp"%>
+
+		<%@ include file="../common/oldMenubar.jsp"%>
+
+		<%
+			if (loginUser != null) {
+		%>
+
 		<h2 style="text-align: center; margin-top: 100px;">
 			<span style="color: rgb(228, 100, 18);"> <strong>
 					수락확인</strong>
@@ -136,16 +145,14 @@ img {
 					src="https://cdn3.iconfinder.com/data/icons/luchesa-vol-9/128/Light-512.png">
 
 			</div>
-			<br />
-			<br />
-			<br /> <br />
+			<br /> <br /> <br /> <br />
 			<div class="RsvStatement">
 				<div class="PSid">
-					<br />
-					<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label>예약번호 : <input
-						type="text" size='18'
+					<br /> <br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label>예약번호 :
+						<input type="text" size='18'
 						style="background-color: transparent; border-style: none;"
-						readonly onfocus="this.blur();"></label>
+						readonly onfocus="this.blur();">
+					</label>
 				</div>
 				<br />
 
@@ -194,10 +201,12 @@ img {
 						size='18'
 						style="background-color: transparent; border-style: none;"
 						readonly onfocus="this.blur();"></label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					<label class=howToPs><input type="radio" id="card" value="card"
-						name="howToPS" value="leavePet" />&nbsp;카드결제&nbsp;</label>&nbsp;&nbsp;&nbsp;&nbsp;
-					<label class=howToPs><input type="radio" id="cash" value="cash"
-						name="howToPS" value="callingPetsitter" />&nbsp;무통장입금&nbsp; </label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+					<label class=howToPs><input type="radio" id="card1"
+						value="card" name="howToPS" />&nbsp;카드결제&nbsp;</label>&nbsp;&nbsp;&nbsp;&nbsp;
+
+					<label class=howToPs><input type="radio" id="cash1"
+						value="cash" name="howToPS" />&nbsp;계좌이체&nbsp; </label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
 					<button id="clickrecharge" background="yellow">충전하기</button>
 					<br />
@@ -205,8 +214,7 @@ img {
 					<br />
 					<button class="btn btn-default btnSt" type="submit">결제하기</button>
 					<button class="btn btn-default btnSt" type="reset">취소</button>
-					<br />
-					<br />
+					<br /> <br />
 				</div>
 
 
@@ -241,227 +249,156 @@ img {
 
 
 
-
+<form action = location></form>
 	<script>
+		$(function() {
+			$('#clickrecharge')
+					.click(
+							function() {
+								if (!$("input:radio[name=howToPS]:checked")
+										.val()) {
+									alert('충전에 필요한 결제수단을 선택해주세요');
+									return false;
+								} else if ($(
+										"input:radio[name=howToPS]:checked")
+										.val() == "card") {
 
-	$(function(){
-		$('#clickrecharge').click(function(){
-			if($("input:radio[name=contract_status]").click(function(){
-				if($("input:radio[name=contract_status]:checked").val()=="card"){
-					IMP.request_pay({
-					    pg : 'jtnet',
-					    pay_method : 'card',
-					    merchant_uid : 'merchant_' + new Date().getTime(),
-					    name : '펫카부 펫시팅 서비스',
-					    amount : 14000,
-					    buyer_email : 'iamport@siot.do',
-					    buyer_name : '구매자이름',
-					    buyer_tel : '010-1234-5678',
-					    buyer_addr : '서울특별시 강남구 삼성동',
-					    buyer_postcode : '123-456'
-					}, function(rsp) {
-					    if ( rsp.success ) {
-					    	//[1] 서버단에서 결제정보 조회를 위해 jQuery ajax로 imp_uid 전달하기
-					    	jQuery.ajax({
-					    		url: "/payments/complete", //cross-domain error가 발생하지 않도록 동일한 도메인으로 전송
-					    		type: 'POST',
-					    		dataType: 'json',
-					    		data: {
-						    		imp_uid : rsp.imp_uid
-						    		//기타 필요한 데이터가 있으면 추가 전달
-					    		}
-					    	}).done(function(data) {
-					    		//[2] 서버에서 REST API로 결제정보확인 및 서비스루틴이 정상적인 경우
-					    		if ( everythings_fine ) {
-					    			var msg = '결제가 완료되었습니다.';
-					    			msg += '\n고유ID : ' + rsp.imp_uid;
-					    			msg += '\n상점 거래ID : ' + rsp.merchant_uid;
-					    			msg += '\결제 금액 : ' + rsp.paid_amount;
-					    			msg += '카드 승인번호 : ' + rsp.apply_num;
+									IMP
+											.request_pay(
+													{
+														pg : 'jtnet',
+														pay_method : 'card',
+														merchant_uid : 'merchant_'
+																+ new Date()
+																		.getTime(),
+														name : '펫카부 펫시팅 서비스',
+														amount : 14000,
+														buyer_email : <%=%>,
+														buyer_name : '구매자이름',
+														buyer_tel : '010-1234-5678',
+														buyer_addr : '서울특별시 강남구 삼성동',
+														buyer_postcode : '123-456'
+													},
+													function(rsp) {
+														if (rsp.success) {
+															//[1] 서버단에서 결제정보 조회를 위해 jQuery ajax로 imp_uid 전달하기
+															jQuery
+																	.ajax(
+																			{
+																				url : "insertRecharge.rc", //cross-domain error가 발생하지 않도록 동일한 도메인으로 전송
+																				type : 'POST',
+																				dataType : 'json',
+																				data : {
+																					imp_uid : rsp.imp_uid
+																				//기타 필요한 데이터가 있으면 추가 전달
+																				}
+																			})
+																	.done(
+																			function(data) {
+																				//[2] 서버에서 REST API로 결제정보확인 및 서비스루틴이 정상적인 경우
+																				if (everythings_fine) {
+																					var msg = '결제가 완료되었습니다.';
+																					msg += '\n고유ID : '
+																							+ rsp.imp_uid;
+																					msg += '\n상점 거래ID : '
+																							+ rsp.merchant_uid;
+																					msg += '\결제 금액 : '
+																							+ rsp.paid_amount;
+																					msg += '카드 승인번호 : '
+																							+ rsp.apply_num;
 
-					    			alert(msg);
-					    		} else {
-					    			//[3] 아직 제대로 결제가 되지 않았습니다.
-					    			//[4] 결제된 금액이 요청한 금액과 달라 결제를 자동취소처리하였습니다.
-					    		}
-					    	});
-					    } else {
-					        var msg = '결제에 실패하였습니다.';
-					        msg += '에러내용 : ' + rsp.error_msg;
+																					alert(msg);
+																				} else {
+																					//[3] 아직 제대로 결제가 되지 않았습니다.
+																					//[4] 결제된 금액이 요청한 금액과 달라 결제를 자동취소처리하였습니다.
+																				}
+																			});
 
-					        alert(msg);
-					    }
-					});
-					
-				}else if($("input:radio[name=contract_status]:checked").val()=="cash"){
-					IMP.request_pay({
-					    pg : 'jtnet',
-					    pay_method : 'trans',
-					    merchant_uid : 'merchant_' + new Date().getTime(),
-					    name : '펫카부 펫시팅 서비스',
-					    amount : 14000,
-					    buyer_email : 'iamport@siot.do',
-					    buyer_name : '구매자이름',
-					    buyer_tel : '010-1234-5678',
-					    buyer_addr : '서울특별시 강남구 삼성동',
-					    buyer_postcode : '123-456'
-					}, function(rsp) {
-					    if ( rsp.success ) {
-					    	//[1] 서버단에서 결제정보 조회를 위해 jQuery ajax로 imp_uid 전달하기
-					    	jQuery.ajax({
-					    		url: "/payments/complete", //cross-domain error가 발생하지 않도록 동일한 도메인으로 전송
-					    		type: 'POST',
-					    		dataType: 'json',
-					    		data: {
-						    		imp_uid : rsp.imp_uid
-						    		//기타 필요한 데이터가 있으면 추가 전달
-					    		}
-					    	}).done(function(data) {
-					    		//[2] 서버에서 REST API로 결제정보확인 및 서비스루틴이 정상적인 경우
-					    		if ( everythings_fine ) {
-					    			var msg = '결제가 완료되었습니다.';
-					    			msg += '\n고유ID : ' + rsp.imp_uid;
-					    			msg += '\n상점 거래ID : ' + rsp.merchant_uid;
-					    			msg += '\결제 금액 : ' + rsp.paid_amount;
-					    			msg += '카드 승인번호 : ' + rsp.apply_num;
+														} else {
+													        var msg = '결제에 실패하였습니다.';
+													        msg += '에러내용 : ' + rsp.error_msg;
 
-					    			alert(msg);
-					    		} else {
-					    			//[3] 아직 제대로 결제가 되지 않았습니다.
-					    			//[4] 결제된 금액이 요청한 금액과 달라 결제를 자동취소처리하였습니다.
-					    		}
-					    	});
-					    } else {
-					        var msg = '결제에 실패하였습니다.';
-					        msg += '에러내용 : ' + rsp.error_msg;
+													        alert(msg);
+													    }
+													});
 
-					        alert(msg);
-					    }
-					});
-					
-				}
-			})
-		)
-	);
-	
-	/* 
-	$(function(){
-		$('#clickrecharge').click(function(){
-			if($("input:radio[name=contract_status]").click(function(){
-				GoRecharge();
-			}));
-		});
-	});
-	
-	
-	function GoRecharge(){
-		if ($('#card').click(function(){
-			IMP.request_pay({
-			    pg : 'jtnet',
-			    pay_method : 'card',
-			    merchant_uid : 'merchant_' + new Date().getTime(),
-			    name : '펫카부 펫시팅 서비스',
-			    amount : 14000,
-			    buyer_email : 'iamport@siot.do',
-			    buyer_name : '구매자이름',
-			    buyer_tel : '010-1234-5678',
-			    buyer_addr : '서울특별시 강남구 삼성동',
-			    buyer_postcode : '123-456'
-			}, function(rsp) {
-			    if ( rsp.success ) {
-			    	//[1] 서버단에서 결제정보 조회를 위해 jQuery ajax로 imp_uid 전달하기
-			    	jQuery.ajax({
-			    		url: "/payments/complete", //cross-domain error가 발생하지 않도록 동일한 도메인으로 전송
-			    		type: 'POST',
-			    		dataType: 'json',
-			    		data: {
-				    		imp_uid : rsp.imp_uid
-				    		//기타 필요한 데이터가 있으면 추가 전달
-			    		}
-			    	}).done(function(data) {
-			    		//[2] 서버에서 REST API로 결제정보확인 및 서비스루틴이 정상적인 경우
-			    		if ( everythings_fine ) {
-			    			var msg = '결제가 완료되었습니다.';
-			    			msg += '\n고유ID : ' + rsp.imp_uid;
-			    			msg += '\n상점 거래ID : ' + rsp.merchant_uid;
-			    			msg += '\결제 금액 : ' + rsp.paid_amount;
-			    			msg += '카드 승인번호 : ' + rsp.apply_num;
+								} else {
 
-			    			alert(msg);
-			    		} else {
-			    			//[3] 아직 제대로 결제가 되지 않았습니다.
-			    			//[4] 결제된 금액이 요청한 금액과 달라 결제를 자동취소처리하였습니다.
-			    		}
-			    	});
-			    } else {
-			        var msg = '결제에 실패하였습니다.';
-			        msg += '에러내용 : ' + rsp.error_msg;
+									IMP
+											.request_pay(
+													{
+														pg : 'jtnet',
+														pay_method : 'trans',
+														merchant_uid : 'merchant_'
+																+ new Date()
+																		.getTime(),
+														name : '펫카부 펫시팅 서비스',
+														amount : 14000,
+														buyer_email : 'iamport@siot.do',
+														buyer_name : '구매자이름',
+														buyer_tel : '010-1234-5678',
+														buyer_addr : '서울특별시 강남구 삼성동',
+														buyer_postcode : '123-456'
+													},
+													function(rsp) {
+														if (rsp.success) {
+															//[1] 서버단에서 결제정보 조회를 위해 jQuery ajax로 imp_uid 전달하기
+															jQuery
+																	.ajax(
+																			{
+																				url : "insertPayment.pm", //cross-domain error가 발생하지 않도록 동일한 도메인으로 전송
+																				type : 'POST',
+																				dataType : 'json',
+																				data : {
+																					imp_uid : rsp.imp_uid
+																				//기타 필요한 데이터가 있으면 추가 전달
+																				}
+																			})
+																	.done(
+																			function(
+																					data) {
+																				//[2] 서버에서 REST API로 결제정보확인 및 서비스루틴이 정상적인 경우
+																				if (everythings_fine) {
+																					var msg = '결제가 완료되었습니다.';
+																					msg += '\n고유ID : '
+																							+ rsp.imp_uid;
+																					msg += '\n상점 거래ID : '
+																							+ rsp.merchant_uid;
+																					msg += '\결제 금액 : '
+																							+ rsp.paid_amount;
+																					msg += '카드 승인번호 : '
+																							+ rsp.apply_num;
 
-			        alert(msg);
-			    }
-			});
-			
-		}else if($('#cash').click(function(){
-			IMP.request_pay({
-			    pg : 'jtnet',
-			    pay_method : 'trans',
-			    merchant_uid : 'merchant_' + new Date().getTime(),
-			    name : '펫카부 펫시팅 서비스',
-			    amount : 14000,
-			    buyer_email : 'iamport@siot.do',
-			    buyer_name : '구매자이름',
-			    buyer_tel : '010-1234-5678',
-			    buyer_addr : '서울특별시 강남구 삼성동',
-			    buyer_postcode : '123-456'
-			}, function(rsp) {
-			    if ( rsp.success ) {
-			    	//[1] 서버단에서 결제정보 조회를 위해 jQuery ajax로 imp_uid 전달하기
-			    	jQuery.ajax({
-			    		url: "/payments/complete", //cross-domain error가 발생하지 않도록 동일한 도메인으로 전송
-			    		type: 'POST',
-			    		dataType: 'json',
-			    		data: {
-				    		imp_uid : rsp.imp_uid
-				    		//기타 필요한 데이터가 있으면 추가 전달
-			    		}
-			    	}).done(function(data) {
-			    		//[2] 서버에서 REST API로 결제정보확인 및 서비스루틴이 정상적인 경우
-			    		if ( everythings_fine ) {
-			    			var msg = '결제가 완료되었습니다.';
-			    			msg += '\n고유ID : ' + rsp.imp_uid;
-			    			msg += '\n상점 거래ID : ' + rsp.merchant_uid;
-			    			msg += '\결제 금액 : ' + rsp.paid_amount;
-			    			msg += '카드 승인번호 : ' + rsp.apply_num;
+																					alert(msg);
+																				} else {
+																					//[3] 아직 제대로 결제가 되지 않았습니다.
+																					//[4] 결제된 금액이 요청한 금액과 달라 결제를 자동취소처리하였습니다.
+																				}
+																			});
 
-			    			alert(msg);
-			    		} else {
-			    			//[3] 아직 제대로 결제가 되지 않았습니다.
-			    			//[4] 결제된 금액이 요청한 금액과 달라 결제를 자동취소처리하였습니다.
-			    		}
-			    	});
-			    } else {
-			        var msg = '결제에 실패하였습니다.';
-			        msg += '에러내용 : ' + rsp.error_msg;
+														} else {
+													        var msg = '결제에 실패하였습니다.';
+													        msg += '에러내용 : ' + rsp.error_msg;
 
-			        alert(msg);
-			    }
-			})
-			
-		}
-			
+													        alert(msg);
+													    }
+													});
+
+								}
+							})
 		})
-	}
-	 */
-	
-	
-	
-
-		
-	
-		
-	
-	
 	</script>
+	<%
+		} else {
+	%>
+	<script>
+		alert('로그인한 회원만 이용 가능합니다.')
+		window.location.href = '<%=request.getContextPath()%>/index.jsp';
+	</script>
+	
 
+	<%
+		}
+	%>
 </body>
 </html>

@@ -8,16 +8,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class InsertContractPesittingServlet
+ * Servlet implementation class selectContractPetsittingServlet
  */
-@WebServlet("/insertCtr.ct")
-public class InsertContractPesittingServlet extends HttpServlet {
+@WebServlet("/selectCtrPetsitting.ct")
+public class selectContractPetsittingServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public InsertContractPesittingServlet() {
+    public selectContractPetsittingServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -26,7 +26,8 @@ public class InsertContractPesittingServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String contract_status = request.getParameter("contract_status");
+		
+		
 		
 	}
 
