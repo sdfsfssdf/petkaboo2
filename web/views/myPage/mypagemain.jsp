@@ -13,6 +13,14 @@
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>마이페이지 메인</title>
+<!-- iamport.payment.js -->
+<script type="text/javascript"
+	src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
+<script>
+	var IMP = window.IMP; // 생략가능
+	IMP.init('imp97048672');
+</script>
+<!-- 합쳐지고 최소화된 최신 CSS -->
 <style>
 body, p, h1, h2, h3, h4, h5, h6, ul, ol, li, dl, dt, dd, table, th, td,
 	form, fieldset, legend, input, textarea, button, select {
@@ -66,9 +74,9 @@ a:hover, a:active, a:focus {
 #header {
 	float: left;
 	width: 100%;
-	height: 250px;
+	height: 150px;
 	_border: 1px solid blue;
-	background-color: rgb(207, 183, 175);
+	background-color: white;
 }
 
 
@@ -227,14 +235,18 @@ th, td {
 
 	<div id="wrap">
 		<div id="container1">
+			
+		<div id="header"></div>
+		<%@ include file="../common/menubar.jsp"%>
+		<%@include file="../common/oldMenubar.jsp"%>
 
-			<!-- 메뉴파일 -->
-			<%@ include file="../common/menubar.jsp"%>
-
-
+	
 			<!-- fixed 창 -->
 			<%@ include file="../common/fixed.jsp"%>
-
+	
+	<%
+		if (loginUser != null) {
+	%>
 			<!-- 사이드 메뉴 부분 -->
 			<div class="content-left">
 			<%@ include file="../common/sidemenubar.jsp" %>
@@ -266,8 +278,16 @@ th, td {
 					<br> <br>
 					<div class="point">
 						<span>보유중인 포인트 </span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input
-							type="text" readonly>&nbsp;&nbsp;&nbsp;원&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a
-							class="rechbutton" style="font-weight:lighter" href="#">충전하기</a>
+							type="text" readonly>&nbsp;&nbsp;&nbsp;원&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							<label class=howToPs><input type="radio" id="card1"
+						value="card" name="howToPS" />&nbsp;카드결제&nbsp;</label>&nbsp;&nbsp;&nbsp;&nbsp;
+
+					<label class=howToPs><input type="radio" id="cash1"
+						value="cash" name="howToPS" />&nbsp;계좌이체&nbsp; </label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+					<button id="clickrecharge">충전하기</button>
+							
+						
 					</div>
 
 					<br> <br>
@@ -442,7 +462,141 @@ th, td {
 			</div>
 		</div>
 	</div>
+<script>
+		$(function() {
+			$('#clickrecharge')
+					.click(
+							function() {
+								if (!$("input:radio[name=howToPS]:checked")
+										.val()) {
+									alert('충전에 필요한 결제수단을 선택해주세요');
+									return false;
+								} else if ($(
+										"input:radio[name=howToPS]:checked")
+										.val() == "card") {
 
+									IMP
+											.request_pay(
+													{
+														pg : 'jtnet',
+														pay_method : 'card',
+														merchant_uid : 'merchant_'
+																+ new Date()
+																		.getTime(),
+														name : '펫카부 펫시팅 서비스',
+														amount : 14000,
+														buyer_email : 'iamport@siot.do',
+														buyer_name : '구매자이름',
+														buyer_tel : '010-1234-5678',
+														buyer_addr : '서울특별시 강남구 삼성동',
+														buyer_postcode : '123-456'
+													},
+													function(rsp) {
+														if (rsp.success) {
+															//[1] 서버단에서 결제정보 조회를 위해 jQuery ajax로 imp_uid 전달하기
+															jQuery
+																	.ajax(
+																			{
+																				url : "/payments/complete", //cross-domain error가 발생하지 않도록 동일한 도메인으로 전송
+																				type : 'POST',
+																				dataType : 'json',
+																				data : {
+																					imp_uid : rsp.imp_uid
+																				//기타 필요한 데이터가 있으면 추가 전달
+																				}
+																			})
+																	.done(
+																			function(
+																					data) {
+																				//[2] 서버에서 REST API로 결제정보확인 및 서비스루틴이 정상적인 경우
+																				if (everythings_fine) {
+																					var msg = '결제가 완료되었습니다.';
+																					msg += '\n고유ID : '
+																							+ rsp.imp_uid;
+																					msg += '\n상점 거래ID : '
+																							+ rsp.merchant_uid;
+																					msg += '\결제 금액 : '
+																							+ rsp.paid_amount;
+																					msg += '카드 승인번호 : '
+																							+ rsp.apply_num;
 
+																					alert(msg);
+																				} else {
+																					//[3] 아직 제대로 결제가 되지 않았습니다.
+																					//[4] 결제된 금액이 요청한 금액과 달라 결제를 자동취소처리하였습니다.
+																				}
+																			})
+
+														}
+													})
+
+								} else {
+
+									IMP
+											.request_pay(
+													{
+														pg : 'jtnet',
+														pay_method : 'trans',
+														merchant_uid : 'merchant_'
+																+ new Date()
+																		.getTime(),
+														name : '펫카부 펫시팅 서비스',
+														amount : 14000,
+														buyer_email : 'iamport@siot.do',
+														buyer_name : '구매자이름',
+														buyer_tel : '010-1234-5678',
+														buyer_addr : '서울특별시 강남구 삼성동',
+														buyer_postcode : '123-456'
+													},
+													function(rsp) {
+														if (rsp.success) {
+															//[1] 서버단에서 결제정보 조회를 위해 jQuery ajax로 imp_uid 전달하기
+															jQuery
+																	.ajax(
+																			{
+																				url : "/payments/complete", //cross-domain error가 발생하지 않도록 동일한 도메인으로 전송
+																				type : 'POST',
+																				dataType : 'json',
+																				data : {
+																					imp_uid : rsp.imp_uid
+																				//기타 필요한 데이터가 있으면 추가 전달
+																				}
+																			})
+																	.done(
+																			function(
+																					data) {
+																				//[2] 서버에서 REST API로 결제정보확인 및 서비스루틴이 정상적인 경우
+																				if (everythings_fine) {
+																					var msg = '결제가 완료되었습니다.';
+																					msg += '\n고유ID : '
+																							+ rsp.imp_uid;
+																					msg += '\n상점 거래ID : '
+																							+ rsp.merchant_uid;
+																					msg += '\결제 금액 : '
+																							+ rsp.paid_amount;
+																					msg += '카드 승인번호 : '
+																							+ rsp.apply_num;
+
+																					alert(msg);
+																				} else {
+																					//[3] 아직 제대로 결제가 되지 않았습니다.
+																					//[4] 결제된 금액이 요청한 금액과 달라 결제를 자동취소처리하였습니다.
+																				}
+																			})
+
+														}
+													})
+
+								}
+							})
+		})
+	</script>
+	<%
+		} else {
+
+			request.getRequestDispatcher("../common/login.jsp").forward(request, response);
+
+		}
+	%>
 </body>
 </html>

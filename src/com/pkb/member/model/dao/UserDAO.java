@@ -503,7 +503,9 @@ public class UserDAO {
 		
 	}
 
-	public int[] lockMember(Connection con, String[] selectUserNos) {
+
+	public int[] lockMember(Connection con, int[] selectUserNos, String title, String content) {
+
 		// TODO Auto-generated method stub
 		PreparedStatement pstmt = null;
 		int result[] = null;
@@ -519,7 +521,75 @@ public class UserDAO {
 			result = pstmt.executeBatch();
 			
 		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally{
+			close(pstmt);
+		}
+
+		return result;
+	}
+	public int insertSms(Connection con, String smsNumber, String email) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("insertSms");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, smsNumber);
+			pstmt.setString(2, email);
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally{
+			close(pstmt);
+		}
+
+		return result;
+	}
+
+	public int[] writeLockReason(Connection con, String[] selectUserNos, int adminUserNo, String title, String content, String lockDate) {
+		PreparedStatement pstmt = null;
+		int result[] = null;
+		String query = prop.getProperty("writeLockReason");	
+		return result;
+	}
+
+	public int updatePhone(Connection con, String phone, String sms, User loginUser) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("updatePhone");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, phone);
+			pstmt.setString(2, loginUser.getEmail());
+			pstmt.setString(3, sms);
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
 			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally{
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public int authTBidentify(Connection con, ImgFile f) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("authTbidentify");
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, f.getUser_no());
+			System.out.println("출력되지"+f.getUser_no());
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally{
 			close(pstmt);
@@ -527,7 +597,44 @@ public class UserDAO {
 		return result;
 	}
 
-	public int[] writeLockReason(Connection con, String[] selectUserNos, int adminUserNo, String title, String content, String lockDate) {
+	public int authTBlicense(Connection con, ImgFile f) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("authTBlicense");
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, f.getUser_no());
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally{
+			close(pstmt);
+		}
+		return result;
+	}
+
+	public int authTBphone(Connection con, User loginUser) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("authTBphone");
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, loginUser.getUser_no());
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		} finally{
+			close(pstmt);
+		}
+		return result;
+	}
+
+  public int[] writeLockReason(Connection con, String[] selectUserNos, int adminUserNo, String title, String content, String lockDate) {
 		PreparedStatement pstmt = null;
 		int result[] = null;
 		String query = prop.getProperty("writeLockReason");
@@ -563,7 +670,7 @@ public class UserDAO {
 		}
 		return result;
 	}
-
+  
 	public int[] writeDeleteReason(Connection con, String[] selectUserNos, int adminUserNo, String title,
 			String content) {
 		PreparedStatement pstmt = null;

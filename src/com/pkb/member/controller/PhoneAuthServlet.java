@@ -1,7 +1,6 @@
 package com.pkb.member.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -12,42 +11,47 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.pkb.member.model.service.UserService;
-import com.pkb.member.model.vo.ImgFile;
 import com.pkb.member.model.vo.User;
 
 /**
- * Servlet implementation class ModifyMemberMoveServlet
+ * Servlet implementation class PhoneAuthServlet
  */
-@WebServlet("/modify.mb")
-public class ModifyMemberMoveServlet extends HttpServlet {
+@WebServlet("/phone.au")
+public class PhoneAuthServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-	
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ModifyMemberMoveServlet() {
+    public PhoneAuthServlet() {
         super();
+        // TODO Auto-generated constructor stub
     }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session = request.getSession();
-		User u = (User)session.getAttribute("loginUser");
-		ArrayList<ImgFile> list= new UserService().selectlist(u);
-		String page = "";
-		if(list.get(0).getFile_name()!=null){
-			String fileName = list.get(0).getFile_name();
-			request.setAttribute("fileName", fileName);
-			page = "views/myPage/modifyMemberInfoMain.jsp";
-		}else{
-			page = "views/myPage/modifyMemberInfoMain.jsp";
+		String smsNumber = request.getParameter("name");
+		User loginUser = (User)request.getSession().getAttribute("loginUser");
+		String rphone = request.getParameter("rphone");
+		String email = loginUser.getEmail();
+		System.out.println("이값이 들어와야해"+smsNumber);
+		System.out.println("번호..." + rphone);
+		int result = new UserService().insertSms(smsNumber, email);
+		
+		
+		if(result>0){
+			HttpSession session = request.getSession();
+			User u = (User)session.getAttribute("loginUser");
+			u.setSms_number(smsNumber);;
+			// 키값은 중복이 안된다. 
+			session.setAttribute("loginUser", u);
+			session.setAttribute("rphone", rphone);
+			System.out.println("성공??");
+			RequestDispatcher view = request.getRequestDispatcher("/views/myPage/modifyMemberInfo.jsp");
+     		view.forward(request, response);
 		}
-		RequestDispatcher view = request.getRequestDispatcher(page);
-		view.forward(request, response);
-
 	}
 
 	/**

@@ -119,6 +119,7 @@ public class UserService {
 		return result;
 	}
 
+
 	public int changeNickname(String nickname, String email) {
 		Connection con = getConnection();
 
@@ -223,11 +224,13 @@ public class UserService {
 		return hmap;
 	}
 
+
 	public String phone(String msg) {
 
 		return msg;
 
 	}
+
 
 	public int[] lockMember(String[] selectUserNos, String title, String content, int adminUserNo, String lockDate) {
 		Connection con = getConnection();
@@ -246,6 +249,42 @@ public class UserService {
 			rollback(con);
 		}
 
+  close(con);
+
+		return result;
+	}
+
+	public int insertSms(String smsNumber, String email) {
+		Connection con = getConnection();
+		
+		int result = new UserDAO().insertSms(con, smsNumber, email);
+		
+		if(result>0){
+			commit(con);
+		}else{
+			rollback(con);
+		}
+		close(con);
+
+		
+		return result;
+	}
+
+	public int updatePhone(String phone, String sms, User loginUser) {
+		Connection con = getConnection();
+		
+		int result = new UserDAO().updatePhone(con, phone, sms, loginUser);
+		
+		if(result>0){
+			int result1 = new UserDAO().authTBphone(con, loginUser);
+			if(result1>0){
+				commit(con);
+			}else{
+				rollback(con);
+			}
+		}else{
+			rollback(con);
+		}
 		close(con);
 		return result;
 	}

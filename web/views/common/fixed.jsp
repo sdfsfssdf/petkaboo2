@@ -40,7 +40,7 @@
 		</p>
 		<p
 			style="color: white; font-size: 24px; font-weight: 600; line-height: 120%; font-family: 'Jua', sans-serif;">
-			02-1588-5555<br>Click
+			02-1588-5555<br><a href="../myPage/onebyoneQNAWrite.jsp" style="font-family:'Jua', sans-serif; color:#704d43;">Click</a>
 		</p>
 		<p
 			style="color: white; font-size: 14px; font-weight: 400; line-height: 120%; font-family: 'Jua', sans-serif;">

@@ -38,9 +38,26 @@
 		<p>돌봐준 펫시터에게 리뷰를 남겨주세요!</p>
 		<br>
 		
-		<form action="<%=request.getContextPath() %>/insertQna.bo" method="post">
+		<form action="<%=request.getContextPath() %>/" method="post">
 			
 			<div class="title">
+			<br /> 
+			
+			<label>반려동물이름</label>
+			    <input type="text" class="form-control writer" id="detailwriter" value="" readOnly>
+				&nbsp;&nbsp;&nbsp;&nbsp;
+				<br />
+				<label>펫시터</label>
+			    <input type="text" class="form-control writer" id="detailwriter" value="" readOnly>
+				&nbsp;&nbsp;&nbsp;&nbsp;
+				
+				
+			<br> <label>작성자 </label>
+			    <input type="text" class="form-control writer" id="detailwriter" value="" readOnly>
+				&nbsp;&nbsp;&nbsp;&nbsp;
+				<br />
+				<label>작성일</label> 
+				<input type="text" class="form-control date" id="detaildate" value="" readOnly> &nbsp;&nbsp;&nbsp;&nbsp;
 		
 				<input type="text" class="form-control" name="onetitle" placeholder="제목을 입력하세요.">
 			</div>
@@ -48,6 +65,7 @@
 			<div class="content">
 				<textarea class="form-control" rows="20" cols="30" name="onecontent" placeholder="내용을 입력하세요."></textarea>
 			</div>
+			
 			<br>
 			<div class="btns" align="center">
 				<button type="submit" class="btn btn-success write">작성하기</button>

@@ -28,9 +28,9 @@
 #header {
 	float: left;
 	width: 100%;
-	height: 250px;
+	height: 150px;
 	_border: 1px solid blue;
-	background-color: rgb(207, 183, 175);
+	background-color: white;
 }
 
 .body {
@@ -98,7 +98,7 @@ img {
 }
 
 td {
-	border: 1px solid black;
+	border-style:none;
 }
 .tableSt{
 	margin-left:5%;
@@ -117,7 +117,14 @@ td {
 <body>
 	<div id="container">
 		<div id="header"></div>
-		<%@include file="../common/menubar.jsp"%>
+		<%@ include file="../common/menubar.jsp"%>
+
+		<%@ include file="../common/oldMenubar.jsp"%>
+
+		<%
+			if (loginUser != null) {
+		%>
+
 		<h2 style="text-align: center; margin-top: 100px;">
 			<span style="color: rgb(228, 100, 18);"> <strong>
 					결제완료</strong>
@@ -146,8 +153,9 @@ td {
 			<div class="RsvStatement">
 				<div class="PSid">
 					<br />
+					<br />
 					<h4>
-						<span>예약번호 : </span>
+						<label>예약번호 : </label>
 					</h4>
 				</div>
 
@@ -156,40 +164,50 @@ td {
 					<br /><br />
 					<table class="tableSt">
 						<tr>
-							<td>예약번호 :</td>
-							<td colspan="3">입력란</td>
+							<td width="70px" height="50px" ><label>예약번호 :</label></td>
+							<td colspan="3" ><input type="text" name="contract_no" size='18'
+						style="background-color: transparent; border-style: none;"
+						readonly onfocus="this.blur();"></td>
 
 						</tr>
 						<tr>
-							<td rowspan="2">펫시터</td>
-							<td rowspan="2"><div class="l">
+							<td rowspan="2" height="200px"><label>펫시터</label></td>
+							<td rowspan="2" width="150px" ><div class="l">
 						<img
 							src="https://pbs.twimg.com/profile_images/984239725190901760/-5wrSANU_400x400.jpg"
 							class="PSphoto img-circle img-responsive" alt="Responsive image" />
 					</div></td>
-							<td>이름 : </td>
-							<td>입력란</td>
+							<td width="50px" style="text-align:center"><label>이름 : </label></td>
+							<td width="400px" ><input type="text" name="petUser_name" size='18'
+						style="background-color: transparent; border-style: none;"
+						readonly onfocus="this.blur();" value="입력란"></td>
 						</tr>
 						<tr>
-							<td>주소 : </td>
-							<td>입력란</td>
+							<td  style="text-align:center"><label>주소 : </label></td>
+							<td><input type="text" name="petUser_address" size='50'
+						style="background-color: transparent; border-style: none;"
+						readonly onfocus="this.blur();"  value="입력란"></td>
 						</tr>
 						<tr>
-							<td rowspan="2">반려동물</td>
-							<td>이름 : </td>
-							<td colspan="2">입력란</td>
+							<td rowspan="2" ><label>반려동물</label></td>
+							<td height="50px" style="text-align:center"><label>이름 : </label></td>
+							<td colspan="2"><input type="text" name="pet_name" size='18'
+						style="background-color: transparent; border-style: none;"
+						readonly onfocus="this.blur();" value="입력란"></td>
 
 						</tr>
 						<tr>
-							<td>나이 : </td>
-							<td colspan="2">입력란</td>
+							<td height="50px" style="text-align:center"><label>나이 : </label></td>
+							<td colspan="2"><input type="text" name="pet_age" size='18'
+						style="background-color: transparent; border-style: none;"
+						readonly onfocus="this.blur();" value="입력란"></td>
 
 						</tr>
-						<tr>
+						<!-- <tr>
 							<td>요구사항</td>
 							<td colspan="3">입력란</td>
-						</tr>
-						보더색깔은 style의 td에서 지워주시면 됩니다. -->
+						</tr> -->
+						
 					</table>
 					<br />
 					<br />
@@ -224,5 +242,17 @@ td {
 	<br />
 	<br />
 	<br />
+	<%
+		} else {
+	%>
+	<script>
+		alert('로그인한 회원만 이용 가능합니다.')
+		window.location.href = '<%=request.getContextPath()%>/index.jsp';
+	</script>
+	
+
+	<%
+		}
+	%>
 </body>
 </html>

@@ -1,8 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"
 	import="com.pkb.board.model.vo.*, java.util.*, com.pkb.common.Paging, com.pkb.member.model.vo.User"%>
+
  <% 
- 	User loginUser = (User)session.getAttribute("loginUser"); 
+ 	
     ArrayList<Board> list = (ArrayList<Board>)request.getAttribute("list");
  
 	Paging pg = (Paging)request.getAttribute("pg");
@@ -62,17 +63,30 @@ th {
 .search {
 	width: 45%;
 }
+
+.searchArea{
+	margin-left:5%;
+}
+
+.pagingArea{
+	margin-left:30%;
+}
 </style>
 </head>
 <body>
+
+
+	<h1 align="center" id="logo">로고</h1>
+
+	<%@ include file="../common/menubar.jsp"%>
+	<%@ include file="../common/oldMenubar.jsp"%>
+	<!-- fixed 창 -->
+			<%@ include file="../common/fixed.jsp"%>
 <%
 
 
 if(loginUser != null){ %>
-
-	<h1 align="center" id="logo">로고</h1>
-	<br>
-	<%@ include file="../common/menubar.jsp"%>
+	
 	<%@ include file="../common/sidemenubar.jsp"%>
 	<div class="contentArea">
 		<h2>내 질문내역</h2>
@@ -102,7 +116,7 @@ if(loginUser != null){ %>
 			</table>
 		</div>
 		<!-- 페이지처리 -->
-		<div class="pagingArea" align="center">
+		<div class="pagingArea">
 		    <button onclick="location.href='<%=request.getContextPath()%>/selectOnebyOneList.bo?currentPage=1'"><<</button>
 			<% if(currentPage <= 1 ){ %>
 			<button disabled><</button>
@@ -171,12 +185,18 @@ if(loginUser != null){ %>
 	
 	</script>
 	
-	<%}else{ 
+	<%
+		} else {
+	%>
+	<script>
+		alert('로그인한 회원만 이용 가능합니다.')
+		window.location.href = '<%=request.getContextPath()%>/index.jsp';
+	</script>
 	
-	request.getRequestDispatcher("../common/login.jsp").forward(request,response);
 
-}%>
-	
+	<%
+		}
+	%>
 	
 	
 </body>
