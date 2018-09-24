@@ -70,22 +70,20 @@ public class InsertOnebyOneQnaServlet extends HttpServlet {
 			if (pg.getMaxPage() < pg.getEndPage()) {
 				pg.setEndPage(pg.getMaxPage());
 			}
-			ArrayList<Board> list = new BoardService().selectOnebyOneList(pg.getCurrentPage(),pg.getLimit(),b.getUser_no());
+			/*ArrayList<Board> list = new BoardService().selectOnebyOneList(pg.getCurrentPage(),pg.getLimit(),b.getUser_no());
 			System.out.println(list);
 			request.setAttribute("list", list);
-			request.setAttribute("pg", pg);
+			request.setAttribute("pg", pg);*/
+			response.sendRedirect(request.getContextPath()+"/selectOnebyOneList.bo");
+			//등록한 정보가 있다면 내 질문내역 화면 띄워주기
 			
 		}else {
 			page = "views/common/errorPage.jsp";
 			request.setAttribute("msg", "1:1문의 등록 실패");		
-			
+			RequestDispatcher view = request.getRequestDispatcher(page);
+			view.forward(request, response);
 		}
 		
-		
-		//등록한 정보가 있다면 내 질문내역 화면 띄워주기
-	/*	response.sendRedirect(request.getContextPath() + "/selectOnebyOneList.bo");*/
-		RequestDispatcher view = request.getRequestDispatcher(page);
-		view.forward(request, response);
 		
 	
 	}

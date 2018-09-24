@@ -28,9 +28,9 @@
 #header {
 	float: left;
 	width: 100%;
-	height: 250px;
+	height: 150px;
 	_border: 1px solid blue;
-	background-color: rgb(207, 183, 175);
+	background-color: white;
 }
 
 .body {
@@ -99,7 +99,11 @@ img{
 <body>
 	<div id="container">
 		<div id="header"></div>
-		<%@include file="../common/menubar.jsp"%>
+		<%@ include file="../common/menubar.jsp"%>
+		<%@include file="../common/oldMenubar.jsp"%>
+		<%
+				if (loginUser != null) {
+		%>
 		<h2 style="text-align: center; margin-top: 100px;">
 			<span style="color: rgb(228, 100, 18);"> <strong>
 					요청완료</strong>
@@ -127,28 +131,58 @@ img{
 			<div class="RsvStatement">
 				<div class="PSid">
 					
-					<span>펫시터 정보</span><img width="140px" height="140px" border-radius="100px" display="inline-block" src="https://scontent.cdninstagram.com/vp/d432a9c5818f68d1dcfd3860935145f2/5BDCF333/t51.2885-15/sh0.08/e35/p640x640/34982645_1703252956454507_5788207006821122048_n.jpg" alt="" />
-					<span>이름 : </span>
-					<span>주소 : </span>
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label>펫시터 정보</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img width="140px" height="140px" border-radius="100px" display="inline-block" src="https://scontent.cdninstagram.com/vp/d432a9c5818f68d1dcfd3860935145f2/5BDCF333/t51.2885-15/sh0.08/e35/p640x640/34982645_1703252956454507_5788207006821122048_n.jpg" alt="" />
+					<label>&nbsp;&nbsp;&nbsp;&nbsp;이름 : </label><input
+									type="text" name="petUser_name" size='18'
+									style="background-color: transparent; border-style: none;"
+									readonly onfocus="this.blur();">
+					<label>&nbsp;&nbsp;&nbsp;&nbsp;주소 : </label><input type="text" name="petUser_address" size='30'
+								style="background-color: transparent; border-style: none;"
+								readonly onfocus="this.blur();">
 				</div>
 				<br />
 				<br />
 
-
+				
 				<div class="RsvDetailed">
 					<br />
-					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<p>예약신청일 : </p>
 					<br />
-					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<p>주소 : </p>
 					<br />
-					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<p>펫시팅 시작일 : </p>
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label>&nbsp;&nbsp;&nbsp;&nbsp;예약신청일 : </label><input
+									type="text" name="contract_date" size='18'
+									style="background-color: transparent; border-style: none;"
+									readonly onfocus="this.blur();">
 					<br />
-					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<p>펫시팅 종료일 : </p>
 					<br />
-					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<p>신청자 : </p>
 					<br />
-					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<p>기타 요구 사항 : </p>
-					<br /><br /><br /><br /><br /><br /><br /><br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label>&nbsp;&nbsp;&nbsp;&nbsp;주소 : </label><input
+									type="text" name="useraddress" size='18'
+									style="background-color: transparent; border-style: none;"
+									readonly onfocus="this.blur();">
+					<br />
+					<br />
+					<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label>&nbsp;&nbsp;&nbsp;&nbsp;펫시팅 시작일 : </label><input
+									type="text" name="contract_start" size='18'
+									style="background-color: transparent; border-style: none;"
+									readonly onfocus="this.blur();">
+					<br />
+					<br />
+					<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label>&nbsp;&nbsp;&nbsp;&nbsp;펫시팅 종료일 : </label><input
+									type="text" name="contract_end" size='18'
+									style="background-color: transparent; border-style: none;"
+									readonly onfocus="this.blur();">
+					<br />
+					<br />
+					<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label>&nbsp;&nbsp;&nbsp;&nbsp;신청자 : </label><input
+									type="text" name="user_name" size='18'
+									style="background-color: transparent; border-style: none;"
+									readonly onfocus="this.blur();">
+					<br />
+					
+					<br /><br /><br />
 				</div>
 			</div>
 		</div>
@@ -191,5 +225,15 @@ img{
 	<br />
 	<br />
 	<br />
+	
+	<%} else {%>
+	<script>
+		alert('로그인한 회원만 이용 가능합니다.')
+		window.location.href = '<%=request.getContextPath()%>/index.jsp';
+	</script>
+			
+
+	<%}%>
+	
 </body>
 </html>

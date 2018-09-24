@@ -8,12 +8,25 @@ public class Payment implements java.io.Serializable {
 	private int user_no;		//회원번호
 	private int pay_amount;		//금액
 	private Date pay_date;		//결제일자
-	private String pay_method;	//결제방법
 	private int payment_type; //결제구분(현금/카드/환불)
 	private int payment_cash_status; // (현금일경우)
 	private Date payment_cash_date;  //결제신청날짜 (현금일경우)
 	private String card_apply_no;	//카드승인번호 (카드일경우)
 	private int pay_recordno;		//결제이력번호
+	
+	//아임포트 관련
+	private String imp_uid;				//아임포트 거래 고유 번호
+	private String pg_provider;			//결제승인/시도된 PG사
+	private int amount;					//결제할 금액
+	private String name;				//주문명
+	private String pay_method;			//결제수단
+	private boolean permission;
+	private boolean validation;
+	private String status;				//결제상태 ready(미결제), paid(결제완료), cancelled(결제취소, 부분취소포함), failed(결제실패)
+	private String receipt_url;			//PG사에서 발행되는 거래 매출전표 URL
+	private String merchan_uid;			//가맹점에서 생성/관리하는 고유 주문번호
+	
+	
 
 	
 	
