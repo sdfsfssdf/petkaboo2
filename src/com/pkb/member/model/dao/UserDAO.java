@@ -942,7 +942,8 @@ public class UserDAO {
 				lh.setLoginDate(rs.getDate("login_date"));
 				lh.setLoginIp(rs.getString("login_ip"));
 				lh.setLocation(rs.getString("location"));
-			}
+			} 
+			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

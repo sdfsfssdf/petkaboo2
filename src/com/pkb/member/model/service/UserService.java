@@ -196,6 +196,7 @@ public class UserService {
 		return result;
 	}
 
+	
 	public HashMap<String, Object> selectMemberOne(int userNo) {
 		// TODO Auto-generated method stub
 		Connection con = getConnection();

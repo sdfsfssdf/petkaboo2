@@ -84,6 +84,7 @@
 					<td><%=lh.getLoginDate() %></td>
 				</tr>
 				<tr>
+				
 					<td width="25%" height="50" style="padding-top: 13px">전화번호</td>
 					<td><%=u.getPhone() %></td>
 					<td style="padding-top: 13px">메일수신여부</td>
