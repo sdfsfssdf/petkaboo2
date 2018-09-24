@@ -57,14 +57,18 @@
 			<p>회원의 상세정보를 확인할 수 있고, 수정, 삭제가 가능합니다.</p>
 			<table class="table" >
 				<tr>
-					<td rowspan="5" colspan="2"><div id="imageArea" style="height:90%;width:100%">
-						<img id="titleImg" src="<%=request.getContextPath()%>/images/profileImagesUpload/<%=img.getFile_path() %>">
+					<td rowspan="5" colspan="2" align="center"><div id="imageArea" style="height:90%;width:100%">
+						<% if (img.getFile_name() == null || img.getFile_name().equals("")) {%>
+							<img id="titleImg" src="<%=request.getContextPath()%>/images/profileImagesUpload/profileBasicImage.png" style="width:300px;height:300px; border-radius:150px">
+						<%} else { %>
+							<img id="titleImg" src="<%=request.getContextPath()%>/images/profileImagesUpload/<%=img.getFile_name() %>" style="width:300px;height:300px; border-radius:150px">
+						<%} %>							
 					</div><button>프로필 사진 다운로드</button></td>
 					<td width="25%" height="50" style="padding-top: 13px">회원번호</td>
 					<td width="25%"	><%=u.getUser_no()%></td>
 				</tr>
 				<tr>
-					<td width="25%" style="padding-top: 13px">아이디(이메일)</td>
+					<td width="25%" height="50"style="padding-top: 13px">아이디(이메일)</td>
 					<td width="25%" ><%=u.getEmail() %></td>
 				</tr>
 				<tr>
@@ -72,7 +76,7 @@
 					<td><%=u.getUser_name()%></td>
 				</tr>
 				<tr>
-					<td style="padding-top: 13px">회원가입일시</td>
+					<td width="25%" height="50"style="padding-top: 13px">회원가입일시</td>
 					<td><%=u.getEnrollDate() %></td>
 				</tr>
 				<tr>
@@ -80,6 +84,7 @@
 					<td><%=lh.getLoginDate() %></td>
 				</tr>
 				<tr>
+				
 					<td width="25%" height="50" style="padding-top: 13px">전화번호</td>
 					<td><%=u.getPhone() %></td>
 					<td style="padding-top: 13px">메일수신여부</td>

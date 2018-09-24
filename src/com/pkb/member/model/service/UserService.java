@@ -197,6 +197,7 @@ public class UserService {
 		return result;
 	}
 
+	
 	public HashMap<String, Object> selectMemberOne(int userNo) {
 		// TODO Auto-generated method stub
 		Connection con = getConnection();
@@ -206,7 +207,6 @@ public class UserService {
 			hmap = new HashMap<String,Object>();
 			hmap.put("user", user);
 			ImgFile profile = new UserDAO().selectUserProfile(con,user.getFile_no());
-			
 			if(profile != null){
 				hmap.put("profile", profile);
 				LoginHistory lh = new UserDAO().selectLoginHistory(con,userNo);
