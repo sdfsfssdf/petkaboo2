@@ -34,12 +34,12 @@
       <div class="myMenu_left">
          <br>
          <br>
-            <div class="text">회원목록</div>
+            <div class="text"><a href="<%=request.getContextPath()%>/selectList.me">회원목록</a></div>
             <br>
             <div class="text">인증요청목록</div>
             <br>
-            <div class="text">제재/차단목록</div>
-            <br>
+            <!-- <div class="text">제재/차단목록</div>
+            <br> -->
            <!--  <div class="text">휴면회원관리</div> -->
       </div>
    </div>

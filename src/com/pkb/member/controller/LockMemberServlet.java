@@ -1,6 +1,10 @@
 package com.pkb.member.controller;
 
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -35,21 +39,14 @@ public class LockMemberServlet extends HttpServlet {
 		String selectUserNo = request.getParameter("selecUserNo");
 		String title = request.getParameter("title");
 		String content = request.getParameter("content");
+		String lockDate = request.getParameter("lockDate");
 
-
-		
-		String[] tempUserNos = selectUserNo.split(",");
-		int[] selectUserNos = new int[tempUserNos.length];
-
-		for (int i = 0; i < selectUserNos.length; i++) {
-			selectUserNos[i] = Integer.parseInt(tempUserNos[i]);
-			System.out.println(selectUserNos[i]);
-		}
-		
+		String[] selectUserNos = selectUserNo.split(",");
 		HttpSession session = request.getSession();
 		int adminUserNo = ((User)session.getAttribute("loginUser")).getUser_no();
 		
-		int[] result = new UserService().lockMember(selectUserNos,title,content,adminUserNo);
+		
+		int[] result = new UserService().lockMember(selectUserNos,title,content,adminUserNo,lockDate);
 
 		String page = "";
 		if (result.length > 0) {

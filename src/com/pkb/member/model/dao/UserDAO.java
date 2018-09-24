@@ -1,21 +1,25 @@
 package com.pkb.member.model.dao;
 
-import static com.pkb.common.JDBCTemplate.*;
+import static com.pkb.common.JDBCTemplate.close;
 
 import java.io.FileReader;
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Properties;
 
 import com.pkb.member.model.vo.ImgFile;
+import com.pkb.member.model.vo.LoginHistory;
 import com.pkb.member.model.vo.User;
 import com.pkb.reservation.model.vo.Reservation;
+import com.sun.corba.se.spi.orbutil.fsm.Guard.Result;
+import com.sun.xml.internal.ws.api.message.Packet.Status;
 
 public class UserDAO {
 
@@ -429,7 +433,7 @@ public class UserDAO {
 
 	}
 
-	public int[] deleteMember(Connection con, int[] selectUserNos) {
+	public int[] deleteMember(Connection con, String[] selectUserNos) {
 		// TODO Auto-generated method stub
 		PreparedStatement pstmt = null;
 		int[] result = null;
@@ -438,7 +442,8 @@ public class UserDAO {
 		try {
 			pstmt = con.prepareStatement(query);
 			for (int i = 0; i < selectUserNos.length; i++) {
-				pstmt.setInt(1, selectUserNos[i]);
+				String[] tempUserNo = selectUserNos[i].split("/");
+				pstmt.setInt(1, Integer.parseInt(tempUserNo[0]));
 				pstmt.addBatch();
 			}
 			result = pstmt.executeBatch();
@@ -500,6 +505,7 @@ public class UserDAO {
 
 
 	public int[] lockMember(Connection con, int[] selectUserNos, String title, String content) {
+
 		// TODO Auto-generated method stub
 		PreparedStatement pstmt = null;
 		int result[] = null;
@@ -508,7 +514,8 @@ public class UserDAO {
 		try {
 			pstmt = con.prepareStatement(query);
 			for (int i = 0; i < selectUserNos.length; i++) {
-				pstmt.setInt(1, selectUserNos[i]);
+				String[] tempUserNo = selectUserNos[i].split("/");
+				pstmt.setInt(1, Integer.parseInt(tempUserNo[0]));
 				pstmt.addBatch();
 			}
 			result = pstmt.executeBatch();
@@ -542,7 +549,7 @@ public class UserDAO {
 		return result;
 	}
 
-	public int[] writeLockReason(Connection con, int[] selectUserNos, int adminUserNo, String title, String content) {
+	public int[] writeLockReason(Connection con, String[] selectUserNos, int adminUserNo, String title, String content, String lockDate) {
 		PreparedStatement pstmt = null;
 		int result[] = null;
 		String query = prop.getProperty("writeLockReason");	
@@ -619,10 +626,438 @@ public class UserDAO {
 			
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
+
 			e.printStackTrace();
 		} finally{
 			close(pstmt);
 		}
 		return result;
+	}
+
+  public int[] writeLockReason(Connection con, String[] selectUserNos, int adminUserNo, String title, String content, String lockDate) {
+		PreparedStatement pstmt = null;
+		int result[] = null;
+		String query = prop.getProperty("writeLockReason");
+		
+		String[] tempDate = lockDate.split("-");
+		java.text.SimpleDateFormat format = new java.text.SimpleDateFormat("yyyy/MM/dd");
+		
+		java.util.Date date = null;
+		try {
+			date = format.parse(tempDate[0]+"/"+tempDate[1]+"/"+tempDate[2]);
+		} catch (ParseException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		java.sql.Date date2 = new java.sql.Date(date.getTime());
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			for (int i = 0; i < selectUserNos.length; i++) {
+				pstmt.setInt(1, adminUserNo);
+				pstmt.setString(2, "("+selectUserNos[i]+")"+title);
+				pstmt.setString(3, content);
+				pstmt.setDate(4, date2);
+				pstmt.addBatch();
+			}
+			result = pstmt.executeBatch();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally{
+			close(pstmt);
+		}
+		return result;
+	}
+  
+	public int[] writeDeleteReason(Connection con, String[] selectUserNos, int adminUserNo, String title,
+			String content) {
+		PreparedStatement pstmt = null;
+		int result[] = null;
+		String query = prop.getProperty("writeDeleteReason");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			for (int i = 0; i < selectUserNos.length; i++) {
+				pstmt.setInt(1, adminUserNo);
+				pstmt.setString(2, "("+selectUserNos[i]+")"+title);
+				pstmt.setString(3, content);
+				pstmt.addBatch();
+			}
+			result = pstmt.executeBatch();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally{
+			close(pstmt);
+		}
+		return result;
+	}
+
+	public int getListCountUserId(Connection con, String value) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String query = prop.getProperty("listCountUserId");
+
+		int listCount = 0;
+
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, "%"+value+"%");
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				listCount = rs.getInt(1);
+			}
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(rs);
+			close(pstmt);
+		}
+		return listCount;
+	}
+
+	public int getListCountUserStatus(Connection con, String value) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String query = prop.getProperty("listCountUserStatus");
+
+		int listCount = 0;
+
+		try {
+			pstmt = con.prepareStatement(query);
+			if(value.equals("dia")){
+				pstmt.setInt(1, 0);
+			} else if(value.equals("nomal")){
+				pstmt.setInt(1, 1);
+			} else if(value.equals("leave")){
+				pstmt.setInt(1, 2);
+			} else {
+				pstmt.setInt(1, 4);
+			}
+			
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				listCount = rs.getInt(1);
+			}
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(rs);
+			close(pstmt);
+		}
+		return listCount;
+	}
+
+	public int getListCountUserGrade(Connection con, String value) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String query = prop.getProperty("listCountUserGrade");
+
+		int listCount = 0;
+
+		try {
+			pstmt = con.prepareStatement(query);
+			if(value.equals("nonCer")){
+				pstmt.setInt(1, 0);
+			} else if(value.equals("nomal")){
+				pstmt.setInt(1, 1);
+			} else if(value.equals("cer")){
+				pstmt.setInt(1, 2);
+			} else {
+				pstmt.setInt(1, 3);
+			}
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				listCount = rs.getInt(1);
+			}
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(rs);
+			close(pstmt);
+		}
+		return listCount;
+	}
+
+	public ArrayList<User> selectMemberListForUserNo(Connection con, int currentPage, int limit, String value) {
+		// TODO Auto-generated method stub
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		User u = null;
+		ArrayList<User> mlist = null;
+		String query = prop.getProperty("selectMemberOne");
+		
+		try {
+			
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, Integer.parseInt(value));
+			rs = pstmt.executeQuery();
+			
+			mlist = new ArrayList<User>();
+			if(rs.next()){
+				u = new User();
+				u.setUser_no(rs.getInt("user_no"));
+				u.setEmail(rs.getString("email"));
+				u.setUser_pwd(rs.getString("user_pwd"));
+				u.setUser_type(rs.getInt("user_type"));
+				u.setUser_name(rs.getString("user_name"));
+				u.setPhone(rs.getString("phone"));
+				u.setBirthday(rs.getDate("birthday"));
+				u.setGender(rs.getString("gender"));
+				u.setAddress(rs.getString("address"));
+				u.setSms_chk(rs.getString("sms_chk"));
+				u.setEmail_chk(rs.getString("email_chk"));
+				u.setEnrollDate(rs.getDate("enrolldate"));
+				u.setNickname(rs.getString("nickname"));
+				u.setUser_grade(rs.getInt("user_grade"));
+				u.setPet_auth(rs.getString("pet_auth"));
+				u.setUser_status(rs.getInt("user_status"));
+				u.setFile_no(rs.getInt("file_no"));
+				u.setEmail_hash(rs.getString("email_hash"));
+				u.setArticle_no(rs.getInt("article_no"));
+				
+				mlist.add(u);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(rs);
+			close(pstmt);
+		}
+		return mlist;
+	}
+
+	public ArrayList<User> selectMemberListForUserId(Connection con, int currentPage, int limit, String value) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		User u = null;
+		ArrayList<User> mlist = null;
+		String query = prop.getProperty("searchMemberForName");
+		
+		try {
+			
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, "%"+value+"%");
+			rs = pstmt.executeQuery();
+			
+			mlist = new ArrayList<User>();
+			
+			while(rs.next()){
+				System.out.println("시행");
+				u = new User();
+				u.setUser_no(rs.getInt("user_no"));
+				u.setEmail(rs.getString("email"));
+				u.setUser_pwd(rs.getString("user_pwd"));
+				u.setUser_type(rs.getInt("user_type"));
+				u.setUser_name(rs.getString("user_name"));
+				u.setPhone(rs.getString("phone"));
+				u.setBirthday(rs.getDate("birthday"));
+				u.setGender(rs.getString("gender"));
+				u.setAddress(rs.getString("address"));
+				u.setSms_chk(rs.getString("sms_chk"));
+				u.setEmail_chk(rs.getString("email_chk"));
+				u.setEnrollDate(rs.getDate("enrolldate"));
+				u.setNickname(rs.getString("nickname"));
+				u.setUser_grade(rs.getInt("user_grade"));
+				u.setPet_auth(rs.getString("pet_auth"));
+				u.setUser_status(rs.getInt("user_status"));
+				u.setFile_no(rs.getInt("file_no"));
+				u.setEmail_hash(rs.getString("email_hash"));
+				u.setArticle_no(rs.getInt("article_no"));
+				
+				mlist.add(u);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(rs);
+			close(pstmt);
+		}
+		return mlist;
+	}
+
+	public ArrayList<User> selectMemberListForUserStatus(Connection con, int currentPage, int limit, String value) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		User u = null;
+		ArrayList<User> mlist = null;
+		String query = prop.getProperty("searchMemberForStatus");
+		
+		try {
+			
+			pstmt = con.prepareStatement(query);
+			if(value.equals("dia")){
+				pstmt.setInt(1, 0);
+			} else if(value.equals("nomal")){
+				pstmt.setInt(1, 1);
+			} else if(value.equals("leave")){
+				pstmt.setInt(1, 2);
+			} else {
+				pstmt.setInt(1, 4);
+			}
+			rs = pstmt.executeQuery();
+			
+			mlist = new ArrayList<User>();
+			while(rs.next()){
+				u = new User();
+				u.setUser_no(rs.getInt("user_no"));
+				u.setEmail(rs.getString("email"));
+				u.setUser_pwd(rs.getString("user_pwd"));
+				u.setUser_type(rs.getInt("user_type"));
+				u.setUser_name(rs.getString("user_name"));
+				u.setPhone(rs.getString("phone"));
+				u.setBirthday(rs.getDate("birthday"));
+				u.setGender(rs.getString("gender"));
+				u.setAddress(rs.getString("address"));
+				u.setSms_chk(rs.getString("sms_chk"));
+				u.setEmail_chk(rs.getString("email_chk"));
+				u.setEnrollDate(rs.getDate("enrolldate"));
+				u.setNickname(rs.getString("nickname"));
+				u.setUser_grade(rs.getInt("user_grade"));
+				u.setPet_auth(rs.getString("pet_auth"));
+				u.setUser_status(rs.getInt("user_status"));
+				u.setFile_no(rs.getInt("file_no"));
+				u.setEmail_hash(rs.getString("email_hash"));
+				u.setArticle_no(rs.getInt("article_no"));
+				
+				mlist.add(u);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(rs);
+			close(pstmt);
+		}
+		return mlist;
+	}
+
+	public ArrayList<User> selectMemberListForUserGrade(Connection con, int currentPage, int limit, String value) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		User u = null;
+		ArrayList<User> mlist = null;
+		String query = prop.getProperty("searchMemberForGrade");
+		
+		try {
+			
+			pstmt = con.prepareStatement(query);
+			if(value.equals("nonCer")){
+				pstmt.setInt(1, 0);
+			} else if(value.equals("nomal")){
+				pstmt.setInt(1, 1);
+			} else if(value.equals("cer")){
+				pstmt.setInt(1, 2);
+			} else {
+				pstmt.setInt(1, 3);
+			}
+
+			rs = pstmt.executeQuery();
+			
+			mlist = new ArrayList<User>();
+			while(rs.next()){
+				u = new User();
+				u.setUser_no(rs.getInt("user_no"));
+				u.setEmail(rs.getString("email"));
+				u.setUser_pwd(rs.getString("user_pwd"));
+				u.setUser_type(rs.getInt("user_type"));
+				u.setUser_name(rs.getString("user_name"));
+				u.setPhone(rs.getString("phone"));
+				u.setBirthday(rs.getDate("birthday"));
+				u.setGender(rs.getString("gender"));
+				u.setAddress(rs.getString("address"));
+				u.setSms_chk(rs.getString("sms_chk"));
+				u.setEmail_chk(rs.getString("email_chk"));
+				u.setEnrollDate(rs.getDate("enrolldate"));
+				u.setNickname(rs.getString("nickname"));
+				u.setUser_grade(rs.getInt("user_grade"));
+				u.setPet_auth(rs.getString("pet_auth"));
+				u.setUser_status(rs.getInt("user_status"));
+				u.setFile_no(rs.getInt("file_no"));
+				u.setEmail_hash(rs.getString("email_hash"));
+				u.setArticle_no(rs.getInt("article_no"));
+				
+				mlist.add(u);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(rs);
+			close(pstmt);
+		}
+		return mlist;
+	}
+
+	public ImgFile selectUserProfile(Connection con, int file_no) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		ImgFile img = null;
+		String query = prop.getProperty("selectProfileImg");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, file_no);
+			
+			rs = pstmt.executeQuery();
+			img = new ImgFile();
+			if(rs.next()){
+				img.setFile_no(rs.getInt("file_no"));
+				img.setFile_date(rs.getDate("file_date"));
+				img.setFile_name(rs.getString("file_name"));
+				img.setFile_use(rs.getInt("file_use"));
+				img.setFile_path(rs.getString("file_path"));
+				img.setFile_dalete(rs.getString("file_delete"));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(rs);
+			close(pstmt);
+		}
+		return img;
+		
+	}
+
+	public LoginHistory selectLoginHistory(Connection con, int userNo) {
+		// TODO Auto-generated method stub
+		PreparedStatement pstmt = null;
+		LoginHistory lh = null;
+		ResultSet rs = null;
+		String query = prop.getProperty("selectLoginHistory");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, userNo);
+			
+			rs= pstmt.executeQuery();
+			lh = new LoginHistory();
+			if(rs.next()){
+				lh.setUserNo(rs.getInt("user_no"));
+				lh.setLoginDate(rs.getDate("login_date"));
+				lh.setLoginIp(rs.getString("login_ip"));
+				lh.setLocation(rs.getString("location"));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(rs);
+			close(pstmt);
+		}
+		
+		return lh;
 	}
 }
