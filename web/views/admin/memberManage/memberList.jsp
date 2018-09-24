@@ -117,7 +117,7 @@
 					%>
 					<tr align="center">
 						<input type="hidden" value="<%=mlist.get(i).getUser_no()%>">
-						<td><input onclick="event.cancelBubble=true" type="checkbox" name="selectUserNo" class="childCheck" value="<%=mlist.get(i).getUser_no()%>"></td>
+						<td><input onclick="event.cancelBubble=true" type="checkbox" name="selectUserNo" class="childCheck" value="<%=mlist.get(i).getUser_no()%>/<%=mlist.get(i).getEmail()%>"></td>
 						<td><%=mlist.get(i).getUser_no()%></td>
 						<td><%=mlist.get(i).getEmail()%></td>
 						<td><%=mlist.get(i).getUser_name()%></td>
@@ -255,39 +255,116 @@
 					<option value="grade">등급</option>
 				</select>
 				<div class="userNoSearch search"> 
-				 	<input class="form-control" type="search">
-				 	<button name="noSearchBtn" class="btn btn-default" style="display:inline-block">검색하기</button>
+				 	<input class="form-control" type="search" id="userNoText">
+				 	<button name="noSearchBtn" id="searchBtnUserNo" class="btn btn-default" style="display:inline-block">검색하기</button>
 				 </div>
+				 
 				 <div class="userNameSearch" style="display:none;">
-				 	<input class="form-control" type="search">
-				 	<button name="nameSearchBtn" class="btn btn-default" style="display:inline-block">검색하기</button>
+				 	<input class="form-control" type="search" id="userIdText">
+				 	<button name="nameSearchBtn" id="searchBtnUserId" class="btn btn-default" style="display:inline-block">검색하기</button>
 				 </div>
 				 
 				 <div class="userStausSearch search" style="display:none;">
-				 	<select class="form-control" name="userStatus">
+				 	<select class="form-control" name="userStatus" id="userSearchStatus">
 				 		<option value="dia">휴면</option>
 				 		<option value="nomal">정상</option>
 				 		<option value="leave">탈퇴</option>
 				 		<option value="faulty">불량</option>
 				 	</select>
-				 	<button name="statusSearchBtn" class="btn btn-default" style="display:inline-block">검색하기</button>
+				 	
+				 	<button name="statusSearchBtn" id="searchBtnUserStatus" class="btn btn-default" style="display:inline-block">검색하기</button>
 				 </div>
-				 
+				
 				 <div class="userGradeSearch search" style="display:none;">
-				 	<select class="form-control" name="userGrade">
+				 	<select class="form-control" name="userGrade" id="userSearchGrade">
 				 		<option value="nonCer">미인증 회원</option>
 				 		<option value="nomal">기본 회원</option>
 				 		<option value="cer">의뢰 가능 회원</option>
 				 		<option value="pet">펫시터</option>
 				 	</select>
-				 	<button name="userSearchBtn" class="btn btn-default" style="display:inline-block">검색하기</button>
+				 	<button name="userSearchBtn" id="searchBtnUserGrade" class="btn btn-default" style="display:inline-block">검색하기</button>
 				 </div>
-				
+				 <script>
+				 	$('#searchBtnUserNo').click(function(){
+				 		var value = document.getElementById("userNoText").value;
+				 		location.href="<%=request.getContextPath()%>/searchMember.me?status=userNo&value="+value;
+				 	})
+				 	
+				 	$('#searchBtnUserId').click(function(){
+				 		var value = document.getElementById("userIdText").value;
+				 		location.href="<%=request.getContextPath()%>/searchMember.me?status=userId&value="+value;
+				 	})
 			
-				<button type="button" id="delete" class="btn btn-danger" name="delete" style="display:inline-block">회원 탈퇴</button>
-				<button type="button" data-toggle="modal" data-target="#myModal" class="btn btn-warning" name="delete" style="display:inline-block">회원 제재</button>
+				 	$('#searchBtnUserStatus').click(function(){
+				 		var value = document.getElementById("userSearchStatus").value;
+				 		location.href="<%=request.getContextPath()%>/searchMember.me?status=userStatus&value="+value;
+				 	})
+				 	
+				 	$('#searchBtnUserGrade').click(function(){
+				 		var value = document.getElementById("userSearchGrade").value;
+				 		location.href="<%=request.getContextPath()%>/searchMember.me?status=userGrade&value="+value;
+				 	})
+				 </script>
+			
+				<button type="button" data-toggle="modal" data-target="#myModal2" class="btn btn-danger" style="display:inline-block">회원 탈퇴</button>
+				<button type="button" data-toggle="modal" data-target="#myModal" class="btn btn-warning" style="display:inline-block">회원 제재</button>
 			</div>
 			
+			<div class="modal fade" id="myModal2" role="dialog">
+				<div class="modal-dialog modal-lg">
+			     	<div class="modal-content">
+			        	<div class="modal-header">
+			         	 <button type="button" class="close" data-dismiss="modal">&times;</button>
+			         	 <h4 class="modal-title">회원 탈퇴하기</h4>
+			         	  <select class="form-control" id="selectDelete">
+			         	 	<option value="직접입력">직접입력</option>
+			         	 	<option value="타사이트 이용">타사이트 이용</option>
+			         	 	<option value="서비스 이용 중단">서비스 이용 중단</option>
+			         	 	<option value="서비스 불만족">서비스 불만족</option>
+						</select>
+			        	</div>
+			        <div class="modal-body">
+			         	
+			         	 	<textarea class="form-control" id="deleteArea" style="width : 100% !important; height:200px !important;">
+			         	 	
+			         	 	</textarea>
+			         	 
+			        </div>
+			        <script type="text/javascript">
+			        	$(function(){
+			        		$('#selectDelete').change(function(){
+			        			console.log($('#deleteArea'))
+			        			var textarea = document.getElementById("deleteArea");
+			        			if($('#selectDelete').val() == '타사이트 이용'){
+			        				textarea.value = "이름자를 어머니, 소녀들의 별에도 하나에 시인의 써 멀리 까닭입니다. 까닭이요, 덮어 아직 어머니, 언덕 아무 옥 너무나 딴은 있습니다. 써 새겨지는 책상을 까닭입니다. 가을 봄이 이름자 밤을 걱정도 마리아 별이 이름과, 까닭입니다. 사랑과 위에 내 당신은 노새, 어머님, 어머니, 이름자 못 봅니다. 토끼, 어머님, 별을 새겨지는 이름자를 멀듯이, 언덕 거외다. \n" 
+        								+"하나에 별 가난한 이름을 추억과 까닭입니다. 하나에 하나에 사랑과 풀이 듯합니다. 묻힌 소녀들의 하나에 가난한 멀듯이, 무엇인지 별 가을 당신은 듯합니다. 된 잔디가 아름다운 하나에 벌써 패, 나의 봅니다. 별 비둘기, 어머니, 경, 계십니다. \n " 
+        								+"아무 라이너 이름자 많은 언덕 잔디가 밤을 우는 애기 있습니다. 내 오면 새워 다 별에도 위에도 부끄러운 버리었습니다. 언덕 옥 애기 이국 불러 내 계십니다. 많은 속의 까닭이요, 봅니다. 나는 하나의 이웃 것은 쉬이 다하지 흙으로 듯합니다. 이름자를 위에 패, 시인의 계십니다. 이름을 딴은 별들을 토끼, 별 써 계십니다.";
+			        			} else if($('#selectDelete').val() == '서비스 이용 중단'){
+			        				textarea.value = "찾아다녀도, 안고, 청춘의 자신과 보는 고동을 것이다.\n" 
+			        					+"이상의 황금시대를 가는 거친 든 오아이스도 방지하는 그들에게 웅대한 이것이다. 곳으로 이 속에 아니다.\n"
+			        					+"영원히 듣기만 들어 어디 더운지라 철환하였는가? 바로 옷을 전인 것이다.사랑의 앞이 우리 말이다. 있는 청춘은 싸인 가치를 약동하다.\n" 
+			        					+"없으면 불어 자신과 그들의 청춘의 것이다. 들어 내는 타오르고 과실이 트고, 있는 쓸쓸하랴? 못할 것이 뼈 방황하여도, 아니다. 대한 어디 귀는 아름다우냐? 이성은 주는 끝에 얼마나 교향악이다.이상 구할 때까지 있으며, 이것은 위하여서.\n "
+			        					+"물방아 피부가 없으면, 놀이 인생에 있는 보내는 철환하였는가? 길을 것은 너의 가슴에 인간이 인간의 듣기만 있으랴? 무엇을 하는 있는 만천하의 사는가 갑 관현악이며, 바이며, 뿐이다. 예수는 물방아 바로 갑 있는가? 얼음이 이상은 따뜻한 못할 풀이 유소년에게서 보는 동력은 불어 것이다. 맺어, 속에서 인간의 든 봄바람이다. \n" 
+        								+"하나에 별 가난한 이름을 추억과 까닭입니다. 하나에 하나에 사랑과 풀이 듯합니다. 묻힌 소녀들의 하나에 가난한 멀듯이, 무엇인지 별 가을 당신은 듯합니다. 된 잔디가 아름다운 하나에 벌써 패, 나의 봅니다. 별 비둘기, 어머니, 경, 계십니다. \n " 
+        								+"아무 라이너 이름자 많은 언덕 잔디가 밤을 우는 애기 있습니다. 내 오면 새워 다 별에도 위에도 부끄러운 버리었습니다. 언덕 옥 애기 이국 불러 내 계십니다. 많은 속의 까닭이요, 봅니다. 나는 하나의 이웃 것은 쉬이 다하지 흙으로 듯합니다. 이름자를 위에 패, 시인의 계십니다. 이름을 딴은 별들을 토끼, 별 써 계십니다.\n";
+				        		} else if($('#selectDelete').val() == '서비스 불만족'){
+				        			textarea.value ="살 대고, 우는 것이다. 산야에 얼마나 뜨거운지라, 인생을 설레는 현저하게 얼마나 봄바람을 기쁘며, 있는가? 눈에 품었기 피어나는 과실이 청춘은 공자는 갑 별과 교향악이다.\n 없으면, 바이며, 인간의 보이는 가는 이 풍부하게 그리하였는가? 인류의 얼음에 하는 더운지라 얼음이 하였으며, 이상이 철환하였는가?\n" 
+				        					+"그들을 대고, 곳으로 그들의 뭇 봄날의 뿐이다. 살 길지 간에 것이다.\n 튼튼하며, 트고, 방황하여도, 노래하며 있으며, 피다. 것은 그들에게 부패를 예가 노년에게서 실로 있으랴? 우리의 날카로우나 품었기 품으며, 이상 말이다. 이상은 수 낙원을 타오르고 가진 피고 운다.";
+			        			} else {
+			        				textarea.value="";
+			        			}
+			        			
+			        		})
+			        	})
+			        </script>
+			       		<div class="modal-footer">
+			       			<button type="button" class="btn btn-danger" data-dismiss="modal" id="delete" name="delete">회원 탈퇴</button>
+			         	 	<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			        	</div>
+			  		</div>
+					</div>
+			  </div>
+		
 			<div class="modal fade" id="myModal" role="dialog">
 				<div class="modal-dialog modal-lg">
 			     	<div class="modal-content">
@@ -300,6 +377,7 @@
 			         	 	<option value="불필요한 게시글 도배">불필요한 게시글 도배</option>
 			         	 	<option value="신고누적">신고누적</option>
 						</select>
+						<label>제재 날짜 선택 : </label><input class="form-control" type="date" id="lockDate">
 			        	</div>
 			        <div class="modal-body">
 			         	
@@ -341,7 +419,7 @@
 			        	</div>
 			  		</div>
 					</div>
-			  	</div>
+			  </div>
 			</div>
 			
 			<script>
@@ -387,7 +465,8 @@
 						var rowid = '';
 						var values = "";
 						var cnt = 0;
-						
+						var title = $('#selectDelete').val();
+						var textarea = document.getElementById("deleteArea").value;
 						for(var i = 0; i < len ; i ++){
 							if(checkBoxs[i].checked == true){
 								checkCnt++;
@@ -418,7 +497,7 @@
 							alert('탈퇴 처리할 회원을 선택해 주세요.')
 							return;
 						}
-						location.href="<%=request.getContextPath()%>/deleteMember.me?selecUserNo="+rowid;
+						location.href="<%=request.getContextPath()%>/deleteMember.me?selecUserNo="+rowid+"&title="+title+"&content="+textarea;
 					})
 					
 					
@@ -433,7 +512,7 @@
 						var cnt = 0;
 						var title = $('#selectLock').val();
 						var textarea = document.getElementById("lockArea").value;
-						
+						var lockDate = document.getElementById("lockDate").value;
 						for(var i = 0; i < len ; i ++){
 							if(checkBoxs[i].checked == true){
 								checkCnt++;
@@ -464,8 +543,10 @@
 							alert('제재 처리할 회원을 선택해 주세요.')
 							return;
 						}
-						location.href="<%=request.getContextPath()%>/lockMember.me?selecUserNo="+rowid+"&title="+title+"&content="+textarea;
+						location.href="<%=request.getContextPath()%>/lockMember.me?selecUserNo="+rowid+"&title="+title+"&content="+textarea+"&lockDate="+lockDate;
 					})
+					
+					$('#ser')
 				})
 			</script>
 		</div>

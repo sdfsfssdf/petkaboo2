@@ -1,6 +1,7 @@
 package com.pkb.member.controller;
 
 import java.io.IOException;
+import java.util.HashMap;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -10,7 +11,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.pkb.member.model.service.UserService;
-import com.pkb.member.model.vo.User;
 
 /**
  * Servlet implementation class SelectOneMemberServlet
@@ -33,13 +33,14 @@ public class SelectOneMemberServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int userNo = Integer.parseInt(request.getParameter("num"));
 		
-		User user = new UserService().selectMemberOne(userNo);
+		
+		HashMap<String,Object> hmap = new UserService().selectMemberOne(userNo);
 		
 		String page = "";
 		
-		if(user != null){
+		if(hmap != null){
 			page = "views/admin/memberManage/memberDetail.jsp";
-			request.setAttribute("user", user);
+			request.setAttribute("userInfo", hmap);
 		} else {
 			page = "views/common/errorPage.jsp";
 			request.setAttribute("msg", "(관리자 페이지)회원 상세조회 실패");
