@@ -1,53 +1,46 @@
 package com.pkb.member.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
-
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import com.pkb.member.model.service.UserService;
-import com.pkb.member.model.vo.ImgFile;
 import com.pkb.member.model.vo.User;
 
 /**
- * Servlet implementation class ModifyMemberMoveServlet
+ * Servlet implementation class ChangePhoneServlet
  */
-@WebServlet("/modify.mb")
-public class ModifyMemberMoveServlet extends HttpServlet {
+@WebServlet("/smsCheck.sc")
+public class ChangePhoneServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-	
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ModifyMemberMoveServlet() {
+    public ChangePhoneServlet() {
         super();
+        // TODO Auto-generated constructor stub
     }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session = request.getSession();
-		User u = (User)session.getAttribute("loginUser");
-		ArrayList<ImgFile> list= new UserService().selectlist(u);
-		String page = "";
-		if(list.get(0).getFile_name()!=null){
-			String fileName = list.get(0).getFile_name();
-			request.setAttribute("fileName", fileName);
-			page = "views/myPage/modifyMemberInfoMain.jsp";
+		String phone = (String)request.getSession().getAttribute("rphone");
+		User loginUser = (User)request.getSession().getAttribute("loginUser");
+		String sms = (String)request.getAttribute("inputNum");
+		System.out.println("dhzl"+sms);
+		int result = new UserService().updatePhone(phone, sms, loginUser);
+		System.out.println("dhzl"+sms);
+		if(result>0){
+			response.sendRedirect("/pkb/views/myPage/modifyMemberInfo.jsp");
 		}else{
-			page = "views/myPage/modifyMemberInfoMain.jsp";
+			response.sendRedirect("views/member/smsCheck.jsp");
 		}
-		RequestDispatcher view = request.getRequestDispatcher(page);
-		view.forward(request, response);
-
+		
 	}
 
 	/**

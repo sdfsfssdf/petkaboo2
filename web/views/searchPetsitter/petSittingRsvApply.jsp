@@ -39,9 +39,9 @@
 	
 	$(function(){
 		$('.allcheck').click(function(){
-			console.log("이건작동함");
+			
 			 if($('.allcheck').prop("checked")){
-				console.log('트루')
+				
 				$("input[type=checkbox]").prop("checked", true);
 			}else{
 				$("input[type=checkbox]").prop("checked", false);
@@ -190,10 +190,10 @@ a:hover {
 			</h2>
 		</div>
 		<br /> <br /> <br /> <br /> <br />
-		<form action="<%=request.getContextPath() %>/insertRsv.rv" method="post">
+		<form action="<%=request.getContextPath() %>/insertCtr.ct" method="post">
 		<div id="ip-style">
-			<label class=howToPs><input type="radio" name="howToPS" value="leavePet" /> 맡기기</label>
-			<label class=howToPs><input type="radio" name="howToPS" value="callingPetsitter"/>부르기 </label>
+			<label class=howToPs><input type="radio" name="contract_status" value="leavePet" /> 맡기기</label>
+			<label class=howToPs><input type="radio" name="contract_status" value="callingPetsitter"/>부르기 </label>
 		</div>
 		<br />
 		<div id="body-div">
@@ -218,12 +218,12 @@ a:hover {
 							src="http://momojeri.com/web/product/big/201607/33_shop1_658629.jpg"
 							class="PSphoto img-circle img-responsive" alt="Responsive image" />
 						</td>
-						<td><label for="">이름 :</label></td>
+						<td><label>&nbsp;&nbsp;&nbsp;&nbsp;이름 : <input type="text" size='18' style="background-color:transparent; border-style:none;" readonly onfocus="this.blur();" ></label></td>
 						<td></td>
 					</tr>
 					<tr>
-						<td><label for="">주소 :</label></td>
-						<td>입력란</td>
+						<td><label>&nbsp;&nbsp;&nbsp;&nbsp;주소 : </label></td>
+						<td><input type="text" size='30' style="background-color:transparent; border-style:none;" readonly onfocus="this.blur();" ></td>
 					</tr>
 
 				</table>
@@ -249,13 +249,13 @@ a:hover {
 							</tr>
 							<tr>
 								<th>도로명주소</th>
-								<td><input type="text" id="roadAddrPart1"
+								<td><input type="text" id="roadAddrPart1" name="useraddress1"
 									style="width: 85%"></td>
 							</tr>
 							<tr>
 								<th>상세주소</th>
-								<td><input type="text" id="addrDetail" style="width: 40%"
-									value=""> <input type="text" id="roadAddrPart2"
+								<td><input type="text" id="addrDetail" name="useraddress2" style="width: 40%"
+									value=""> <input type="text" id="roadAddrPart2" name="useraddress3"
 									style="width: 40%" value=""></td>
 							</tr>
 						</tbody>
@@ -271,23 +271,24 @@ a:hover {
 			<div class="div1 div4">
 				<br />
 				<h4>&nbsp;&nbsp;2.날짜를 알려주세요</h4>
-				&nbsp;&nbsp;&nbsp;&nbsp;<input type="Date" placeholder="시작 날짜 입력"
-					style="width: 200px;" /> - <input type="Date"
-					placeholder="종료 날짜 입력" style="width: 200px;" /> <br /> <br /> <br />
+				&nbsp;&nbsp;&nbsp;&nbsp;
+				<input type="Date" placeholder="시작 날짜 입력"
+					style="width: 200px;" name="startdate"/> - <input type="Date"
+					placeholder="종료 날짜 입력" style="width: 200px;" name="enddate" /> <br /> <br /> <br />
 			</div>
 			<br />
 			<div class="div1 div5">
 				<br />
 
 				<h4>&nbsp;&nbsp;3.연락받을 휴대전화 번호를 알려주세요</h4>
-				&nbsp;&nbsp;&nbsp;&nbsp;<select name="phoneNum" id="phoneNum">
+				&nbsp;&nbsp;&nbsp;&nbsp;<select name="phoneNum1" id="phoneNum">
 					<option value="">010</option>
 					<option value="">011</option>
 					<option value="">017</option>
 					<option value="">016</option>
 					<option value="">019</option>
 				</select> &nbsp;&nbsp;&nbsp;&nbsp;<input type="text"
-					placeholder=" ' - , . / '를 제외한 나머지 번호 입력" style="width: 250px;" />&nbsp;&nbsp;
+					placeholder=" ' - , . / '를 제외한 나머지 번호 입력" name="phoneNum2" style="width: 250px;" />&nbsp;&nbsp;
 				<button class="btn btn-default" type="submit" onclick="">인증</button>
 				<br /> &nbsp;&nbsp;&nbsp;&nbsp;<input type="text"
 					placeholder="인증번호 입력" />&nbsp;&nbsp;
@@ -295,13 +296,7 @@ a:hover {
 				<br /> <br />
 			</div>
 			<br />
-			<!-- <div class="div1 div6">
-			<br />
-				<h4>&nbsp;&nbsp;4.추가 요청 사항을 기재해 주세요</h4>
-				<br />
-				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<textarea name="msg" id="" cols="60" rows="6">내용을 입력해주세요</textarea>
-				<br /><br /><br />
-			</div> -->
+			
 			<br />
 			<fieldset class="div1 f-style">
 				<br /> &nbsp;&nbsp;<label for="">약관을 확인해 주세요</label> <br /> <br />
