@@ -18,7 +18,14 @@ public class ContractService {
 		int result = new ContractDao().insertContractPetsitting(con, c);
 		
 		if(result > 0){
-			commit(con);
+			Contract c2 = new ContractDao().selectContractPetsitting(con, c);
+			if(c2 != null){
+				
+				commit(con);
+			} else {
+				rollback(con);
+				result = 0;
+			}
 			
 		}else{
 			rollback(con);
