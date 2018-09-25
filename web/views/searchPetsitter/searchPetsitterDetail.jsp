@@ -134,8 +134,6 @@ td {
 }
 </style>
 <body>
-	<div class="header">
-		<div id="header"></div>
 		<%@include file="/views/common/menubar.jsp"%>
 		<br /><br /><br />
 		<div class="top-body">

@@ -1,10 +1,9 @@
 ﻿<%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
 <head>
-<link href="https://fonts.googleapis.com/css?family=Jua"
-	rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Jua" rel="stylesheet">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>마이페이지 사이드바 메뉴</title>
 <style>
@@ -98,27 +97,25 @@ ul.sub li:hover > ul.sub-sub{display:block;}
 </style>
 </head>
 <body>
-
-	
 				<div class="side-menu">
-
 					<ul id="navi">
-					
 						<li class="group">
+							<%
+							if(loginUser != null && loginUser.getUser_grade() == 3){
+							%>
 							<div class="title">펫시터 관리</div>
 							<ul class="sub">
 								<li><a href="../myPage/petSitterServiceInsertForm.jsp">펫시터 서비스 등록</a></li>
-								<li><a href="#">펫시터 정보 수정</a></li>
+								<li><a href="../myPage/petSitterServiceUpdateForm.jsp">펫시터 정보 수정</a></li>
 								<li><a href="#">수입 현황</a></li>
 								<li><a href="#">돌봄일지</a></li>
 							</ul>
 						</li>
+							<% } %>
 						<li class="group">
 							<div class="title">서비스 관리</div>
 							<ul class="sub">
-
 								<li><a onclick="rsv()">예약현황</a></li>
-
 								<li><a href="#">거래내역</a></li>
 								<li><a href="/pkb/views/myPage/onebyoneQNAWrite.jsp" >1:1 문의</a></li>
 								<li><a href="<%=request.getContextPath()%>/selectOnebyOneList.bo">내 질문 내역</a></li>
