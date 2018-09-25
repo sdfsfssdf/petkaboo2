@@ -77,12 +77,15 @@
 		<p>예약현황을 확인 할 수 있습니다.</p>
 		<div class="listInfoArea">
 		
-		<!--  이거 테이블도 여러개지만 반복문으로 처리할 것... -->
-		<%-- <form action="<%=request.getContextPath()%>/reservation.ps" method="get"> --%>
-			
-		
-			<table class="tableArea" >
 			<% for(int i=0;i<rsvList.size();i++){ %>
+		<!--  이거 테이블도 여러개지만 반복문으로 처리할 것... -->
+		<form action="<%=request.getContextPath()%>/review.wr" method="post">
+			
+		<input type="hidden" name="contractNo" value="<%=rsvList.get(i).getContract_no() %>">
+		<input type="hidden" name="petName" value="<%=rsvList.get(i).getPet_name() %>">
+		<input type="hidden" name="userName" value="<%=loginUser.getUser_name() %>">
+			<table class="tableArea" >
+		
 				<tr>
 					<td class="imgArea" rowspan="4" width="150px">img</td>
 					<td>이름 : <%=rsvList.get(i).getUser_name() %></td>
@@ -98,14 +101,16 @@
 					<td colspan="3"><label>에약번호 : <%=rsvList.get(i).getContract_no() %> </label></td>
 				</tr>
 				<tr>
-					<td colspan="3"><button type="submit" class="btn btn-warning" data-toggle="modal" data-target="#myModal">예약보기</button>
-					<button type="submit" class="btn btn-success">바로예약</button>
-					<button type="submit" class="btn btn-info" ><a onclick="reviewWriting()">리뷰남기기</a></button></td>
+					<td colspan="3"><button type="button" class="btn btn-warning" data-toggle="modal" data-target="#myModal">예약보기</button>
+					<button type="button" class="btn btn-success">바로예약</button>
+					<button type="submit" class="btn btn-info" >리뷰남기기</button></td>
 				</tr>
 				
-				<%} %>
+
 			</table>
-			<!-- </form> -->
+			</form>
+			
+							<%} %>
 			<br><br>
 			
 		</div>
@@ -158,10 +163,15 @@
   </div>
   
   <script>
-  	function reviewWriting(){
-  		
-  		location.href = "<%=request.getContextPath()%>/reservation.ps";
-  	}
+  	<%-- function reviewWriting(){
+  		alert("ddd");
+  		location.href = "reviewWrite.jsp?contractNo=" + "<%=rsvList.get(i).getContract_no() %>"
+  				+"&petName=" + "<%=rsvList.get(i).getPet_name() %>"
+  				";
+  		<input type="hidden" name="contractNo" value="<%=rsvList.get(i).getContract_no() %>">
+		<input type="hidden" name="petName" value="<%=rsvList.get(i).getPet_name() %>">
+		<input type="hidden" name="userName" value="<%=loginUser.getUser_name() %>">
+  	} --%>
   </script>
   
 </body>
