@@ -40,10 +40,8 @@ public class UserService {
 
 		int result = new UserDAO().joinUser(con, u);
 
-		System.out.println();
 		if (result > 0) {
 			commit(con);
-
 		} else {
 			rollback(con);
 		}
@@ -357,5 +355,15 @@ public class UserService {
 		close(con);
 
 		return mlist;
+	}
+
+	public int setCyberMoney(User u) {
+		Connection con= getConnection();
+		
+		int result = new UserDAO().setCyberMoney(con, u);
+		
+		close(con);
+		
+		return 0;
 	}
 }

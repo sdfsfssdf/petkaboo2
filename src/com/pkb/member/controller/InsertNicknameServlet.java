@@ -58,8 +58,8 @@ public class InsertNicknameServlet extends HttpServlet {
 			f.setFile_name(upload);
 			f.setFile_path(finalPath);
 			f.setUser_no(Integer.valueOf(((User) (request.getSession().getAttribute("loginUser"))).getUser_no()));
-			
-			result = new FileService().InsertProfile(f);
+			int UserNO= f.getUser_no();
+			result = new FileService().InsertProfile(f, UserNO);
 		}else if(nickname != null && upload ==null){
 			HttpSession session = request.getSession();
 			User u = (User)session.getAttribute("loginUser");
@@ -96,6 +96,9 @@ public class InsertNicknameServlet extends HttpServlet {
 				u.setNickname(nickname);
 				// 키값은 중복이 안된다. 
 				session.setAttribute("loginUser", u);
+				if(fileName == null){
+					fileName = "profileBasicImage.png";
+				}
 				request.setAttribute("fileName", fileName);
 				page = "views/myPage/modifyMemberInfoMain.jsp";
 		}else if(result == 0){

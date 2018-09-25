@@ -1061,4 +1061,57 @@ public class UserDAO {
 		
 		return lh;
 	}
+
+	public int setUserFileNO(Connection con, User u) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+
+		String query = prop.getProperty("setUserFileNO");
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, u.getUser_no());
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally{
+			close(pstmt);
+		}
+		return result;
+	}
+	
+	public int setUserFileNO(Connection con, int UserNO) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+
+		String query = prop.getProperty("setUserFileNO");
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, UserNO);
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally{
+			close(pstmt);
+		}
+		return result;
+	}
+
+	public int setCyberMoney(Connection con, User u) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("setCyberMoney");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally{
+			close(pstmt);
+		}
+		return result;
+	}
+
 }

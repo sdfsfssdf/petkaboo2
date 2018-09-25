@@ -40,7 +40,12 @@ public class FileService {
 		result2 = new UserDAO().changeNickname(con, u);
 		
 		if(result1+result2>0){
-			commit(con);
+			int result3 = new UserDAO().setUserFileNO(con, u);
+			if(result3>0){
+				commit(con);				
+			}else{
+				rollback(con);
+			}
 		}else{
 			rollback(con);
 		}
@@ -56,7 +61,12 @@ public class FileService {
 		result = new UserDAO().changeNickname(con, u);
 		
 		if(result > 0){
-			commit(con);
+			int result1 = new UserDAO().setUserFileNO(con, u);
+			if(result1>0){
+				commit(con);				
+			}else{
+				rollback(con);
+			}
 		}else{
 			rollback(con);
 		}
@@ -65,7 +75,7 @@ public class FileService {
 		return result;
 	}
 	
-	public int InsertProfile(ImgFile f){
+	public int InsertProfile(ImgFile f, int UserNO){
 		Connection con = getConnection();
 		
 		int result = 0;
@@ -73,7 +83,12 @@ public class FileService {
 		result = new UserDAO().insertProfile(con, f);
 		
 		if(result > 0){
-			commit(con);
+			int result1 = new UserDAO().setUserFileNO(con, UserNO);
+			if(result1>0){
+				commit(con);				
+			}else{
+				rollback(con);
+			}
 		}else{
 			rollback(con);
 		}

@@ -38,11 +38,14 @@ public class ModifyMemberMoveServlet extends HttpServlet {
 		User u = (User)session.getAttribute("loginUser");
 		ArrayList<ImgFile> list= new UserService().selectlist(u);
 		String page = "";
-		if(list.get(0).getFile_name()!=null){
+
+		if(list.size() > 0){
 			String fileName = list.get(0).getFile_name();
 			request.setAttribute("fileName", fileName);
 			page = "views/myPage/modifyMemberInfoMain.jsp";
 		}else{
+			String fileName = "profileBasicImage.png";
+			request.setAttribute("fileName", fileName);
 			page = "views/myPage/modifyMemberInfoMain.jsp";
 		}
 		RequestDispatcher view = request.getRequestDispatcher(page);

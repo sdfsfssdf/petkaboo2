@@ -294,7 +294,11 @@ a:hover, a:active, a:focus {
 							<br>
 							<!-- 사진부분 -->
 							<div class=circleimg>
+								<%if(fileName != null) {%>
 								<Img class=profileImg  src="<%=request.getContextPath()%>/images/profileImagesUpload/<%=fileName%>">
+ 								<%} else{ %>
+ 								<Img class=profileImg src="<%=request.getContextPath()%>/images/profileImagesUpload/profileBasicImage.png">
+ 								<%} %>
  							</div>
 							<!-- 닉네임 -->
 							<div class=nicknamespan>
