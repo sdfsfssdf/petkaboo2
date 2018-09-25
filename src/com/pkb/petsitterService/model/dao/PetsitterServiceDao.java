@@ -198,5 +198,85 @@ public class PetsitterServiceDao {
 		
 		return p;
 	}
+
+	public ArrayList<PetsitterService> searchList(Connection con, String searchKeyword, String gender, String arrayCondition) {
+		// 페이징 처리시에는 PrepareStatement 사용
+		PreparedStatement pstmt = null;
+		
+		ResultSet rset = null;
+		ArrayList<PetsitterService> list = null;
+		
+		String address = null;
+		String pet_category = null;
+		String nickname = null;
+		
+		if(searchKeyword == null){
+			address = "";
+			pet_category = "";
+			nickname = "";
+		} else {
+			address = searchKeyword;
+			pet_category = searchKeyword;
+			nickname = searchKeyword;
+		}
+		
+		if(gender == null){
+			gender = "";
+		}
+		
+		if(arrayCondition == null){
+			arrayCondition = "";
+		}
+		
+		String query = prop.getProperty("searchList");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, "%" + nickname + "%");
+			pstmt.setString(2, gender);
+			pstmt.setString(3, "%" + address + "%");
+			// pstmt.setString(4, pet_category);
+			
+			System.out.println(query);
+			
+			rset = pstmt.executeQuery();
+			list = new ArrayList<PetsitterService>();
+			
+			while(rset.next()){
+				PetsitterService p = new PetsitterService();
+				
+				p.setPet_service_regno(rset.getInt("pet_service_regno"));
+				p.setUser_no(rset.getInt("user_no"));
+				p.setUser_name(rset.getString("user_name"));
+				p.setNickname(rset.getString("nickname"));
+				p.setAddress(rset.getString("address"));
+				p.setPhone(rset.getString("phone"));
+				p.setGender(rset.getString("gender"));
+				p.setContract_type(rset.getString("contract_type"));
+				p.setPet_category(rset.getInt("pet_category"));
+				p.setPet_count(rset.getInt("pet_count"));
+				p.setService_charge(rset.getInt("service_charge"));
+				p.setContract_days(rset.getString("contract_days"));
+				p.setContract_start(rset.getDate("contract_start"));
+				p.setContract_end(rset.getDate("contract_end"));
+				p.setService_detail(rset.getString("service_detail"));
+				p.setService_restrict(rset.getString("service_restrict"));
+				
+				list.add(p);
+			}
+			
+			// 테스트 코드
+			System.out.println("dao : " + list);			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+			close(rset);
+		}
+
+		return list;
+	}
+	
 	
 }

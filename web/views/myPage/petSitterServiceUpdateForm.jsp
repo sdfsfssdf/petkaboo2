@@ -1,12 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
 <head>
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>Petsitting Service Update</title>
 <style>
 .contentArea {
 	margin-top: 80px;
@@ -32,11 +32,16 @@
 </style>
 </head>
 <body>
-	<h1 align="center" id="logo">로고</h1>
-	<br>
-	<%@ include file="WEB-INF/menubar.jsp"%>
-	<%@ include file="WEB-INF/myPageSidebar.jsp"%>
-
+	<%@ include file="/views/common/menubar.jsp"%>
+	<%
+		if(loginUser == null || loginUser.getUser_grade() != 3){
+	%>
+	<script>
+		alert('펫시터 회원만 이용할 수 있습니다!');
+		window.location.href = '<%=request.getContextPath()%>/index.jsp';
+	</script>
+	<% } else {%>
+	<%@ include file="/views/common/sidemenubar.jsp"%>
 	<div class="contentArea">
 		<h2>내 펫시팅 서비스 정보 수정</h2>
 		<p>나의 내가 등록한 펫시팅 서비스 정보를 수정할 수 있습니다.</p>
@@ -95,5 +100,6 @@
 		</div>
 		<br>
 	</div>
+	<% }%>
 </body>
 </html>

@@ -10,12 +10,48 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>PETKABOO - Find Petsitter for your lovely pets</title>
 <style>
+.menubarOuter {
+	margin-top:15px;
+	padding:15px;
+}
 #upperLogo {
 	text-align:center;
+	margin-bottom:30px;
 }
 #upperLoginArea {
 	text-align:right;
 }
+#upperMenu {
+	width:50%;
+	height:50px;
+}
+
+#upperMenu ul{ 
+	list-style-type:none;
+	/* 좌측 여백 없애기 */
+	padding-left:0px;
+	/* 우측 정렬 하기 */
+	float:left;
+}
+
+#upperMenu ul li{
+	display:inline-block;
+	border-left: 2px solid #c0c0c0;
+	/* 테두리와 메뉴 간격 벌리기. padding: 위 오른쪽 아래 왼쪽; */
+	padding: 0px 10px 0px 10px;
+	/* 메뉴와 테두리 사이 간격 벌리기. margin: 위 오른쪽 아래 왼쪽; */
+	margin: 5px 0px 5px 0px;
+	}
+	
+#upperMenu ul li:first-child {
+	/* li의 첫번째 요소의 좌측에는 테두리 없애기 */
+	border-left: none;
+	}
+	
+	a:link {font-size:1.5em; color: #333333;}
+	a:visited {text-decoration: none; color: #333333;}
+	a:active {text-decoration: none; color: #333333;}
+	a:hover {text-decoration: none; color: red;}
 </style>
 </head>
 <body>
@@ -46,8 +82,13 @@
 		<div id="upperLogo">
 			<h1>PETKABOO - Find Petsitter for your lovely pets!</h1>
 		</div>
-		<div id="upperMenu">
-			<h3>실제 상단 메뉴1234 위치 여기</h3>
+		<div class="upperMenu" id="upperMenu">
+		<ul class="menu">
+			<li><a href="<%=request.getContextPath()%>/index.jsp">HOME</a></li>
+			<li><a href="<%=request.getContextPath()%>/PetSitter.all">펫시터 찾기</a></li>
+			<li><a href="#">menu3</a></li>
+			<li><a href="#">menu4</a></li>
+		</ul> 
 		</div>
 	</div>
 </body>

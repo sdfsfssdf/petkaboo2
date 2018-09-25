@@ -49,7 +49,7 @@ public class SelectAllPetsitterService extends HttpServlet {
 			currentPage = Integer.parseInt(request.getParameter("currentPage"));
 		}
 		
-		// BoardService에서 전체 목록 개수를 리턴받음
+		// Service에서 전체 목록 개수를 리턴받음
 		int listCount = new PetsitterMainService().getListCount();
 		// 테스트 코드
 		System.out.println(listCount);
