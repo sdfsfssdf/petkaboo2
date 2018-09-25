@@ -72,12 +72,14 @@
 	<br>
 	<%@ include file="../common/menubar.jsp"%>
 	<%@ include file="../common/sidemenubar.jsp" %>
+	<%int cnt=0; %>
 	<div class="contentArea">
 		<h2>예약현황</h2>
 		<p>예약현황을 확인 할 수 있습니다.</p>
 		<div class="listInfoArea">
 		
 			<% for(int i=0;i<rsvList.size();i++){ %>
+			<%cnt++; %>
 		<!--  이거 테이블도 여러개지만 반복문으로 처리할 것... -->
 		<form action="<%=request.getContextPath()%>/review.wr" method="post">
 			
@@ -133,19 +135,19 @@
         
         <!-- Modal body -->
         <div class="modal-body">
-         <% for(int i=0;i<rsvList.size();i++){ %>
+         
           <div class="modalTop">
          
           	<div class="modalTopImg"></div>
-          	<div class="modalTopContent"><label>이름 : </label><%=rsvList.get(i).getUser_name() %><br>
-          		 <label>주소 : </label><%=rsvList.get(i).getAddress()%> <br>
+          	<div class="modalTopContent"><label>이름 : </label><%=rsvList.get(cnt).getUser_name() %><br>
+          		 <label>주소 : </label><%=rsvList.get(cnt).getAddress()%> <br>
           	</div>	
           </div>
           <br clear="both">
           <div class="modalContent">
-          	<label>예약번호 : </label><%=rsvList.get(i).getContract_no() %><br>
-          	<label>돌봄 시작일 : </label> <%=rsvList.get(i).getContract_start()%> <br>
-          	<label>돌봄 종료일 : </label> <%=rsvList.get(i).getContract_end() %> <br>
+          	<label>예약번호 : </label><%=rsvList.get(cnt).getContract_no() %><br>
+          	<label>돌봄 시작일 : </label> <%=rsvList.get(cnt).getContract_start()%> <br>
+          	<label>돌봄 종료일 : </label> <%=rsvList.get(cnt).getContract_end() %> <br>
          <%--  	<label>반려동물 정보 : </label> <%=rsvList.get(i).getPet_name()%>(<%=rsvList.get(i).getPet_categoryName()%>) <br><!-- tb_petcategory 테이블 조인해야됨 -->
          	<label>총요금 : </label> <%=rsvList.get(i).getService_charge()%> <br> --%><!-- tb_regdetail(펫시터등록상세) 테이블 조인해야됨 -->
           	<label class="modalContentMenu">서비스 진행상황</label>
@@ -154,7 +156,7 @@
           	<label>3. 완료대기</label> <br>
           	<label>4. 완료</label><br>
           </div>
-           <%} %>
+           
         </div>
         
         <!-- Modal footer -->
