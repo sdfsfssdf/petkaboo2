@@ -26,8 +26,20 @@ public class InsertRechargeServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String user_no = request.getParameter("user_no");
+		String pay_method = request.getParameter("pay_method");
+		String paid_amount = request.getParameter("paid_amount");
+		String apply_num = request.getParameter("apply_num");
 		
+		System.out.println(user_no);
+		System.out.println(pay_method);
+		System.out.println(paid_amount);
+		System.out.println(apply_num);
+		
+	/*String json ="{\"user_no\" :" + user_no + ",\"pay_method\" :" + pay_method + ",\"paid_amount\" : " + paid_amount + ",\"apply_num\" : " + apply_num + "}";	
+	System.out.println(json);*/
 	}
+	
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)

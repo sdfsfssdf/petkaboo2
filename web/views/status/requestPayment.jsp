@@ -1,5 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8" import="com.pkb.member.model.vo.*"%>
+<%
+	User user = (User)(session.getAttribute("loginUser"));
+	
+%>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -123,7 +128,7 @@ img {
 		<%
 			if (loginUser != null) {
 		%>
-
+	
 		<h2 style="text-align: center; margin-top: 100px;">
 			<span style="color: rgb(228, 100, 18);"> <strong>
 					수락확인</strong>
@@ -202,11 +207,14 @@ img {
 						style="background-color: transparent; border-style: none;"
 						readonly onfocus="this.blur();"></label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
-					<label class=howToPs><input type="radio" id="card1"
+					 <label class=howToPs><input type="radio" id="card1"
 						value="card" name="howToPS" />&nbsp;카드결제&nbsp;</label>&nbsp;&nbsp;&nbsp;&nbsp;
 
 					<label class=howToPs><input type="radio" id="cash1"
-						value="cash" name="howToPS" />&nbsp;계좌이체&nbsp; </label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						value="cash" name="howToPS" />&nbsp;무통장 입금&nbsp; </label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+
+
 
 					<button id="clickrecharge" background="yellow">충전하기</button>
 					<br />
@@ -214,6 +222,10 @@ img {
 					<br />
 					<button class="btn btn-default btnSt" type="submit">결제하기</button>
 					<button class="btn btn-default btnSt" type="reset">취소</button>
+					
+				
+	
+					
 					<br /> <br />
 				</div>
 
@@ -255,19 +267,16 @@ img {
 	
 	
 		$(function() {
-			$('#clickrecharge')
-					.click(
+			$('#clickrecharge').click(
 							function() {
 								if (!$("input:radio[name=howToPS]:checked")
 										.val()) {
 									alert('충전에 필요한 결제수단을 선택해주세요');
 									return false;
 								} else if ($(
-										"input:radio[name=howToPS]:checked")
-										.val() == "card") {
+										"input:radio[name=howToPS]:checked").val() == "card") {
 
-									IMP
-											.request_pay(
+									IMP.request_pay(
 													{
 														pg : 'jtnet',
 														pay_method : 'card',
@@ -275,25 +284,34 @@ img {
 																+ new Date()
 																		.getTime(),
 														name : '펫카부 펫시팅 서비스',
-														amount : 14000,
-														buyer_email : <%=((User)(session.getAttribute("loginUser"))).getEmail()%>,
-														buyer_name : <%=((User)(session.getAttribute("loginUser"))).getUser_name()%>,
-														buyer_tel : <%=((User)(session.getAttribute("loginUser"))).getPhone()%>,
-														buyer_addr : <%=((User)(session.getAttribute("loginUser"))).getAddress()%>,
-														buyer_postcode : '123-456'
+														amount : 1000,
+														buyer_email : '<%=user.getEmail()%>',
+														buyer_name : '<%=user.getUser_name()%>',
+														buyer_tel :  '<%=user.getPhone()%>',
+														buyer_addr : '<%=user.getAddress()%>',
+														
 													},
 													function(rsp) {
-														if (rsp.success) {
+														
+															if (rsp.success) {
 															//[1] 서버단에서 결제정보 조회를 위해 jQuery ajax로 imp_uid 전달하기
-															jQuery
-																	.ajax(
+															jQuery.ajax(
 																			{
-																				url : "insertRecharge.rc", //cross-domain error가 발생하지 않도록 동일한 도메인으로 전송
+																				url : 'insertRecharge.rc', //cross-domain error가 발생하지 않도록 동일한 도메인으로 전송
 																				type : 'POST',
 																				dataType : 'json',
 																				data : {
-																					imp_uid : rsp.imp_uid
+																					imp_uid : rsp.imp_uid,
+																					paid_amount : rsp.paid_amount ,
+																					merchant_uid : rsp.merchant_uid,
+																					pay_method : rsp.pay_method,
+																					apply_num : rsp.apply_num,
+								
+																					user_no :  <%=user.getUser_no()%>,
 																				//기타 필요한 데이터가 있으면 추가 전달
+																				
+																				
+																				
 																				}
 																			})
 																	.done(
@@ -311,6 +329,9 @@ img {
 																							+ rsp.apply_num;
 
 																					alert(msg);
+																					
+																					window.location = '/insertRecharge.rc';
+																					
 																				} else {
 																					//[3] 아직 제대로 결제가 되지 않았습니다.
 																					//[4] 결제된 금액이 요청한 금액과 달라 결제를 자동취소처리하였습니다.
@@ -325,10 +346,9 @@ img {
 													    }
 													});
 
-								} else {
+								} <%-- else {
 
-									IMP
-											.request_pay(
+									IMP.request_pay(
 													{
 														pg : 'jtnet',
 														pay_method : 'trans',
@@ -337,23 +357,29 @@ img {
 																		.getTime(),
 														name : '펫카부 펫시팅 서비스',
 														amount : 14000,
-														buyer_email : 'iamport@siot.do',
-														buyer_name : '구매자이름',
-														buyer_tel : '010-1234-5678',
-														buyer_addr : '서울특별시 강남구 삼성동',
+														buyer_email : '<%=user.getEmail()%>',
+														buyer_name : '<%=user.getUser_name()%>',
+														buyer_tel : '<%=user.getPhone()%>',
+														buyer_addr : '<%=user.getAddress()%>',
 														buyer_postcode : '123-456'
 													},
 													function(rsp) {
 														if (rsp.success) {
 															//[1] 서버단에서 결제정보 조회를 위해 jQuery ajax로 imp_uid 전달하기
-															jQuery
-																	.ajax(
+															jQuery.ajax(
 																			{
-																				url : "insertPayment.pm", //cross-domain error가 발생하지 않도록 동일한 도메인으로 전송
+																				url : "insertRecharge.rc", //cross-domain error가 발생하지 않도록 동일한 도메인으로 전송
 																				type : 'POST',
 																				dataType : 'json',
 																				data : {
 																					imp_uid : rsp.imp_uid
+																					paid_amount : rsp.paid_amount 
+																					pay_method : rsp.pay_method
+																					merchant_uid : rsp.merchant_uid
+																					apply_num : rsp.apply_num
+																					paid_at : rsp.paid_at
+																					user_no :  <%=user.getUser_no()%>
+																				   
 																				//기타 필요한 데이터가 있으면 추가 전달
 																				}
 																			})
@@ -387,9 +413,9 @@ img {
 													    }
 													});
 
-								}
-							})
-		})
+								} --%>
+							});
+		});
 	</script>
 	<%
 		} else {
