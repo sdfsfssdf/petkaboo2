@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8" import="com.pkb.member.model.vo.*"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 
@@ -13,7 +13,7 @@
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>반려동물 등록<(미완성)</title>
+<title>반려동물 등록</title>
 
 <style>
 body, p, h1, h2, h3, h4, h5, h6, ul, ol, li, dl, dt, dd, table, th, td,
@@ -65,9 +65,9 @@ a:hover, a:active, a:focus {
 #header {
 	float: left;
 	width: 100%;
-	height: 250px;
+	height: 150px;
 	_border: 1px solid blue;
-	background-color: rgb(207, 183, 175);
+	background-color: white;
 }
 
 .intro {
@@ -127,95 +127,89 @@ background-color:#eee;  */
 	background: #e1e1e1
 }
 
-/* 적용 취소 부분 */
-.submitandcancle {
-	text-align: center;
-	margin-top: 20px;
+ input[type=text], select {
+    width: 90%;
+    padding: 12px 20px;
+    margin: 8px 0; 
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    display:inline-block;
+    
 }
 
-#submit, #cancel, #regphoto {
-	display: inline-block;
-	text-align: center;
-	vertical-align: middle;
-	text-decoration: none;
-	font-size: 17px;
-	color: white;
-	border: none;
-	border-radius: 0.5em;
-	width: 118px;
-	height: 38px;
-	line-height: 38px;
-	background-color: #cfb7af;
-	font-family: 'Jua', sans-serif;
+input[type=date] {
+ width: 90%;
+    padding: 12px 20px;
+    margin: 8px 0; 
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    display:inline-block;
 }
 
-#submit:hover, #cancel:hover {
-	color: black;
-	opacity: 0.7;
-	font-family: 'Jua', sans-serif;
+input[type=textarea] {
+	width: 90%;
+    height : 200px;
+    margin: 8px 0; 
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    
 }
 
-#regphoto {
-	display: inline-block;
-	text-align: center;
-	vertical-align: middle;
-	text-decoration: none;
-	font-size: 17px;
-	color: white;
-	border: none;
-	border-radius: 0.5em;
-	width: 80px;
-	height: 38px;
-	background-color: #cfb7af;
-	font-family: 'Jua', sans-serif;
+button[type=submit] {
+    width: 30%;
+    background-color: #4CAF50;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    
 }
 
-/* .passwordform1{
-text-align:center;
-width:35%;
-height:100px;
-background-color:white; 
-border-width:1px;
-border:1px solid lightgray;
-border-radius:12px;
-margin:auto;
-margin-bottom:30px;
-margin-top:50px;
-padding:20px;
-} */
-.identifyform1 {
-	margin: auto;
-	margin-top: 30px;
+button[type=submit]:hover {
+    background-color: #45a049;
 }
 
-.identifyform2 {
-	text-align: center;
-	width: 37%;
-	height: 240px;
-	background-color: #eee;
-	margin: auto;
-	margin-top: 30px;
-	border: 1px solid lightgray;
-}
+.Petreginfo{
+    border-radius: 5px;
+    background-color: #f2f2f2;
+    padding: 20px;
+    width:80%;
+    margin-left: 100px;
+    float:left;
+    text-align:left;
+} 
+
+
+
+
+
 </style>
 </head>
 <body>
 
 
 	<div id="wrap">
-		<div id="header">
-			<h1 align="center">펫카부</h1>
-		</div>
+		<div id="header"></div>
+		<%@ include file="../common/menubar.jsp"%>
+		<%@include file="../common/oldMenubar.jsp"%>
+		
+		<%
+				if (loginUser != null) {
+		%>
+		
+		
 		<div id="container1">
-
-			<!-- 메뉴파일 -->
-			<%@ include file="../common/menubar.jsp"%>
-
-
-			<!-- fixed 창 -->
-			<%@ include file="../common/fixed.jsp"%>
-
-
+		
+		<!-- fixed 창 -->
+		<%@ include file="../common/fixed.jsp"%>
 
 			<!-- 사이드 메뉴 부분 -->
 			<div class="content-left">
@@ -248,34 +242,62 @@ padding:20px;
 
 				<!-- 반려동물 등록 -->
 				&nbsp;&nbsp;&nbsp;&nbsp;<span
-					style="text-align: left; font-size: 17px; font-weight: bold;">반려동물 등록</span>
+					style="text-align: left; font-size: 17px; font-weight: bold;">반려동물
+					등록</span>
 				<hr
 					style="border: thin solid lightgray !important; display: inline-block !important; width: 100% !important;" />
 				<div class="center-content1">
-					
-					<!-- 주민등록증 사진 찾기 -->
-					<div class=identifyform1>
-						<input type="text" name="inputnamepath" size='30' maxlength='25'
-							style="width: 300px; height: 40px; margin: 0; color: black; border-width: 1px"
-							value="파일경로" readonly>&nbsp;&nbsp;&nbsp;
-						<button id="regphoto" onclick="#" style="font-weight: lighter">찾기</button>
-					</div>
 
-					<!-- 주민등록증 미리보기 부분 -->
-					<div class=identifyform2>
-						<span>주민등록증 미리보기 사진</span>
-					</div>
-
-					<div class=submitandcancle>
-						<button type="submit" id="submit" onclick="#"
-							style="font-weight: lighter">등록하기</button>
-						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						<button type="submit" id="cancel" onclick="#"
-							style="font-weight: lighter">취소하기</button>
-
+					<div class="Petreginfo">
+						<form action="<%=request.getContextPath()%>/insertPet.pi" method="post">
+							<label>이름</label><br> <input type="text" id="petName"
+								name="petName" placeholder="반려동물의 이름을 입력해주세요." required>
+							<br>
+							<br> <label>동물 종류</label><br> <input type="text"
+								id="petCategory" name="petCategory" placeholder="종류를 입력해주세요."
+								required> <br>
+							<br> <label>생년월일</label><br> <input type="date"
+								id="petBirth" name="petBirth" required> <br>
+							<br> <label>무게</label><br> <input type="text"
+								id="petWeight" name="petWeight" placeholder="무게를 입력해주세요."
+								required>&nbsp; kg <br>
+							<br> <label>성별</label><br> <select id="petGender"
+								name="petGender" required>
+								<option value="">-----</option>
+								<option value="M">수컷</option>
+								<option value="F">암컷</option>
+							</select> <br>
+							<br> <label>중성화 여부</label><br> <select
+								id="neutralization" name="neutralization" required>
+								<option value="">-----</option>
+								<option value="O">했어요</option>
+								<option value="X">안했어요</option>
+							</select> <br>
+							<br> <label for="fname">기타 사항</label><br> <input
+								type=textarea> <br>
+							<br> 
+							<br> 
+							<label>&nbsp;&nbsp;<input type="checkbox" id="okcheck">&nbsp;&nbsp;사실과 다른 정보를 입력했을 시 불이익이 있을 수 있으며, 그에 대한 책임은 사용자에게 있음을 동의합니다.</label>
+							<br> 
+							<br> 
+							<br> 
+							<br> 
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							&nbsp;&nbsp;&nbsp;
+							<button type="submit" id="submit">등록</button>
+							<br> <br>
+							
+							
+						</form>
 					</div>
 				</div>
-
+				
 
 
 
@@ -315,6 +337,30 @@ padding:20px;
 		</div>
 	</div>
 
+	<script>
+	$(function() {
+		$('#submit').click(function() {
+			if (!$("input:checkbox[id=okcheck]:checked").val()) {
+				alert('아래 사항에 동의해주셔야 합니다.');
+				return false;
+			}
+		})
 
+	})
+	
+	
+	
+	
+	</script>
+
+	<%} else {%>
+	<script>
+		alert('로그인한 회원만 이용 가능합니다.')
+		window.location.href = '<%=request.getContextPath()%>/index.jsp';
+	</script>
+			<!--  request.getRequestDispatcher("../common/login.jsp").forward(request, response);  -->
+
+		<%}%>
+	
 </body>
 </html>

@@ -7,6 +7,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.pkb.reservation.model.service.ContractService;
+import com.pkb.reservation.model.vo.Contract;
+
 /**
  * Servlet implementation class selectContractPetsittingServlet
  */
@@ -27,7 +30,7 @@ public class selectContractPetsittingServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		
+
 		
 	}
 

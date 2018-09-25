@@ -24,7 +24,7 @@ public class Payment implements java.io.Serializable {
 	private boolean validation;
 	private String status;				//결제상태 ready(미결제), paid(결제완료), cancelled(결제취소, 부분취소포함), failed(결제실패)
 	private String receipt_url;			//PG사에서 발행되는 거래 매출전표 URL
-	private String merchan_uid;			//가맹점에서 생성/관리하는 고유 주문번호
+	private String merchant_uid;			//가맹점에서 생성/관리하는 고유 주문번호
 	
 	
 
