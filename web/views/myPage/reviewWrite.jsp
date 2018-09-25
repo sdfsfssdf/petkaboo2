@@ -1,6 +1,10 @@
+<%@page import="com.pkb.reservation.model.vo.Reservation"%>
+<%@page import="java.util.*"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@page import="com.pkb.member.model.vo.User" %> 
+<%ArrayList<Reservation> rsvList = (ArrayList<Reservation>)request.getAttribute("rsvList"); 
+%>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -25,8 +29,6 @@
 </head>
 <body>
 
-	
-
 <a  href="/pkb/index.jsp"><h1 align="center" id="logo">로고</h1></a>
 	<br>
 	<%@ include file="../common/menubar.jsp"%>
@@ -38,13 +40,13 @@
 		<p>돌봐준 펫시터에게 리뷰를 남겨주세요!</p>
 		<br>
 		
-		<form action="<%=request.getContextPath() %>/" method="post">
+		<form action="<%=request.getContextPath() %>/review.wr" method="post">
 			
 			<div class="title">
 			<br /> 
 			
 			<label>반려동물이름</label>
-			    <input type="text" class="form-control writer" id="detailwriter" value="" readOnly>
+			    <input type="text" class="form-control writer" id="detailwriter" value="<%= request.getAttribute("petName") %>" readOnly>
 				&nbsp;&nbsp;&nbsp;&nbsp;
 				<br />
 				<label>펫시터</label>

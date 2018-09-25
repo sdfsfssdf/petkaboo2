@@ -1,8 +1,8 @@
 package com.pkb.board.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -12,10 +12,7 @@ import javax.servlet.http.HttpSession;
 
 import com.pkb.board.model.service.BoardService;
 import com.pkb.board.model.vo.Board;
-import com.pkb.common.Paging;
-import com.pkb.member.model.service.UserService;
 import com.pkb.member.model.vo.User;
-import com.pkb.reservation.model.vo.Reservation;
 
 /**
  * Servlet implementation class WritingReviewServlet
@@ -35,55 +32,83 @@ public class WritingReviewServlet extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		System.out.println("왔다");
 		
+//		User loginUser = (User) request.getSession().getAttribute("loginUser");
 		
-		User loginUser = (User) request.getSession().getAttribute("loginUser");
+//		String 
 		
-		String title = request.getParameter("onetitle");
-		String content = request.getParameter("onecontent");
+//		System.out.println("22" + request.getParameter("contractNo"));
+//		System.out.println("33" + request.getParameter(""));
 		
-		System.out.println(title);
-		System.out.println(content);
-
-		Board b = new Board();
-		b.setArticle_title(title);
-		b.setArticle_contents(content);
-		
-		
-		HttpSession session = request.getSession();
-		b.setUser_no(((User)(session.getAttribute("loginUser"))).getUser_no());
-		
-		int result = new BoardService().insertOnebyOneQna(b);
-
 		String page = "";
-		if(result > 0) {
-			page = "views/myPage/onebyoneList.jsp";
-			Paging pg = new Paging(1,10);
-	
-			if(request.getParameter("currentPage") != null){
-				pg.setCurrentPage(Integer.parseInt(request.getParameter("currentPage")));
-			}
-			
-			pg.setListCount(new BoardService().getOnebyOneListCount());
-			
-			pg.setMaxPage((int) ((double)pg.getListCount() / pg.getLimit() + 0.9));
-			
-			pg.setStartPage((((int) ((double) pg.getCurrentPage() / pg.getLimit() + 0.9)) - 1) * pg.getLimit() + 1);
-			
-			if (pg.getMaxPage() < pg.getEndPage()) {
-				pg.setEndPage(pg.getMaxPage());
-			}
-			ArrayList<Board> list = new BoardService().selectOnebyOneList(pg.getCurrentPage(),pg.getLimit(),b.getUser_no());
-			System.out.println(list);
-			request.setAttribute("list", list);
-			request.setAttribute("pg", pg);
-			
-		}else {
-			page = "views/common/errorPage.jsp";
-			request.setAttribute("msg", "1:1문의 등록 실패");		
-			
-		}
+		page="views/myPage/reviewWrite.jsp";
+		
+		RequestDispatcher view = request.getRequestDispatcher(page);
+		view.forward(request, response);
+		request.setAttribute("contractNo", request.getParameter("contractNo"));
+		request.setAttribute("petName", request.getParameter("petName"));
+		//request.setAttribute("contractNo", request.getParameter("contractNo"));
+		
+//		
+//		
+//		String title = request.getParameter("onetitle");
+//		String content = request.getParameter("onecontent");
+//		
+//		System.out.println(title);
+//		System.out.println(content);
+//
+//		Board b = new Board();
+//		b.setArticle_title(title);
+//		b.setArticle_contents(content);
+//		
+//		
+//		HttpSession session = request.getSession();
+//		b.setUser_no(((User)(session.getAttribute("loginUser"))).getUser_no());
+//		
+//		int result = new BoardService().insertOnebyOneQna(b);
+//		System.out.println(result);
+//		String page = "";
+//		if(result > 0) {
+//			page = "views/myPage/reviewWrite.jsp";
+//			
+//		/*	String page="";
+//			page="views/myPage/reserveList.jsp";
+//			request.setAttribute("rsvList", rsvList);
+////			request.setAttribute("pg", pg);//페이징처리에 쓸거임
+//			System.out.println("sss" + loginUser);
+//			
+//			System.out.println("rsvList = " + rsvList );*/
+//		RequestDispatcher view = request.getRequestDispatcher(page);
+//		view.forward(request, response);
+//		
+//		/*
+//			Paging pg = new Paging(1,10);
+//	
+//			if(request.getParameter("currentPage") != null){
+//				pg.setCurrentPage(Integer.parseInt(request.getParameter("currentPage")));
+//			}
+//			
+//			pg.setListCount(new BoardService().getOnebyOneListCount());
+//			
+//			pg.setMaxPage((int) ((double)pg.getListCount() / pg.getLimit() + 0.9));
+//			
+//			pg.setStartPage((((int) ((double) pg.getCurrentPage() / pg.getLimit() + 0.9)) - 1) * pg.getLimit() + 1);
+//			
+//			if (pg.getMaxPage() < pg.getEndPage()) {
+//				pg.setEndPage(pg.getMaxPage());
+//			}
+//			ArrayList<Board> list = new BoardService().selectOnebyOneList(pg.getCurrentPage(),pg.getLimit(),b.getUser_no());
+//			System.out.println(list);
+//			request.setAttribute("list", list);
+//			request.setAttribute("pg", pg);*/
+//			
+//		}else {
+//			page = "views/common/errorPage.jsp";
+//			request.setAttribute("msg", "리뷰남기기 실패");		
+//			
+//		}
 		
 		
 	}
@@ -94,6 +119,7 @@ public class WritingReviewServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
+		
 	}
 
 }
