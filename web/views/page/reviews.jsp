@@ -132,7 +132,7 @@ width:60%;
 
 	<div id="container">
 		<div id="header"></div>
-		<%@include file="menubar.jsp"%>
+		<%@include file="../common/oldMenubar.jsp"%>
 
 		<div
 			style="position: relative; left: 0; top: 0; right: 0; bottom: 0; width: 1519.200; height: 283.800px;">

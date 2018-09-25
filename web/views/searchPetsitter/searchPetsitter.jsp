@@ -229,13 +229,7 @@ table.listArea td {
 	}
 </script>
 <body>
-	<div id="container">
-		<%@include file="/views/common/menubar.jsp"%>
-		<h2 style="text-align: center; margin-top: 100px;">
-			<span style="color: rgb(228, 100, 18);"> <strong> 펫시터
-					찾기 </strong>
-			</span>
-		</h2>
+	<%@include file="/views/common/menubar.jsp"%>
 	<div class="SearchFormArea">
 		<%@ include file="petSitterSearchForm.jsp" %>
 	</div>
@@ -322,7 +316,6 @@ table.listArea td {
 		
 		</div>
 		</div>
-</div>
 </div>
 	<script>
 		$('#myModal').on('shown.bs.modal', function() {

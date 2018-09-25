@@ -1,7 +1,6 @@
 package com.pkb.member.controller;
 
 import java.io.IOException;
-import java.util.HashMap;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -13,16 +12,16 @@ import javax.servlet.http.HttpServletResponse;
 import com.pkb.member.model.service.UserService;
 
 /**
- * Servlet implementation class SelectOneMemberServlet
+ * Servlet implementation class UpdateTitleProfileServlet
  */
-@WebServlet("/selectOneMember.me")
-public class SelectOneMemberServlet extends HttpServlet {
+@WebServlet("/updateTitleProfile.me")
+public class UpdateTitleProfileServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public SelectOneMemberServlet() {
+    public UpdateTitleProfileServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -31,27 +30,21 @@ public class SelectOneMemberServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String tempUserNo = request.getParameter("num");
-		int userNo = 0;
-		if(tempUserNo != null && !tempUserNo.equals("")){
-			userNo = Integer.parseInt(tempUserNo);
-		} else {
-			userNo = Integer.parseInt((String)request.getAttribute("num"));
-		}
+		String fileNo = request.getParameter("fileNo");
 		
-		HashMap<String,Object> hmap = new UserService().selectMemberOne(userNo);
+		int userNo = Integer.parseInt(request.getParameter("userNo"));
+		
+		int result = new UserService().updateTitleProfile(fileNo,userNo);
 		
 		String page = "";
-		
-		if(hmap != null){
-			page = "views/admin/memberManage/memberDetail.jsp";
-			request.setAttribute("userInfo", hmap);
+		if(result > 0){
+			response.sendRedirect(request.getContextPath() + "/selectOneMember.me?num="+userNo);
 		} else {
 			page = "views/common/errorPage.jsp";
-			request.setAttribute("msg", "(관리자 페이지)회원 상세조회 실패");
+			request.setAttribute("msg", "(관리자 페이지)타이틀 이미지 변경 실패");
+			RequestDispatcher view = request.getRequestDispatcher(page);
+			view.forward(request, response);
 		}
-		RequestDispatcher view = request.getRequestDispatcher(page);
-		view.forward(request, response);
 	}
 
 	/**

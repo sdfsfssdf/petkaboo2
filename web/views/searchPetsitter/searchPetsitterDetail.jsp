@@ -134,8 +134,6 @@ td {
 }
 </style>
 <body>
-	<div class="header">
-		<div id="header"></div>
 		<%@include file="/views/common/menubar.jsp"%>
 		<br /><br /><br />
 		<div class="top-body">
@@ -170,7 +168,7 @@ td {
 							<td colspan="3">*정확한 가격 책정을 위한 <a href="#" >1:1문의하기</a></td>
 						</tr>
 					</table>
-					<button class="btn btn-default" type="submit" style="width:80%; margin-left:auto; margin-right:auto; ">예약하기</button>
+					<button class="btn btn-default" type="submit" style="width:80%; margin-left:auto; margin-right:auto;" onclick="location.href='<%=request.getContextPath()%>/pkb/views/searchPetsitter/petSittingRsvApply.jsp'">예약하기</button>
 				</div>
 			</div>
 

@@ -12,10 +12,13 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Properties;
 
+import com.pkb.member.model.vo.CyberMoney;
 import com.pkb.member.model.vo.ImgFile;
 import com.pkb.member.model.vo.LoginHistory;
+import com.pkb.member.model.vo.Pet;
 import com.pkb.member.model.vo.User;
 import com.pkb.reservation.model.vo.Reservation;
 import com.sun.corba.se.spi.orbutil.fsm.Guard.Result;
@@ -457,11 +460,14 @@ public class UserDAO {
 		return result;
 	}
 
-	public User selectMemberOne(Connection con, int userNo) {
+	public HashMap<String, Object> selectMemberOne(Connection con, int userNo) {
 		// TODO Auto-generated method stub
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
+		HashMap<String, Object> hmap = null;
 		User u = null;
+		LoginHistory lh = null;
+		CyberMoney cm = null;
 		String query = prop.getProperty("selectMemberOne");
 		
 		try {
@@ -469,9 +475,11 @@ public class UserDAO {
 			pstmt = con.prepareStatement(query);
 			pstmt.setInt(1, userNo);
 			rs = pstmt.executeQuery();
-			
+			hmap = new HashMap<String,Object>();
 			if(rs.next()){
 				u = new User();
+				lh = new LoginHistory();
+				cm = new CyberMoney();
 				u.setUser_no(rs.getInt("user_no"));
 				u.setEmail(rs.getString("email"));
 				u.setUser_pwd(rs.getString("user_pwd"));
@@ -491,6 +499,17 @@ public class UserDAO {
 				u.setFile_no(rs.getInt("file_no"));
 				u.setEmail_hash(rs.getString("email_hash"));
 				u.setArticle_no(rs.getInt("article_no"));
+				lh.setUserNo(userNo);
+				lh.setLoginDate(rs.getDate("login_date"));
+				lh.setLoginIp(rs.getString("login_ip"));
+				lh.setLocation(rs.getString("location"));
+				cm.setUserNo(userNo);
+				cm.setCyberMoneyNo(rs.getInt("MONEY_NO"));
+				cm.setMoney(rs.getInt("money"));
+				
+				hmap.put("user", u);
+				hmap.put("loginHistory", lh);
+				hmap.put("money", cm);
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -499,12 +518,12 @@ public class UserDAO {
 			close(rs);
 			close(pstmt);
 		}
-		return u;
+		return hmap;
 		
 	}
 
 
-	public int[] lockMember(Connection con, int[] selectUserNos, String title, String content) {
+	public int[] lockMember(Connection con, String[] selectUserNos) {
 
 		// TODO Auto-generated method stub
 		PreparedStatement pstmt = null;
@@ -546,13 +565,6 @@ public class UserDAO {
 			close(pstmt);
 		}
 
-		return result;
-	}
-
-	public int[] writeLockReason(Connection con, String[] selectUserNos, int adminUserNo, String title, String content, String lockDate) {
-		PreparedStatement pstmt = null;
-		int result[] = null;
-		String query = prop.getProperty("writeLockReason");	
 		return result;
 	}
 
@@ -638,7 +650,6 @@ public class UserDAO {
 		PreparedStatement pstmt = null;
 		int result[] = null;
 		String query = prop.getProperty("writeLockReason");
-		
 		String[] tempDate = lockDate.split("-");
 		java.text.SimpleDateFormat format = new java.text.SimpleDateFormat("yyyy/MM/dd");
 		
@@ -1062,51 +1073,74 @@ public class UserDAO {
 		return lh;
 	}
 
-	public int setUserFileNO(Connection con, User u) {
-		PreparedStatement pstmt = null;
-		int result = 0;
 
-		String query = prop.getProperty("setUserFileNO");
-		try {
-			pstmt = con.prepareStatement(query);
-			pstmt.setInt(1, u.getUser_no());
-			result = pstmt.executeUpdate();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally{
-			close(pstmt);
-		}
-		return result;
-	}
-	
-	public int setUserFileNO(Connection con, int UserNO) {
-		PreparedStatement pstmt = null;
-		int result = 0;
+   public int setUserFileNO(Connection con, User u) {
+      PreparedStatement pstmt = null;
+      int result = 0;
 
-		String query = prop.getProperty("setUserFileNO");
-		try {
-			pstmt = con.prepareStatement(query);
-			pstmt.setInt(1, UserNO);
-			result = pstmt.executeUpdate();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally{
-			close(pstmt);
-		}
-		return result;
-	}
+      String query = prop.getProperty("setUserFileNO");
+      try {
+         pstmt = con.prepareStatement(query);
+         pstmt.setInt(1, u.getUser_no());
+         result = pstmt.executeUpdate();
+      } catch (SQLException e) {
+         e.printStackTrace();
+      } finally{
+         close(pstmt);
+      }
+      return result;
+   }
+   
 
-	public int setCyberMoney(Connection con, User u) {
+	public ArrayList<ImgFile> selectProfileHistory(Connection con, int file_no, int userNo) {
+		// TODO Auto-generated method stub
 		PreparedStatement pstmt = null;
-		int result = 0;
-		
-		String query = prop.getProperty("setCyberMoney");
+		ImgFile img = null;
+		ResultSet rs = null;
+		ArrayList<ImgFile> plist = null;
+		String query = prop.getProperty("selectProFileHistory");
 		
 		try {
 			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, userNo);
+			pstmt.setInt(2, file_no);
+			
+			rs = pstmt.executeQuery();
+			plist = new ArrayList<ImgFile>();
+			
+			while(rs.next()){
+				img = new ImgFile();
+				img.setFile_no(rs.getInt("file_no"));
+				img.setFile_date(rs.getDate("file_date"));
+				img.setFile_name(rs.getString("file_name"));
+				img.setFile_use(rs.getInt("file_use"));
+				img.setFile_path(rs.getString("file_path"));
+				img.setFile_dalete(rs.getString("file_delete"));
+				
+				plist.add(img);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(rs);
+			close(pstmt);
+		}
+		return plist;
+	}
+
+	public int deleteTitleProfileSetMember(Connection con, int userNo) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String query = prop.getProperty("deleteTitleProfileSetMember");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, userNo);
 			
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally{
 			close(pstmt);
@@ -1114,4 +1148,123 @@ public class UserDAO {
 		return result;
 	}
 
+public int setUserFileNO(Connection con, int UserNO) {
+      PreparedStatement pstmt = null;
+      int result = 0;
+
+      String query = prop.getProperty("setUserFileNO");
+      try {
+         pstmt = con.prepareStatement(query);
+         pstmt.setInt(1, UserNO);
+         result = pstmt.executeUpdate();
+      } catch (SQLException e) {
+         e.printStackTrace();
+      } finally{
+         close(pstmt);
+      }
+      return result;
+   }
+
+
+	public int deleteTitleProfileSetFile(Connection con, String fileNo) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String query = prop.getProperty("deleteTitleProfileSetFile");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, Integer.parseInt(fileNo));
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+
+			e.printStackTrace();
+		} finally{
+			close(pstmt);
+		}
+		return result;
+	}
+
+
+	public int setCyberMoney(Connection con, User u) {
+      PreparedStatement pstmt = null;
+      int result = 0;
+      
+      String query = prop.getProperty("setCyberMoney");
+      
+      try {
+         pstmt = con.prepareStatement(query);
+         
+         result = pstmt.executeUpdate();
+      } catch (SQLException e) {
+         e.printStackTrace();
+      } finally{
+         close(pstmt);
+      }
+      return result;
+   }
+
+	public int updateTitleProfile(Connection con, String fileNo, int userNo) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String query = prop.getProperty("updateTitleProfile");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, Integer.parseInt(fileNo));
+			pstmt.setInt(2, userNo);
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+
+			e.printStackTrace();
+		} finally{
+			close(pstmt);
+		}
+		return result;
+	}
+
+	public ArrayList<Pet> selectUserPet(Connection con, int userNo) {
+		PreparedStatement pstmt = null;
+		ArrayList<Pet> plist = null;
+		Pet pet = null;
+		ResultSet rs = null;
+		String query = prop.getProperty("selectUserPet");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, userNo);
+			
+			rs = pstmt.executeQuery();
+			
+			plist = new ArrayList<Pet>();
+			
+			while(rs.next()){
+				pet = new Pet();
+				pet.setPetNo(rs.getInt("pet_no"));
+				pet.setUserNo(rs.getInt("user_no"));
+				pet.setPetCategory(rs.getInt("pet_category"));
+				pet.setPetName(rs.getString("pet_name"));
+				pet.setPetBirth(rs.getDate("pet_birth"));
+				pet.setPetGender(rs.getString("pet_gender"));
+				pet.setNeutralChk(rs.getString("neutral_chk"));
+				pet.setPetWeight(rs.getString("pet_weight"));
+				pet.setPetMeno(rs.getString("pet_memo"));
+				pet.setPetCategoryMajorName(rs.getString("major"));
+				pet.setPetCategoryMinorName(rs.getString("minor"));
+				
+				plist.add(pet);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(rs);
+			close(pstmt);
+		}
+		
+		return plist;
+	}
 }

@@ -22,12 +22,12 @@
 </script>
 <!-- 합쳐지고 최소화된 최신 CSS -->
 <style>
-body, p, h1, h2, h3, h4, h5, h6, ul, ol, li, dl, dt, dd, table, th, td,
+/* body, p, h1, h2, h3, h4, h5, h6, ul, ol, li, dl, dt, dd, table, th, td,
 	form, fieldset, legend, input, textarea, button, select {
 	margin: 0;
 	padding: 0;
 	font-family: none;
-}
+} 
 
 img, fieldset {
 	border: 0;
@@ -47,7 +47,7 @@ a {
 	font-family: none;
 	color: black;
 }
-
+*/
 a:hover, a:active, a:focus {
 	text-decoration: none;
 	font-family: none;
@@ -60,7 +60,6 @@ a:hover, a:active, a:focus {
 	width: 100%;
 	background: transparent;
 	
-	
 }
 
 /* #container 모든 컨텐츠를 가운데로 위치 레프트건 라이트건 hello world건 브라우저 창의 가운데에 위치해야 하는데 가운데에 있게 해주게끔하기위해 만든 컨테이너 입니다. 
@@ -71,13 +70,13 @@ a:hover, a:active, a:focus {
 }
 
 /*위의 소스에서 _가 있는데 이것은 그 CSS를 해제 시키는 역할입니다. 즉 헤더부분의 영역을 보고 싶다면 _를 삭제 하면 됩니다. ^^*/
-#header {
+/* #header {
 	float: left;
 	width: 100%;
 	height: 150px;
 	_border: 1px solid blue;
 	background-color: white;
-}
+} */
 
 
 .intro {
@@ -231,27 +230,19 @@ th, td {
 </style>
 </head>
 <body>
-
-
-	<div id="wrap">
-		<div id="container1">
-			
-		<div id="header"></div>
-		<%@ include file="../common/menubar.jsp"%>
-		<%@include file="../common/oldMenubar.jsp"%>
-
-	
-			<!-- fixed 창 -->
-			<%@ include file="../common/fixed.jsp"%>
-	
+	<%@ include file="../common/menubar.jsp"%>
 	<%
 		if (loginUser != null) {
 	%>
+	<div id="wrap">
+			
+		<div id="header"></div>
+			<!-- fixed 창 -->
+			<%@ include file="../common/fixed.jsp"%>
+
 			<!-- 사이드 메뉴 부분 -->
 			<div class="content-left">
 			<%@ include file="../common/sidemenubar.jsp" %>
-
-				
 			</div>
 
 

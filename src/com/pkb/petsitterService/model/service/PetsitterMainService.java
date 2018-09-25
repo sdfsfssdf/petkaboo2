@@ -69,5 +69,13 @@ public class PetsitterMainService {
 		
 		return p;
 	}
+	
+	public ArrayList<PetsitterService> searchList(String searchKeyword, String gender, String arrayCondition) {
+		Connection con = getConnection();
+		
+		ArrayList<PetsitterService> list = new PetsitterServiceDao().searchList(con, searchKeyword, gender, arrayCondition);
+		
+		return list;
+	}
 
 }

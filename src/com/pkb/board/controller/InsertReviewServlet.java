@@ -1,7 +1,6 @@
-package com.pkb.member.controller;
+package com.pkb.board.controller;
 
 import java.io.IOException;
-import java.util.HashMap;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -10,19 +9,17 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.pkb.member.model.service.UserService;
-
 /**
- * Servlet implementation class SelectOneMemberServlet
+ * Servlet implementation class InsertReviewServlet
  */
-@WebServlet("/selectOneMember.me")
-public class SelectOneMemberServlet extends HttpServlet {
+@WebServlet("/insertReview.bo")
+public class InsertReviewServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public SelectOneMemberServlet() {
+    public InsertReviewServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -31,27 +28,23 @@ public class SelectOneMemberServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String tempUserNo = request.getParameter("num");
-		int userNo = 0;
-		if(tempUserNo != null && !tempUserNo.equals("")){
-			userNo = Integer.parseInt(tempUserNo);
-		} else {
-			userNo = Integer.parseInt((String)request.getAttribute("num"));
-		}
 		
-		HashMap<String,Object> hmap = new UserService().selectMemberOne(userNo);
+		System.out.println("리뷰작성하기버튼 누르고 왔다!");
 		
 		String page = "";
+		page="views/myPage/reviewWrite.jsp";
 		
-		if(hmap != null){
-			page = "views/admin/memberManage/memberDetail.jsp";
-			request.setAttribute("userInfo", hmap);
-		} else {
-			page = "views/common/errorPage.jsp";
-			request.setAttribute("msg", "(관리자 페이지)회원 상세조회 실패");
-		}
+		request.setAttribute("petsitterName", request.getParameter("petsitterName"));
+		request.setAttribute("petName", request.getParameter("petName"));
+		request.setAttribute("contractNo", request.getParameter("contractNo"));
+		/*request.setAttribute("writter", request.getParameter("writter"));
+		
+		System.out.println(writter);*/
+		
+		
 		RequestDispatcher view = request.getRequestDispatcher(page);
 		view.forward(request, response);
+		
 	}
 
 	/**

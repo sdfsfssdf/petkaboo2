@@ -33,10 +33,10 @@ th, tr, td{
 <body>
 	<%@ include file="/views/common/menubar.jsp"%>
 	<%
-		if(loginUser == null){
+		if(loginUser == null || loginUser.getUser_grade() != 3){
 	%>
 	<script>
-		alert('로그인 회원만 이용할 수 있습니다!');
+		alert('펫시터 회원만 이용할 수 있습니다!');
 		window.location.href = '<%=request.getContextPath()%>/index.jsp';
 	</script>
 	<% } else {%>
@@ -51,23 +51,39 @@ th, tr, td{
 						<td rowspan="13">프로필 사진</td>
 					</tr>
 					<tr>
-						<td><label>이름 </label><input type="text" placeholder="<%=loginUser.getUser_name() %>" readonly></td>
+						<td><label>이름 </label>
+						</td>
+						<td>
+						<%=loginUser.getUser_name() %></td>
 					</tr>
 					<tr>
-						<td><label>주소 </label><input type="text" placeholder="<%=loginUser.getAddress() %>" readonly></td>					
+						<td><label>주소 </label>
+						</td>
+						<td>
+						<%=loginUser.getAddress() %></td>					
 					</tr>
 					<tr>
-						<td><label>카테고리 </label> <input type="radio" value="1"
-						name="pet_category" id="1"><label for="dog">개</label> <input
-						type="radio" value="2" name="pet_category" id="2"><label
-						for="2">고양이</label> <input type="radio" value="3"
-						name="pet_category" id="3"><label for="3">파충류</label> <input
-						type="radio" value="4" name="pet_category" id="4"><label
-						for="4">조류</label> <input type="radio" value="5"
-						name="pet_category" id="5"><label for="5">어류</label></td>
+						<td>
+						<label>카테고리 </label>
+						</td>
+						<td>
+						<input type="radio" value="1" name="pet_category" id="1">
+						<label for="1">개</label>
+						<input type="radio" value="2" name="pet_category" id="2">
+						<label for="2">고양이</label>
+						<input type="radio" value="3" name="pet_category" id="3">
+						<label for="3">파충류</label>
+						<input type="radio" value="4" name="pet_category" id="4">
+						<label for="4">조류</label>
+						<input type="radio" value="5" name="pet_category" id="5">
+						<label for="5">어류</label>
+						</td>
 					</tr>
 					<tr>
-						<td><label>서비스 종류</label>
+						<td>
+						<label>서비스 종류</label>
+						</td>
+						<td>
 						<input type="radio" name="contract_type" value="v" id="v">
 						<label for="v">방문</label>
 						<input type="radio" name="contract_type" value="c" id="c">
@@ -75,36 +91,62 @@ th, tr, td{
 						</td>
 					</tr>
 					<tr>
-					<td><label>예약가능 요일 </label><input type="checkbox"
-					name="contract_days" id="mon" value="mon"><label for="mon">월</label>
-					<input type="checkbox" name="contract_days" id="tues" value="tues"><label
-					for="tues">화</label> <input type="checkbox" name="contract_days" id="wed"
-					value="wed"><label for="wed">수</label> <input
-					type="checkbox" name="contract_days" id="thurs" value="thurs"><label
-					for="thurs">목</label> <input type="checkbox" name="day" id="fri"
-					value="fri"><label for="fri">금</label> <input
-					type="checkbox" name="contract_days" id="sat" value="sat"><label
-					for="sat">토</label> <input type="checkbox" name="contract_days" id="sun"
-					value="sun"><label for="sun">일</label></td>
+						<td>
+							<label>예약가능 요일 </label>
+						</td>
+						<td>
+							<input type="checkbox" name="contract_days" id="mon" value="mon">
+							<label for="mon">월</label>
+							<input type="checkbox" name="contract_days" id="tues" value="tues">
+							<label for="tues">화</label>
+							<input type="checkbox" name="contract_days" id="wed" value="wed">
+							<label for="wed">수</label>
+							<input type="checkbox" name="contract_days" id="thurs" value="thurs">
+							<label for="thurs">목</label>
+							<input type="checkbox" name="day" id="fri" value="fri">
+							<label for="fri">금</label>
+							<input type="checkbox" name="contract_days" id="sat" value="sat">
+							<label for="sat">토</label>
+							<input type="checkbox" name="contract_days" id="sun" value="sun">
+							<label for="sun">일</label>
+						</td>
 					</tr>
 					<tr>
-						<td><label>서비스 시작 가능일</label><input type="date" id="contract_start" name="contract_start" value="2017-01-01">
+						<td>
+						<label>서비스 시작 가능일</label>
+						</td>
+						<td>
+						<input type="date" id="contract_start" name="contract_start" value="2017-01-01">
 						</td>
 						</tr>
 					<tr>
-						<td><label>서비스 종료일</label><input type="date" id="contract_end" name="contract_end" value=""></td>
+						<td>
+						<label>서비스 종료일</label>
+						</td>
+						<td>
+						<input type="date" id="contract_end" name="contract_end" value="">
+						</td>
 					</tr>					
 			<tr>
-				<td><label>펫시팅 이용가격 </label><input type="number" id="service_charge" name="service_charge"></td>
+				<td>
+					<label>펫시팅 이용가격 </label>
+				</td>
+				<td>
+					<input type="number" id="service_charge" name="service_charge">
+				</td>
 			</tr>
 			<tr>
-				<td><label>최대 서비스 가능 동물 수</label> <input type="number" id="pet_count" name="pet_count"></td>
+				<td><label>최대 서비스 가능 동물 수</label>
+				</td>
+				<td> <input type="number" id="pet_count" name="pet_count"></td>
 			</tr>
 			<tr>
-				<td><label>서비스 내용</label> <input type="text"
+				<td><label>서비스 내용</label></td>
+						<td> <input type="text"
 					id="service_detail" name="service_detail"></td>
 							<tr>
-				<td><label>제한 사항</label> <input type="text"
+				<td><label>제한 사항</label></td>
+						<td> <input type="text"
 					id="service_restrict" name="service_restrict"></td>	
 			</tr>	
 			</tr>														
