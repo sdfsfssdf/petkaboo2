@@ -5,16 +5,13 @@ import static com.pkb.common.JDBCTemplate.commit;
 import static com.pkb.common.JDBCTemplate.getConnection;
 import static com.pkb.common.JDBCTemplate.rollback;
 
-import com.pkb.member.model.vo.ImgFile;
-import com.pkb.member.model.vo.LoginHistory;
-
 import java.sql.Connection;
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import com.pkb.commiAndAccount.model.vo.CommissionAndAccountList;
 import com.pkb.member.model.dao.UserDAO;
+import com.pkb.member.model.vo.ImgFile;
+import com.pkb.member.model.vo.Pet;
 import com.pkb.member.model.vo.User;
 import com.pkb.member.util.SHA256;
 import com.pkb.reservation.model.vo.Reservation;
@@ -119,7 +116,6 @@ public class UserService {
 		return result;
 	}
 
-
 	public int changeNickname(String nickname, String email) {
 		Connection con = getConnection();
 
@@ -197,40 +193,32 @@ public class UserService {
 		return result;
 	}
 
-	
 	public HashMap<String, Object> selectMemberOne(int userNo) {
 		// TODO Auto-generated method stub
 		Connection con = getConnection();
-		HashMap<String,Object> hmap = null;
-		User user = new UserDAO().selectMemberOne(con, userNo);
-		if(user != null){
-			hmap = new HashMap<String,Object>();
-			hmap.put("user", user);
-			ImgFile profile = new UserDAO().selectUserProfile(con,user.getFile_no());
-			if(profile != null){
-				hmap.put("profile", profile);
-				LoginHistory lh = new UserDAO().selectLoginHistory(con,userNo);
-				if(lh != null){
-					hmap.put("loginHistory", lh);
-				} else {
-					hmap = null;
-				}
-			} else {
-				hmap = null;
-			}
-		} 
+		HashMap<String, Object> hmap = new UserDAO().selectMemberOne(con, userNo);
+		if (hmap != null) {
+			ImgFile profile = new UserDAO().selectUserProfile(con, ((User) hmap.get("user")).getFile_no());
+
+			hmap.put("profile", profile);
+			ArrayList<ImgFile> profileHistory = new UserDAO().selectProfileHistory(con, profile.getFile_no(), userNo);
+
+			hmap.put("profileHistory", profileHistory);
+			
+			ArrayList<Pet> plist = new UserDAO().selectUserPet(con, userNo);
+			hmap.put("pet", plist);
+		}
+
 		close(con);
 
 		return hmap;
 	}
-
 
 	public String phone(String msg) {
 
 		return msg;
 
 	}
-
 
 	public int[] lockMember(String[] selectUserNos, String title, String content, int adminUserNo, String lockDate) {
 		Connection con = getConnection();
@@ -249,40 +237,39 @@ public class UserService {
 			rollback(con);
 		}
 
-  close(con);
+		close(con);
 
 		return result;
 	}
 
 	public int insertSms(String smsNumber, String email) {
 		Connection con = getConnection();
-		
+
 		int result = new UserDAO().insertSms(con, smsNumber, email);
-		
-		if(result>0){
+
+		if (result > 0) {
 			commit(con);
-		}else{
+		} else {
 			rollback(con);
 		}
 		close(con);
 
-		
 		return result;
 	}
 
 	public int updatePhone(String phone, String sms, User loginUser) {
 		Connection con = getConnection();
-		
+
 		int result = new UserDAO().updatePhone(con, phone, sms, loginUser);
-		
-		if(result>0){
+
+		if (result > 0) {
 			int result1 = new UserDAO().authTBphone(con, loginUser);
-			if(result1>0){
+			if (result1 > 0) {
 				commit(con);
-			}else{
+			} else {
 				rollback(con);
 			}
-		}else{
+		} else {
 			rollback(con);
 		}
 		close(con);
@@ -322,7 +309,7 @@ public class UserService {
 	public ArrayList<User> selectMemberListForUserNo(int currentPage, int limit, String value) {
 		Connection con = getConnection();
 
-		ArrayList<User> mlist = new UserDAO().selectMemberListForUserNo(con, currentPage, limit,value);
+		ArrayList<User> mlist = new UserDAO().selectMemberListForUserNo(con, currentPage, limit, value);
 
 		close(con);
 
@@ -332,7 +319,7 @@ public class UserService {
 	public ArrayList<User> selectMemberListForUserId(int currentPage, int limit, String value) {
 		Connection con = getConnection();
 
-		ArrayList<User> mlist = new UserDAO().selectMemberListForUserId(con, currentPage, limit,value);
+		ArrayList<User> mlist = new UserDAO().selectMemberListForUserId(con, currentPage, limit, value);
 
 		close(con);
 
@@ -342,7 +329,7 @@ public class UserService {
 	public ArrayList<User> selectMemberListForUserStatus(int currentPage, int limit, String value) {
 		Connection con = getConnection();
 
-		ArrayList<User> mlist = new UserDAO().selectMemberListForUserStatus(con, currentPage, limit,value);
+		ArrayList<User> mlist = new UserDAO().selectMemberListForUserStatus(con, currentPage, limit, value);
 
 		close(con);
 
@@ -352,10 +339,60 @@ public class UserService {
 	public ArrayList<User> selectMemberListForUserGrade(int currentPage, int limit, String value) {
 		Connection con = getConnection();
 
-		ArrayList<User> mlist = new UserDAO().selectMemberListForUserGrade(con, currentPage, limit,value);
+		ArrayList<User> mlist = new UserDAO().selectMemberListForUserGrade(con, currentPage, limit, value);
 
 		close(con);
 
 		return mlist;
+	}
+
+	public int deleteTitleProfile(String fileNo, int userNo) {
+		Connection con = getConnection();
+
+		int result = new UserDAO().deleteTitleProfileSetMember(con, userNo);
+
+		if (result > 0) {
+			result = new UserDAO().deleteTitleProfileSetFile(con, fileNo);
+			if (result > 0) {
+				commit(con);
+			} else {
+				rollback(con);
+			}
+		} else {
+			rollback(con);
+		}
+
+		close(con);
+		return result;
+	}
+
+	public int deleteSubProfile(String fileNo) {
+		Connection con = getConnection();
+
+		int result = new UserDAO().deleteTitleProfileSetFile(con, fileNo);
+
+		if (result > 0) {
+			commit(con);
+		} else {
+			rollback(con);
+		}
+		close(con);
+
+		return result;
+	}
+
+	public int updateTitleProfile(String fileNo, int userNo) {
+		Connection con = getConnection();
+
+		int result = new UserDAO().updateTitleProfile(con, fileNo, userNo);
+
+		if (result > 0) {
+			commit(con);
+		} else {
+			rollback(con);
+		}
+		close(con);
+
+		return result;
 	}
 }
