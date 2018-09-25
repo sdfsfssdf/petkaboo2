@@ -86,7 +86,11 @@ public class InsertContractPetsittingServlet extends HttpServlet {
 		
 		String page = "";
 		if(result > 0){
-			response.sendRedirect(request.getContextPath() + "/selectCtrPetsitting.ct");
+			/*response.sendRedirect(request.getContextPath() + "/selectCtrPetsitting.ct");*/
+			
+			System.out.println("c객체 잘 잇어? : " + c);
+			Contract c2 = new ContractService().selectContractPetsitting(c);
+			
 			
 		}else{
 			request.setAttribute("msg", "예약 실패");

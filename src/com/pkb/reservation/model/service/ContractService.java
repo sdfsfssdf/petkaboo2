@@ -28,4 +28,16 @@ public class ContractService {
 		return result;
 	}
 
+
+
+	public Contract selectContractPetsitting(Contract c) {
+		Connection con = getConnection();
+		
+		Contract c2 = new ContractDao().selectContractPetsitting(con, c);
+		
+		close(con);
+		
+		return c2 ;
+	}
+
 }

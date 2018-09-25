@@ -120,8 +120,8 @@ ul.sub li:hover > ul.sub-sub{display:block;}
 								<li><a onclick="rsv()">예약현황</a></li>
 
 								<li><a href="#">거래내역</a></li>
-								<li><a href="../myPage/onebyoneQNAWrite.jsp" >1:1 문의</a></li>
-								<li><a onclick="goOnebyOneQna()">내 질문 내역</a></li>
+								<li><a href="/pkb/views/myPage/onebyoneQNAWrite.jsp" >1:1 문의</a></li>
+								<li><a href="<%=request.getContextPath()%>/selectOnebyOneList.bo">내 질문 내역</a></li>
 							</ul>
 						</li>
 						<li class="group">
@@ -138,17 +138,14 @@ ul.sub li:hover > ul.sub-sub{display:block;}
 								
 								</li>
 								
-								<li><a href="#">내 반려동물 등록</a></li>
+								<li><a href="/pkb/views/myPage/registerPet.jsp">내 반려동물 등록</a></li>
 							</ul>
 						</li>
 					</ul>
 				</div>
 				
 				<script>
-				 	 function goOnebyOneQna(){
-						location.href = "<%=request.getContextPath()%>/selectOnebyOneList.bo";
-						
-					}
+				 	
 				 	 function rsv(){
 				 		 location.href = "<%=request.getContextPath()%>/reservation.ps";
 				 		 
