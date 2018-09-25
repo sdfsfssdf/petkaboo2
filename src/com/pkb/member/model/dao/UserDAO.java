@@ -1073,6 +1073,25 @@ public class UserDAO {
 		return lh;
 	}
 
+
+   public int setUserFileNO(Connection con, User u) {
+      PreparedStatement pstmt = null;
+      int result = 0;
+
+      String query = prop.getProperty("setUserFileNO");
+      try {
+         pstmt = con.prepareStatement(query);
+         pstmt.setInt(1, u.getUser_no());
+         result = pstmt.executeUpdate();
+      } catch (SQLException e) {
+         e.printStackTrace();
+      } finally{
+         close(pstmt);
+      }
+      return result;
+   }
+   
+
 	public ArrayList<ImgFile> selectProfileHistory(Connection con, int file_no, int userNo) {
 		// TODO Auto-generated method stub
 		PreparedStatement pstmt = null;
@@ -1129,6 +1148,24 @@ public class UserDAO {
 		return result;
 	}
 
+public int setUserFileNO(Connection con, int UserNO) {
+      PreparedStatement pstmt = null;
+      int result = 0;
+
+      String query = prop.getProperty("setUserFileNO");
+      try {
+         pstmt = con.prepareStatement(query);
+         pstmt.setInt(1, UserNO);
+         result = pstmt.executeUpdate();
+      } catch (SQLException e) {
+         e.printStackTrace();
+      } finally{
+         close(pstmt);
+      }
+      return result;
+   }
+
+
 	public int deleteTitleProfileSetFile(Connection con, String fileNo) {
 		PreparedStatement pstmt = null;
 		int result = 0;
@@ -1141,12 +1178,32 @@ public class UserDAO {
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 		} finally{
 			close(pstmt);
 		}
 		return result;
 	}
+
+
+	public int setCyberMoney(Connection con, User u) {
+      PreparedStatement pstmt = null;
+      int result = 0;
+      
+      String query = prop.getProperty("setCyberMoney");
+      
+      try {
+         pstmt = con.prepareStatement(query);
+         
+         result = pstmt.executeUpdate();
+      } catch (SQLException e) {
+         e.printStackTrace();
+      } finally{
+         close(pstmt);
+      }
+      return result;
+   }
 
 	public int updateTitleProfile(Connection con, String fileNo, int userNo) {
 		PreparedStatement pstmt = null;
@@ -1161,6 +1218,7 @@ public class UserDAO {
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 		} finally{
 			close(pstmt);

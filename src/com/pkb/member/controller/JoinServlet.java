@@ -42,6 +42,7 @@ public class JoinServlet extends HttpServlet {
 		
 		int result = new UserService().joinUser(u);
 		
+		int result1 = new UserService().setCyberMoney(u);
 		String page = "";
 		
 		if(result>0){
