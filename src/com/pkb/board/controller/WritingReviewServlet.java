@@ -41,14 +41,28 @@ public class WritingReviewServlet extends HttpServlet {
 		
 //		System.out.println("22" + request.getParameter("contractNo"));
 //		System.out.println("33" + request.getParameter(""));
+	/*	String contractNo = request.getParameter("contractNo");
+		System.out.println(contractNo);
+		String petName=request.getParameter("petName");*/
+		
 		
 		String page = "";
 		page="views/myPage/reviewWrite.jsp";
 		
+		request.setAttribute("petsitterName", request.getParameter("petsitterName"));
+		request.setAttribute("petName", request.getParameter("petName"));
+		request.setAttribute("contractNo", request.getParameter("contractNo"));
+		/*request.setAttribute("writter", request.getParameter("writter"));
+		
+		System.out.println(writter);*/
+		
+		
 		RequestDispatcher view = request.getRequestDispatcher(page);
 		view.forward(request, response);
-		request.setAttribute("contractNo", request.getParameter("contractNo"));
-		request.setAttribute("petName", request.getParameter("petName"));
+		
+		
+		
+		
 		//request.setAttribute("contractNo", request.getParameter("contractNo"));
 		
 //		
