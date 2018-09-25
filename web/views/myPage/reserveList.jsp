@@ -83,7 +83,8 @@
 			
 		<input type="hidden" name="contractNo" value="<%=rsvList.get(i).getContract_no() %>">
 		<input type="hidden" name="petName" value="<%=rsvList.get(i).getPet_name() %>">
-		<input type="hidden" name="userName" value="<%=loginUser.getUser_name() %>">
+		<input type="hidden" name="petsitterName" value="<%=rsvList.get(i).getUser_name() %>" />
+		<%-- <input type="hidden" name="writter" value="<%=loginUser.getUser_name() %>"> --%>
 			<table class="tableArea" >
 		
 				<tr>
@@ -132,25 +133,28 @@
         
         <!-- Modal body -->
         <div class="modal-body">
+         <% for(int i=0;i<rsvList.size();i++){ %>
           <div class="modalTop">
+         
           	<div class="modalTopImg"></div>
-          	<div class="modalTopContent"><label>이름 : </label>이주혁<br>
-          		 <label>주소 : </label>경기도 광주시 <br>
+          	<div class="modalTopContent"><label>이름 : </label><%=rsvList.get(i).getUser_name() %><br>
+          		 <label>주소 : </label><%=rsvList.get(i).getAddress()%> <br>
           	</div>	
           </div>
           <br clear="both">
           <div class="modalContent">
-          	<label>예약번호 : </label><br>
-          	<label>돌봄 시작일 : </label> 2018-09-13 <br>
-          	<label>돌봄 종료일 : </label> 2018-09-30 <br>
-          	<label>반려동물 정보 : </label> 쿠키(푸들) <br>
-          	<label>총요금 : </label> 45000원 <br>
+          	<label>예약번호 : </label><%=rsvList.get(i).getContract_no() %><br>
+          	<label>돌봄 시작일 : </label> <%=rsvList.get(i).getContract_start()%> <br>
+          	<label>돌봄 종료일 : </label> <%=rsvList.get(i).getContract_end() %> <br>
+         <%--  	<label>반려동물 정보 : </label> <%=rsvList.get(i).getPet_name()%>(<%=rsvList.get(i).getPet_categoryName()%>) <br><!-- tb_petcategory 테이블 조인해야됨 -->
+         	<label>총요금 : </label> <%=rsvList.get(i).getService_charge()%> <br> --%><!-- tb_regdetail(펫시터등록상세) 테이블 조인해야됨 -->
           	<label class="modalContentMenu">서비스 진행상황</label>
           	<label>1. 계약</label> v <br>
           	<label>2. 진행중</label>	<br>
           	<label>3. 완료대기</label> <br>
           	<label>4. 완료</label><br>
           </div>
+           <%} %>
         </div>
         
         <!-- Modal footer -->
