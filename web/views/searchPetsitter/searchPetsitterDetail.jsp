@@ -148,8 +148,10 @@ td {
 			</div>
 
 			<div class="petsitter-id">
+			<form>
 				<div class="PSid">
 					<div class="l">
+						
 						<img
 							src="https://pbs.twimg.com/profile_images/984239725190901760/-5wrSANU_400x400.jpg"
 							class="PSphoto img-circle img-responsive" alt="Responsive image" />
@@ -168,10 +170,12 @@ td {
 							<td colspan="3">*정확한 가격 책정을 위한 <a href="#" >1:1문의하기</a></td>
 						</tr>
 					</table>
-					<button class="btn btn-default" type="submit" style="width:80%; margin-left:auto; margin-right:auto;" onclick="location.href='<%=request.getContextPath()%>/pkb/views/searchPetsitter/petSittingRsvApply.jsp'">예약하기</button>
+					<button class="btn btn-default" type="submit" style="width:80%; margin-left:auto; margin-right:auto;" onclick="<%=request.getContextPath()%>/selectPetsitterInfo.ps">예약하기</button>
+				
 				</div>
+				</form>
 			</div>
-
+			
 			<div class="photo">
 				<nav>
 				<ul>
