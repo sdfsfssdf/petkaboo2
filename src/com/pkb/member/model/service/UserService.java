@@ -39,9 +39,9 @@ public class UserService {
 
 		if (result > 0) {
 			int result1 = new UserDAO().setCyberMoney(con, u);
-			if(result1> 0){
+			if (result1 > 0) {
 				commit(con);
-			}else{
+			} else {
 				rollback(con);
 			}
 		} else {
@@ -190,10 +190,10 @@ public class UserService {
 			ImgFile profile = new UserDAO().selectUserProfile(con, ((User) hmap.get("user")).getFile_no());
 
 			hmap.put("profile", profile);
-			ArrayList<ImgFile> profileHistory = new UserDAO().selectProfileHistory(con, profile.getFile_no(), userNo);
-
-			hmap.put("profileHistory", profileHistory);
-			
+			if(profile != null){
+				ArrayList<ImgFile> profileHistory = new UserDAO().selectProfileHistory(con, profile.getFile_no(), userNo);
+				hmap.put("profileHistory", profileHistory);
+			}
 			ArrayList<Pet> plist = new UserDAO().selectUserPet(con, userNo);
 			hmap.put("pet", plist);
 		}
@@ -386,6 +386,7 @@ public class UserService {
 
 	}
 
+
 	public ImgFile selectUserProfile(User u) {
 		Connection con = getConnection();
 		
@@ -395,4 +396,54 @@ public class UserService {
 	
 		return profile;
 	}
+
+	public int modifyMemberInfo(User user) {
+		Connection con = getConnection();
+
+		int result = new UserDAO().modifyMemberInfo(con, user);
+
+		if (result > 0) {
+			commit(con);
+		} else {
+			rollback(con);
+		}
+
+		close(con);
+
+		return result;
+	}
+
+	public int deletePetInfo(int petNo) {
+		// TODO Auto-generated method stub
+		Connection con = getConnection();
+
+		int result = new UserDAO().deletePetInfo(con, petNo);
+
+		if (result > 0) {
+			commit(con);
+		} else {
+			rollback(con);
+		}
+
+		close(con);
+
+		return result;
+	}
+
+	public HashMap<String, Object> selectDiapauseMember(int currentPage, int limit) {
+		Connection con = getConnection();
+		HashMap<String, Object> dmMap = null;
+		ArrayList<User> mlist = new UserDAO().selectMemberListForUserStatus(con, currentPage, limit, "dia");
+		
+		if(mlist != null){
+			dmMap = new HashMap<String,Object>();
+			dmMap.put("mlist", mlist);
+			ArrayList<User> needMemberList = new UserDAO().selectNeedDiapauseMemberList(con);
+			dmMap.put("nmlist", needMemberList);
+		}
+		
+		close(con);
+		return dmMap;
+	}
+
 }

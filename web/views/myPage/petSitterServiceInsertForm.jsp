@@ -1,6 +1,12 @@
+<%@page import="com.pkb.common.JDBCTemplate"%>
+<%@page import="com.pkb.petsitterService.model.vo.PetCategory"%>
+<%@page import="java.sql.ResultSet"%>
+<%@page import="java.sql.PreparedStatement"%>
+<%@page import="java.sql.Connection"%>
+<%@page import="java.sql.SQLException"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ page import="java.util.*, java.text.*" %>
+<%@ page import="java.util.*, java.text.*, com.pkb.common.JDBCTemplate.*" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -41,6 +47,51 @@ th, tr, td{
 	</script>
 	<% } else {%>
 	<%@ include file="/views/common/sidemenubar.jsp"%>
+	<% 
+		// PetCategory DB 조회
+		Properties prop = new Properties();
+		
+		Connection con = null;
+		PreparedStatement pstmt=null;
+		ResultSet rset = null;
+		
+		String query = "SELECT * FROM TB_PETCATEGORY P";
+		
+		// System.out.println("query : " + query);
+		
+		ArrayList<PetCategory> pcl = null;
+		
+		try{
+			con = JDBCTemplate.getConnection();
+			pstmt = con.prepareStatement(query);
+			rset = pstmt.executeQuery();
+			pcl = new ArrayList<PetCategory>();
+			
+			while(rset.next()){
+				PetCategory pc = new PetCategory();
+				
+				pc.setPetCategory(rset.getInt("pet_category"));
+				pc.setCategoryName(rset.getString("pet_categoryname"));
+				
+				pcl.add(pc);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			JDBCTemplate.close(pstmt);
+			JDBCTemplate.close(rset);
+		}
+		
+		Calendar cal = Calendar.getInstance();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		String startDate = sdf.format(cal.getTime());
+		cal.add(Calendar.DATE, 7);
+		String endDate = sdf.format(cal.getTime());
+		
+		// System.out.println("sysdate : " + sysdate1);
+		
+	%>
 	<div class="contentArea">
 		<h2><b>펫시터 서비스 등록</b></h2>
 		<p>펫시터 서비스를 등록할 수 있습니다.</p>
@@ -67,16 +118,10 @@ th, tr, td{
 						<label>카테고리 </label>
 						</td>
 						<td>
-						<input type="radio" value="1" name="pet_category" id="1">
-						<label for="1">개</label>
-						<input type="radio" value="2" name="pet_category" id="2">
-						<label for="2">고양이</label>
-						<input type="radio" value="3" name="pet_category" id="3">
-						<label for="3">파충류</label>
-						<input type="radio" value="4" name="pet_category" id="4">
-						<label for="4">조류</label>
-						<input type="radio" value="5" name="pet_category" id="5">
-						<label for="5">어류</label>
+						<% for(PetCategory pc : pcl){ %>
+						<input type="radio" value="<%= pc.getPetCategory() %>" name="pet_category" id="<%= pc.getPetCategory() %>">
+						<label for="<%= pc.getPetCategory() %>"><%= pc.getCategoryName() %></label>
+						<% } %>
 						</td>
 					</tr>
 					<tr>
@@ -116,7 +161,7 @@ th, tr, td{
 						<label>서비스 시작 가능일</label>
 						</td>
 						<td>
-						<input type="date" id="contract_start" name="contract_start" value="2017-01-01">
+						<input type="date" id="contract_start" name="contract_start" value="<%= startDate %>">
 						</td>
 						</tr>
 					<tr>
@@ -124,7 +169,7 @@ th, tr, td{
 						<label>서비스 종료일</label>
 						</td>
 						<td>
-						<input type="date" id="contract_end" name="contract_end" value="">
+						<input type="date" id="contract_end" name="contract_end" value="<%= endDate %>">
 						</td>
 					</tr>					
 			<tr>

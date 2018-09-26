@@ -159,6 +159,7 @@ a:hover {
 			</h2>
 		</div>
 		<br /> <br /> <br /> <br /> <br />
+
 		<form name="form1" action="<%=request.getContextPath()%>/insertCtr.ct"
 			method="post">
 			--%>
@@ -168,20 +169,75 @@ a:hover {
 					class=howToPs><input type="radio" name="contract_type"
 					value="방문" />부르기 </label>
 			</div>
-			<br />
+			<br/>
+
 			<div id="body-div">
 				<div class="div1">
 					<br /> <br />
 					<p>&nbsp;&nbsp;&nbsp;예약 전 확인 해주세요</p>
-					<br /> <br />
+					<br />
 					<p>
 						&nbsp;&nbsp; 더이상 우리의 소중한 아이를 낯선곳에 맡기지 마세요. <br>
 						&nbsp;&nbsp;평소와 똑같이 집에서 산책하고 놀아주는 펫카부가 있습니다.
 					</p>
 					<br />
+					<br />
+					
 				</div>
 				<br />
+				
+				
+				<div class="div1 div5">
+				<br />
+				<br />
+				
+				
+				
+					<div class=phone>
+					&nbsp;&nbsp;&nbsp;<label>예약 전 휴대폰 인증을 진행합니다.</label>
+										 <%String name = (int)(Math.random()*(999999-100000+1))+100000+""; %>
+										    <form method="post" class="rsvinfo" name="smsForm" action="sendSms.jsp">
+										        <input type="hidden" name="action" value="go">
+										        <input type="hidden" name="msg" value="인증번호는 <%=name%> 입니다. 인증번호를 입력해주세요">
+										        <br>&nbsp;&nbsp;&nbsp;<label>받는 번호</label>&nbsp;&nbsp;&nbsp;
+										        <input type="text" id="ineedyou" name="rphone" placeholder="010-0000-0000형식으로 입력해주세요." size="32px">
+										        <input type="hidden" name="sphone1" value="010">
+										        <input type="hidden" name="sphone2" value="6551">
+										        <input type="hidden" name="sphone3" value="5979">
+										        <input type="hidden" name="name" value="<%=name%>">
+										        &nbsp;<input type="submit" id="send" value="전송">
+										    </form>
+										
+										<!-- 수정완료 수정취소 -->
+										<form class ="rsvinfo" method="post" action="<%=request.getContextPath()%>/smsCheckOk.ct">
+										<div class="phone3">
+										
+											&nbsp;&nbsp;&nbsp;<label>인증번호 입력</label>&nbsp;&nbsp;
+											<input type="text" id="code" name="inputNum" size='20' maxlength='20' style="width: 300px; height: 30px; margin: 0; color: black; border-width: 1px">
+										&nbsp;<button type="submit" style="font-weight: lighter">확인</button>
+										</div>
+										
+											<br />
+											<br />
+										
+										</form>
+									</div>
+									
+				</div>
+				<br>
+					
+			
+			
+				<br />
 				<div class="div2">
+				<form name="form1" class="rsvinfo" action="<%=request.getContextPath()%>/insertCtr.ct" method="post">
+				<br />
+		
+			
+				&nbsp;&nbsp;&nbsp;<label class=howToPs><input type="radio" name="contract_type" value="위탁" required /> 맡기기</label> 
+				<label class=howToPs><input type="radio" name="contract_type" value="방문" />부르기 </label>
+			
+				
 					<br />
 					<h4>&nbsp;&nbsp;선택하신 펫시터입니다.</h4>
 					<table style="display: inline-block">
@@ -207,6 +263,9 @@ a:hover {
 					</table>
 				</div>
 				<br />
+				
+				
+				
 				<div class="div1 div3">
 					<br />
 					<h4>&nbsp;&nbsp;1.지역을 알려주세요</h4>
@@ -220,9 +279,14 @@ a:hover {
 
 					&nbsp;&nbsp;&nbsp;<input type="checkbox" /> &nbsp;&nbsp;기본주소로 설정하기
 					<br /> <br /> <br />
-
 				</div>
+				
+				
+				
 				<br />
+				
+				
+				
 				<div class="div1 div4">
 					<br />
 					<h4>&nbsp;&nbsp;2.날짜를 알려주세요</h4>
@@ -231,27 +295,30 @@ a:hover {
 						type="Date" placeholder="종료 날짜 입력" style="width: 200px;"
 						name="enddate" required /> <br /> <br /> <br />
 				</div>
+				
+				
+				
+				
 				<br />
+				
+				
+				
 				<div class="div1 div5">
-					<br />
-
-					<h4>&nbsp;&nbsp;3.연락받을 휴대전화 번호를 알려주세요</h4>
-					&nbsp;&nbsp;&nbsp;&nbsp;<select name="phoneNum1" id="phoneNum"
-						required>
-						<option value="010">010</option>
-						<option value="011">011</option>
-						<option value="017">017</option>
-						<option value="016">016</option>
-						<option value="019">019</option>
-					</select> &nbsp;&nbsp;&nbsp;&nbsp;<input type="text"
-						placeholder=" ' - , . / '를 제외한 나머지 번호 입력" name="phoneNum2"
-						style="width: 250px;" required />&nbsp;&nbsp;
-					<button class="btn btn-default" type="submit" onclick="">인증</button>
-					<br /> &nbsp;&nbsp;&nbsp;&nbsp;<input type="text"
-						placeholder="인증번호 입력" />&nbsp;&nbsp;
-					<button class="btn btn-default" type="submit">확인</button>
-					<br /> <br />
-				</div>
+				<br />
+				<h4>&nbsp;&nbsp;3.연락받을 휴대전화 번호를 알려주세요</h4>
+				&nbsp;&nbsp;&nbsp;&nbsp;<select name="phoneNum" id="phoneNum">
+					<option value="">010</option>
+					<option value="">011</option>
+					<option value="">017</option>
+					<option value="">016</option>
+					<option value="">019</option>
+				</select> &nbsp;&nbsp;&nbsp;&nbsp;<input type="text"
+					placeholder=" ' - , . / '를 제외한 나머지 번호 입력" style="width: 250px;" />&nbsp;&nbsp;
+				<br /> 
+				<br /> <br />
+			    </div>
+			
+			
 				<br /> <br />
 				<fieldset class="div1 f-style">
 					<br /> &nbsp;&nbsp;<label for="">약관을 확인해 주세요</label> <br /> <br />
@@ -269,13 +336,17 @@ a:hover {
 						onclick="document.getElementById('modal3').style.display='block'">위치정보
 						활용약관</a> <br /> <br /> <br />
 				</fieldset>
+				
+				
 				<br /> <br />
 				<button class="btn btn-default" type="submit" id="submit">제출</button>
 				<button class="btn btn-default" type="reset" id="reset">취소</button>
+			</form>
 			</div>
 
+	
 
-		</form>
+		
 
 
 		<br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br />
@@ -796,6 +867,9 @@ a:hover {
 			<!--  request.getRequestDispatcher("../common/login.jsp").forward(request, response);  -->
 
 		<%}%>
+		
+	
+		
 	
 </body>
 
