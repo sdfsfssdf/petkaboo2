@@ -15,10 +15,10 @@
 <!-- iamport.payment.js -->
 <script type="text/javascript"
 	src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
-<script>
+
 	var IMP = window.IMP; // 생략가능
 	IMP.init('imp97048672');
-</script>
+
 <!-- 합쳐지고 최소화된 최신 CSS -->
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
@@ -215,8 +215,14 @@ img {
 
 
 
-
-					<button id="clickrecharge" background="yellow">충전하기</button>
+					<form action = "<%=request.getContextPath() %>/insertRecharge.rc" method="post">
+					<input type="hidden" value = "<%= user.getUser_no() %>" name ="user_no">
+					<button type="submit" id="clickrecharge" background="yellow" name="clickrecharge" onclick="goRecharge()">충전하기</button>
+					</form>
+					
+					
+					
+					
 					<br />
 					<hr />
 					<br />
@@ -261,21 +267,22 @@ img {
 
 
 
-<form action = location></form>
+
+
+
+
 	<script>
 	
-	
-	
-		$(function() {
-			$('#clickrecharge').click(
-							function() {
-								if (!$("input:radio[name=howToPS]:checked")
-										.val()) {
+		function goRecharge() {
+								if (!$("input:radio[name=howToPS]:checked").val()) {
 									alert('충전에 필요한 결제수단을 선택해주세요');
 									return false;
 								} else if ($(
 										"input:radio[name=howToPS]:checked").val() == "card") {
-
+									
+									var IMP = window.IMP; // 생략가능
+									IMP.init('imp97048672');
+									
 									IMP.request_pay(
 													{
 														pg : 'jtnet',
@@ -289,60 +296,20 @@ img {
 														buyer_name : '<%=user.getUser_name()%>',
 														buyer_tel :  '<%=user.getPhone()%>',
 														buyer_addr : '<%=user.getAddress()%>',
-														
+														m_redirect_url:'http://127.0.0.1:8001/pkb/views/status/requestPayment.jsp'
 													},
 													function(rsp) {
 														
 															if (rsp.success) {
-															//[1] 서버단에서 결제정보 조회를 위해 jQuery ajax로 imp_uid 전달하기
-															jQuery.ajax(
-																			{
-																				url : 'insertRecharge.rc', //cross-domain error가 발생하지 않도록 동일한 도메인으로 전송
-																				type : 'POST',
-																				dataType : 'json',
-																				data : {
-																					imp_uid : rsp.imp_uid,
-																					paid_amount : rsp.paid_amount ,
-																					merchant_uid : rsp.merchant_uid,
-																					pay_method : rsp.pay_method,
-																					apply_num : rsp.apply_num,
-								
-																					user_no :  <%=user.getUser_no()%>,
-																				//기타 필요한 데이터가 있으면 추가 전달
-																				
-																				
-																				
-																				}
-																			})
-																	.done(
-																			function(data) {
-																				//[2] 서버에서 REST API로 결제정보확인 및 서비스루틴이 정상적인 경우
-																				if (everythings_fine) {
-																					var msg = '결제가 완료되었습니다.';
-																					msg += '\n고유ID : '
-																							+ rsp.imp_uid;
-																					msg += '\n상점 거래ID : '
-																							+ rsp.merchant_uid;
-																					msg += '\결제 금액 : '
-																							+ rsp.paid_amount;
-																					msg += '카드 승인번호 : '
-																							+ rsp.apply_num;
-
-																					alert(msg);
+															//[1] 서버단에서 결제정보 조회를 위해 jQuery ajax로 imp_uid 전달하는값
 																					
-																					window.location = '/insertRecharge.rc';
-																					
+																					document.getElementById("clickrecharge").click();
+																			
 																				} else {
-																					//[3] 아직 제대로 결제가 되지 않았습니다.
-																					//[4] 결제된 금액이 요청한 금액과 달라 결제를 자동취소처리하였습니다.
-																				}
-																			});
+																					
+													      
 
-														} else {
-													        var msg = '결제에 실패하였습니다.';
-													        msg += '에러내용 : ' + rsp.error_msg;
-
-													        alert(msg);
+													        alert();
 													    }
 													});
 
@@ -414,7 +381,7 @@ img {
 													});
 
 								} --%>
-							});
+							
 		});
 	</script>
 	<%

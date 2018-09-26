@@ -7,20 +7,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.pkb.reservation.model.service.ContractService;
-import com.pkb.reservation.model.vo.Contract;
+import com.pkb.member.model.service.UserService;
+import com.pkb.member.model.vo.User;
 
 /**
- * Servlet implementation class selectContractPetsittingServlet
+ * Servlet implementation class smsCheckOkServlet
  */
-@WebServlet("/selectCtrPetsitting.ct")
-public class selectContractPetsittingServlet extends HttpServlet {
+@WebServlet("/smsCheckOk.ct")
+public class smsCheckOkServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public selectContractPetsittingServlet() {
+    public smsCheckOkServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -29,9 +29,17 @@ public class selectContractPetsittingServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String phone = (String)request.getSession().getAttribute("rphone");
+		User loginUser = (User)request.getSession().getAttribute("loginUser");
+		String sms = request.getParameter("inputNum");
 		
-
-		
+		int result = new UserService().updatePhone(phone, sms, loginUser);
+		System.out.println("dhzl"+sms);
+		if(result>0){
+			response.sendRedirect("/pkb/views/searchPetsitter/petSittingRsvApply.jsp");
+		}else{
+			response.sendRedirect("views/searchPetsitter/checkSmsOk.jsp");
+		}
 	}
 
 	/**
