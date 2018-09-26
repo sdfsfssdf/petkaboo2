@@ -286,7 +286,9 @@ margin-top:20px;
 							<td colspan="2"; width=800px; height=300px>
 							<!-- 사진 -->
 							<div class="photo">
-								<img id="profileImg" width=450px; height=450px; alt="" />
+								<div id="contentImgArea">
+									<img id="foo" width = "450px" height="450px">
+								</div>
 							</div>
 							
 							<div class=modanddelete>
@@ -318,21 +320,6 @@ margin-top:20px;
 					</div>
 					</form>	
 				</div>
-
-				<script>
-					function loadImg(value, num){
-						if(value.files && value.files[0]){
-							var reader = new FileReader();
-							
-							reader.onload = function(e){
-								$("#profileImg").attr("src", e.targetresult);
-							}
-						}
-						reader.readAsDataURL(value.files[0]);
-					}
-				</script>
-
-
 
 				<!-- 구분선 -->
 				<br> <br> <br> <br> <br>
@@ -368,7 +355,23 @@ margin-top:20px;
 			</div>
 		</div>
 	</div>
-
+		<script>
+			function readURL(input) {
+		
+		    if (input.files && input.files[0]) {
+		      var reader = new FileReader();
+		      reader.onload = function(e) {
+		        $('#foo').attr('src', e.target.result);
+		      }
+		      reader.readAsDataURL(input.files[0]);
+		    }
+		  }
+		  $("#imgInp").change(function() {
+		
+		    readURL(this);
+		
+		  });
+		</script>
 
 </body>
 </html>

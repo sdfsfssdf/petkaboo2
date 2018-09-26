@@ -294,16 +294,16 @@ a:hover, a:active, a:focus {
 							<!-- 사진부분 -->
 							<div class=circleimg>
 								<%if(fileName != null) {%>
-								<Img class=profileImg style=height:200px width=100px radius=150px src="<%=request.getContextPath()%>/images/profileImagesUpload/<%=fileName%>">
+								<Img class=profileImg style="width:180px;height:180px; border-radius:150px" src="<%=request.getContextPath()%>/images/profileImagesUpload/<%=fileName%>">
  								<%} else{ %>
- 								<Img class=profileImg style=height:200px width=100px radius=150px src="<%=request.getContextPath()%>/images/profileImagesUpload/profileBasicImage.png">
+ 								<Img class=profileImg style="width:180px;height:180px; border-radius:150px" src="<%=request.getContextPath()%>/images/profileImagesUpload/profileBasicImage.png">
  								<%} %>
  							</div>
 							<!-- 닉네임 -->
 							<div class=nicknamespan>
 								<span style="text-align: left">닉네임 : </span>&nbsp;<input
-									type="text" name="nimknamespann" size="20" maxlength="15"
-									style="width: 50px; color: black; margin: 0; padding: 0; height: 35px; border-width: 0; background-color: #eee;"
+									type="text" name="nimknamespann" size="20" maxlength="30"
+									style="width: 100px; color: black; margin: 0; padding: 0; height: 35px; border-width: 0; background-color: #eee;"
 									<% if(loginUser != null){%>
 									value="<%=loginUser.getNickname()%>"
 									<% } %> readonly>
