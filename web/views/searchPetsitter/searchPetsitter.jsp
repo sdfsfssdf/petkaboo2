@@ -276,7 +276,14 @@ table.listArea td {
 					</tr>
 					<tr>
 						<th scope="row">주소</th>
-						<td><%= p.getAddress() %></td>
+						<td>
+						<% 
+							String[] maskedAddress = null;
+							maskedAddress = 
+						
+						%>
+						<%= p.getAddress() %>
+						</td>
 					</tr>
 					<tr>
 						<th scope="row">서비스내용</th>
@@ -313,8 +320,7 @@ table.listArea td {
 				<button onclick="location.href='<%=request.getContextPath()%>/PetSitter.all?currentPage=<%=currentPage + 1 %>'">></button>
 			<% } %>
 			<button onclick="location.href='<%=request.getContextPath()%>/PetSitter.all?currentPage=<%=maxPage%>'">>></button>
-		
-		</div>
+			</div>
 		</div>
 </div>
 	<script>

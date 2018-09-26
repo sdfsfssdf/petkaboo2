@@ -159,8 +159,18 @@ a:hover {
 			</h2>
 		</div>
 		<br /> <br /> <br /> <br /> <br />
-	
-			<br />
+
+		<form name="form1" action="<%=request.getContextPath()%>/insertCtr.ct"
+			method="post">
+			--%>
+			<div id="ip-style">
+				<label class=howToPs><input type="radio"
+					name="contract_type" value="위탁" required /> 맡기기</label> <label
+					class=howToPs><input type="radio" name="contract_type"
+					value="방문" />부르기 </label>
+			</div>
+			<br/>
+
 			<div id="body-div">
 				<div class="div1">
 					<br /> <br />
