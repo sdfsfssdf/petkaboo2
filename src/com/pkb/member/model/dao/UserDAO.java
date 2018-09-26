@@ -1268,4 +1268,58 @@ public int setUserFileNO(Connection con, int UserNO) {
 		
 		return plist;
 	}
+
+	public int modifyMemberInfo(Connection con, User user) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String query = prop.getProperty("modifyMemberInfo");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, user.getUser_name());
+			pstmt.setString(2, user.getEmail());
+			pstmt.setString(3, user.getPhone());
+			pstmt.setString(4, user.getSms_chk());
+			pstmt.setString(5, user.getEmail_chk());
+			pstmt.setInt(6, user.getUser_no());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally{
+			close(pstmt);
+		}
+		return result;
+	}
+
+	public int deletePetInfo(Connection con, int petNo) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String query = prop.getProperty("deletePetInfo");
+
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, petNo);
+			
+			result = pstmt.executeUpdate();
+			
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally{
+			close(pstmt);
+		}
+		return result;
+	}
+
+	public ArrayList<User> selectNeedDiapauseMemberList(Connection con) {
+		Statement stmt = null;
+		ResultSet rs = null;
+		ArrayList<User> u = null;
+		String query = prop.getProperty("selectNeedDiapauseMember");
+	}
+
 }

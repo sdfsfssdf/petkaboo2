@@ -81,6 +81,7 @@
 			<div class="table1">
 			<h2>회원정보 상세</h2>
 			<p>회원의 상세정보를 확인할 수 있고, 수정이 가능합니다.</p>
+			<form action="<%=request.getContextPath()%>/modifyMember.me" method="post">		
 			<table class="table">
 				<tr align="center">
 					<td rowspan="5" colspan="2" align="center"><div id="imageArea" style="height:90%;width:100%">
@@ -137,19 +138,7 @@
 
           	<%} %>
           <%} %>
-      <!--   <script>
-        	$(function(){
-        		$('#titleImg').click(function(){
-        			
-        			console.log($(this).parent().children('input[type=hidden]').val());
-        			console.log($(this).prop('src'));
-		
-  			
-        		})
-        		
-        	})
-        </script> -->
-        <!-- Modal -->
+
   <div class="modal fade" id="titleImageModal" role="dialog">
     <div class="modal-dialog modal-sm">
       <div class="modal-content">
@@ -224,19 +213,25 @@
       </div>                          
     </div>
   </div>
-														
+											
 					</td>
-					<input type="hidden" id="userNo" value="<%=u.getUser_no()%>">
+					<input type="hidden" name="userNo" id="userNo" value="<%=u.getUser_no()%>">
 					<td width="25%" height="50" style="padding-top: 13px">회원번호</td>
 					<td width="25%"	><%=u.getUser_no()%></td>
 				</tr>
 				<tr>
 					<td width="25%" height="50"style="padding-top: 13px">아이디(이메일)</td>
-					<td width="25%" ><%=u.getEmail() %></td>
+					<td width="25%" >
+						<div class="originData"><%=u.getEmail() %></div>
+						<div class="modifyData" style="display:none"><input class="form-control" type="email" name="email" value="<%=u.getEmail() %>"></div>
+					</td>
 				</tr>
 				<tr>
 					<td width="25%" height="50"style="padding-top: 13px">이름</td>
-					<td><%=u.getUser_name()%></td>
+					<td>
+						<div class="originData"><%=u.getUser_name()%></div>
+						<div class="modifyData" style="display:none"><input class="form-control" type="text" name="userName" value="<%=u.getUser_name()%>"></div>
+					</td>
 				</tr>
 				<tr>
 					<td width="25%" height="50"style="padding-top: 13px">회원가입일시</td>
@@ -249,44 +244,78 @@
 				<tr>
 				
 					<td width="25%" height="50" style="padding-top: 13px">전화번호</td>
-					<td><%=u.getPhone() %></td>
+					<td>
+						<div class="originData"><%=u.getPhone() %></div>
+						<div class="modifyData" style="display:none"><input class="form-control" value="<%=u.getPhone() %>" type="tel" name="phone" placeholder="-를 포함한 전화번호를 적어주세요."></div>
+					</td>
 					<td style="padding-top: 13px">메일수신여부</td>
-					<td><%=u.getEmail_chk() %></td>
+					<td>
+						<div class="originData"><%=u.getEmail_chk() %></div>
+						<div class="modifyData" style="display:none">
+							<select name="emailChk" class="form-control">
+								<option>Y</option>
+								<option>N</option>
+							</select>
+						</div>
+					</td>
 				</tr>
 				<tr>
 					<td width="25%" height="50" style="padding-top: 13px">SMS수신여부</td>
-					<td><%=u.getSms_chk() %></td>
-					<td style="padding-top: 13px">인증여부</td>
+					<td>
+						<div class="originData"><%=u.getSms_chk() %></div>
+						<div class="modifyData" style="display:none">
+							<select name="smsChk" class="form-control">
+								<option>Y</option>
+								<option>N</option>
+							</select>
+						</div>
+					</td>
+					<td style="padding-top: 13px">인증여부/상태</td>
+					<td>
 					<%if(u.getUser_grade()==0){ %>
-						<td>
 							<img src="/pkb/images/adminImgs/check2.png">
 							<img src="/pkb/images/adminImgs/check2.png">
 							<img src="/pkb/images/adminImgs/check2.png">
-						</td>
 					<%} else if(u.getUser_grade() == 1){ %>
-						<td>
 							<img src="/pkb/images/adminImgs/check1.png">
 							<img src="/pkb/images/adminImgs/check2.png">
 							<img src="/pkb/images/adminImgs/check2.png">
-						</td>
 					<%} else if (u.getUser_grade() == 2) {%>
-						<td>
 							<img src="/pkb/images/adminImgs/check1.png">
 							<img src="/pkb/images/adminImgs/check1.png">
 							<img src="/pkb/images/adminImgs/check2.png">
-						</td>
 					<%} else { %>
-						<td>
 							<img src="/pkb/images/adminImgs/check1.png">
 							<img src="/pkb/images/adminImgs/check1.png">
 							<img src="/pkb/images/adminImgs/check1.png">
-						</td>
 					<%} %>
+					/
+					<%
+						if (u.getUser_status() == 0) {
+					%>
+						<div align="center" style="width:100px;border-radius:10px; background:lightgray; color:white; display:inline-block">휴먼</div>
+					<%
+						} else if (u.getUser_status() == 1) {
+					%>
+						<div align="center" style="width:100px;border-radius:10px; background:green; color:white; display:inline-block">정상</div>
+					<%
+						} else if (u.getUser_status() == 2) {
+					%>
+						<div align="center" style="width:100px;border-radius:10px; background:red; color:white; display:inline-block">탈퇴</div>
+					<%
+						} else {
+					%>
+						<div align="center" style="width:100px;border-radius:10px; background:orange; color:white ; display:inline-block">불량</div>
+					<%
+						}
+					%>
+					</td>
 				</tr>
 				<tr>
 					<td width="25%" height="50" style="padding-top: 13px">사이버머니</td>
 					<td><%=money.getMoney() %>P</td>
 					<td height="50" style="padding-top: 13px">등급</td>
+					
 					<%if(u.getUser_grade()==0){ %>
 						<td>미인증 회원</td>
 					<%} else if(u.getUser_grade() == 1){ %>
@@ -297,13 +326,35 @@
 						<td>펫시터</td>
 					<%} %>
 				</tr>
-			</table>
+			</table>	
 			<div align="center">
 				<button type="button" data-toggle="modal" data-target="#myModal2" class="btn btn-danger" style="display:inline-block">회원 탈퇴</button>
 				<button type="button" data-toggle="modal" data-target="#myModal" class="btn btn-warning" style="display:inline-block">회원 제재</button>
+				<button type="button"class="btn btn-default" id="modifyBtn" style="display:inline-block">수정하기</button>
+				<button type="submit"class="btn btn-default" id="modifySuccessBtn" style="display:none">수정완료</button>
+				<button type="button"class="btn btn-default" id="modifycancelBtn" style="display:none">취소하기</button>
 			</div>
+			</form>	
 			</div>
-			
+			<script>
+				$(function(){
+					$('#modifyBtn').click(function(){
+						$('#modifyBtn').hide();
+						$('.originData').hide();
+						$('.modifyData').show();
+						$('#modifySuccessBtn').show();
+						$('#modifycancelBtn').show();
+					})
+					
+					$('#modifycencleBtn').click(function(){
+						$('#modifySuccessBtn').hide();
+						$('#modifycancelBtn').hide();
+						$('.modifyData').hide();
+						$('.originData').show();
+						$('#modifyBtn').show();
+					})
+				})
+			</script>
 			
 			<div class="modal fade" id="myModal2" role="dialog">
 				<div class="modal-dialog modal-lg">
@@ -431,12 +482,15 @@
 				<h3>등록한 반려동물이 없습니다.</p>
 			<%} else { %>
 			<%for(int i = 0 ; i < plist.size(); i ++ ) { %>
+			<form action="deletePetInfo.me" method="post">
 				<table class="table">
 					<tr>
 						<td colspan="2" rowspan="5" style="width:30%">
 							<img id="petImage" src="<%=request.getContextPath()%>/images/profileImagesUpload/tempPetImage.jpg" style="width:100%;height:100%; border-radius:50px">
 						</td>
 						<td >반려동물 번호    </td>
+						<input type="hidden" name="userNo" id="userNo" value="<%=u.getUser_no()%>">
+						<input type="hidden" value="<%=plist.get(i).getPetNo() %>" name="petNo">
 						<td><%=plist.get(i).getPetNo() %></td>
 						<td colspan="2"></td>
 					</tr>
@@ -448,7 +502,7 @@
 					</tr>
 					<tr>
 						<td>이름</td>
-						<td><%=plist.get(i).getPetName() %></td>
+						<td><%=plist.get(i).getPetName()%></td>
 						<td>생일</td>
 						<td><%=plist.get(i).getPetBirth() %></td>
 					</tr>
@@ -470,8 +524,34 @@
 						</td>
 					</tr>
 				</table>
-				
-				<br><br>
+				<div align="center">
+					<button type="submit" class="btn btn-danger"  id="deletePetBtn<%=i%>">삭제하기</button>
+			    	<button type="button" class="btn btn-default" id="modifyPetBtn<%=i%>" >수정하기</button>
+			    	<button type="button" class="btn btn-default" id="modifyPetSuccessBtn<%=i%>" style="display:none">수정완료</button>
+			    	<button type="button" class="btn btn-default" id="modifyPetCancel<%=i%>" style="display:none">취소하기</button>
+				</div>
+				</form>
+				<hr>
+				<script>
+					$(function(){
+						var deletePetBtn = '#deletePetBtn'+<%=i%>;
+						var modifyPetBtn = '#modifyPetBtn'+<%=i%>;
+						var modifyPetSuccessBtn = '#modifyPetSuccessBtn'+<%=i%>;
+						var modifyPetCancel = '#modifyPetCancel'+<%=i%>;
+	
+						$(modifyPetBtn).click(function(){
+							$(modifyPetBtn).hide();
+							$(modifyPetSuccessBtn).show();
+							$(modifyPetCancel).show();
+						})
+						
+						$(modifyPetCancel).click(function(){
+							$(modifyPetBtn).show();
+							$(modifyPetSuccessBtn).hide();
+							$(modifyPetCancel).hide();
+						})
+					})
+				</script>
 				<%} %>
 			<%} %>
 		</div>

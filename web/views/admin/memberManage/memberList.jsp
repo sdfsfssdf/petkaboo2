@@ -4,7 +4,6 @@
 <%
 	ArrayList<User> mlist = (ArrayList<User>) request.getAttribute("mlist");
 	Paging pg = (Paging) request.getAttribute("pg");
-	// 아래에서 사용하기 편하기 위해 선언 따로 선언하지 않고 pi의 getter메소드를 사용해도 상관없다...
 	int listCount = pg.getListCount();
 	int currentPage = pg.getCurrentPage();
 	int maxPage = pg.getMaxPage();
@@ -101,7 +100,7 @@
 			<div class="table1">
 				<h2>회원 목록</h2>
 				<p>회원의 정보를 확인 할 수 있고, 관리를 할 수 있습니다.</p>
-				<h5 style="color:lightgray">*인증상태는 이메일인증, 휴대폰인증, 펫시터인증 순서 입니다.</h5>
+				<h5 style="color:gray">*인증상태는 이메일인증, 휴대폰인증, 펫시터인증 순서 입니다.</h5>
 				<table id="memberListTable" class="table table-hover" align="center" name="memberListTable">
 					<tr class="head">
 						<th width="2%"><input type="checkbox" class="masterCheck"></th>
