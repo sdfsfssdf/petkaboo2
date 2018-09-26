@@ -393,12 +393,15 @@ border: 1px solid black; */
 							
 							<td colspan="2" width=800px; height=200px>
 									<div class=phone>
+										
 										 <%String name = (int)(Math.random()*(999999-100000+1))+100000+""; %>
 										    <form method="post" name="smsForm" action="smssend.jsp">
 										        <input type="hidden" name="action" value="go">
 										        <input type="hidden" name="msg" value="인증번호는 <%=name%> 입니다. 인증번호를 입력해주세요"></textarea>
-										        <br>받는 번호
-										        <input type="text" id="ineedyou" name="rphone" placeholder="010-0000-0000형식으로 입력해주세요">
+										     	<br>
+										     	<span style="float=left">현재번호 :<%=loginUser.getPhone() %></span>
+										     	<span style="margin= 0px 0px 0px 0px">번호:</span>
+										     	<input type="text" id="ineedyou" name="rphone" placeholder="010-0000-0000형식으로 입력해주세요">
 										        <input type="hidden" name="sphone1" value="010">
 										        <input type="hidden" name="sphone2" value="6551">
 										        <input type="hidden" name="sphone3" value="5979">
@@ -477,13 +480,13 @@ border: 1px solid black; */
 				<div class="bottom-content">
 					<br>
 					<div class="bottom-content1">
-						<img src="../images/info1.png" width="65%" height="250px">
+						<img src="../../images/myPageImgs/info1.png" width="65%" height="250px">
 					</div>
 
 
 
 					<div class="bottom-content1">
-						<img src="../images/info2.png" width="65%" height="250px">
+						<img src="../../images/myPageImgs/info2.png" width="65%" height="250px">
 					</div>
 				</div>
 

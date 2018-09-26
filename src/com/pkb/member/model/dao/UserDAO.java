@@ -91,7 +91,11 @@ public class UserDAO {
 			pstmt = con.prepareStatement(query);
 			pstmt.setString(1, u.getEmail());
 			pstmt.setString(2, u.getUser_pwd());
-			pstmt.setString(3, u.getEmail_hash());
+			pstmt.setString(3, u.getUser_name());
+			pstmt.setString(4, u.getGender());
+			pstmt.setString(5, u.getSms_chk());
+			pstmt.setString(6, u.getEmail_chk());
+			pstmt.setString(7, u.getEmail_hash());
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();

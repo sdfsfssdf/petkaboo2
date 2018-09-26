@@ -71,6 +71,24 @@
 	
 							placeholder="비밀번호를 확인해주세요" name="check" maxlength="100">
 					</div>
+					<div class="form-group">
+						<input type="text" id="name" class="form-control" placeholder="이름을 입력해주세요" name="name" maxlength="30">
+					</div>
+					<div class="form-group">
+						<label>성별 : </label>
+						<input type="radio" name="gender" value="M" id="male"><label for="male"> 남 </label> 
+						<input type="radio" name="gender" value="F" id="female"><label for="female"> 여 </label>
+					</div>
+					<div class="form-group">
+						<label>이메일 수신:</label>
+						<input type="radio" name="email_chk" value="Y" id="agree"><label for="agree"> 동의</label> 
+						<input type="radio" name="email_chk" value="N" id="disagree"><label for="disagree"> 미동의 </label>
+					</div>
+					<div class="form-group">
+						<label>문자 수신:</label>
+						<input type="radio" name="sms_chk" value="Y" id="agree"><label for="agree"> 동의</label> 
+						<input type="radio" name="sms_chk" value="N" id="disagree"><label for="disagree"> 미동의 </label>
+					</div>
 					<input type="submit" id="join" onclick="join1()"
 						class="btn btn-primary form-control" value="회원가입">
 

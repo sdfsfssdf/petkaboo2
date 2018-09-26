@@ -119,20 +119,6 @@ public class UserService {
 		return result;
 	}
 
-	public int changeNickname(String nickname, String email) {
-		Connection con = getConnection();
-
-		int result = new UserDAO().changeNickname(con, nickname, email);
-
-		if (result > 0) {
-			commit(con);
-		} else {
-			rollback(con);
-		}
-		close(con);
-		return result;
-	}
-
 	public ArrayList<Reservation> getReservation(User loginUser) {
 
 		Connection con = getConnection();
@@ -398,6 +384,17 @@ public class UserService {
 
 		return result;
 
+	}
+
+
+	public ImgFile selectUserProfile(User u) {
+		Connection con = getConnection();
+		
+		ImgFile profile = new UserDAO().selectUserProfile(con, u.getFile_no());
+		
+		close(con);
+	
+		return profile;
 	}
 
 	public int modifyMemberInfo(User user) {
