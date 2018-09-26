@@ -69,6 +69,15 @@ public class PetsitterMainService {
 		
 		return p;
 	}
+
+	public PetsitterService selectOne(String user_no) {
+		Connection con = getConnection();
+		PetsitterService p = null;
+		
+		p = new PetsitterServiceDao().selectOne(con, user_no);
+		
+		return p;
+	}
 	
 	public ArrayList<PetsitterService> searchList(String searchKeyword, String gender, String arrayCondition) {
 		Connection con = getConnection();

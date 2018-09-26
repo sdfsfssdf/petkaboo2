@@ -33,7 +33,21 @@ public class InsertPetsitterService extends HttpServlet {
 		// 펫시터 서비스 값 꺼내오기
 		String pet_category = request.getParameter("pet_category");
 		String contract_type = request.getParameter("contract_type");
-		String contract_days = request.getParameter("contract_days");
+		
+		// 계약 가능한 날을 처리
+		// getParameterValues로 checkbox 내용을 모두 가져온다
+		String[] contract_days_origin = request.getParameterValues("contract_days");
+		String contract_days = "";
+		
+		for(int i = 0; i < contract_days_origin.length; i++){
+			// 구분자 "," 사용
+			
+			if(i == contract_days_origin.length - 1){
+				contract_days += contract_days_origin[i];
+			}else{
+				contract_days += contract_days_origin[i] + ", ";
+			}
+		}
 		
 		// 날짜는 parameter에서 String 으로 꺼내온 후 Date로 변형해야 함
 		String contract_start_string = request.getParameter("contract_start");

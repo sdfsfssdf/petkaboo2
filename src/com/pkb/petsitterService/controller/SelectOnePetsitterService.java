@@ -31,13 +31,33 @@ public class SelectOnePetsitterService extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// 펫시터 서비스 등록번호 가져오기
+		PetsitterService p = null;
+		// 펫시터 서비스 등록번호가 있다면
 		int psrno = Integer.parseInt(request.getParameter("no"));
-		System.out.println(psrno);
 		
-		PetsitterService p = new PetsitterMainService().selectOne(psrno);
+		// user_no는 일부러 스트링으로 꺼내기
+		String user_no = request.getParameter("user_no");
+		
+		if(psrno != 0){
+			// 전달 받은 psrno가 있다면
+			// 테스트코드
+			System.out.println(psrno);
+			
+			p = new PetsitterMainService().selectOne(psrno);
+			
+		}else if(user_no != null){
+			// 전달 받은 user_no가 있다면
+			// 테스트코드
+			System.out.println(user_no);
+			
+			p = new PetsitterMainService().selectOne(user_no);
+			
+		}else{
+			System.out.println("조회실패");
+		}
 		
 		String page = null;
+		
 		if(p != null){
 			page ="views/searchPetsitter/searchPetsitterDetail.jsp";
 			request.setAttribute("p", p);

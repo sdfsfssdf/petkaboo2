@@ -75,36 +75,29 @@ public class SearchPetsitter extends HttpServlet {
 		System.out.println("키워드: " + searchKeyword);
 		System.out.println("성별: " + gender);
 		System.out.println("정렬조건: " + arrayCondition);
+		System.out.println("질의개시");
 		
-		// 테스트 코드
-		if(searchKeyword.equals("") || searchKeyword.equals(null)){
-			// 아무 키워드도 안 들어왔으면 그냥 모든 리스트 보여주기
-			response.sendRedirect(request.getContextPath() + "/PetSitter.all");
-		}else{
-			// 아니면 질의 개시
-			System.out.println("질의개시");
-			ArrayList<PetsitterService> list = new PetsitterMainService().searchList(searchKeyword, gender, arrayCondition);
+		ArrayList<PetsitterService> list = new PetsitterMainService().searchList(searchKeyword, gender, arrayCondition);
+		
+		RequestDispatcher view = request.getRequestDispatcher(page);
+
 
 			if(list != null){
 				// 테스트코드
 				System.out.println("검색결과" + list);
-				RequestDispatcher view = request.getRequestDispatcher(page);
 				page = "views/searchPetsitter/searchPetsitter.jsp";
 				request.setAttribute("list", list);
-				// PageInfo 전달
 				request.setAttribute("pi", pi);
-				view.forward(request, response);
 			}else{
-				RequestDispatcher view = request.getRequestDispatcher(page);
 				page = "views/common/errorPage.jsp";
 				request.setAttribute("msg", "조회 실패!");
-				view.forward(request, response);
 			}
+			
+			view.forward(request, response);
 				
 		}
 		
 		
-	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
