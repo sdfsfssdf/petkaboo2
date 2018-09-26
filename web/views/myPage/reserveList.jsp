@@ -79,7 +79,8 @@
 		<div class="listInfoArea">
 		
 			<% for(int i=0;i<rsvList.size();i++){ %>
-			<%cnt++; %>
+			<%
+			if( i != 0) {cnt++ ;}%>
 		<!--  이거 테이블도 여러개지만 반복문으로 처리할 것... -->
 		<form action="<%=request.getContextPath()%>/review.wr" method="post">
 			

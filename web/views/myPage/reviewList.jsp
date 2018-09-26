@@ -1,18 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"
 	import="com.pkb.board.model.vo.*, java.util.*, com.pkb.common.Paging, com.pkb.member.model.vo.User"%>
-
+<%@page import="com.pkb.reservation.model.vo.Reservation"%>
  <% 
- 	
-    ArrayList<Board> list = (ArrayList<Board>)request.getAttribute("list");
- 
-	Paging pg = (Paging)request.getAttribute("pg");
-	int currentPage = pg.getCurrentPage();
-	int startPage = pg.getStartPage();
-	int endPage = pg.getEndPage();
-	int oneByOneListCount = pg.getListCount();
-	int maxPage = pg.getMaxPage();
-	
+ ArrayList<Reservation> rsvList = (ArrayList<Reservation>)request.getAttribute("rsvList"); 
 	
 %> 
 
@@ -101,22 +92,21 @@ if(loginUser != null){ %>
 					<th class="third">작성일</th>
 				</tr>
 
-				 <%for(Board b : list){ %>
 
 				<tr>
 					
-				    <input type="hidden" value="<%=b.getArticle_no() %>">
+				    <input type="hidden" value="<%=rsvList.getArticle_no() %>">
 					<td><%=b.getArticle_no() %></td>
 					<td><%=b.getArticle_title()%></td>
 					<td><%=b.getArticle_date()%></td>
+					
 				</tr>
 
-				<% } %> 
 
 			</table>
 		</div>
 		<!-- 페이지처리 -->
-		<div class="pagingArea">
+<%-- 		<div class="pagingArea">
 		    <button onclick="location.href='<%=request.getContextPath()%>/selectOnebyOneList.bo?currentPage=1'"><<</button>
 			<% if(currentPage <= 1 ){ %>
 			<button disabled><</button>
@@ -145,14 +135,13 @@ if(loginUser != null){ %>
 			<button
 				onclick="location.href='<%=request.getContextPath()%>/selectOnebyOneList.bo?currentPage=<%=maxPage%>'">>></button>
 
-		</div>
+		</div> --%>
 		
 		
 		
 		<div class="searchArea">
-			<form name="searchOne" method="get" action="./onebyoneList.jsp">
-			<select class="form-control" id="searchCondition"
-				name="searchCondition">
+			<form name="searchOne" method="get" action="<%=request.getContextPath() %>/insertReview.bo">
+			<select class="form-control" id="searchCondition" name="searchCondition">
 				<option>----</option>
 				<option value="title">제목</option>
 				<option value="content">내용</option>
@@ -160,14 +149,13 @@ if(loginUser != null){ %>
 			</select> <input type="search" class="form-control search">
 			<button type="submit" class="btn btn-default">검색하기</button>
 			
-			<button onclick="location.href='onebyoneQNAWrite.jsp'"
-				class="btn btn-success">작성하기</button>
+			<button onclick="location.href='onebyoneQNAWrite.jsp'" class="btn btn-success">작성하기</button>
 			</form>
 		</div>
 
 	</div>
 	
-	<script>
+<%-- 	<script>
 		$(function(){
 			$("#listArea td").mouseenter(function(){
 				$(this).parent().css({"cursor":"pointer"})
@@ -183,7 +171,7 @@ if(loginUser != null){ %>
 			
 		})
 	
-	</script>
+	</script> --%>
 	
 	<%
 		} else {
