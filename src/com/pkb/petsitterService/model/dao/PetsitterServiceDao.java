@@ -198,51 +198,6 @@ public class PetsitterServiceDao {
 		
 		return p;
 	}
-
-	public PetsitterService selectOne(Connection con, String user_no) {
-		PreparedStatement pstmt = null;
-		ResultSet rset = null;
-		PetsitterService p = null;
-		
-		String query = prop.getProperty("selectOne");
-		
-		try {
-			pstmt = con.prepareStatement(query);
-			pstmt.setInt(1, Integer.parseInt(user_no));
-			
-			rset = pstmt.executeQuery();
-			
-			if(rset.next()){
-				p = new PetsitterService();
-				
-				p.setPet_service_regno(rset.getInt("pet_service_regno"));
-				p.setUser_no(rset.getInt("user_no"));
-				p.setUser_name(rset.getString("user_name"));
-				p.setNickname(rset.getString("nickname"));
-				p.setAddress(rset.getString("address"));
-				p.setPhone(rset.getString("phone"));
-				p.setGender(rset.getString("gender"));
-				p.setContract_type(rset.getString("contract_type"));
-				p.setPet_category(rset.getInt("pet_category"));
-				p.setPet_count(rset.getInt("pet_count"));
-				p.setService_charge(rset.getInt("service_charge"));
-				p.setContract_days(rset.getString("contract_days"));
-				p.setContract_start(rset.getDate("contract_start"));
-				p.setContract_end(rset.getDate("contract_end"));
-				p.setService_detail(rset.getString("service_detail"));
-				p.setService_restrict(rset.getString("service_restrict"));		
-			}
-			
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} finally {
-			close(rset);
-			close(pstmt);
-		}
-		
-		return p;
-	}
 	
 	public ArrayList<PetsitterService> searchList(Connection con, String searchKeyword, String gender, String arrayCondition) {
 		// 페이징 처리시에는 PrepareStatement 사용
@@ -254,19 +209,25 @@ public class PetsitterServiceDao {
 		String address = null;
 		String pet_category = null;
 		String nickname = null;
+		String gender1 = null;
+		String gender2 = null;
 		
 		if(searchKeyword == null){
 			address = "";
 			pet_category = "";
 			nickname = "";
 		} else {
-			address = searchKeyword;
-			pet_category = searchKeyword;
-			nickname = searchKeyword;
+			address = searchKeyword.toUpperCase();
+			pet_category = searchKeyword.toUpperCase();
+			nickname = searchKeyword.toUpperCase();
 		}
 		
 		if(gender == null){
-			gender = "";
+			gender1 = "M";
+			gender2 = "F";
+		}else{
+			gender1 = gender;
+			gender2 = gender;
 		}
 		
 		if(arrayCondition == null){
@@ -278,9 +239,10 @@ public class PetsitterServiceDao {
 		try {
 			pstmt = con.prepareStatement(query);
 			pstmt.setString(1, "%" + nickname + "%");
-			pstmt.setString(2, gender);
-			pstmt.setString(3, "%" + address + "%");
-			// pstmt.setString(4, pet_category);
+			pstmt.setString(2, "%" + address + "%");
+			pstmt.setString(3, gender1);
+			pstmt.setString(4, gender2);
+			// pstmt.setString(5, pet_category);
 			
 			rset = pstmt.executeQuery();
 			list = new ArrayList<PetsitterService>();

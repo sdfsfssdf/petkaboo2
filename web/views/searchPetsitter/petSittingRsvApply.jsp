@@ -168,7 +168,7 @@ a:hover {
 					class=howToPs><input type="radio" name="contract_type"
 					value="방문" />부르기 </label>
 			</div>
-			<br />
+			<br/>
 			<div id="body-div">
 				<div class="div1">
 					<br /> <br />

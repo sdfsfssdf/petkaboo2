@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.pkb.petsitterService.model.service.PetsitterMainService;
 import com.pkb.petsitterService.model.vo.PetsitterService;
@@ -31,36 +32,37 @@ public class SelectOnePetsitterService extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		PetsitterService p = null;
-		// 펫시터 서비스 등록번호가 있다면
 		int psrno = Integer.parseInt(request.getParameter("no"));
+		String revLevel_ori = request.getParameter("revLevel");
+		int revLevel = 0;
 		
-		// user_no는 일부러 스트링으로 꺼내기
-		String user_no = request.getParameter("user_no");
-		
-		if(psrno != 0){
-			// 전달 받은 psrno가 있다면
-			// 테스트코드
-			System.out.println(psrno);
-			
-			p = new PetsitterMainService().selectOne(psrno);
-			
-		}else if(user_no != null){
-			// 전달 받은 user_no가 있다면
-			// 테스트코드
-			System.out.println(user_no);
-			
-			p = new PetsitterMainService().selectOne(user_no);
-			
-		}else{
-			System.out.println("조회실패");
+		if(revLevel_ori != null){
+			revLevel = Integer.parseInt(request.getParameter("revLevel"));
 		}
+		
+		PetsitterService p = new PetsitterMainService().selectOne(psrno);
+		
+		// 테스트코드
+		System.out.println("revLevel" + revLevel);
 		
 		String page = null;
 		
 		if(p != null){
+			
+			if(revLevel == 0){
+			// 테스트 코드
+			System.out.println("예약단계 없음");
+				
 			page ="views/searchPetsitter/searchPetsitterDetail.jsp";
 			request.setAttribute("p", p);
+			
+			}else if(revLevel == 1){
+			
+			page ="views/searchPetsitter/petSittingRsvApply.jsp";	
+			request.setAttribute("p", p);		
+			
+			}
+			
 		}else{
 			page = "views/common/errorPage.jsp";
 			request.setAttribute("msg", "펫시터 상세 정보 조회 실패");

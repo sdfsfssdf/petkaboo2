@@ -6,6 +6,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>펫시터상세보기</title>
 <!-- 합쳐지고 최소화된 최신 CSS -->
@@ -148,7 +149,6 @@ td {
 			</div>
 
 			<div class="petsitter-id">
-			<form>
 				<div class="PSid">
 					<div class="l">
 						
@@ -170,10 +170,12 @@ td {
 							<td colspan="3">*정확한 가격 책정을 위한 <a href="#" >1:1문의하기</a></td>
 						</tr>
 					</table>
-					<button class="btn btn-default" type="submit" style="width:80%; margin-left:auto; margin-right:auto;" onclick="<%=request.getContextPath()%>/selectPetsitterInfo.ps">예약하기</button>
-				
+					<form class="orderInfo" id="orderInfo" name="orderInfo" method="post" action="<%=request.getContextPath()%>/selectOne.do">
+					<input type="text" id="revLevel" name="revLevel" value="1">
+					<input type="text" id="no" name="no" value="<%= p.getPet_service_regno() %>">
+					<button class="pre-order" id="pre-order" onclick="submit()">예약하기</button>
+					</form>
 				</div>
-				</form>
 			</div>
 			
 			<div class="photo">
@@ -309,5 +311,10 @@ td {
 	<br />
 	<br />
 	<br />
+<script>
+	function submit(){
+		$("#orderInfo").submit();
+	}
+</script>
 </body>
 </html>
