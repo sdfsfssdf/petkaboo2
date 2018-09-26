@@ -15,6 +15,7 @@ import javax.servlet.http.HttpSession;
 
 import com.pkb.member.model.vo.ImgFile;
 import com.pkb.common.MyFileRenamePolicy;
+import com.pkb.member.model.dao.UserDAO;
 import com.pkb.member.model.service.FileService;
 import com.pkb.member.model.service.UserService;
 import com.pkb.member.model.vo.User;
@@ -84,18 +85,16 @@ public class InsertNicknameServlet extends HttpServlet {
 		
 			ArrayList<ImgFile> list= new UserService().selectlist(u);
 			
-			
 			String fileName =  list.get(0).getFile_name();
 			
-			
-			
-			System.out.println(fileName);
-			System.out.println(list);
+			ImgFile profile = new UserService().selectUserProfile(u);
+		
 			String page = "";
 		if(result > 0){
 				u.setNickname(nickname);
 				// 키값은 중복이 안된다. 
 				session.setAttribute("loginUser", u);
+				request.setAttribute("profile", profile);
 				if(fileName == null){
 					fileName = "profileBasicImage.png";
 				}

@@ -1,6 +1,12 @@
+<%@page import="java.util.HashMap"%>
+<%@page import="com.pkb.member.model.vo.ImgFile"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%
+	User u = (User)request.getSession().getAttribute("loginUser");
+	ImgFile img = (ImgFile)request.getAttribute("profile");
+%>
+<!DOCTYPE html>
 <html>
 <head>
 <link href="https://fonts.googleapis.com/css?family=Jua"
@@ -287,12 +293,16 @@ margin-top:20px;
 							<!-- 사진 -->
 							<div class="photo">
 								<div id="contentImgArea">
-									<img id="foo" width = "450px" height="450px">
+									<%if(img != null) {%>
+									<Img class=profileImg id="foo" style="width:450px;height:450px;" src="<%=request.getContextPath()%>/images/profileImagesUpload/<%=img.getFile_name()%>">
+ 									<%} else{ %>
+ 									<Img class=profileImg id="foo" style="width:450px;height:450px;" src="<%=request.getContextPath()%>/images/profileImagesUpload/profileBasicImage.png">
+ 									<%} %>
 								</div>
 							</div>
 							
 							<div class=modanddelete>
-								<input type="file" id="profile" name="profile" onchange="loadImg()" style="font-weight:lighter">사진변경</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button id="delete" style="font-weight:lighter">삭제</button>
+								<input type="file" id="imgInp" name="profile" onchange="loadImg()" style="font-weight:lighter">사진변경</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button id="delete" style="font-weight:lighter">삭제</button>
 							</div>					
 							</td>
 						</tr>
@@ -331,13 +341,13 @@ margin-top:20px;
 				<div class="bottom-content">
 					<br>
 					<div class="bottom-content1">
-						<img src="../images/info1.png" width="65%" height="250px">
+						<img src="../../images/myPageImgs/info1.png" width="65%" height="250px">
 					</div>
 
 
 
 					<div class="bottom-content1">
-						<img src="../images/info2.png" width="65%" height="250px">
+						<img src="../../images/myPageImgs/info2.png" width="65%" height="250px">
 					</div>
 				</div>
 
@@ -356,6 +366,12 @@ margin-top:20px;
 		</div>
 	</div>
 		<script>
+		<%-- 	$("#delete").click(function(){
+					var src = <%=img.getFile_path()%>;
+					var fileNo = <%=u.getFile_no()%>;
+					var userNo = <%=u.getUser_no()%>;
+					location.href="<%=request.getContextPath()%>/deleteTitleProfile.me?src="+src+"$fileNo="+fileNo+"&userNo="+userNo;
+			}); --%>
 			function readURL(input) {
 		
 		    if (input.files && input.files[0]) {
@@ -367,10 +383,9 @@ margin-top:20px;
 		    }
 		  }
 		  $("#imgInp").change(function() {
-		
 		    readURL(this);
-		
 		  });
+		  
 		</script>
 
 </body>

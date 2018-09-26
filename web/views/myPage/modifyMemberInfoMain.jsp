@@ -325,12 +325,9 @@ a:hover, a:active, a:focus {
 										type="text" name="nimknamespann" size="15" maxlength="10"
 										style="width: 50px; color: black; margin: 0; padding: 0; height: 35px; border-width: 0; background-color: #eee;"
 									
-										<% if(loginUser != null){
-											if(loginUser.getUser_name()==null){ %>
-											value="지정된 주소가 없습니다."
-										<% }else{ %>
+										<% if(loginUser != null){%>
 											value="<%=loginUser.getUser_name()%>"
-										<% }} %> readonly>
+										<% } %> readonly>
 								</div>
 			
 								<div class=memail>
@@ -344,7 +341,7 @@ a:hover, a:active, a:focus {
 								<div class=maddress>
 									<span style="text-align: left">주소 : </span>&nbsp;<input
 										type="text" name="nimknamespann" size="80" maxlength="60"
-										style="width: 300px; color: black; margin: 0; padding: 0; height: 35px; border-width: 0; background-color: #eee;"	
+										style="width: 350px; color: black; margin: 0; padding: 0; height: 35px; border-width: 0; background-color: #eee;"	
 										<% if(loginUser != null){%>
 											value="<%=loginUser.getAddress()%>"
 										<% } %>	 readonly>
@@ -413,11 +410,11 @@ a:hover, a:active, a:focus {
 				<div class="bottom-content">
 					<br>
 					<div class="bottom-content1">
-						<img src="../images/info1.png" width="65%" height="250px">
+						<img src="/pkb/images/myPageImgs/info1.png" width="65%" height="250px">
 					</div>
 
 					<div class="bottom-content1">
-						<img src="../images/info2.png" width="65%" height="250px">
+						<img src="/pkb/images/myPageImgs/info2.png" width="65%" height="250px">
 					</div>
 				</div>
 

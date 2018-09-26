@@ -31,12 +31,20 @@ public class JoinServlet extends HttpServlet {
 		String email = request.getParameter("email");
 		String user_pwd = request.getParameter("user_pwd");
 		String email_hash = (String)SHA256.getSHA256(email);
+		String name = request.getParameter("name");
+		String gender = request.getParameter("gender");
+		String sms = request.getParameter("sms_chk");
+		String email_chk = request.getParameter("email_chk");
 		
 		User u = new User();
 		
 		u.setEmail(email);
 		u.setUser_pwd(user_pwd);
 		u.setEmail_hash(email_hash);
+		u.setUser_name(name);
+		u.setGender(gender);
+		u.setSms_chk(sms);
+		u.setEmail_chk(email_chk);
 		
 		System.out.println("조인고");
 		
