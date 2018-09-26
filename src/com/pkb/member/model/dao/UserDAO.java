@@ -70,6 +70,7 @@ public class UserDAO {
 				loginUser.setFile_no(rset.getInt("file_no"));
 				loginUser.setEmail_hash(rset.getString("email_hash"));
 				loginUser.setArticle_no(rset.getInt("article_no"));
+				loginUser.setMoney(rset.getInt("money"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

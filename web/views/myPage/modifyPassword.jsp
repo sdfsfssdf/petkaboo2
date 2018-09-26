@@ -12,6 +12,7 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>비밀번호 변경</title>
 
@@ -224,27 +225,28 @@ margin:auto;
 				<form method = "post" action = "<%=request.getContextPath()%>/checkPwd.me">
 					<div class=passwordform2>
 						<input type="password" size='30' maxlength='25'
-							style="width: 300px; height: 40px; margin: 0; color: black; border-width: 1px" name = "user_pwd" placeholder="현재 비밀번호 입력">
+							style="width: 300px; height: 40px; margin: 0; color: black; border-width: 1px" id = pwd1 name = "user_pwd" placeholder="현재 비밀번호 입력">
 							<br>
 							<br>
 						<input type="password" size='30' maxlength='25'
-							style="width: 300px; height: 40px; margin: 0; color: black; border-width: 1px" name = "newPwd" placeholder="새 비밀번호 입력">
+							style="width: 300px; height: 40px; margin: 0; color: black; border-width: 1px" id = pwd2 name = "newPwd" placeholder="새 비밀번호 입력">
 							<br>
 							<br>
 						<input type="password"   size='30' maxlength='25'
-							style="width: 300px; height: 40px; margin: 0; color: black; border-width: 1px" name = "newPwd2" placeholder="새 비밀번호 확인"><br>
+							style="width: 300px; height: 40px; margin: 0; color: black; border-width: 1px" id = pwd3 name = "newPwd2" placeholder="새 비밀번호 확인"><br>
 					</div>
 				
 					<div class=passwordform3>
+				
 					<p>자동입력 방지문자 매크로 구현</p>
 					<br>
 					<br>
 					<input type="text"  name="inputapi" size='30' maxlength='25'
 							style="width: 300px; height: 40px; margin: 0; color: black; border-width: 1px" value="자동입력 방지문자"><br>
 					</div>
-
+				
 					<div class=submitandcancle>
-						<input type="submit" id="submit"
+						<button id="submit" onclick="checkPwd();"
 							style="font-weight: lighter">확인</button>
 						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 						<button type="submit" id="cancel" onclick="#"
@@ -284,7 +286,21 @@ margin:auto;
 			</div>
 		</div>
 	</div>
-
+	<script>	
+		$("#submit").click(function checkPwd(){
+				var pwd1 = $("#pwd1").val();
+				$.ajax({
+				url :"<%=request.getContextPath()%>/checkPwd.me",
+						data : {user_pwd : pwd1},
+						type : "get",
+						success : function(data) {
+							if (data == 0) {
+								alert("비밀번호가 잘못입력되었습니다.");
+							}
+						}
+					});
+			}
+	</script>
 
 </body>
 </html>

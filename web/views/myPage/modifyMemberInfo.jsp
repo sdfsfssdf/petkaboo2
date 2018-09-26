@@ -435,7 +435,6 @@ border: 1px solid black; */
 										style="width: 300px; color: black; margin: 0; padding: 0; height: 35px; border-width: 0"
 										<% if(loginUser != null){
 											if(loginUser.getAddress()==null){ %>
-				
 											value="지정된 주소가 없습니다."
 									<% }else{ %>
 											value="<%=loginUser.getAddress()%>"

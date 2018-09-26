@@ -38,7 +38,12 @@ public class UserService {
 		int result = new UserDAO().joinUser(con, u);
 
 		if (result > 0) {
-			commit(con);
+			int result1 = new UserDAO().setCyberMoney(con, u);
+			if(result1> 0){
+				commit(con);
+			}else{
+				rollback(con);
+			}
 		} else {
 			rollback(con);
 		}
@@ -343,17 +348,6 @@ public class UserService {
 
 		return mlist;
 	}
-
-
-public int setCyberMoney(User u) {
-      Connection con= getConnection();
-      
-      int result = new UserDAO().setCyberMoney(con, u);
-      
-      close(con);
-      
-      return result;
-   }
 
 	public int deleteTitleProfile(String fileNo, int userNo) {
 		Connection con = getConnection();
