@@ -8,26 +8,19 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Petsitting Service Update</title>
 <style>
-.contentArea {
-	margin-top: 80px;
-	margin-left: 320px;
-	width: 60%;
+#MyPetsitterInfoheader{
+	text-align:center;
 }
-
-.content {
-	border: solid 1px black;
-	border-radius: 8px;
-	height: 40px;
+hr{
+	width:50%;
+	border:1px solid black;
 }
-
-.labelArea {
-	display: inline-block;
-	width: 60%;
-}
-
-.btnsArea {
-	display: inline-block;
-	width:38%;
+#MyPetsitterInfoTable{
+	margin-top:1%;
+	margin-right:5%;
+	margin-left:20%;
+	width:auto;
+	border:1px solid black;
 }
 </style>
 </head>
@@ -42,63 +35,13 @@
 	</script>
 	<% } else {%>
 	<%@ include file="/views/common/sidemenubar.jsp"%>
-	<div class="contentArea">
-		<h2>내 펫시팅 서비스 정보 수정</h2>
-		<p>나의 내가 등록한 펫시팅 서비스 정보를 수정할 수 있습니다.</p>
-
-		<br>
-		<div class="content">
-			<div class="labelArea">
-				<label>고양이 / 월화수목금토 / 20000원 / 산책, 밥주기</label>
-			</div>
-			<div class="btnsArea">
-				<button type="submit" class="btn btn-info write">수정하기</button>
-				&nbsp;
-				<button type="button" class="btn btn-danger cancel">삭제하기</button>
-			</div>
-		</div>
-		<br>
-		<div class="content">
-			<div class="labelArea">
-				<label>고양이 / 월화수목금토 / 20000원 / 산책, 밥주기</label>
-			</div>
-			<div class="btnsArea">
-				<button type="submit" class="btn btn-info write">수정하기</button>
-				&nbsp;
-				<button type="button" class="btn btn-danger cancel">삭제하기</button>
-			</div>
-		</div>
-		<br><div class="content">
-			<div class="labelArea">
-				<label>고양이 / 월화수목금토 / 20000원 / 산책, 밥주기</label>
-			</div>
-			<div class="btnsArea">
-				<button type="submit" class="btn btn-info write">수정하기</button>
-				&nbsp;
-				<button type="button" class="btn btn-danger cancel">삭제하기</button>
-			</div>
-		</div>
-		<br><div class="content">
-			<div class="labelArea">
-				<label>고양이 / 월화수목금토 / 20000원 / 산책, 밥주기</label>
-			</div>
-			<div class="btnsArea">
-				<button type="submit" class="btn btn-info write">수정하기</button>
-				&nbsp;
-				<button type="button" class="btn btn-danger cancel">삭제하기</button>
-			</div>
-		</div>
-		<br><div class="content">
-			<div class="labelArea">
-				<label>고양이 / 월화수목금토 / 20000원 / 산책, 밥주기</label>
-			</div>
-			<div class="btnsArea">
-				<button type="submit" class="btn btn-info write">수정하기</button>
-				&nbsp;
-				<button type="button" class="btn btn-danger cancel">삭제하기</button>
-			</div>
-		</div>
-		<br>
+	<div class="MyPetsitterInfoheader" id="MyPetsitterInfoheader">
+		<h2><b>내 펫시터 등록 정보 수정</b></h2>
+		<hr>
+	</div>
+	<div class="MyPetsitterInfoTable" id="MyPetsitterInfoTable">
+		loginUser 정보 출력 테스트: <%= loginUser.getUser_no() %>
+	
 	</div>
 	<% }%>
 </body>
