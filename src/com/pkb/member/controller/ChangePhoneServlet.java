@@ -32,7 +32,7 @@ public class ChangePhoneServlet extends HttpServlet {
 		String phone = (String)request.getSession().getAttribute("rphone");
 		User loginUser = (User)request.getSession().getAttribute("loginUser");
 		String sms = request.getParameter("inputNum");
-		System.out.println("dhzl"+sms);
+		
 		int result = new UserService().updatePhone(phone, sms, loginUser);
 		System.out.println("dhzl"+sms);
 		if(result>0){

@@ -24,6 +24,7 @@ public class User implements Serializable{
 	private String email_hash;
 	private int article_no;
 	private String sms_number;
+	private int money;
 	
 	public User(){}
 	
@@ -36,7 +37,7 @@ public class User implements Serializable{
 	public User(int user_no, String email, String user_pwd, int user_type, String user_name, String phone,
 			Date birthday, String gender, String address, String sms_chk, String email_chk, Date enrollDate,
 			String nickname, int user_grade, String pet_auth, int user_status, int file_no, String email_hash,
-			int article_no, String sms_number) {
+			int article_no, String sms_number, int money) {
 		this.user_no = user_no;
 		this.email = email;
 		this.user_pwd = user_pwd;
@@ -57,6 +58,7 @@ public class User implements Serializable{
 		this.email_hash = email_hash;
 		this.article_no = article_no;
 		this.sms_number = sms_number;
+		this.money = money;
 	}
 
 	public int getUser_no() {
@@ -219,6 +221,14 @@ public class User implements Serializable{
 		this.sms_number = sms_number;
 	}
 
+	public int getMoney() {
+		return money;
+	}
+
+	public void setMoney(int money) {
+		this.money = money;
+	}
+
 	@Override
 	public String toString() {
 		return "User [user_no=" + user_no + ", email=" + email + ", user_pwd=" + user_pwd + ", user_type=" + user_type
@@ -226,9 +236,8 @@ public class User implements Serializable{
 				+ ", address=" + address + ", sms_chk=" + sms_chk + ", email_chk=" + email_chk + ", enrollDate="
 				+ enrollDate + ", nickname=" + nickname + ", user_grade=" + user_grade + ", pet_auth=" + pet_auth
 				+ ", user_status=" + user_status + ", file_no=" + file_no + ", email_hash=" + email_hash
-				+ ", article_no=" + article_no + ", sms_number=" + sms_number + "]";
+				+ ", article_no=" + article_no + ", sms_number=" + sms_number + ", money=" + money + "]";
 	}
 
-	
 
 }

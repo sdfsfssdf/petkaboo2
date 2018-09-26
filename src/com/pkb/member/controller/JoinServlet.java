@@ -41,8 +41,7 @@ public class JoinServlet extends HttpServlet {
 		System.out.println("조인고");
 		
 		int result = new UserService().joinUser(u);
-		
-		int result1 = new UserService().setCyberMoney(u);
+	
 		String page = "";
 		
 		if(result>0){
@@ -50,7 +49,7 @@ public class JoinServlet extends HttpServlet {
 			se.doGet(request, response);
 			HttpSession session = request.getSession();
 			session.setAttribute("email", email);
-			response.sendRedirect("index.jsp");
+			response.sendRedirect("/pkb/views/member/emailCheck.jsp");
 		}else{
 			System.out.println("실패");
 		}

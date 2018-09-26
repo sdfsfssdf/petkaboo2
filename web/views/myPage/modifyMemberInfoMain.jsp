@@ -239,7 +239,6 @@ a:hover, a:active, a:focus {
 </head>
 <body>
 
-
 	<div id="wrap">
 		<div id="header">
 			<h1 align="center">펫카부</h1>
@@ -295,9 +294,9 @@ a:hover, a:active, a:focus {
 							<!-- 사진부분 -->
 							<div class=circleimg>
 								<%if(fileName != null) {%>
-								<Img class=profileImg  src="<%=request.getContextPath()%>/images/profileImagesUpload/<%=fileName%>">
+								<Img class=profileImg style=height:200px width=100px radius=150px src="<%=request.getContextPath()%>/images/profileImagesUpload/<%=fileName%>">
  								<%} else{ %>
- 								<Img class=profileImg src="<%=request.getContextPath()%>/images/profileImagesUpload/profileBasicImage.png">
+ 								<Img class=profileImg style=height:200px width=100px radius=150px src="<%=request.getContextPath()%>/images/profileImagesUpload/profileBasicImage.png">
  								<%} %>
  							</div>
 							<!-- 닉네임 -->

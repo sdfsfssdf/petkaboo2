@@ -34,9 +34,11 @@ public class CheckPwdServlet extends HttpServlet {
 		int result = new UserService().checkPwd(currentPwd,email);
 		System.out.println("비번확인"+result);
 		if(result == 1){
+			//response.getWriter().print(result);
 			request.getRequestDispatcher("changePwd.me").forward(request, response);
 		}else{
-			response.sendRedirect("views/myPage/modifyPassword.jsp");
+			response.getWriter().print(result);
+			//response.sendRedirect("views/myPage/modifyPassword.jsp");
 		}
 	}
 
