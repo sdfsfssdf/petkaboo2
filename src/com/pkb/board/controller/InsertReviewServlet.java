@@ -67,9 +67,7 @@ public class InsertReviewServlet extends HttpServlet {
 		
 		System.out.println(writter);*/
 		
-		
-		RequestDispatcher view = request.getRequestDispatcher(page);
-		view.forward(request, response);
+		response.sendRedirect(request.getContextPath()+"/selectReviewList.bo");
 		
 	}
 

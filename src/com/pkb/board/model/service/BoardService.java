@@ -80,5 +80,16 @@ public class BoardService {
 		return result;
 	}
 
+	public ArrayList<Board> selectReviewList(int currentPage, int limit, int user_no) {
+		
+		Connection con = getConnection();
+		
+		ArrayList<Board> list = new BoardDao().selectReviewList(con, currentPage, limit, user_no);
+		
+		close(con);
+		
+		return list;
+	}
+
 	
 }
