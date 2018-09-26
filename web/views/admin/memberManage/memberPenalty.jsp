@@ -1,5 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8"
+    import="java.util.*,com.pkb.common.Paging, com.pkb.member.model.vo.*"%>
+<%
+	ArrayList<User> mlist = (ArrayList<User>) request.getAttribute("mlist");
+	Paging pg = (Paging) request.getAttribute("pg");
+	int listCount = pg.getListCount();
+	int currentPage = pg.getCurrentPage();
+	int maxPage = pg.getMaxPage();
+	int startPage = pg.getStartPage();
+	int endPage = pg.getEndPage();
+%>    
+    
 <!DOCTYPE html>
 <html>
 <head>
@@ -41,7 +52,13 @@
 	<div class="outer">
 	<div class="first-row">
 	<div class="table1">
-	<h2><b>제재/차단목록</b></h2>
+	<h2>제재관리</h2>
+	<p>휴면계정 처리와 휴면계정의 목록을 확인할 수 있습니다.</p>
+	<hr>
+	<h4>휴면처리가 필요한 계정</h4>
+	<div style="display:inline-block" align="right">
+		<button>일괄처리</button><button>선택처리</button>
+	</div>
 	<hr>
 		<table id="memberList">
 			<tr class="head" >

@@ -38,9 +38,9 @@
             <br>
             <div class="text">인증요청목록</div>
             <br>
-            <!-- <div class="text">제재/차단목록</div>
-            <br> -->
-           <!--  <div class="text">휴면회원관리</div> -->
+           	<div class="text">제재/차단목록</div>
+            <br> 
+           	<div class="text"><a href="<%=request.getContextPath()%>/diapauseList.me">휴면회원관리</a></div>
       </div>
    </div>
 </body>
