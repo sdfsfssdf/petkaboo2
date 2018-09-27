@@ -230,6 +230,67 @@ public class BoardDao {
 		
 		
 	}
+	public ArrayList<Board> selectReviewList(Connection con, int currentPage, int limit, int user_no) {
+		
+		Board b = null;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<Board> list = null;
+	
+		
+		String query = prop.getProperty("selectReviewList");
+		System.out.println(query);
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			int startRow = (currentPage - 1) * limit + 1;
+			int endRow = startRow + limit - 1;
+			System.out.println("sn:"+startRow);
+			System.out.println("en:"+endRow);
+			/*pstmt.setInt(1, user_no);
+			pstmt.setInt(2, startRow);
+			pstmt.setInt(3, endRow);*/
+			
+			rset = pstmt.executeQuery();
+			
+			list = new ArrayList<Board>();
+			
+			while(rset.next()){
+				b = new Board();
+				
+				b.setArticle_no(rset.getInt("article_no"));
+				b.setUser_no(rset.getInt("user_no"));
+				b.setUser_name(rset.getString("user_name"));
+				b.setArticle_date(rset.getDate("article_date"));
+				b.setArticle_title(rset.getString("article_title"));
+				b.setArticle_contents(rset.getString("article_contents"));
+				b.setArticle_type(rset.getString("article_type"));
+				b.setArticle_lv(rset.getInt("article_lv"));
+				b.setContract_no(rset.getInt("contract_no"));
+				b.setArticle_status(rset.getInt("article_status"));
+				b.setArticle_refno(rset.getInt("article_refno"));
+				b.setArticle_modify_date(rset.getDate("article_modify_date"));
+				System.out.println(b);
+				list.add(b);
+			}
+			
+			System.out.println("dao : " + list);
+			
+		
+			
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rset);
+			
+		}
+		
+		
+		return list;
+	}
 	
 	
 	/*public int updateOnebyOneCount(Connection con, int num) {
