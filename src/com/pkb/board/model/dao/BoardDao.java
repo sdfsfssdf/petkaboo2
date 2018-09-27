@@ -247,9 +247,8 @@ public class BoardDao {
 			int endRow = startRow + limit - 1;
 			System.out.println("sn:"+startRow);
 			System.out.println("en:"+endRow);
-			/*pstmt.setInt(1, user_no);
-			pstmt.setInt(2, startRow);
-			pstmt.setInt(3, endRow);*/
+			pstmt.setInt(1, user_no);
+			
 			
 			rset = pstmt.executeQuery();
 			
@@ -260,7 +259,6 @@ public class BoardDao {
 				
 				b.setArticle_no(rset.getInt("article_no"));
 				b.setUser_no(rset.getInt("user_no"));
-				b.setUser_name(rset.getString("user_name"));
 				b.setArticle_date(rset.getDate("article_date"));
 				b.setArticle_title(rset.getString("article_title"));
 				b.setArticle_contents(rset.getString("article_contents"));
@@ -290,6 +288,33 @@ public class BoardDao {
 		
 		
 		return list;
+	}
+	public int insertReview(Connection con, Board b, User loginUser) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("insertReview");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			
+			pstmt.setInt(1, loginUser.getUser_no());
+			pstmt.setString(2, b.getArticle_title());
+			pstmt.setString(3, b.getArticle_contents());
+			pstmt.setInt(4,b.getContract_no());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+		} finally {
+			
+			close(pstmt);
+		}
+		
+		
+		return result;
 	}
 	
 	
