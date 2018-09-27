@@ -1,3 +1,4 @@
+<%@page import="java.net.InetAddress"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" %>
 <!DOCTYPE html>
@@ -6,20 +7,63 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>PETKABOO - Find Petsitter for your lovely pets</title>
-<style>	
+<style>
+#bottomDiv {
+	display:inline-block;
+	padding:10px;
+}
+.menu {
+	display:inline-block;
+	text-align:center;
+}	
 </style>
 </head>
 <body>
 	<%@ include file="views/common/menubar.jsp"%>
 	<%@ include file="views/common/mainSearchForm.jsp" %>
 	
-	<div class="paddingDiv"></div>
-	<div class="menu leftMenu"><img src="images/mainPageImgs/menu1.png"><div class="menuPadding"></div><span><h3>SERVICE</h3></span><span>서비스 소개<span></span></div><div class="menu"><img src="images/mainPageImgs/menu4.png"><div class="menuPadding"></div><span><h3>SEARCH</h3></span><span>펫시터찾기</span></div><div class="menu"><img src="images/mainPageImgs/menu3.png"><div class="menuPadding"></div><span><h3>STEP</h3></span><span>이용절차</span></div><div class="menu rightMenu"><img src="images/mainPageImgs/menu6.png"><div class="menuPadding"></div><span><h3>DEVELOPER</h3></span><span>개발진 소개</span></div><br>
-	<div class="menuPadding"></div><div class="menuPadding"></div>
-	<div class="menu leftMenu"><img src="images/mainPageImgs/menu5.png"><div class="menuPadding"></div><span><h3>VOICE</h3></span>이용후기<span></span></div><div class="menu"><img src="images/mainPageImgs/menu2.png"><div class="menuPadding"></div><span><h3>APPLY</h3></span>펫시터 신청<span></span></div><div class="menu"><img src="images/mainPageImgs/menu7.png"><div class="menuPadding"></div><span><h3>FAQ</h3></span><span>고객센터</span></div><div class="menu rightMenu"><img src="images/mainPageImgs/menu8.png"><div class="menuPadding"></div><span><h3>INTRODUCE</h3></span>회사정보<span></span></div>
-	<div class="paddingDiv"></div>
-	
-	<div class="paddingDiv"></div>
+	<div class="bottomDiv" id="bottomDiv" name="bottomDiv">
+		<div id="menu1" class="menu">
+		<img src="images/mainPageImgs/menu1.png">
+		<span><h3>SERVICE</h3></span>
+		<span>서비스 소개</span>
+		</div>
+		<div id="menu2" class="menu">
+		<img src="images/mainPageImgs/menu4.png">
+		<span><h3>SEARCH</h3></span>
+		<span>펫시터찾기</span>
+		</div>
+		<div id="menu3" class="menu">
+		<img src="images/mainPageImgs/menu3.png">
+		<span><h3>STEP</h3></span>
+		<span>이용절차</span>
+		</div>
+		<div id="menu4" class="menu">
+		<img src="images/mainPageImgs/menu6.png">
+		<span><h3>DEVELOPER</h3></span>
+		<span>개발진 소개</span>
+		</div>
+		<div id="menu5" class="menu">
+		<img src="images/mainPageImgs/menu5.png">
+		<span><h3>VOICE</h3></span>
+		<span>이용후기</span>
+		</div>
+		<div id="menu6" class="menu">
+		<img src="images/mainPageImgs/menu2.png">
+		<span><h3>APPLY</h3></span>
+		<span>펫시터 신청</span>
+		</div>
+		<div id="menu7" class="menu">
+		<img src="images/mainPageImgs/menu7.png">
+		<span><h3>FAQ</h3></span>
+		<span>고객센터</span>
+		</div>
+		<div id="menu8" class="menu">
+		<img src="images/mainPageImgs/menu8.png">
+		<span><h3>INTRODUCE</h3></span>
+		<span>회사정보</span>
+		</div>
+	</div>
 	<h4 align="center">ㅡ</h4>
 	<h4 align="center">REVIEW</h4>
 	
