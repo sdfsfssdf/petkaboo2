@@ -448,6 +448,21 @@ public class UserService {
 		return dmMap;
 	}
 
+
+	public int findPwd(String email, String name) {
+		Connection con = getConnection();
+		
+		int result = new UserDAO().findPwd(con, email, name);
+		if(result > 0 ) {
+      commit(con);
+    } else {
+      rollback(con);
+    } 
+    close(con);
+    
+    return result;
+}
+
 	public int[] updateDiapauseMember(String[] selectUserNos) {
 		Connection con = getConnection();
 		int[] result = new UserDAO().updateDiapauseMember(con, selectUserNos);
@@ -503,6 +518,7 @@ public class UserService {
 		} else {
 			rollback(con);
 		} 
+
 		close(con);
 		
 		return result;

@@ -1,3 +1,7 @@
+<%@page import="java.io.InputStream"%>
+<%@page import="java.net.URL"%>
+<%@page import="java.net.HttpURLConnection"%>
+<%@page import="java.net.InetAddress"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -28,8 +32,9 @@
 			<button type="button" class="navbar-toggle collapsed"
 				data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"
 				aria-expanded="false">
-				<span class="icon-bar"></span> <span class="icon-bar"></span> <span
-					class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span> 
+				<span class="icon-bar"></span>
 			</button>
 			<a class="navbar-brand"
 				href="<%=request.getContextPath()%>/index.jsp">펫카부</a>
@@ -40,13 +45,15 @@
 				<li><a href="<%=request.getContextPath()%>/index.jsp">메인</a></li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
-				<li class="dropdown"><a href="#" class="dropdown-toggle"
+				<li class="dropdown">
+				<a href="#" class="dropdown-toggle"
 					data-toggle="dropdown" role="button" aria-haspopup="true"
 					aria-expanede="false">접속하기<span class="caret"></span></a>
 					<ul class="dropdown-menu">
 						<li><a href="../common/login.jsp">로그인</a></li>
 						<li class="active"><a href="joinForm.jsp">회원가입</a></li>
-					</ul></li>
+					</ul>
+				</li>
 			</ul>
 		</div>
 	</nav>
@@ -58,9 +65,51 @@
 					action="<%=request.getContextPath()%>/join.me">
 					<h3 style="text-align: center;">회원가입 화면</h3>
 					<div class="form-group">
+					<script>
+						$("document").ready(function($.getJSON('https://api.ipify.org?format=jsonp&callback=?', function(data)) {
+						  console.log(JSON.stringify(data, null, 2))))
+						   var ip = (data.ip);
+						  console.log(ip);
+						});
+					</script>
+					<input type = "hidden" >
+					<%	
+						InetAddress local = InetAddress.getLocalHost();
+						String ip = local.getHostAddress();
+						System.out.println("ipipipip: " + ip);
+						//112.169.187.140
+
+						HttpURLConnection urlcon = (HttpURLConnection)new URL("http://ip2c.org/"+ip).openConnection();
+						urlcon.setDefaultUseCaches(false);
+						urlcon.setUseCaches(false);
+						urlcon.connect();
+						InputStream is = urlcon.getInputStream();
+						int c = 0;
+						String s = "";
+						while((c = is.read()) != -1) s+= (char)c;
+						is.close();
+						switch(s.charAt(0))
+						{
+						  case '0':
+						    System.out.println("Something wrong");
+						    break;
+						  case '1':
+						    String[] reply = s.split(";");
+						    System.out.println("Two-letter: " + reply[1]);
+						    System.out.println("Three-letter: " + reply[2]);
+						    System.out.println("Full name: " + reply[3]);
+						    break;
+						  case '2':
+						    System.out.println("Not found in database");
+						    break;
+						}
+
+					%>
+						<input type="hidden" name="ip" value="<%=ip%>">
+						<input type="hidden" name="s" value="<%=s %>">
 						<input type="email" id="email" class="form-control"
 							placeholder="아이디" name="email" maxlength="100">
-						<input type="button" onclick="checkEmail()" value="중복체크">
+						<input type="button" style="margin-top:10px" class="btn btn-warning form-control" onclick="checkEmail()" value="중복체크">
 					</div>
 					<div class="form-group">
 						<input type="password" id="pwd" class="form-control"
@@ -89,15 +138,18 @@
 						<input type="radio" name="sms_chk" value="Y" id="agree"><label for="agree"> 동의</label> 
 						<input type="radio" name="sms_chk" value="N" id="disagree"><label for="disagree"> 미동의 </label>
 					</div>
-					<input type="submit" id="join" onclick="join1()"
-						class="btn btn-primary form-control" value="회원가입">
-
+					<button id="join" onclick="join1()"
+						class="btn btn-primary form-control">회원가입</button>
+					
+					
+					
+					
 				</form>
 			</div>
 			<div class="col-lg-4"></div>
 		</div>
 	</div>
-
+	
 	<script>
 			var checked = 0;
 			
@@ -114,6 +166,8 @@
 								alert("사용 가능한 아이디입니다.");
 								checked=1;
 							} else {
+								$('#email').val('');
+								$('#email').focus();
 								alert("이미 가입된 아이디입니다.");
 							}
 						}
@@ -124,33 +178,36 @@
 				if(checked == 0){
 					alert("중복체크를 해주세요");
 				}else{
-				 if ($('#email').val() == "") {
-
-					alert("이메일을 입력해 주세요");
-					
-					$('#email').focus();
-					return;
-					}
-				 if ($('#pwd').val() == "") {
-						alert("비밀번호를 입력 해 주세요");
-						$('#pwd').focus();
+					 if ($('#email').val() == "") {
+	
+						alert("이메일을 입력해 주세요");
+						
+						$('#email').focus();
 						return;
-				}
-				if ($('#check').val() != $('#pwd').val()) {
-							alert("입력하신 비밀번호를 확인 해 주세요");
-							$('#check').focus();
+						}
+					 if ($('#pwd').val() == "") {
+							alert("비밀번호를 입력 해 주세요");
+							$('#pwd').focus();
 							return;
 						}
-				if($('#pwd').val().length <6){
-							alert("비밀번호를 6자리 이상입력해주세요");
-							$('#pwd').focus();
-							return;			
-				}
-				if($('#email').val() != "" && $('#pwd').val() != "" && ($('#pwd').val().length() > 6 ||$('#pwd').val().length() < 20)){
-					$("#joinForm").submit();
+					 if ($('#check').val() != $('#pwd').val()) {
+								alert("입력하신 비밀번호를 확인 해 주세요");
+								$('#check').val('');
+								$('#check').focus();
+								return;
+							}
+				     if($('#pwd').val().length <6){
+								alert("비밀번호를 6자리 이상입력해주세요");
+								$('#check').val('');
+								$('#pwd').focus();
+								return;			
+					 }else{
+						//if($('#email').val() != "" && $('#pwd').val() != "" && ($('#pwd').val().length() > 6 ||$('#pwd').val().length() < 20)){
+						$("#joinForm").attr('action','/pkb/join.me').submit();
+						}
 					}
 				}
-				}
+				
 			
 		</script>
 </body>

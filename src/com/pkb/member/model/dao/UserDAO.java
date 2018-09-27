@@ -1368,6 +1368,25 @@ public class UserDAO {
 		return maplist;
 	}
 
+
+	public int findPwd(Connection con, String email, String name) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("findPwd");
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, email);
+			pstmt.setString(2, name);
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally{
+      close(pstmt);
+    }
+    return result ;
+  }
 	public int[] updateDiapauseMember(Connection con, String[] selectUserNos) {
 		PreparedStatement pstmt = null;
 		int[] result = null;
@@ -1550,10 +1569,12 @@ public class UserDAO {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
+
 			close(pstmt);
 		}
 		return result;
 	}
+
 
 	public int[] updateBoardStatus(Connection con, String[] selectUserNos) {
 		PreparedStatement pstmt = null;
@@ -1578,4 +1599,5 @@ public class UserDAO {
 		}
 		return result;
 	}
+
 }

@@ -35,7 +35,10 @@ public class JoinServlet extends HttpServlet {
 		String gender = request.getParameter("gender");
 		String sms = request.getParameter("sms_chk");
 		String email_chk = request.getParameter("email_chk");
+		String ip = request.getParameter("ip");
+		String s = request.getParameter("s");
 		
+		System.out.println(s);
 		User u = new User();
 		
 		u.setEmail(email);
