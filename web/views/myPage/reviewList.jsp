@@ -3,7 +3,8 @@
 	import="com.pkb.board.model.vo.*, java.util.*, com.pkb.common.Paging, com.pkb.member.model.vo.User"%>
 <%@page import="com.pkb.reservation.model.vo.Reservation"%>
  <% 
- ArrayList<Reservation> rsvList = (ArrayList<Reservation>)request.getAttribute("rsvList"); 
+/*  ArrayList<Reservation> rsvList = (ArrayList<Reservation>)request.getAttribute("rsvList");  */
+ ArrayList<Board> b = (ArrayList<Board>)request.getAttribute("list");
 
 %> 
 
@@ -91,9 +92,14 @@ if(loginUser != null){ %>
 					<th class="second">제목</th>
 					<th class="third">작성일</th>
 				</tr>
-
-
-<!-- 				<tr> -->
+					<% for(int i = 0 ; i < b.size(); i++){ %>
+				<tr>
+					<td><%=b.get(i).getArticle_no() %></td> 
+				    <td><%=b.get(i).getArticle_title()%></td>
+					<td><%=b.get(i).getArticle_date()%></td>
+				</tr>
+				<% } %>
+<!-- 				                                 <tr> -->
 					
 <%-- 				    <input type="hidden" value="<%=여기보드객체명?.getArticle_no() %>"> --%>
 <%-- 					<td><%=b.getArticle_no() %></td> --%>
@@ -114,9 +120,9 @@ if(loginUser != null){ %>
 <%-- 			<button onclick="location.href'<%=request.getContextPath()%>/selectOnebyOneList.bo?currentPage=<%=currentPage - 1%>'"><</button> --%>
 <%-- 			<%} %> --%>
 
-<!-- 			<!-- 1,2,3,4,5버튼 --> -->
+ 			<!-- 1,2,3,4,5버튼 --> 
 <%-- 			<% for(int p = startPage; p <= endPage; p++){ --%>
-// 					if(p == currentPage){
+ 					<!-- if(p == currentPage){ -->
 <%-- 				%> --%>
 <%-- 			<button disabled><%= p %></button> --%>
 <%-- 			<% 	}else { %> --%>
