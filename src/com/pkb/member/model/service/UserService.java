@@ -33,7 +33,7 @@ public class UserService {
 		return loginUser;
 	}
 
-	public int joinUser(User u) {
+	public int joinUser(User u, String ip, String reply) {
 		Connection con = getConnection();
 
 		int result = new UserDAO().joinUser(con, u);
@@ -41,7 +41,12 @@ public class UserService {
 		if (result > 0) {
 			int result1 = new UserDAO().setCyberMoney(con, u);
 			if (result1 > 0) {
-				commit(con);
+				int result2 = new UserDAO().insertLoginHistory(con, u, ip, reply);
+					if(result2>0){
+						commit(con);
+					}else{
+						rollback(con);
+					}
 			} else {
 				rollback(con);
 			}
@@ -521,6 +526,19 @@ public class UserService {
 
 		close(con);
 		
+		return result;
+	}
+
+	public int loginHistory(User loginUser, String ip, String reply) {
+		Connection con = getConnection();
+		
+		int result = new UserDAO().loginHistory(con, loginUser, ip, reply);
+		
+		if(result>0){
+			commit(con);
+		}else{
+			rollback(con);
+		}
 		return result;
 	}
 
