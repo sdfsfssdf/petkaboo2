@@ -105,8 +105,8 @@ ul.sub li:hover > ul.sub-sub{display:block;}
 							%>
 							<div class="title">펫시터 관리</div>
 							<ul class="sub">
-								<li><a href="../myPage/petSitterServiceInsertForm.jsp">펫시터 서비스 등록</a></li>
-								<li><a href="../myPage/petSitterServiceUpdateForm.jsp">펫시터 정보 수정</a></li>
+								<li><a href="<%=request.getContextPath()%>/views/myPage/petSitterServiceInsertForm.jsp">펫시터 서비스 등록</a></li>
+								<li><a href="<%=request.getContextPath()%>/views/myPage/petSitterServiceUpdateForm.jsp">펫시터 정보 수정</a></li>
 								<li><a href="#">수입 현황</a></li>
 								<li><a href="#">돌봄일지</a></li>
 							</ul>

@@ -107,20 +107,40 @@ th, tr, td{
 						<td>
 						<%=loginUser.getUser_name() %></td>
 					</tr>
+					<%	
+							String[] fullAddress = null;
+							String address = "잘못된 주소";
+							String zipcode = "잘못된 우편번호";
+							
+							if(loginUser.getAddress().contains("^")){
+							fullAddress = loginUser.getAddress().split("\\^");
+							address = fullAddress[0];
+							zipcode = fullAddress[1];
+							}
+					%>
 					<tr>
 						<td><label>주소 </label>
 						</td>
-						<td>
-						<%=loginUser.getAddress() %></td>					
+						<td id="address"><%=address %></td>					
+					</tr>
+					<tr>
+						<td><label>우편번호</label>
+						</td>
+						<td id="zipcode"><%=zipcode %></td>
 					</tr>
 					<tr>
 						<td>
 						<label>카테고리 </label>
 						</td>
 						<td>
-						<% for(PetCategory pc : pcl){ %>
+						<%if(pcl != null)
+							{
+								for(PetCategory pc : pcl){ %>
 						<input type="radio" value="<%= pc.getPetCategory() %>" name="pet_category" id="<%= pc.getPetCategory() %>">
 						<label for="<%= pc.getPetCategory() %>"><%= pc.getCategoryName() %></label>
+						<% } 
+								}else { %>
+						<b>펫 카테고리 불러오기 오류!</b>
 						<% } %>
 						</td>
 					</tr>
@@ -209,8 +229,72 @@ th, tr, td{
 		</div>
 	<script>
 		function insertService(){
+			var address = $("#address").text();
+			var zipcode = $("#zipcode").text();
+			var today = new Date();
+			today.setHours(0, 0, 0, 0);
+			var startdayArr = $("#contract_start").val().split('-');
+			var contract_startDay = new Date(startdayArr[0], startdayArr[1] - 1, startdayArr[2]);
+			var enddayArr = $("#contract_end").val().split('-');
+			var contract_endDay = new Date(enddayArr[0], enddayArr[1] - 1, enddayArr[2]);
+			var chk_petcategory = document.getElementsByName('pet_category');
+			var chk_type = document.getElementsByName('contract_type');
+			var price = $("#service_charge").val();
+			var petcount = $("#pet_count").val();
+			price *= 1;
+			petcount *= 1;
+			
+			var sel_type = null;
+			var sel_type2 = null;
+			
+			console.log(price);
+			
+			var isPetcategoryChk = $("input:checkbox[name='pet_category[]']").is(":checked");
+
+			if($("#pet_category").prop("checked", true)){
+				alert("동물 카테고리를 선택하세요.");
+				return;
+			}
+			
+			// var isContractTypeChk = $("input:checkbox[name='contract_type[]']").is(":checked");
+			
+			if($("#contract_type").prop("checked", true)){
+				alert("서비스 종류를 선택하세요.");
+				return;
+			}
+			
+			var isDaysChk = $("input:checkbox[name='contract_days[]']").is(":checked");
+			
+			if(!isDaysChk){
+				alert('가능 요일은 최소한 1개 이상 선택해야 합니다.');
+				return;
+			}
+
+			if(contract_startDay >= contract_endDay || today > contract_endDay || today > contract_startDay){
+				alert('계약 개시일과 종료일이 잘못되었습니다. 올바르게 입력해 주세요.')
+				return;
+			}
+			
+			if(price < 1000){
+				alert('가격이 잘못되었습니다. 올바르게 입력해 주세요. 최소 금액은 1천원입니다.');
+				return;
+			}
+			
+			if(petcount < 1 || petcount > 5){
+				alert('최대 서비스 가능 동물 수가 잘못되었습니다. 1인당 5마리를 초과할 수 없습니다. 올바르게 입력해 주세요.');
+				return;
+			}
+			
+			if(address == "잘못된 주소" || zipcode == "잘못된 우편번호"){
+				alert('주소가 잘못되었습니다. 회원정보수정에서 올바르게 입력해 주세요.');
+				return;
+			}
+			
+			alert('정상');
+			console.log(zipcode);
 			$("#insertForm").submit();
-		}
+			
+			}
 	</script>
 	<% } %>
 

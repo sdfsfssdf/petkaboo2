@@ -128,6 +128,11 @@ public class PetsitterServiceDao {
 				p.setAddress(rset.getString("address"));
 				p.setPhone(rset.getString("phone"));
 				p.setGender(rset.getString("gender"));
+				// 프로필 이미지 경로 가져오기
+				String file_path = rset.getString("file_path");
+				String file_name = rset.getString("file_name");
+				String fullpath = "/" + file_path + file_name;
+				p.setProfileImage(fullpath);
 				p.setContract_type(rset.getString("contract_type"));
 				p.setPet_category(rset.getInt("pet_category"));
 				p.setPet_count(rset.getInt("pet_count"));
@@ -177,6 +182,12 @@ public class PetsitterServiceDao {
 				p.setAddress(rset.getString("address"));
 				p.setPhone(rset.getString("phone"));
 				p.setGender(rset.getString("gender"));
+				// p.setFile_no(rset.getString("file_no"));
+				// 프로필 이미지 경로 가져오기
+				String file_path = rset.getString("file_path");
+				String file_name = rset.getString("file_name");
+				String fullpath = "/" + file_path + file_name;
+				p.setProfileImage(fullpath);
 				p.setContract_type(rset.getString("contract_type"));
 				p.setPet_category(rset.getInt("pet_category"));
 				p.setPet_count(rset.getInt("pet_count"));
@@ -207,18 +218,18 @@ public class PetsitterServiceDao {
 		ArrayList<PetsitterService> list = null;
 		
 		String address = null;
-		String pet_category = null;
+		String pet_categoryname = null;
 		String nickname = null;
 		String gender1 = null;
 		String gender2 = null;
 		
 		if(searchKeyword == null){
 			address = "";
-			pet_category = "";
+			pet_categoryname = "";
 			nickname = "";
 		} else {
 			address = searchKeyword.toUpperCase();
-			pet_category = searchKeyword.toUpperCase();
+			pet_categoryname = searchKeyword.toUpperCase();
 			nickname = searchKeyword.toUpperCase();
 		}
 		
@@ -240,9 +251,9 @@ public class PetsitterServiceDao {
 			pstmt = con.prepareStatement(query);
 			pstmt.setString(1, "%" + nickname + "%");
 			pstmt.setString(2, "%" + address + "%");
-			pstmt.setString(3, gender1);
-			pstmt.setString(4, gender2);
-			// pstmt.setString(5, pet_category);
+			pstmt.setString(3, "%" + pet_categoryname + "%");
+			pstmt.setString(4, gender1);
+			pstmt.setString(5, gender2);
 			
 			rset = pstmt.executeQuery();
 			list = new ArrayList<PetsitterService>();
@@ -257,6 +268,12 @@ public class PetsitterServiceDao {
 				p.setAddress(rset.getString("address"));
 				p.setPhone(rset.getString("phone"));
 				p.setGender(rset.getString("gender"));
+				// p.setFile_no(rset.getString("file_no"));
+				// 프로필 이미지 경로 가져오기
+				String file_path = rset.getString("file_path");
+				String file_name = rset.getString("file_name");
+				String fullpath = "/" + file_path + file_name;
+				p.setProfileImage(fullpath);
 				p.setContract_type(rset.getString("contract_type"));
 				p.setPet_category(rset.getInt("pet_category"));
 				p.setPet_count(rset.getInt("pet_count"));

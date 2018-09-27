@@ -9,6 +9,7 @@ public class PetsitterService {
 	private int user_no;				// 회원번호
 	private String user_name;			// 회원이름
 	private String nickname;			// 닉네임
+	private String profileImage;		// 프로필사진
 	private String gender;				// 성별
 	private String phone;				// 전화번호
 	private String address;				// 주소
@@ -25,15 +26,16 @@ public class PetsitterService {
 	public PetsitterService(){}
 
 	public PetsitterService(int pet_service_regno, int pet_regno, int user_no, String user_name, String nickname,
-			String gender, String phone, String address, String contract_type, int pet_category, int pet_count,
-			int service_charge, String contract_days, Date contract_start, Date contract_end, String service_detail,
-			String service_restrict) {
+			String profileImage, String gender, String phone, String address, String contract_type, int pet_category,
+			int pet_count, int service_charge, String contract_days, Date contract_start, Date contract_end,
+			String service_detail, String service_restrict) {
 		super();
 		this.pet_service_regno = pet_service_regno;
 		this.pet_regno = pet_regno;
 		this.user_no = user_no;
 		this.user_name = user_name;
 		this.nickname = nickname;
+		this.profileImage = profileImage;
 		this.gender = gender;
 		this.phone = phone;
 		this.address = address;
@@ -66,6 +68,10 @@ public class PetsitterService {
 
 	public String getNickname() {
 		return nickname;
+	}
+
+	public String getProfileImage() {
+		return profileImage;
 	}
 
 	public String getGender() {
@@ -136,6 +142,10 @@ public class PetsitterService {
 		this.nickname = nickname;
 	}
 
+	public void setProfileImage(String profileImage) {
+		this.profileImage = profileImage;
+	}
+
 	public void setGender(String gender) {
 		this.gender = gender;
 	}
@@ -187,12 +197,12 @@ public class PetsitterService {
 	@Override
 	public String toString() {
 		return "PetsitterService [pet_service_regno=" + pet_service_regno + ", pet_regno=" + pet_regno + ", user_no="
-				+ user_no + ", user_name=" + user_name + ", nickname=" + nickname + ", gender=" + gender + ", phone="
-				+ phone + ", address=" + address + ", contract_type=" + contract_type + ", pet_category=" + pet_category
-				+ ", pet_count=" + pet_count + ", service_charge=" + service_charge + ", contract_days=" + contract_days
-				+ ", contract_start=" + contract_start + ", contract_end=" + contract_end + ", service_detail="
-				+ service_detail + ", service_restrict=" + service_restrict + "]";
+				+ user_no + ", user_name=" + user_name + ", nickname=" + nickname + ", profileImage=" + profileImage
+				+ ", gender=" + gender + ", phone=" + phone + ", address=" + address + ", contract_type="
+				+ contract_type + ", pet_category=" + pet_category + ", pet_count=" + pet_count + ", service_charge="
+				+ service_charge + ", contract_days=" + contract_days + ", contract_start=" + contract_start
+				+ ", contract_end=" + contract_end + ", service_detail=" + service_detail + ", service_restrict="
+				+ service_restrict + "]";
 	}
-
-
+	
 }
