@@ -57,8 +57,18 @@
 			<div class="jumbotron" style="padding-top: 20px;">
 				<form method="post" action="<%=request.getContextPath()%>/login.me">
 					<h3 style="text-align:center;">로그인 화면</h3>
+					<script>
+						$.getJSON('https://api.ipify.org?format=jsonp&callback=?', function(data) {
+						  console.log(JSON.stringify(data, null, 2))
+						   var ip = (data.ip);
+						  console.log(ip);
+						  $("#ip").val(ip);
+						});
+					</script>
+					
 					<div class="form-group">
 						<input type="text" class="form-control" placeholder="아이디" name="email" maxlength="100">
+						<input type = "hidden" id="ip" name="ip">
 					</div>
 					<div class="form-group">
 						<input type="password" class="form-control" placeholder="비밀번호" name="user_pwd" maxlength="100">
