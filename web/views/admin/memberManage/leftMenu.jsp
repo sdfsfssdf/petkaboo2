@@ -38,7 +38,7 @@
             <br>
             <div class="text">인증요청목록</div>
             <br>
-           	<div class="text">제재/차단목록</div>
+           	<div class="text"><a href="<%=request.getContextPath()%>/selectPenaltyList.me">제재/탈퇴 회원관리</a></div>
             <br> 
            	<div class="text"><a href="<%=request.getContextPath()%>/diapauseList.me">휴면회원관리</a></div>
       </div>
