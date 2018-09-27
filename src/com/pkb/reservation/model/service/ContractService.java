@@ -19,7 +19,7 @@ public class ContractService {
 		int result = new ContractDao().insertContractPetsitting(con, c, p);
 		
 		if(result > 0){
-			Contract c2 = new ContractDao().selectContractPetsitting(con, c);
+			Contract c2 = new ContractDao().selectContractPetsitting(con, c, p);
 			if(c2 != null){
 				
 				commit(con);

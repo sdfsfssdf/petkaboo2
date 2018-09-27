@@ -333,7 +333,11 @@ a:hover {
 				
 				
 					<input type="hidden" id="revLevel" name="revLevel" value="2">
-					<input type="hidden" id="no" name="no" value="<%= p.getPet_service_regno() %>">	<br /> <br />
+					<input type="hidden" id="no" name="no" value="<%= p.getPet_service_regno() %>">	
+					<input type="hidden" id="petUserno" name="petUserno" value="<%= p.getUser_no()%>">
+					
+					
+					<br /> <br />
 				
 				<button class="btn btn-default" type="submit" id="submit">제출</button>
 				<button class="btn btn-default" type="reset" id="reset">취소</button>

@@ -45,8 +45,9 @@ public class ContractDao {
 			pstmt = con.prepareStatement(query);
 			
 			pstmt.setInt(1, c.getUser_no());
-			pstmt.setDate(2, c.getContract_start());
-			pstmt.setDate(3, c.getContract_end());
+			pstmt.setInt(2, p.getPet_service_regno());
+			pstmt.setDate(3, c.getContract_start());
+			pstmt.setDate(4, c.getContract_end());
 			
 			result = pstmt.executeUpdate();
 			
@@ -62,16 +63,19 @@ public class ContractDao {
 		return result;
 	}
 
-	public Contract selectContractPetsitting(Connection con, Contract c) {
+	public Contract selectContractPetsitting(Connection con, Contract c, PetsitterService p) {
 		Contract c2 = null;
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
+		PetsitterService p2 = null;
 
+		
 		String query = prop.getProperty("selectContractPetsitting");
 		
 		try {
 			pstmt = con.prepareStatement(query);
 			pstmt.setInt(1, c.getContract_no());
+	
 			
 			rset = pstmt.executeQuery();
 			
