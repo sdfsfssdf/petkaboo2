@@ -66,47 +66,16 @@
 					<h3 style="text-align: center;">회원가입 화면</h3>
 					<div class="form-group">
 					<script>
-						$("document").ready(function($.getJSON('https://api.ipify.org?format=jsonp&callback=?', function(data)) {
-						  console.log(JSON.stringify(data, null, 2))))
+						$.getJSON('https://api.ipify.org?format=jsonp&callback=?', function(data) {
+						  console.log(JSON.stringify(data, null, 2))
 						   var ip = (data.ip);
 						  console.log(ip);
+						  $("#ip").val(ip);
 						});
 					</script>
-					<input type = "hidden" >
-					<%	
-						InetAddress local = InetAddress.getLocalHost();
-						String ip = local.getHostAddress();
-						System.out.println("ipipipip: " + ip);
-						//112.169.187.140
-
-						HttpURLConnection urlcon = (HttpURLConnection)new URL("http://ip2c.org/"+ip).openConnection();
-						urlcon.setDefaultUseCaches(false);
-						urlcon.setUseCaches(false);
-						urlcon.connect();
-						InputStream is = urlcon.getInputStream();
-						int c = 0;
-						String s = "";
-						while((c = is.read()) != -1) s+= (char)c;
-						is.close();
-						switch(s.charAt(0))
-						{
-						  case '0':
-						    System.out.println("Something wrong");
-						    break;
-						  case '1':
-						    String[] reply = s.split(";");
-						    System.out.println("Two-letter: " + reply[1]);
-						    System.out.println("Three-letter: " + reply[2]);
-						    System.out.println("Full name: " + reply[3]);
-						    break;
-						  case '2':
-						    System.out.println("Not found in database");
-						    break;
-						}
-
-					%>
-						<input type="hidden" name="ip" value="<%=ip%>">
-						<input type="hidden" name="s" value="<%=s %>">
+					
+					
+				<%-- 		<input type="hidden" name="s" value="<%=s %>"> --%>
 						<input type="email" id="email" class="form-control"
 							placeholder="아이디" name="email" maxlength="100">
 						<input type="button" style="margin-top:10px" class="btn btn-warning form-control" onclick="checkEmail()" value="중복체크">
@@ -141,7 +110,7 @@
 					<button id="join" onclick="join1()"
 						class="btn btn-primary form-control">회원가입</button>
 					
-					
+					<input type = "hidden" id="ip" name="ip" >
 					
 					
 				</form>
