@@ -50,14 +50,11 @@ th, tr, td{
 	<% 
 		// PetCategory DB 조회
 		Properties prop = new Properties();
-		
 		Connection con = null;
-		PreparedStatement pstmt=null;
+		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		
 		String query = "SELECT * FROM TB_PETCATEGORY P";
-		
-		// System.out.println("query : " + query);
 		
 		ArrayList<PetCategory> pcl = null;
 		
@@ -65,6 +62,7 @@ th, tr, td{
 			con = JDBCTemplate.getConnection();
 			pstmt = con.prepareStatement(query);
 			rset = pstmt.executeQuery();
+			
 			pcl = new ArrayList<PetCategory>();
 			
 			while(rset.next()){
@@ -82,14 +80,40 @@ th, tr, td{
 			JDBCTemplate.close(pstmt);
 			JDBCTemplate.close(rset);
 		}
-		
+
 		Calendar cal = Calendar.getInstance();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		String startDate = sdf.format(cal.getTime());
 		cal.add(Calendar.DATE, 7);
 		String endDate = sdf.format(cal.getTime());
 		
-		// System.out.println("sysdate : " + sysdate1);
+		// fileName 조회
+		con = null;
+		pstmt = null;
+		rset = null;
+		
+		query = "SELECT FILE_NAME FROM TB_FILE WHERE FILE_NO = " + loginUser.getFile_no() + " AND USER_NO = " + loginUser.getUser_no();
+		
+		String fileName = null;
+		
+		try{
+			
+			con = JDBCTemplate.getConnection();
+			pstmt = con.prepareStatement(query);
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()){
+				fileName = rset.getString("file_name");	
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			JDBCTemplate.close(pstmt);
+			JDBCTemplate.close(rset);
+		}
+
+		System.out.println("fileName: " + fileName);
 		
 	%>
 	<div class="contentArea">
@@ -99,7 +123,13 @@ th, tr, td{
 			<form id="insertForm" method="post" action="<%=request.getContextPath()%>/insertPetService.do">
 				<table id="insertTable">
 					<tr>
-						<td rowspan="13">프로필 사진</td>
+						<td rowspan="13">
+						<%if(fileName != null) {%>
+						<Img class=profileImg style="width:200px;height:200px; border-radius:150px" src="<%=request.getContextPath()%>/images/profileImagesUpload/<%=fileName%>">
+ 						<%} else { %>
+ 						<Img class=profileImg style="width:200px;height:200px; border-radius:150px" src="<%=request.getContextPath()%>/images/profileImagesUpload/profileBasicImage.png">
+ 						<%} %>						
+						</td>
 					</tr>
 					<tr>
 						<td><label>이름 </label>
@@ -221,7 +251,6 @@ th, tr, td{
 	</div>
 		<br>
 		<div class="btnsArea" align="center">
-			<button type="submit" class="btn btn-default write">추가하기</button>
 			&nbsp;
 			<button type="submit" id="submit" onclick="insertService()" class="btn btn-success write">등록하기</button>
 			&nbsp;
@@ -244,32 +273,6 @@ th, tr, td{
 			price *= 1;
 			petcount *= 1;
 			
-			var sel_type = null;
-			var sel_type2 = null;
-			
-			console.log(price);
-			
-			var isPetcategoryChk = $("input:checkbox[name='pet_category[]']").is(":checked");
-
-			if($("#pet_category").prop("checked", true)){
-				alert("동물 카테고리를 선택하세요.");
-				return;
-			}
-			
-			// var isContractTypeChk = $("input:checkbox[name='contract_type[]']").is(":checked");
-			
-			if($("#contract_type").prop("checked", true)){
-				alert("서비스 종류를 선택하세요.");
-				return;
-			}
-			
-			var isDaysChk = $("input:checkbox[name='contract_days[]']").is(":checked");
-			
-			if(!isDaysChk){
-				alert('가능 요일은 최소한 1개 이상 선택해야 합니다.');
-				return;
-			}
-
 			if(contract_startDay >= contract_endDay || today > contract_endDay || today > contract_startDay){
 				alert('계약 개시일과 종료일이 잘못되었습니다. 올바르게 입력해 주세요.')
 				return;
@@ -290,8 +293,6 @@ th, tr, td{
 				return;
 			}
 			
-			alert('정상');
-			console.log(zipcode);
 			$("#insertForm").submit();
 			
 			}

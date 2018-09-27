@@ -292,7 +292,6 @@ table.listArea td {
 						<th scope="row">주소</th>
 						<td>
 						<% 
-
 							String maskedAddress = "";
 							if(p.getAddress() != null){
 							// 가져온 주소를 공백을 기준으로 잘라 동까지만 노출
@@ -308,18 +307,35 @@ table.listArea td {
 							}
 						%>
 						<%= maskedAddress %>
-
 						</td>
 					</tr>
 					<tr>
 						<th scope="row">서비스</th>
 						<td>
-						<%= p.getService_detail() %>
+						<% 
+							String serviceDetail = null;
+							if(p.getService_detail().length() > 15){
+								serviceDetail = p.getService_detail().substring(0, 15) + "...";
+							}else{
+								serviceDetail = p.getService_detail();
+							}
+						%>
+						<%= serviceDetail %>
 						</td>
 					</tr>
 					<tr>
 						<th scope="row">제한사항</th>
-						<td><%= p.getService_restrict() %></td>
+						<td>
+						<% 
+							String serviceRes = null;
+							if(p.getService_restrict().length() > 15){
+								serviceRes = p.getService_restrict().substring(0, 15) + "...";
+							}else{
+								serviceRes = p.getService_restrict();
+							}
+						%>
+						<%= serviceRes %>
+						</td>						
 					</tr>
 				</table>
 				<% } %>
