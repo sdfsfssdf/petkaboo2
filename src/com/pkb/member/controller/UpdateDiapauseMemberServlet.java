@@ -34,6 +34,9 @@ public class UpdateDiapauseMemberServlet extends HttpServlet {
 		
 		String[] selectUserNos = selectUserNo.split(",");
 		
+		for (int i = 0; i < selectUserNos.length; i++) {
+			System.out.println(selectUserNos[i]);
+		}
 		int[] result = new UserService().updateDiapauseMember(selectUserNos);
 		
 		if(result.length>0){

@@ -29,7 +29,7 @@
 	.outer{
 		float:left;
 		width:1000px;
-		height:600px;
+		height:1200px;
 		color:black;
 		margin-left:20px;
 		margin-right:auto;
@@ -42,7 +42,6 @@
 	.table1{
 		float:left;
 		width:1000px;
-		height:600px;
 		margin-top:20px;
 		marign-left:auto;
 		margin-right:auto;
@@ -61,6 +60,10 @@
 		background: #ddd;
 		text-align:center;
 	}
+	
+	.leftWrapArea{
+		height:1200px !important;
+	}
 </style>
 </head>
 <body>
@@ -72,16 +75,16 @@
 	<h2>휴면계정 관리</h2>
 	<p>휴면계정 처리와 휴면계정의 목록을 확인할 수 있습니다.</p>
 	<hr>
-	<%if (ndlist.size() != 0 ){%>
 		<h4 style="display:inline-block">휴면처리가 필요한 계정</h4>
 		<%-- <img src="<%=request.getContextPath() %>/images/adminImgs/newIcon.png" width="30px" height="30px"> --%>
 		<div style="display:inline-block; float:right;">
-			<button class="btn btn-default" id="totalDiapauseBtn" name="totalDiapauseBtn">일괄처리</button> 
+			<button class="btn 	btn-default" id="totalDiapauseBtn" name="totalDiapauseBtn">일괄처리</button> 
 			<button class="btn btn-default" id="diapauseBtn" name="diapauseBtn">선택처리</button>
 		</div>
 		<hr style="clear:both;">
 		
 		<div class="" style="width:100%; height:300px; overflow:auto;">
+	<%if (ndlist.size() != 0 ){%>
 			<table id="needDiapauseMemberTable" class="table table-hover" align="center" name="memberListTable">
 				<tr class="head">
 					<th width="2%"><input type="checkbox" class="masterCheck"></th>
@@ -121,9 +124,9 @@
 					</tr>
 				<%} %>
 			</table>
+	<%} %>
 		</div>
 		<hr>
-	<%} %>
 	<script>
 		$(function(){
 			$('.masterCheck').click(function(){
@@ -293,9 +296,13 @@
 						for(var i = 0; i < len ; i ++){
 							checkRow = checkBoxs[i].value;
 								if(i == 0){
-									rowid += checkRow;
+									if(len == 0) {
+										rowid += checkRow;
+									} else {
+										rowid += checkRow+",";
+									}
 								} else {
-									if(i == len -1){
+									if(i == len - 1){
 										rowid += checkRow ;
 									} else {
 										rowid += checkRow + ",";

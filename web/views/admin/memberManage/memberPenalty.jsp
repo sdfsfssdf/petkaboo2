@@ -196,7 +196,11 @@
 				for(var i = 0; i < len ; i ++){
 					checkRow = checkBoxs[i].value;
 						if(i == 0){
-							rowid += checkRow;
+							if(len == 0) {
+								rowid += checkRow;
+							} else {
+								rowid += checkRow+",";
+							}
 						} else {
 							if(i == len -1){
 								rowid += checkRow ;
