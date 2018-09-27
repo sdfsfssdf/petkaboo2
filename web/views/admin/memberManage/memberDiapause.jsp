@@ -310,13 +310,11 @@
 								}
 							checkRow = '';
 						}	
-						
-						
 						location.href="<%=request.getContextPath()%>/updateDiapause.me?selecUserNo="+rowid;
 					})
 			})
 		</script>
-</div>
+	</div>
 </body>
 </html>
 
