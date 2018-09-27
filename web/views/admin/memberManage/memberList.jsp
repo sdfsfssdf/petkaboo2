@@ -40,7 +40,7 @@
 .table1 {
 	float: left;
 	width: 1000px;
-	height: 600px;
+	height: 650px;
 	margin-top: 20px;
 	marign-left: auto;
 	margin-right: auto;
@@ -158,7 +158,7 @@
 						<%
 							if (mlist.get(i).getUser_status() == 0) {
 						%>
-						<td><div style="border-radius:10px; background:lightgray; color:white">휴먼</div></td>
+						<td><div style="border-radius:10px; background:lightgray; color:white">휴면</div></td>
 						<%
 							} else if (mlist.get(i).getUser_status() == 1) {
 						%>
@@ -544,8 +544,7 @@
 						}
 						location.href="<%=request.getContextPath()%>/lockMember.me?selecUserNo="+rowid+"&title="+title+"&content="+textarea+"&lockDate="+lockDate;
 					})
-					
-					$('#ser')
+
 				})
 			</script>
 		</div>

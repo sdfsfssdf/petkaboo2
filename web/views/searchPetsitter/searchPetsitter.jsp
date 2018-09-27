@@ -278,11 +278,12 @@ table.listArea td {
 						<th scope="row">주소</th>
 						<td>
 						<% 
-							String[] maskedAddress = null;
-							maskedAddress = 
-						
-						%>
-						<%= p.getAddress() %>
+                     // 가져온 주소를 공백을 기준으로 잘라 동까지만 노출
+                     String[] splitAddress = null;
+                     splitAddress = p.getAddress().split("\\s");
+                     String maskedAddress = splitAddress[0] + " " + splitAddress[1] + " " + splitAddress[2] + " ";
+                  %>
+                  <%= maskedAddress %>
 						</td>
 					</tr>
 					<tr>

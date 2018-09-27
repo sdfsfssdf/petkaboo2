@@ -41,7 +41,7 @@
 	
 	.vertical_line{
 		width:1px;
-		border:0.5px solid black;
+		border:0.5px solid lightgray;
 		height:300px;
 		display:inline-block;
 		margin-left:20px;
