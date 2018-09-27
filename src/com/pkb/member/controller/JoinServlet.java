@@ -1,6 +1,9 @@
 package com.pkb.member.controller;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -36,9 +39,33 @@ public class JoinServlet extends HttpServlet {
 		String sms = request.getParameter("sms_chk");
 		String email_chk = request.getParameter("email_chk");
 		String ip = request.getParameter("ip");
-		String s = request.getParameter("s");
+		System.out.println(ip + " // 제바르");
 		
-		System.out.println(s);
+		HttpURLConnection urlcon = (HttpURLConnection)new URL("http://ip2c.org/"+ip).openConnection();
+		urlcon.setDefaultUseCaches(false);
+		urlcon.setUseCaches(false);
+		urlcon.connect();
+		InputStream is = urlcon.getInputStream();
+		int c = 0;
+		String s = "";
+		while((c = is.read()) != -1) s+= (char)c;
+		is.close();
+		switch(s.charAt(0))
+		{
+		  case '0':
+		    System.out.println("Something wrong");
+		    break;
+		  case '1':
+		    String[] reply = s.split(";");
+		    System.out.println("Three-letter: " + reply[2]);
+		    break;
+		  case '2':
+		    System.out.println("Not found in database");
+		    break;
+		}
+		
+		System.out.println();
+
 		User u = new User();
 		
 		u.setEmail(email);
