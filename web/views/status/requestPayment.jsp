@@ -16,8 +16,7 @@
 <script type="text/javascript"
 	src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 
-	var IMP = window.IMP; // 생략가능
-	IMP.init('imp97048672');
+
 
 <!-- 합쳐지고 최소화된 최신 CSS -->
 <link rel="stylesheet"
@@ -273,13 +272,16 @@ img {
 
 	<script>
 	
-		function goRecharge() {
+				$('#clickrecharge').click(){
+					
+				
 								if (!$("input:radio[name=howToPS]:checked").val()) {
 									alert('충전에 필요한 결제수단을 선택해주세요');
 									return false;
 								} else if ($(
 										"input:radio[name=howToPS]:checked").val() == "card") {
 									
+						function goRecharge() {
 									var IMP = window.IMP; // 생략가능
 									IMP.init('imp97048672');
 									
@@ -382,7 +384,8 @@ img {
 
 								} --%>
 							
-		});
+								}
+								});
 	</script>
 	<%
 		} else {

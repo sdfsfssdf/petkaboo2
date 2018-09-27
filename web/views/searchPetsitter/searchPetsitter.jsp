@@ -292,6 +292,7 @@ table.listArea td {
 						<th scope="row">주소</th>
 						<td>
 						<% 
+
 							String maskedAddress = "";
 							if(p.getAddress() != null){
 							// 가져온 주소를 공백을 기준으로 잘라 동까지만 노출
@@ -307,6 +308,7 @@ table.listArea td {
 							}
 						%>
 						<%= maskedAddress %>
+
 						</td>
 					</tr>
 					<tr>

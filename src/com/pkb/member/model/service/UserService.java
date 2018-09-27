@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import com.pkb.board.model.vo.Board;
 import com.pkb.member.model.dao.UserDAO;
 import com.pkb.member.model.vo.ImgFile;
 import com.pkb.member.model.vo.Pet;
@@ -438,12 +439,89 @@ public class UserService {
 		if(mlist != null){
 			dmMap = new HashMap<String,Object>();
 			dmMap.put("mlist", mlist);
-			ArrayList<User> needMemberList = new UserDAO().selectNeedDiapauseMemberList(con);
+			ArrayList<HashMap<String,Object>> needMemberList = new UserDAO().selectNeedDiapauseMemberList(con);
 			dmMap.put("nmlist", needMemberList);
 		}
 		
 		close(con);
+		
 		return dmMap;
+	}
+
+
+	public int findPwd(String email, String name) {
+		Connection con = getConnection();
+		
+		int result = new UserDAO().findPwd(con, email, name);
+		if(result > 0 ) {
+      commit(con);
+    } else {
+      rollback(con);
+    } 
+    close(con);
+    
+    return result;
+}
+
+	public int[] updateDiapauseMember(String[] selectUserNos) {
+		Connection con = getConnection();
+		int[] result = new UserDAO().updateDiapauseMember(con, selectUserNos);
+		if(result.length>0){
+			commit(con);
+		} else {
+			rollback(con);
+		} 
+		close(con);
+		
+		return result;
+	}
+
+	public int getPenaltyMemberCount() {
+		Connection con = getConnection();
+
+		int result = new UserDAO().getPenaltyMemberCount(con);
+
+		close(con);
+
+		return result;
+	}
+
+	public HashMap<String, Object> selectPenaltyMemberList(int currentPage, int limit) {
+		Connection con = getConnection();
+		HashMap<String,Object> hmap = null;
+		ArrayList<Board> pmlist = new UserDAO().selectPenaltyMemberList(con,currentPage,limit);
+		if(pmlist != null){
+			hmap = new HashMap<String,Object>();
+			hmap.put("pmlist", pmlist);
+			
+			ArrayList<Board> recentlyList = new UserDAO().selectRecentlyList(con);
+			hmap.put("reList", recentlyList);
+			
+			ArrayList<Board> sanctinsExpirationList = new UserDAO().selectSEList(con);
+			hmap.put("seList", sanctinsExpirationList);
+		}
+		close(con);
+		return hmap;
+	}
+
+	public int[] updateSanctions(String[] selectUserNos) {
+		Connection con = getConnection();
+		int[] result = new UserDAO().updateSanctions(con, selectUserNos);
+		if(result.length>0){
+			int[] result2 = new UserDAO().updateBoardStatus(con,selectUserNos);
+			if(result2.length > 0){
+				commit(con);				
+			} else {
+				rollback(con);
+				result = null;
+			}
+		} else {
+			rollback(con);
+		} 
+
+		close(con);
+		
+		return result;
 	}
 
 }

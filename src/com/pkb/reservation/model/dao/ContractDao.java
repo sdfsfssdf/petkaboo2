@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Properties;
 
 import com.pkb.pet.model.vo.Pet;
+import com.pkb.petsitterService.model.vo.PetsitterService;
 import com.pkb.reservation.model.vo.Contract;
 
 public class ContractDao {
@@ -34,7 +35,7 @@ public class ContractDao {
 		}
 	}
 	
-	public int insertContractPetsitting(Connection con, Contract c) {
+	public int insertContractPetsitting(Connection con, Contract c, PetsitterService p) {
 		PreparedStatement pstmt = null;
 		int result = 0;
 		

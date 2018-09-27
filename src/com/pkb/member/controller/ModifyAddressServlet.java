@@ -34,7 +34,7 @@ public class ModifyAddressServlet extends HttpServlet {
 		String add2 = request.getParameter("addressDetail");
 		String postcode = request.getParameter("postcode");
 		String email = (String)request.getSession().getAttribute("email");
-		String address = (add1+add2+'/'+postcode);
+		String address = (add1+add2+" ^ "+postcode);
 		User loginUser = (User)request.getSession().getAttribute("loginUser");
 
 		System.out.println(address);
@@ -49,7 +49,7 @@ public class ModifyAddressServlet extends HttpServlet {
 			u.setAddress(address);
 			// 키값은 중복이 안된다. 
 			session.setAttribute("loginUser", u);
-			response.sendRedirect("views/myPage/modifyMemberInfoMain.jsp");
+			response.sendRedirect("/pkb/modify.mb");
 		}else{
 			request.setAttribute("msg", "주소 변환실패!");
 			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);

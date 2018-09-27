@@ -4,7 +4,7 @@
 <%@page import="com.pkb.reservation.model.vo.Reservation"%>
  <% 
  ArrayList<Reservation> rsvList = (ArrayList<Reservation>)request.getAttribute("rsvList"); 
-	
+
 %> 
 
 <!DOCTYPE html>
@@ -93,49 +93,49 @@ if(loginUser != null){ %>
 				</tr>
 
 
-				<tr>
+<!-- 				<tr> -->
 					
-				    <input type="hidden" value="<%=rsvList.getArticle_no() %>">
-					<td><%=b.getArticle_no() %></td>
-					<td><%=b.getArticle_title()%></td>
-					<td><%=b.getArticle_date()%></td>
+<%-- 				    <input type="hidden" value="<%=여기보드객체명?.getArticle_no() %>"> --%>
+<%-- 					<td><%=b.getArticle_no() %></td> --%>
+<%-- 					<td><%=b.getArticle_title()%></td> --%>
+<%-- 					<td><%=b.getArticle_date()%></td> --%>
 					
-				</tr>
+<!-- 				</tr> -->
 
 
 			</table>
 		</div>
 		<!-- 페이지처리 -->
-<%-- 		<div class="pagingArea">
-		    <button onclick="location.href='<%=request.getContextPath()%>/selectOnebyOneList.bo?currentPage=1'"><<</button>
-			<% if(currentPage <= 1 ){ %>
-			<button disabled><</button>
-			<%}else{ %>
-			<button onclick="location.href'<%=request.getContextPath()%>/selectOnebyOneList.bo?currentPage=<%=currentPage - 1%>'"><</button>
-			<%} %>
+<!-- 		<div class="pagingArea"> -->
+<%-- 		    <button onclick="location.href='<%=request.getContextPath()%>/selectOnebyOneList.bo?currentPage=1'"><<</button> --%>
+<%-- 			<% if(currentPage <= 1 ){ %> --%>
+<!-- 			<button disabled><</button> -->
+<%-- 			<%}else{ %> --%>
+<%-- 			<button onclick="location.href'<%=request.getContextPath()%>/selectOnebyOneList.bo?currentPage=<%=currentPage - 1%>'"><</button> --%>
+<%-- 			<%} %> --%>
 
-			<!-- 1,2,3,4,5버튼 -->
-			<% for(int p = startPage; p <= endPage; p++){
-					if(p == currentPage){
-				%>
-			<button disabled><%= p %></button>
-			<% 	}else { %>
-			<button onclick="location.href='<%=request.getContextPath()%>/selectOnebyOneList.bo?currentPage=<%=p%>'"><%= p %></button>
+<!-- 			<!-- 1,2,3,4,5버튼 --> -->
+<%-- 			<% for(int p = startPage; p <= endPage; p++){ --%>
+// 					if(p == currentPage){
+<%-- 				%> --%>
+<%-- 			<button disabled><%= p %></button> --%>
+<%-- 			<% 	}else { %> --%>
+<%-- 			<button onclick="location.href='<%=request.getContextPath()%>/selectOnebyOneList.bo?currentPage=<%=p%>'"><%= p %></button> --%>
 
-			<% } %>
+<%-- 			<% } %> --%>
 
-			<% } %>
+<%-- 			<% } %> --%>
 
-			<% if(currentPage >= maxPage){ %>
-			<button disabled>></button>
-			<% }else{ %>
-			<button
-				onclick="location.href='<%=request.getContextPath()%>/selectOnebyOneList.bo?currentPage=<%=currentPage + 1 %>'">></button>
-			<% } %>
-			<button
-				onclick="location.href='<%=request.getContextPath()%>/selectOnebyOneList.bo?currentPage=<%=maxPage%>'">>></button>
+<%-- 			<% if(currentPage >= maxPage){ %> --%>
+<!-- 			<button disabled>></button> -->
+<%-- 			<% }else{ %> --%>
+<!-- 			<button -->
+<%-- 				onclick="location.href='<%=request.getContextPath()%>/selectOnebyOneList.bo?currentPage=<%=currentPage + 1 %>'">></button> --%>
+<%-- 			<% } %> --%>
+<!-- 			<button -->
+<%-- 				onclick="location.href='<%=request.getContextPath()%>/selectOnebyOneList.bo?currentPage=<%=maxPage%>'">>></button> --%>
 
-		</div> --%>
+<!-- 		</div> -->
 		
 		
 		
@@ -155,7 +155,7 @@ if(loginUser != null){ %>
 
 	</div>
 	
-<%-- 	<script>
+	<script>
 		$(function(){
 			$("#listArea td").mouseenter(function(){
 				$(this).parent().css({"cursor":"pointer"})
@@ -171,7 +171,7 @@ if(loginUser != null){ %>
 			
 		})
 	
-	</script> --%>
+	</script>
 	
 	<%
 		} else {

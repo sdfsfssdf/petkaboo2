@@ -1,27 +1,27 @@
 package com.pkb.member.controller;
 
 import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import com.pkb.member.model.service.UserService;
-import com.pkb.member.model.vo.User;
 
 /**
- * Servlet implementation class ChangePhoneServlet
+ * Servlet implementation class UpdateDiapauseMemberServlet
  */
-@WebServlet("/smsCheck.sc")
-public class ChangePhoneServlet extends HttpServlet {
+@WebServlet("/updateDiapause.me")
+public class UpdateDiapauseMemberServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ChangePhoneServlet() {
+    public UpdateDiapauseMemberServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -30,22 +30,20 @@ public class ChangePhoneServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String phone = (String)request.getSession().getAttribute("rphone");
-		User loginUser = (User)request.getSession().getAttribute("loginUser");
-		String sms = request.getParameter("inputNum");
+		String selectUserNo = request.getParameter("selecUserNo");
 		
-		int result = new UserService().updatePhone(phone, sms, loginUser);
-		System.out.println("dhzl"+sms);
+		String[] selectUserNos = selectUserNo.split(",");
 		
-		loginUser.setPhone(phone);
-		HttpSession session = request.getSession();
-		session.setAttribute("loginUser", loginUser);
-		if(result>0){
-			response.sendRedirect("/pkb/views/myPage/modifyMemberInfo.jsp");
-		}else{
-			response.sendRedirect("views/member/smsCheck.jsp");
+		int[] result = new UserService().updateDiapauseMember(selectUserNos);
+		
+		if(result.length>0){
+			response.sendRedirect(request.getContextPath()+"/diapauseList.me");
+		} else {
+			String page = "views/common/errorPage.jsp";
+			request.setAttribute("msg", "(관리자 페이지)회원 휴면상태 설정 실패");
+			RequestDispatcher view = request.getRequestDispatcher(page);
+			view.forward(request, response);
 		}
-		
 	}
 
 	/**
