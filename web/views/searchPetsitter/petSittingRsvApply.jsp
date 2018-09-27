@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" import="com.pkb.member.model.vo.*, java.util.*, com.pkb.petsitterService.model.vo.*"%>
+	<% 
+   PetsitterService p = (PetsitterService)request.getAttribute("p");
+	
+%>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -162,13 +166,8 @@ a:hover {
 
 		<form name="form1" action="<%=request.getContextPath()%>/insertCtr.ct"
 			method="post">
-			--%>
-			<div id="ip-style">
-				<label class=howToPs><input type="radio"
-					name="contract_type" value="위탁" required /> 맡기기</label> <label
-					class=howToPs><input type="radio" name="contract_type"
-					value="방문" />부르기 </label>
-			</div>
+			
+			
 			<br/>
 
 			<div id="body-div">
@@ -208,7 +207,7 @@ a:hover {
 										        &nbsp;<input type="submit" id="send" value="전송">
 										    </form>
 										
-										<!-- 수정완료 수정취소 -->
+										<!-- 인증 확인-->
 										<form class ="rsvinfo" method="post" action="<%=request.getContextPath()%>/smsCheckOk.ct">
 										<div class="phone3">
 										
@@ -247,17 +246,12 @@ a:hover {
 								src="http://momojeri.com/web/product/big/201607/33_shop1_658629.jpg"
 								class="PSphoto img-circle img-responsive" alt="Responsive image" />
 							</td>
-							<td><label>&nbsp;&nbsp;&nbsp;&nbsp;이름 : </label><input
-									type="text" name="petUser_name" size='18'
-									style="background-color: transparent; border-style: none;"
-									readonly onfocus="this.blur();"></td>
-							<td></td>
+							<td><label>&nbsp;&nbsp;&nbsp;&nbsp;이름 : </label></td>
+							<td><%=p.getNickname() %></td>
 						</tr>
 						<tr>
 							<td><label>&nbsp;&nbsp;&nbsp;&nbsp;주소 : </label></td>
-							<td><input type="text" name="petUser_address" size='30'
-								style="background-color: transparent; border-style: none;"
-								readonly onfocus="this.blur();"></td>
+							<td><%=p.getAddress() %></td>
 						</tr>
 
 					</table>
@@ -312,8 +306,8 @@ a:hover {
 					<option value="">017</option>
 					<option value="">016</option>
 					<option value="">019</option>
-				</select> &nbsp;&nbsp;&nbsp;&nbsp;<input type="text"
-					placeholder=" ' - , . / '를 제외한 나머지 번호 입력" style="width: 250px;" />&nbsp;&nbsp;
+				</select> &nbsp;&nbsp;&nbsp;&nbsp;
+				<input type="text" placeholder=" ' - , . / '를 제외한 나머지 번호 입력" style="width: 250px;" />&nbsp;&nbsp;
 				<br /> 
 				<br /> <br />
 			    </div>
@@ -338,7 +332,9 @@ a:hover {
 				</fieldset>
 				
 				
-				<br /> <br />
+					<input type="hidden" id="revLevel" name="revLevel" value="2">
+					<input type="hidden" id="no" name="no" value="<%= p.getPet_service_regno() %>">	<br /> <br />
+				
 				<button class="btn btn-default" type="submit" id="submit">제출</button>
 				<button class="btn btn-default" type="reset" id="reset">취소</button>
 			</form>
