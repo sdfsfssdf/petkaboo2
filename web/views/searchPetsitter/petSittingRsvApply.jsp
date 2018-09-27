@@ -229,15 +229,16 @@ a:hover {
 			
 				<br />
 				<div class="div2">
-				<form name="form1" class="rsvinfo" action="<%=request.getContextPath()%>/insertCtr.ct" method="post">
+				
 				<br />
 		
 			
-				&nbsp;&nbsp;&nbsp;<label class=howToPs><input type="radio" name="contract_type" value="위탁" required /> 맡기기</label> 
-				<label class=howToPs><input type="radio" name="contract_type" value="방문" />부르기 </label>
+				<!-- &nbsp;&nbsp;&nbsp;<label class=howToPs><input type="radio" name="contract_type" value="위탁" required /> 맡기기</label> 
+				<label class=howToPs><input type="radio" name="contract_type" value="방문" />부르기 </label> -->
 			
 				
 					<br />
+					<form name="form1" class="rsvinfo" action="<%=request.getContextPath()%>/insertCtr.ct" method="post">
 					<h4>&nbsp;&nbsp;선택하신 펫시터입니다.</h4>
 					<table style="display: inline-block">
 						<tr>
@@ -331,12 +332,11 @@ a:hover {
 						활용약관</a> <br /> <br /> <br />
 				</fieldset>
 				
-				
 					<input type="hidden" id="revLevel" name="revLevel" value="2">
 					<input type="hidden" id="no" name="no" value="<%= p.getPet_service_regno() %>">	
 					<input type="hidden" id="petUserno" name="petUserno" value="<%= p.getUser_no()%>">
-					
-					
+					<input type="hidden" id="petUsername" name="petUsername" value="<%=p.getUser_name()%>">	
+					<input type="hidden" id="ContractType" name="ContractType" value="<%=p.getContract_type()%>">
 					<br /> <br />
 				
 				<button class="btn btn-default" type="submit" id="submit">제출</button>

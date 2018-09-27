@@ -67,7 +67,7 @@ public class InsertContractPetsittingServlet extends HttpServlet {
 			
 			}else if(revLevel == 2){
 				//입력한 계약 타입
-				String contract_type = request.getParameter("contract_type");
+				
 				//입력한 주소
 				String zipNo = request.getParameter("zipNo");
 				String address1 = request.getParameter("useraddress1");
@@ -92,7 +92,7 @@ public class InsertContractPetsittingServlet extends HttpServlet {
 				String user_no = String.valueOf(loginUser.getUser_no());
 				
 				
-				System.out.println(contract_type);
+				
 				System.out.println(totalAddress);
 				System.out.println(contract_start);
 				System.out.println(contract_end);
@@ -100,7 +100,7 @@ public class InsertContractPetsittingServlet extends HttpServlet {
 				
 				Contract c = new Contract();
 				
-				c.setContract_type(contract_type);
+				
 				c.setAddress(totalAddress);
 				c.setContract_start(contract_start);
 				c.setContract_end(contract_end);

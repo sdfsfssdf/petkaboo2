@@ -1,7 +1,6 @@
 package com.pkb.pet.controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.Date;
 
 import javax.servlet.RequestDispatcher;
@@ -41,9 +40,8 @@ public class InsertPetInfoServlet extends HttpServlet {
 		User loginUser = (User)session.getAttribute("loginUser");
 		
 		String user_no = String.valueOf(loginUser.getUser_no());
-		
-		String pet_name = request.getParameter("petName");
 		String pet_categoryname = request.getParameter("petCategory");
+		String pet_name = request.getParameter("petName");
 		String birthday_pet = request.getParameter("petBirth");
 		Date pet_birth = Date.valueOf(birthday_pet);
 		String pet_gender = request.getParameter("petGender");
@@ -67,12 +65,17 @@ public class InsertPetInfoServlet extends HttpServlet {
 		String page = "";
 		if(result > 0){
 			
-			PrintWriter out = response.getWriter();
+			request.setAttribute("p", p);
+			RequestDispatcher rd = request.getRequestDispatcher("/selectPetInfo.pi");
+			rd.forward(request, response);
+			/*int result2 = new PetService().selectPetInfo(p);*/
+			
+			/*PrintWriter out = response.getWriter();
 			out.println("<script language='javascript'>");
 			out.println("alert('반려동물이 등록되었습니다.');");
 			out.println("location.href = 'views/mypagemain.jsp';"); 
 			out.println("</script>"); 
-			out.close();
+			out.close();*/
 
 		}else{
 			
