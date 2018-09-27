@@ -250,7 +250,20 @@ table.listArea td {
 				<table id="listArea" class="listArea">
 					<tr>
 						<input id="no" name="no" value="<%=p.getPet_service_regno() %>" type="hidden">
-						<td colspan="2"><br><br><br><Br></td>
+						<td colspan="2">
+						<div id="profileImage">
+						<% 
+							String profileImage = null;
+						
+							if(!p.getProfileImage().equals("/nullnull")){
+								profileImage = p.getProfileImage();
+							}else{
+								profileImage = "/images/profileImagesUpload/profileBasicImage.png";
+							}
+						%>
+						<img height="200px;" src="<%=request.getContextPath()%><%= profileImage %>">
+						</div>
+						</td>
 					</tr>
 					<tr>
 						<th scope="row">닉네임</th>
@@ -266,7 +279,8 @@ table.listArea td {
 					</tr>
 					<tr>
 						<th scope="row">동물</th>
-						<% switch(p.getPet_category()){ 
+						<% 
+						switch(p.getPet_category()){ 
 						case 1:%><td>강아지</td><%;break; 
 						case 2:%><td>고양이</td><%;break;
 						case 3:%><td>파충류</td><%;break;
@@ -278,20 +292,33 @@ table.listArea td {
 						<th scope="row">주소</th>
 						<td>
 						<% 
-                     // 가져온 주소를 공백을 기준으로 잘라 동까지만 노출
-                     String[] splitAddress = null;
-                     splitAddress = p.getAddress().split("\\s");
-                     String maskedAddress = splitAddress[0] + " " + splitAddress[1] + " " + splitAddress[2] + " ";
-                  %>
-                  <%= maskedAddress %>
+
+							String maskedAddress = "";
+							if(p.getAddress() != null){
+							// 가져온 주소를 공백을 기준으로 잘라 동까지만 노출
+							String[] splitAddress = null;
+							splitAddress = p.getAddress().split("\\s");
+								if(splitAddress.length > 3){
+									for(int i = 0; i < 3; i++){
+										maskedAddress += splitAddress[i] + " ";
+									}
+								}else{
+									maskedAddress = "잘못된 주소";
+								}
+							}
+						%>
+						<%= maskedAddress %>
+
 						</td>
 					</tr>
 					<tr>
-						<th scope="row">서비스내용</th>
-						<td><%= p.getService_detail() %></td>
+						<th scope="row">서비스</th>
+						<td>
+						<%= p.getService_detail() %>
+						</td>
 					</tr>
 					<tr>
-						<th scope="row">서비스 제한사항</th>
+						<th scope="row">제한사항</th>
 						<td><%= p.getService_restrict() %></td>
 					</tr>
 				</table>
