@@ -71,17 +71,49 @@ public class SearchPetsitter extends HttpServlet {
 		String arrayCondition = request.getParameter("arrayCondition");
 		String page = "";
 		
+		// user_no로 찾기 위한 질의어 준비
+		String user_no = request.getParameter("user_no");
+		
+		if(user_no != null){
+			// user_no를 전달받았다면
+			ArrayList<PetsitterService> list = new PetsitterMainService().searchList(user_no);
+			
+			if(list != null){
+				// 테스트코드
+				// System.out.println("검색결과" + list);
+				
+				page = "views/myPage/petSitterServiceUpdateForm.jsp";
+				RequestDispatcher view = request.getRequestDispatcher(page);
+				request.setAttribute("list", list);
+				request.setAttribute("pi", pi);
+				view.forward(request, response);
+				
+				}else{
+					
+				// System.out.println("조회정보 없음");
+				page = "views/common/errorPage.jsp";
+				RequestDispatcher view = request.getRequestDispatcher(page);
+				request.setAttribute("msg", "조회 실패!");
+				view.forward(request, response);		
+				
+				
+				}
+			
+			return;
+			
+		}
+		
 		// 테스트코드
-		System.out.println("키워드: " + searchKeyword);
-		System.out.println("성별: " + gender);
-		System.out.println("정렬조건: " + arrayCondition);
-		System.out.println("질의개시");
+		// System.out.println("키워드: " + searchKeyword);
+		// System.out.println("성별: " + gender);
+		// System.out.println("정렬조건: " + arrayCondition);
+		// System.out.println("질의개시");
 		
 		ArrayList<PetsitterService> list = new PetsitterMainService().searchList(searchKeyword, gender, arrayCondition);
 		
 		if(list != null){
 			// 테스트코드
-			System.out.println("검색결과" + list);
+			// System.out.println("검색결과" + list);
 			
 			page = "views/searchPetsitter/searchPetsitter.jsp";
 			RequestDispatcher view = request.getRequestDispatcher(page);
@@ -91,7 +123,7 @@ public class SearchPetsitter extends HttpServlet {
 			
 			}else{
 				
-			System.out.println("조회정보 없음");
+			// System.out.println("조회정보 없음");
 			page = "views/common/errorPage.jsp";
 			RequestDispatcher view = request.getRequestDispatcher(page);
 			request.setAttribute("msg", "조회 실패!");

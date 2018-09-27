@@ -34,6 +34,7 @@ public class SelectOnePetsitterService extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int psrno = Integer.parseInt(request.getParameter("no"));
 		String revLevel_ori = request.getParameter("revLevel");
+		String page = null;
 		int revLevel = 0;
 		
 		if(revLevel_ori != null){
@@ -41,11 +42,6 @@ public class SelectOnePetsitterService extends HttpServlet {
 		}
 		
 		PetsitterService p = new PetsitterMainService().selectOne(psrno);
-		
-		// 테스트코드
-		System.out.println("revLevel" + revLevel);
-		
-		String page = null;
 		
 		if(p != null){
 			

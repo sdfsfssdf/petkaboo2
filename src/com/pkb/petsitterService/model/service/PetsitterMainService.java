@@ -78,4 +78,11 @@ public class PetsitterMainService {
 		return list;
 	}
 
+	public ArrayList<PetsitterService> searchList(String user_no) {
+		Connection con = getConnection();
+		
+		ArrayList<PetsitterService> list = new PetsitterServiceDao().searchList(con, user_no);
+		
+		return list;
+	}
 }
