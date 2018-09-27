@@ -1326,4 +1326,23 @@ public int setUserFileNO(Connection con, int UserNO) {
 		String query = prop.getProperty("selectNeedDiapauseMember");
 	}
 
+	public int findPwd(Connection con, String email, String name) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("findPwd");
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, email);
+			pstmt.setString(2, name);
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally{
+			close(pstmt);
+		}
+		return result;
+	}
+
 }

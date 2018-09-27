@@ -20,7 +20,7 @@
 <script
    src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="css/bootstrap.css"> 
-<title>펫카부 로그인</title>
+<title>비밀번호 찾기</title>
 </head>
 <body>
 	<nav class="navbar navbar-default">
@@ -55,49 +55,15 @@
 		<div class="col-lg-4"></div>
 		<div class="col-lg-4">
 			<div class="jumbotron" style="padding-top: 20px;">
-				<form method="post" action="<%=request.getContextPath()%>/login.me">
-					<h3 style="text-align:center;">로그인 화면</h3>
+				<form method="post" action="<%=request.getContextPath()%>/findPwd.fp">
+					<h3 style="text-align:center;">비밀번호 찾기</h3>
 					<div class="form-group">
 						<input type="text" class="form-control" placeholder="아이디" name="email" maxlength="100">
 					</div>
 					<div class="form-group">
-						<input type="password" class="form-control" placeholder="비밀번호" name="user_pwd" maxlength="100">
+						<input type="text" class="form-control" placeholder="이름" name="name" maxlength="100">
 					</div>
-					<input type="submit" class="btn btn-primary form-control" value="로그인">
-					<br>
-					<a href="findPassword.jsp">비밀번호 찾기</a>
-					<a href="#" onclick="signOut();">Sign out</a>
-					<div class="form-group">
-					<br>				
-						<div class="g-signin2" data-onsuccess="onSignIn"></div>
-					<!-- 	<script>
-						if(this.value === 'Login'){
-							googleAuthObj.signIn().then(function(){
-								checkLoginStatus();
-							});
-						}else{
-							googleAuthObj.signOut().then(function(){
-								checkLoginStatus();
-	
-							});
-						}
-						</script> -->
-						<script>
-							function onSignIn(googleUser) {
-							  var profile = googleUser.getBasicProfile();
-							  var id = profile.getId()); // Do not send to your backend! Use an ID token instead.
-							  var name = profile.getName());
-							  var email = profile.getEmail()); // This is null if the 'email' scope is not present.
-							}
-							
-							  function signOut() {
-							    var auth2 = gapi.auth2.getAuthInstance();
-							    auth2.signOut().then(function () {
-							      console.log('User signed out.');
-							    });
-							  }
-						</script>
-					</div>
+					<input type="submit" class="btn btn-primary form-control" value="새 비밀번호 받기">
 				</form>
 			</div>
 			</div>

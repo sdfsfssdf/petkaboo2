@@ -446,4 +446,14 @@ public class UserService {
 		return dmMap;
 	}
 
+	public int findPwd(String email, String name) {
+		Connection con = getConnection();
+		
+		int result = new UserDAO().findPwd(con, email, name);
+		
+		close(con);
+		
+		return result;
+	}
+
 }

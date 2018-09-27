@@ -157,8 +157,6 @@ a:hover, a:active, a:focus {
 }
 
 .circleimg {
-	width: 35%;
-	height: 180px;
 	float: left;
 	margin-top: 10px;
 	border: 1px solid lightgray;
@@ -263,7 +261,6 @@ a:hover, a:active, a:focus {
 			<div class="content-center">
 
 				<br> <br>
-
 				<!-- 마이페이지 타이틀부분 -->
 				<div class="title">
 					<h3 align="center"
@@ -271,12 +268,7 @@ a:hover, a:active, a:focus {
 					<hr
 						style="border: thin solid lightgray !important; display: inline-block !important; width: 100% !important;" />
 				</div>
-
-
-
 				<br>
-
-
 				<!-- 개인정보 관리-->
 				&nbsp;&nbsp;&nbsp;&nbsp;<span
 					style="text-align: left; font-size: 17px; font-weight: bold;">개인정보
