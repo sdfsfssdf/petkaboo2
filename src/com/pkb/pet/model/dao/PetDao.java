@@ -1,15 +1,18 @@
 package com.pkb.pet.model.dao;
 
+import static com.pkb.common.JDBCTemplate.close;
+
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Properties;
+import com.pkb.common.JDBCTemplate.*;
 
 import com.pkb.pet.model.vo.Pet;
-import static com.pkb.common.JDBCTemplate.*;
 
 public class PetDao {
 	
@@ -59,6 +62,53 @@ public class PetDao {
 		
 		
 		return result;
+	}
+
+
+	public Pet selectPetInfo(Connection con, Pet p) {
+		
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		Pet p2 = null;
+		
+		String query = prop.getProperty("selectPetInfo");
+		
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, p.getUser_no());
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()){
+				p2 = new Pet();
+				
+				p2.setPet_no(rset.getInt("pet_no"));
+				p2.setUser_no(rset.getInt("user_no"));
+				p2.setPet_category(rset.getInt("pet_category"));
+				p2.setPet_name(rset.getString("pet_name"));
+				p2.setPet_birth(rset.getDate("pet_birth"));
+				p2.setPet_gender(rset.getString("pet_gender"));
+				p2.setNeutral_chk(rset.getString("netural_chk"));
+				p2.setPet_weight(rset.getString("pet_weight"));
+				p2.setPet_memo(rset.getString("pet_memo"));
+				
+				
+			}
+			
+			
+		
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rset);
+			
+		}
+		
+		
+		return p2;
 	}
 
 }

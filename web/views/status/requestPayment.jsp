@@ -216,6 +216,8 @@ img {
 
 					<form action = "<%=request.getContextPath() %>/insertRecharge.rc" method="post">
 					<input type="hidden" value = "<%= user.getUser_no() %>" name ="user_no">
+					<input type="hidden" value = "10000" name ="paid_amount">
+					<label>충전금액 : <input type="text" name="paid_amount"></label>
 					<button type="submit" id="clickrecharge" background="yellow" name="clickrecharge" onclick="goRecharge()">충전하기</button>
 					</form>
 					
@@ -306,11 +308,8 @@ img {
 															//[1] 서버단에서 결제정보 조회를 위해 jQuery ajax로 imp_uid 전달하는값
 																					
 																					document.getElementById("clickrecharge").click();
-																			
-																				} else {
-																					
-													      
-
+															} else {
+																	
 													        alert();
 													    }
 													});

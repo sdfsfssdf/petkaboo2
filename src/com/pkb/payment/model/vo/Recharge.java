@@ -1,7 +1,7 @@
 package com.pkb.payment.model.vo;
 
 public class Recharge {
-	//아임포트 관련
+	    //아임포트 관련
 		private String imp_uid;				//아임포트 거래 고유 번호
 		private String pg_provider;			//결제승인/시도된 PG사
 		private int amount;					//결제할 금액
