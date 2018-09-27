@@ -371,8 +371,8 @@ table.listArea td {
 		$('#myModal').on('shown.bs.modal', function() {
 			$('#myInput').trigger('focus')
 		})
-		$(".listArea").click(function(){
-				var num = $(this).find("input").val();
+		$(".listArea td").click(function(){
+				var num = $(this).parent().children("input").val();
 				location.href = "<%=request.getContextPath()%>/selectOne.do?no=" + num;
 			});
 	</script>

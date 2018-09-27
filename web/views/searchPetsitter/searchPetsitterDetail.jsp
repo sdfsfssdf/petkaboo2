@@ -22,140 +22,74 @@
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 </head>
 <style>
-#container {
-	position: absolute;
-	left: 0;
-	top: 0;
-	right: 0;
-	bottom: 0;
+#topArea{
+	width:100%;
+	display:inline-block;
+	text-align:center;
 }
 
-#header {
-	float: left;
-	width: 100%;
-	height: 250px;
-	_border: 1px solid blue;
-	background-color: rgb(207, 183, 175);
+#serviceDetail {
+	display:inline-block;
+	width:50%;
+	height:250px;
+	margin:auto;
+	text-align:center;
+	border:1px solid black;
+}
+#serviceDetail th{
+	text-align:center;
 }
 
-.top-body {
-	margin-top: 1%;
-	margin-left: 20%;
-	margin-right: 20%;
-	/* border: 1px solid black; */
-	display: inline-block;
+#servicePhoto {
+	display:inline-block;
+	width:200px;
+	height:250px;
+	text-align:center;
+	border:1px solid black;
 }
-
-.photo-detail {
-	margin-left: 6%;
-	width: 40%;
-	height: 30%;
-	display: inline-block;
-	float: left;
-}
-
-.photo {
-	display: inline-block;
-	width: 500px;
-}
-
-nav ul {
-	position: :relative;
-	margin: 0;
-	padding: 0;
-	width: 100%;
-	text-align: left;
-	display: inline-block;
-}
-
-nav ul li {
-	display: inline;
-	margin-bottom: 1%;
-}
-
-nav {
-	margin-top: 3%;
-	margin-bottom: 3%;
-	display: inline-block;
-	width: 450px;
-	height: 56px;
-}
-
-#nav-icon {
-	width: 8%;
-	height: 8%;
-	margin-bottom: 10%;
-}
-
-.photo-box {
-	width: 80px;
-	height: 50px;
-	background: lightgray;
-	border: 1px solid black;
-	display: inline-block;
-}
-
-.petsitter-id {
-	margin-right: 6%;
-	width: 30%;
-	height: 40%;
-	float: right;
-	display: inline-block;
-	float: right;
-}
-
-.PSid {
-	margin-left: auto;
-	margin-rignt: auto;
-	margin-top: 2%;
-	marign-bottom: auto;
-	width: 300px;
-	height: 400px;
-	background: lightgray;
-	display: inline-block;
-}
-
-td {
-	border: 1px solid red;
-}
-
-.PSidTable {
-	
-}
-
-.PSphoto {
-	width: 127px;
-	height: 127px;
-	display: inline-block;
-}
-
-.l {
-	width: 100%;
-	text-align: center;
+#servicePhoto tr{
+	margin:5px;
 }
 </style>
 <body>
-		<%@include file="/views/common/menubar.jsp"%>
-		<br /><br /><br />
-		<div class="top-body">
-			<div class="photo-detail" width="400px" height="300px">
-				<div>
-					<img
-						style="width: 300px; height: 300px; margin-left: auto; margin-right: auto; margin-top: 2%; margin-bottom: 2%;"
-						src="https://scontent-lhr3-1.cdninstagram.com/vp/ac8121339280924d9df4b40835a0d470/5C0572B3/t51.2885-15/e35/38777651_2135674779789937_5511126361474859008_n.jpg?se=7&ig_cache_key=MTg0NzAwNDU1MjU1NDIzMDg4Mw%3D%3D.2"
-						alt="" />
-
-				</div>
-			</div>
-
-			<div class="petsitter-id">
-				<div class="PSid">
-					<div class="l">
-						
-						<img
-							src="https://pbs.twimg.com/profile_images/984239725190901760/-5wrSANU_400x400.jpg"
-							class="PSphoto img-circle img-responsive" alt="Responsive image" />
-					</div>
+	<%@include file="/views/common/menubar.jsp"%>
+	<div class="topArea" id="topArea" name="topArea">
+		<table id="servicePhoto" name="servicePhoto">
+			<tr>
+				<td>
+					<% 
+						String profileImage = null;
+						if(!p.getProfileImage().equals("/nullnull")){
+							profileImage = p.getProfileImage();
+						}else{
+							profileImage = "/images/profileImagesUpload/profileBasicImage.png";
+						}
+						%>
+						<p><img height="auto;" width="200px;" height-max="200px;" src="<%=request.getContextPath()%><%= profileImage %>"></p>				
+					</td>
+			</tr>
+			<tr>
+				<td><b><%=p.getNickname() %> 펫시터</b></td>
+			</tr>
+			<tr>
+				<td><%=p.getAddress() %></td>
+			</tr>
+		</table>
+		<table id="serviceDetail" name="serviceDetail">
+			<tr>
+				<th width="100px"></th>
+				<th width="100px">서비스 종류</th>
+				<th width="200px">예약가능 요일</th>
+				<th width="150px">시작 가능일</th>
+				<th width="150px">종료일</th>
+				<th width="100px">서비스가격</th>			
+			</tr>
+			<tr>
+				<td></td>
+			</tr>
+		</table>
+	</div>
+						</div>
 					<table width="200px" height="200px"
 						style="margin-left: auto; margin-right: auto; margin-top:20px; margin-bottom:auto;">
 						<tr>
@@ -171,8 +105,8 @@ td {
 						</tr>
 					</table>
 					<form class="orderInfo" id="orderInfo" name="orderInfo" method="post" action="<%=request.getContextPath()%>/selectOne.do">
-					<input type="text" id="revLevel" name="revLevel" value="1">
-					<input type="text" id="no" name="no" value="<%= p.getPet_service_regno() %>">
+					<input type="hidden" id="revLevel" name="revLevel" value="1">
+					<input type="hidden" id="no" name="no" value="<%= p.getPet_service_regno() %>">
 					<button class="pre-order" id="pre-order" onclick="submit()">예약하기</button>
 					</form>
 				</div>
