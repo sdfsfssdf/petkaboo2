@@ -1600,6 +1600,40 @@ public class UserDAO {
 		return result;
 	}
 
+	public Board selectPenaltyMemberOne(Connection con, int article_no) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String query = prop.getProperty("selectPenaltyMemberOne");
+		Board b = null;
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, article_no);
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()){
+				b = new Board();
+				b.setArticle_no(rs.getInt("ARTICLE_NO"));
+				b.setUser_no(rs.getInt("user_no"));
+				b.setArticle_date(rs.getDate("ARTICLE_DATE"));
+				b.setArticle_title(rs.getString("ARTICLE_TITLE"));
+				b.setArticle_contents(rs.getString("ARTICLE_CONTENTS"));
+				b.setArticle_type(rs.getString("ARTICLE_TYPE"));
+				b.setArticle_lv(rs.getInt("ARTICLE_LV"));
+				b.setArticle_refno(rs.getInt("article_refno"));
+				b.setArticle_status(rs.getInt("article_status"));
+				b.setArticle_modify_date(rs.getDate("ARTICLE_MODIFY_DATE"));
+				
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return b;
+	}
+
+
 	public int insertLoginHistory(Connection con, User u, String ip, String reply) {
 		PreparedStatement pstmt = null;
 		int result = 0;
@@ -1640,4 +1674,5 @@ public class UserDAO {
 		}
 		return result;
 	}
+
 }

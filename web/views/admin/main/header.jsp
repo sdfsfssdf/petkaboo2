@@ -164,6 +164,7 @@
 			<ul class="leftMenu">
 				<li><a class="menu" href="<%=request.getContextPath()%>/caaList.caa">기본설정</a></li>
 				<li><a class="menu" href="<%=request.getContextPath()%>/selectList.me">회원관리</a></li>
+				<li><a class="menu" href="<%=request.getContextPath()%>/views/admin/paymentManage/cMoneyManage.jsp">결제관리</a></li>
 				<li><a class="menu" href="">거래관리</a></li>
 				<li><a class="menu" href="">통계/현황</a></li>
 				<li id="search-bar" class="pull-right" >
