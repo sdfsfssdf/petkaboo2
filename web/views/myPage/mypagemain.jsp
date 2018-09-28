@@ -268,14 +268,30 @@ th, td {
 					<span style="text-align:center; font-size:17px; font-weight:bold;">거래내역</p>
 					<br> <br>
 					<div class="point">
-						<span>보유중인 포인트 </span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input
-							type="text" value="<%= %>" readonly>&nbsp;&nbsp;&nbsp;원&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+						<label>보유중인 포인트 </label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input
+							type="text" readonly>&nbsp;&nbsp;&nbsp;원&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							
+							<br>
+							<br>
+							<form method="post" action="<%=request.getContextPath()%>/insertRecharge.rc" id="testForm">
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							<label>충전할 금액 </label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							<input type="text" value="" name="paid_amount" id="paid_amount">
+							<input type="hidden" id="imp_uid" name="imp_uid">&nbsp;&nbsp;원&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							<input type="hidden" id="pay_method" name="pay_method">
+							<input type="hidden" id="apply_num" name="apply_num">
+							
+							</form>
+							<br>
+
 							<label class=howToPs><input type="radio" id="card1"
 						value="card" name="howToPS" />&nbsp;카드결제&nbsp;</label>&nbsp;&nbsp;&nbsp;&nbsp;
 
 					<label class=howToPs><input type="radio" id="cash1"
-						value="cash" name="howToPS" />&nbsp;계좌이체&nbsp; </label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-
+						value="cash" name="howToPS" />&nbsp;무통장 입금&nbsp; </label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				
+				
 					<button id="clickrecharge">충전하기</button>
 							
 						
@@ -447,10 +463,7 @@ th, td {
 			</div> -->
 
 
-			<form method="post" action="<%=request.getContextPath()%>/insertRecharge.rc" id="testForm">
-				<input type="hidden" value="10000" name="paid_amount" id="testBtn">
-				<input type="hidden" id="imp_uid" name="imp_uid"">
-			</form>
+			
 			<!-- footer -->
 			<div id="footer">
 				<h1>footer</h1>
@@ -458,6 +471,8 @@ th, td {
 		</div>
 	</div>
 <script>
+
+
 		$(function() {
 			$('#clickrecharge')
 					.click(
@@ -466,7 +481,7 @@ th, td {
 									alert('충전에 필요한 결제수단을 선택해주세요');
 									return false;
 								} else if ($("input:radio[name=howToPS]:checked").val() == "card") {
-
+									var paid_amount = document.getElementById('paid_amount').value;
 									IMP.request_pay(
 													{
 														pg : 'jtnet',
@@ -475,77 +490,27 @@ th, td {
 																+ new Date()
 																		.getTime(),
 														name : '펫카부 펫시팅 서비스',
-														amount : 1000,
-														buyer_email : 'iamport@siot.do',
-														buyer_name : '구매자이름',
-														buyer_tel : '010-1234-5678',
-														buyer_addr : '서울특별시 강남구 삼성동',
-														buyer_postcode : '123-456'
+														amount : paid_amount,
+														buyer_email : '<%=loginUser.getEmail()%>',
+														buyer_name : '<%=loginUser.getUser_name()%>',
+														buyer_tel : '<%=loginUser.getPhone()%>',
+														buyer_addr : '<%=loginUser.getAddress()%>',
+														
 													},
 													function(rsp) {
 														if (rsp.success) {
 															//[1] 서버단에서 결제정보 조회를 위해 jQuery ajax로 imp_uid 전달하기
 															console.log("haha");
 															$('#imp_uid').val(rsp.imp_uid);
+															$('#pay_method').val(rsp.pay_method);
+															$('#apply_num').val(rsp.apply_num);
 															document.getElementById("testForm").submit();
 														}
 													})
 
 								} else {
 
-									IMP.request_pay(
-													{
-														pg : 'jtnet',
-														pay_method : 'trans',
-														merchant_uid : 'merchant_'
-																+ new Date()
-																		.getTime(),
-														name : '펫카부 펫시팅 서비스',
-														amount : 14000,
-														buyer_email : 'iamport@siot.do',
-														buyer_name : '구매자이름',
-														buyer_tel : '010-1234-5678',
-														buyer_addr : '서울특별시 강남구 삼성동',
-														buyer_postcode : '123-456'
-													},
-													function(rsp) {
-														if (rsp.success) {
-															//[1] 서버단에서 결제정보 조회를 위해 jQuery ajax로 imp_uid 전달하기
-															jQuery
-																	.ajax(
-																			{
-																				url : "/payments/complete", //cross-domain error가 발생하지 않도록 동일한 도메인으로 전송
-																				type : 'POST',
-																				dataType : 'json',
-																				data : {
-																					imp_uid : rsp.imp_uid
-																				//기타 필요한 데이터가 있으면 추가 전달
-																				}
-																			})
-																	.done(
-																			function(
-																					data) {
-																				//[2] 서버에서 REST API로 결제정보확인 및 서비스루틴이 정상적인 경우
-																				if (everythings_fine) {
-																					var msg = '결제가 완료되었습니다.';
-																					msg += '\n고유ID : '
-																							+ rsp.imp_uid;
-																					msg += '\n상점 거래ID : '
-																							+ rsp.merchant_uid;
-																					msg += '\결제 금액 : '
-																							+ rsp.paid_amount;
-																					msg += '카드 승인번호 : '
-																							+ rsp.apply_num;
-
-																					alert(msg);
-																				} else {
-																					//[3] 아직 제대로 결제가 되지 않았습니다.
-																					//[4] 결제된 금액이 요청한 금액과 달라 결제를 자동취소처리하였습니다.
-																				}
-																			})
-
-														}
-													})
+									
 
 								}
 							})

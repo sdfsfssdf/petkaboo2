@@ -245,6 +245,7 @@
 				})
 				
 				
+				
 				$("#diapauseBtn").click(function(){
 						var checkBoxs = document.getElementsByName("selectUserNo"); // 체크박스 객체
 						var len = checkBoxs.length;
