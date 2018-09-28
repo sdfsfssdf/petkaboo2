@@ -535,6 +535,7 @@ public class UserService {
 		return result;
 	}
 
+
 	public int loginHistory(User loginUser, String ip, String reply) {
 		Connection con = getConnection();
 		
@@ -547,6 +548,15 @@ public class UserService {
 		}
 		close(con);
 		return result;
+
+	}
+  public Board selectPenaltyMemberOne(int article_no) {
+		Connection con = getConnection();
+		Board b = new UserDAO().selectPenaltyMemberOne(con, article_no);
+		
+		close(con);
+		
+		return b;
 	}
 
 }

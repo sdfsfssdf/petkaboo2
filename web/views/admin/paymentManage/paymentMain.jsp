@@ -9,6 +9,6 @@
 <body>
 		<%@include file="../main/header.jsp" %>
 		<%@include file="leftMenu.jsp" %>
-		<%@include file="refundManage.jsp" %>
+		
 </body>
 </html>
