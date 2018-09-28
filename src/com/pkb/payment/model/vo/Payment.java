@@ -1,3 +1,4 @@
+
 package com.pkb.payment.model.vo;
 
 import java.sql.Date;
@@ -159,6 +160,7 @@ public class Payment implements java.io.Serializable {
 
 				+ ", imp_uid=" + imp_uid + ", enter_account_no=" + enter_account_no + "]";
 	}
+
 
 
 }

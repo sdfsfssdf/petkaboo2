@@ -2,7 +2,7 @@ package com.pkb.reservation.model.vo;
 
 import java.sql.Date;
 
-public class Reservation {
+public class Reservation implements java.io.Serializable{
 
 	private int contract_no;		//계약번호
 	private int user_no;			//회원번호

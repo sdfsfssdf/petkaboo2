@@ -38,22 +38,31 @@ public class InsertRechargeServlet extends HttpServlet {
 		String paid_amount = request.getParameter("paid_amount");				//충전금액
 		int pay_amount = Integer.parseInt(paid_amount);
 		String imp_uid = request.getParameter("imp_uid");						//아임포트 고유번호
-		String pay_method = request.getParameter("pay_method");					//결제수단
+		String pay_type= request.getParameter("pay_type");						//결제구분 (카드 0, 현금 1)
+		
+		int payment_type = 0;
+		if(pay_type == "card"){
+			payment_type = 0;
+		}
+		
 		String apply_no = request.getParameter("apply_num");					//카드 승인번호
+		
+		
+		
 		System.out.println("들어옴");
 		System.out.println(user_no+"/// 유저");
 		System.out.println(paid_amount+"/// 돈");
 		System.out.println(imp_uid + "아임포트 고유번호 들어옴");
-		System.out.println(pay_method + "결제수단 왔어");
+		System.out.println(payment_type + "결제수단 왔어");
 		System.out.println(apply_no + "카드승인번호 들어왔다");
 
 		
 		Payment py = new Payment();
 		
-		py.setUser_no(user_no);
-		py.setPay_amount(pay_amount);
-		py.setPay_method(pay_method);
-		py.setCard_apply_no(apply_no);
+		py.setUser_no(user_no);					//회원번호
+		py.setPay_amount(pay_amount);			//충전금액
+		py.setPayment_type(payment_type);		//결제구분
+		py.setCard_apply_no(apply_no);			//카드승인 번호
 		
 		System.out.println("py객체 들어왔어? : " + py);
 		
@@ -62,7 +71,9 @@ public class InsertRechargeServlet extends HttpServlet {
 		String page = "";
 		
 		if(result > 0){
-		//sendredirect?
+		
+			
+			
 		}
 	}
 	

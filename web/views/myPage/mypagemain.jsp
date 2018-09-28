@@ -279,7 +279,7 @@ th, td {
 							<label>충전할 금액 </label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 							<input type="text" value="" name="paid_amount" id="paid_amount">
 							<input type="hidden" id="imp_uid" name="imp_uid">&nbsp;&nbsp;원&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-							<input type="hidden" id="pay_method" name="pay_method">
+							<input type="hidden" id="pay_type" name="pay_type">
 							<input type="hidden" id="apply_num" name="apply_num">
 							
 							</form>
@@ -502,7 +502,7 @@ th, td {
 															//[1] 서버단에서 결제정보 조회를 위해 jQuery ajax로 imp_uid 전달하기
 															console.log("haha");
 															$('#imp_uid').val(rsp.imp_uid);
-															$('#pay_method').val(rsp.pay_method);
+															$('#pay_type').val(rsp.pay_method);
 															$('#apply_num').val(rsp.apply_num);
 															document.getElementById("testForm").submit();
 														}
