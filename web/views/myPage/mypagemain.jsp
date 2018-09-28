@@ -268,6 +268,7 @@ th, td {
 					<span style="text-align:center; font-size:17px; font-weight:bold;">거래내역</p>
 					<br> <br>
 					<div class="point">
+
 						<label>보유중인 포인트 </label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input
 							type="text" readonly>&nbsp;&nbsp;&nbsp;원&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 							
@@ -283,7 +284,7 @@ th, td {
 							
 							</form>
 							<br>
-							
+
 							<label class=howToPs><input type="radio" id="card1"
 						value="card" name="howToPS" />&nbsp;카드결제&nbsp;</label>&nbsp;&nbsp;&nbsp;&nbsp;
 
@@ -325,7 +326,7 @@ th, td {
 
 				<!-- 충전내역 사용내역 탭 -->
 				<div class="center-content2">
-
+				
 					<div class="container">
 
 
@@ -430,6 +431,7 @@ th, td {
 								<td>$250</td>
 							</tr>
 						</table>
+						
 					</form>
 
 				</div>
