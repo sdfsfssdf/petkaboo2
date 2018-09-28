@@ -9,6 +9,7 @@ import javax.security.auth.message.callback.PrivateKeyCallback.Request;
 
 import com.pkb.board.model.dao.BoardDao;
 import com.pkb.board.model.vo.Board;
+import com.pkb.member.model.vo.User;
 
 public class BoardService {
 
@@ -89,6 +90,25 @@ public class BoardService {
 		close(con);
 		
 		return list;
+	}
+
+	public int insertReview(Board b, User loginUser) {
+		
+		Connection con = getConnection();
+		
+		int result = new BoardDao().insertReview(con, b, loginUser);
+		
+		if(result > 0){
+			commit(con);
+			
+		}else{
+			rollback(con);
+			
+		}
+		
+		close(con);
+		
+		return result;
 	}
 
 	

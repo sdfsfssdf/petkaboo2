@@ -1600,4 +1600,42 @@ public class UserDAO {
 		return result;
 	}
 
+	public int insertLoginHistory(Connection con, User u, String ip, String reply) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("insertLoginHistory");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, ip);
+			pstmt.setString(2, reply);
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally{
+			close(pstmt);
+		}
+		return result;
+	}
+
+	public int loginHistory(Connection con, User loginUser, String ip, String reply) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("UpdateLoginHistory");
+		
+		try {
+			pstmt= con.prepareStatement(query);
+			pstmt.setString(1, ip);
+			pstmt.setString(2, reply);
+			pstmt.setInt(3, loginUser.getUser_no());
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
 }
