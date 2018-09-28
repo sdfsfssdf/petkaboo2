@@ -15,6 +15,9 @@ public class PetService {
 		int result = new PetDao().insertPetInfo(con, p);
 		
 		if(result > 0){
+			
+			Pet p = new PetDao().selectPetInfo(con);
+			
 			commit(con);
 		}else{
 			rollback(con);
@@ -22,6 +25,22 @@ public class PetService {
 		}
 		
 		return  result;
+	}
+
+	public Pet selectPetInfo(Pet p) {
+		Connection con = getConnection();
+		
+		Pet p2 = new PetDao().selectPetInfo(con, p);
+		
+		if(p2 != null){
+			commit(con);
+			
+		}else{
+			rollback(con);
+		}
+		
+		
+		return p2;
 	}
 
 }

@@ -12,7 +12,7 @@ String contractNo = (String)request.getAttribute("contractNo");
 /* String writter =(String) request.getAttribute("writter"); */
 String onetitle = (String)request.getAttribute("onetitle");
 String onecontent = (String)request.getAttribute("onecontent");
-String writtedDate = (String)request.getAttribute("writtedDate");
+Date writtedDate = (Date)request.getAttribute("writtedDate");
 %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">

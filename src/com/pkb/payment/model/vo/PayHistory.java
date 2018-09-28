@@ -1,5 +1,6 @@
 package com.pkb.payment.model.vo;
 
+
 import java.io.Serializable;
 
 public class PayHistory implements Serializable{
@@ -47,3 +48,4 @@ public class PayHistory implements Serializable{
    
    
 }
+

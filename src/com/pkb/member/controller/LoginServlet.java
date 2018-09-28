@@ -1,6 +1,9 @@
 package com.pkb.member.controller;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -37,12 +40,35 @@ public class LoginServlet extends HttpServlet {
 		
 		String email = request.getParameter("email");
 		String user_pwd = request.getParameter("user_pwd");
+		String ip = request.getParameter("ip");
+		System.out.println("아이피 들어옴>?" + ip);
+		User loginUser = null;
+		HttpURLConnection urlcon = (HttpURLConnection)new URL("http://ip2c.org/"+ip).openConnection();
+		urlcon.setDefaultUseCaches(false);
+		urlcon.setUseCaches(false);
+		urlcon.connect();
+		InputStream is = urlcon.getInputStream();
+		int c = 0;
+		String s = "";
+		int result=0;
+		while((c = is.read()) != -1) s+= (char)c;
+		is.close();
+		switch(s.charAt(0))
+		{
+		  case '0':
+		    System.out.println("Something wrong");
+		    break;
+		  case '1':
+		    String[] reply = s.split(";");
+		    System.out.println("Three-letter: " + reply[2]);
+		    loginUser = new UserService().loginCheck(email, user_pwd,ip,reply[2]);
+		    System.out.println("로그인 히스토리 :"+result);
+			break;
+		  case '2':
+		    System.out.println("Not found in database");
+		    break;
+		}
 		
-		System.out.println("email : " + email);
-		System.out.println("user_pwd : " + user_pwd);
-		
-		
-		User loginUser = new UserService().loginCheck(email, user_pwd);
 		
 		System.out.println("controller : " + loginUser);
 		

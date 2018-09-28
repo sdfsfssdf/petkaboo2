@@ -36,6 +36,8 @@ public class SelectReviewList extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		System.out.println("insert리뷰 갔다옴");
+		
 		HttpSession session = request.getSession();
 		
 		Paging pg = new Paging(1,10);
@@ -64,7 +66,7 @@ public class SelectReviewList extends HttpServlet {
 		
 		
 		if(list != null){
-			page = "views/myPage/reviewList.jsp";
+			page = "views/myPage/reviewList.jsp"; 
 			request.setAttribute("list", list);
 			request.setAttribute("pg", pg);
 			

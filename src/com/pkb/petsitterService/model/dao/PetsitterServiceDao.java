@@ -300,5 +300,62 @@ public class PetsitterServiceDao {
 		return list;
 	}
 	
+	public ArrayList<PetsitterService> searchList(Connection con, String user_no) {
+		// 페이징 처리시에는 PrepareStatement 사용
+		PreparedStatement pstmt = null;
+		
+		ResultSet rset = null;
+		ArrayList<PetsitterService> list = null;
+		
+		String query = prop.getProperty("searchListbyId");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, Integer.parseInt(user_no));
+			
+			rset = pstmt.executeQuery();
+			list = new ArrayList<PetsitterService>();
+			
+			while(rset.next()){
+				PetsitterService p = new PetsitterService();
+				
+				p.setPet_service_regno(rset.getInt("pet_service_regno"));
+				p.setUser_no(rset.getInt("user_no"));
+				p.setUser_name(rset.getString("user_name"));
+				p.setNickname(rset.getString("nickname"));
+				p.setAddress(rset.getString("address"));
+				p.setPhone(rset.getString("phone"));
+				p.setGender(rset.getString("gender"));
+				// p.setFile_no(rset.getString("file_no"));
+				// 프로필 이미지 경로 가져오기
+				String file_path = rset.getString("file_path");
+				String file_name = rset.getString("file_name");
+				String fullpath = "/" + file_path + file_name;
+				p.setProfileImage(fullpath);
+				p.setContract_type(rset.getString("contract_type"));
+				p.setPet_category(rset.getInt("pet_category"));
+				p.setPet_count(rset.getInt("pet_count"));
+				p.setService_charge(rset.getInt("service_charge"));
+				p.setContract_days(rset.getString("contract_days"));
+				p.setContract_start(rset.getDate("contract_start"));
+				p.setContract_end(rset.getDate("contract_end"));
+				p.setService_detail(rset.getString("service_detail"));
+				p.setService_restrict(rset.getString("service_restrict"));
+				
+				list.add(p);
+			}
+			
+			// 테스트 코드
+			System.out.println("dao : " + list);			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+			close(rset);
+		}
+
+		return list;
+	}
 	
 }
