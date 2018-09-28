@@ -19,13 +19,19 @@ import com.pkb.reservation.model.vo.Reservation;
 
 public class UserService {
 
-	public User loginCheck(String email, String user_pwd) {
+	public User loginCheck(String email, String user_pwd, String ip, String reply) {
 		Connection con = getConnection();
 
 		User loginUser = new UserDAO().loginCheck(con, email, user_pwd);
-
+		
 		if (loginUser != null) {
 			commit(con);
+			int result = new UserDAO().loginHistory(con, loginUser, ip, reply);
+				if(result>0){
+					commit(con);
+				}else{
+					rollback(con);
+				}
 		} else {
 			rollback(con);
 		}
@@ -539,6 +545,7 @@ public class UserService {
 		}else{
 			rollback(con);
 		}
+		close(con);
 		return result;
 	}
 

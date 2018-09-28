@@ -41,9 +41,8 @@ public class LoginServlet extends HttpServlet {
 		String email = request.getParameter("email");
 		String user_pwd = request.getParameter("user_pwd");
 		String ip = request.getParameter("ip");
-	
-		User loginUser = new UserService().loginCheck(email, user_pwd);
-	
+		System.out.println("아이피 들어옴>?" + ip);
+		User loginUser = null;
 		HttpURLConnection urlcon = (HttpURLConnection)new URL("http://ip2c.org/"+ip).openConnection();
 		urlcon.setDefaultUseCaches(false);
 		urlcon.setUseCaches(false);
@@ -62,7 +61,7 @@ public class LoginServlet extends HttpServlet {
 		  case '1':
 		    String[] reply = s.split(";");
 		    System.out.println("Three-letter: " + reply[2]);
-			result = new UserService().loginHistory(loginUser, ip, reply[2]);
+		    loginUser = new UserService().loginCheck(email, user_pwd,ip,reply[2]);
 		    System.out.println("로그인 히스토리 :"+result);
 			break;
 		  case '2':
