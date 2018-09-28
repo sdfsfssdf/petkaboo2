@@ -244,7 +244,7 @@ table.listArea td {
 					  };
 		var map = new daum.maps.Map(container, options);
 	</script>
-	
+	 
 	</div>	
 	<button id="test">위도 경도 변환 사용해보기.</button>
 	<script>
@@ -253,6 +253,7 @@ table.listArea td {
 				location.href="<%=request.getContextPath()%>/test.pe";
 			})
 		})
+
 	</script>
 		<div class="new-ps-body">
 				<% for(PetsitterService p : list){ %>
