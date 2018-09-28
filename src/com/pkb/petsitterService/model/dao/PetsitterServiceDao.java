@@ -357,5 +357,38 @@ public class PetsitterServiceDao {
 
 		return list;
 	}
+
+	public int updatePetsitterService(Connection con, PetsitterService ps) {
+		PreparedStatement pstmt = null;
+		int result  = 0;
+		
+		String query = prop.getProperty("updatePetsitterService");
+		System.out.println(ps);
+		try {
+			pstmt = con.prepareStatement(query);
+			
+/*			query = UPDATE TB_REG SET CONTRACT_TYPE = ? , 
+			CONTRACT_DAYS = ?, 
+			CONTRACT_START = ?, 
+			CONTRACT_END = ? 
+			WHERE USER_NO = ? AND PET_SERVICE_REGNO = ?
+*/
+			pstmt.setString(1, ps.getContract_type());
+			pstmt.setString(2, ps.getContract_days());			
+			pstmt.setDate(3, ps.getContract_start());
+			pstmt.setDate(4, ps.getContract_end());
+			pstmt.setInt(5, ps.getUser_no());
+			pstmt.setInt(6, ps.getPet_service_regno());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
 	
 }
