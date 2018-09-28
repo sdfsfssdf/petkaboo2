@@ -171,24 +171,7 @@
   </div>
   
   <script>
-  $(".btn-warning").click(function(){
-	  alert("클릭클릭");
-	  var tt = document.getElementsByClassName("btn-warning");
-	  $(".btn-warning")
-	  for(var i= 0; i <tt.length; i++ ){
-		  if(<%=)
-	  }
-// 	  $("#idx2").val($("#idx").val());
-  });
-  	<%-- function reviewWriting(){
-  		alert("ddd");
-  		location.href = "reviewWrite.jsp?contractNo=" + "<%=rsvList.get(i).getContract_no() %>"
-  				+"&petName=" + "<%=rsvList.get(i).getPet_name() %>"
-  				";
-  		<input type="hidden" name="contractNo" value="<%=rsvList.get(i).getContract_no() %>">
-		<input type="hidden" name="petName" value="<%=rsvList.get(i).getPet_name() %>">
-		<input type="hidden" name="userName" value="<%=loginUser.getUser_name() %>">
-  	} --%>
+
   </script>
   
 </body>
