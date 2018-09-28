@@ -1,6 +1,6 @@
 package com.pkb.payment.model.vo;
 
-public class CyberMoney {
+public class CyberMoney implements java.io.Serializable {
 	private int money_no;		//사이버머니잔액일련번호
 	private int user_no;		//회원번호
 	private int money;			//잔액

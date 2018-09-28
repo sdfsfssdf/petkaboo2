@@ -1,6 +1,8 @@
 package com.pkb.payment.model.vo;
 
-public class PayHistory {
+import java.io.Serializable;
+
+public class PayHistory implements Serializable{
 	private int pay_recordno;		//결제이력번호
 	private int pay_no;				//결제번호
 	private int user_no;			//회원번호

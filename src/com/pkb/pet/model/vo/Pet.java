@@ -2,7 +2,7 @@ package com.pkb.pet.model.vo;
 
 import java.sql.Date;
 
-public class Pet {
+public class Pet implements java.io.Serializable {
 	private int pet_no;				//반려동물번호
 	private int user_no;			//회원번호
 	private int pet_category;		//동물카테고리번호

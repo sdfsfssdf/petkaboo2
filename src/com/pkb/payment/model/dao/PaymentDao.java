@@ -39,9 +39,8 @@ public class PaymentDao {
 			pstmt = con.prepareStatement(query);
 			pstmt.setInt(1, py.getUser_no());
 			pstmt.setInt(2, py.getPay_amount());
-			pstmt.setString(3, py.getPay_method());
+			pstmt.setInt(3, py.getPayment_type());
 			pstmt.setString(4, py.getCard_apply_no());
-		
 			result = pstmt.executeUpdate();
 			
 		} catch (SQLException e) {
@@ -78,6 +77,35 @@ public class PaymentDao {
 		}
 		
 		return result2;
+	}
+
+
+	public int updateCybermoney(Connection con, int user_no, Payment py) {
+		PreparedStatement pstmt = null;
+		int result3 = 0;
+		
+		String query = prop.getProperty("updateCybermoney");
+		
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, py.getPay_amount());
+			pstmt.setInt(2, user_no);
+			
+			result3 = pstmt.executeUpdate();
+			
+		
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+		} finally{
+			close(pstmt);
+			
+			
+		}
+		
+		
+		return result3;
 	}
 
 }

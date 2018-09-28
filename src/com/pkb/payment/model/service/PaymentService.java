@@ -1,11 +1,14 @@
 package com.pkb.payment.model.service;
 
-import com.pkb.payment.model.dao.PaymentDao;
-import com.pkb.payment.model.vo.Payment;
+import static com.pkb.common.JDBCTemplate.close;
+import static com.pkb.common.JDBCTemplate.commit;
+import static com.pkb.common.JDBCTemplate.getConnection;
+import static com.pkb.common.JDBCTemplate.rollback;
 
 import java.sql.Connection;
 
-import static com.pkb.common.JDBCTemplate.*;
+import com.pkb.payment.model.dao.PaymentDao;
+import com.pkb.payment.model.vo.Payment;
 
 public class PaymentService {
 
@@ -21,7 +24,16 @@ public class PaymentService {
 			
 			if(result2 > 0){
 				//사이버머니 이력 테이블에 insert한 결과가 1일시
-				commit(con);
+				
+				result3 = new PaymentDao().updateCybermoney(con, user_no, py);
+				
+				if(result3 > 0){ //잔액 업데이트한 결과가 1일시
+					
+					commit(con);
+				}else{
+					rollback(con);
+				}
+				close(con);
 				
 			}else{
 				rollback(con);
@@ -30,9 +42,9 @@ public class PaymentService {
 		}else{
 			rollback(con);
 		}
-		close(con);
 		
-		return result2;
+		
+		return result3; //*??
 	}
 
 }
