@@ -72,7 +72,7 @@
 	<br>
 	<%@ include file="../common/menubar.jsp"%>
 	<%@ include file="../common/sidemenubar.jsp" %>
-	<%int cnt=0; %>
+	<%int idx=0; %>
 	<div class="contentArea">
 		<h2>예약현황</h2>
 		<p>예약현황을 확인 할 수 있습니다.</p>
@@ -80,13 +80,13 @@
 		
 			<% for(int i=0;i<rsvList.size();i++){ %>
 			<%
-			if( i != 0) {cnt++ ;}%>
+			if( rsvList.size() != 0) {idx= i ;}%>
 		<!--  이거 테이블도 여러개지만 반복문으로 처리할 것... -->
 		<form action="<%=request.getContextPath()%>/review.wr" method="post">
-			
-		<input type="hidden" name="contractNo" value="<%=rsvList.get(i).getContract_no() %>">
-		<input type="hidden" name="petName" value="<%=rsvList.get(i).getPet_name() %>">
-		<input type="hidden" name="petsitterName" value="<%=rsvList.get(i).getUser_name() %>" />
+		<input type="text" name="idx" id="idx" value="<%=i %>">
+		<input type="text" name="contractNo" value="<%=rsvList.get(i).getContract_no() %>">
+		<input type="text" name="petName" value="<%=rsvList.get(i).getPet_name() %>">
+		<input type="text" name="petsitterName" value="<%=rsvList.get(i).getUser_name() %>" />
 		<%-- <input type="hidden" name="writter" value="<%=loginUser.getUser_name() %>"> --%>
 			<table class="tableArea" >
 		
@@ -105,7 +105,7 @@
 					<td colspan="3"><label>에약번호 : <%=rsvList.get(i).getContract_no() %> </label></td>
 				</tr>
 				<tr>
-					<td colspan="3"><button type="button" class="btn btn-warning" data-toggle="modal" data-target="#myModal">예약보기</button>
+					<td colspan="3"><button type="button" class="btn btn-warning<%=i %>" data-toggle="modal" data-target="#myModal">예약보기</button>
 					<button type="button" class="btn btn-success">바로예약</button>
 					<button type="submit" class="btn btn-info" >리뷰남기기</button></td>
 				</tr>
@@ -140,15 +140,16 @@
           <div class="modalTop">
          
           	<div class="modalTopImg"></div>
-          	<div class="modalTopContent"><label>이름 : </label><%=rsvList.get(cnt).getUser_name() %><br>
-          		 <label>주소 : </label><%=rsvList.get(cnt).getAddress()%> <br>
+          	<div class="modalTopContent"><label>이름 : </label><%=rsvList.get(idx).getUser_name() %><br>
+          	<input type="text" id="idx2" name="idx2" value="<%=idx%>">
+          		 <label>주소 : </label><%=rsvList.get(idx).getAddress()%> <br>
           	</div>	
           </div>
           <br clear="both">
           <div class="modalContent">
-          	<label>예약번호 : </label><%=rsvList.get(cnt).getContract_no() %><br>
-          	<label>돌봄 시작일 : </label> <%=rsvList.get(cnt).getContract_start()%> <br>
-          	<label>돌봄 종료일 : </label> <%=rsvList.get(cnt).getContract_end() %> <br>
+          	<label>예약번호 : </label><%=rsvList.get(idx).getContract_no() %><br>
+          	<label>돌봄 시작일 : </label> <%=rsvList.get(idx).getContract_start()%> <br>
+          	<label>돌봄 종료일 : </label> <%=rsvList.get(idx).getContract_end() %> <br>
          <%--  	<label>반려동물 정보 : </label> <%=rsvList.get(i).getPet_name()%>(<%=rsvList.get(i).getPet_categoryName()%>) <br><!-- tb_petcategory 테이블 조인해야됨 -->
          	<label>총요금 : </label> <%=rsvList.get(i).getService_charge()%> <br> --%><!-- tb_regdetail(펫시터등록상세) 테이블 조인해야됨 -->
           	<label class="modalContentMenu">서비스 진행상황</label>
@@ -170,6 +171,15 @@
   </div>
   
   <script>
+  $(".btn-warning").click(function(){
+	  alert("클릭클릭");
+	  var tt = document.getElementsByClassName("btn-warning");
+	  $(".btn-warning")
+	  for(var i= 0; i <tt.length; i++ ){
+		  if(<%=)
+	  }
+// 	  $("#idx2").val($("#idx").val());
+  });
   	<%-- function reviewWriting(){
   		alert("ddd");
   		location.href = "reviewWrite.jsp?contractNo=" + "<%=rsvList.get(i).getContract_no() %>"
