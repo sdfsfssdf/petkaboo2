@@ -47,11 +47,10 @@
 	/* li의 첫번째 요소의 좌측에는 테두리 없애기 */
 	border-left: none;
 	}
-	
-	a:link {font-size:1.5em; color: #333333;}
-	a:visited {text-decoration: none; color: #333333;}
-	a:active {text-decoration: none; color: #333333;}
-	a:hover {text-decoration: none; color: red;}
+#upperMenu a:link {font-size:1.5em; color: #333333;}
+#upperMenu a:visited {text-decoration: none; color: #333333;}
+#upperMenu a:active {text-decoration: none; color: #333333;}
+#upperMenu a:hover {text-decoration: none; color: red;}
 </style>
 </head>
 <body>
@@ -70,7 +69,14 @@
 			}else{
 		%>	
 			<div class="afterLoginArea">
-				<button name="myPage" onclick="location.href='<%=request.getContextPath()%>/views/myPage/mypagemain.jsp'">마이페이지</button>
+				<a href="<%=request.getContextPath()%>/views/myPage/mypagemain.jsp">
+				<% if (loginUser.getNickname() != null) { %>
+				<b><%= loginUser.getNickname() %>
+				<% } else { %>
+				<b><%= loginUser.getEmail() %>
+				<% } %>
+				</a></b>님 환영합니다!&nbsp;
+				<b>보유 사이버머니:</b> <%= loginUser.getMoney() %>원&nbsp;
 				&nbsp;|&nbsp;
 				<button name="logout" onclick="location.href='<%=request.getContextPath()%>/logout.me'">로그아웃</button>
 				&nbsp;
@@ -80,7 +86,7 @@
 		%>
 		</div>
 		<div id="upperLogo">
-			<h1>PETKABOO - Find Petsitter for your lovely pets!</h1>
+			<h1>PETKABOO</h1>
 		</div>
 		<div class="upperMenu" id="upperMenu">
 		<ul class="menu">

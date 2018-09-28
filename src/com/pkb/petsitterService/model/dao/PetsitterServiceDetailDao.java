@@ -54,4 +54,40 @@ public class PetsitterServiceDetailDao {
 		return result;
 	}
 
+	public int updatePetsitterServiceDetail(Connection con, PetsitterService ps) {
+		PreparedStatement pstmt = null;
+		int result  = 0;
+		
+		String query = prop.getProperty("updatePetsitterServiceDetail");
+		System.out.println(ps);
+		try {
+			pstmt = con.prepareStatement(query);
+			
+/*			UPDATE TB_REGDETAIL 
+			SET PET_CATEGORY = ?, 
+				SERVICE_CHARGE = ?,
+				PET_COUNT = ?,
+				SERVICE_DETAIL = ?,
+				SERVICE_RESTRICT = ? 
+			WHERE PET_SERVICE_REGNO = ? AND PET_REGNO = ? 
+*/			// 쿼리문 완성
+			pstmt.setInt(1, ps.getPet_category());
+			pstmt.setInt(2, ps.getService_charge());
+			pstmt.setInt(3, ps.getPet_count());
+			pstmt.setString(4, ps.getService_detail());
+			pstmt.setString(5, ps.getService_restrict());
+			pstmt.setInt(6, ps.getPet_service_regno());
+			// pstmt.setInt(7, ps.getPet_regno());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
 }

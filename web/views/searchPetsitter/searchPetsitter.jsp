@@ -259,9 +259,9 @@ table.listArea td {
 				<% for(PetsitterService p : list){ %>
 				<table id="listArea" class="listArea">
 					<tr>
-						<input id="no" name="no" value="<%=p.getPet_service_regno() %>" type="hidden">
 						<td colspan="2">
 						<div id="profileImage">
+						<input id="no" name="no" value="<%=p.getPet_service_regno() %>" type="hidden">
 						<% 
 							String profileImage = null;
 						
@@ -381,8 +381,9 @@ table.listArea td {
 		$('#myModal').on('shown.bs.modal', function() {
 			$('#myInput').trigger('focus')
 		})
-		$(".listArea td").click(function(){
-				var num = $(this).parent().children("input").val();
+		$(".listArea #profileImage").click(function(){
+				// var num = $(this).parent().children("input").val();
+				var num = $(this).children("input").val();
 				location.href = "<%=request.getContextPath()%>/selectOne.do?no=" + num;
 			});
 	</script>

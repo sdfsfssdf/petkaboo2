@@ -85,4 +85,32 @@ public class PetsitterMainService {
 		
 		return list;
 	}
+
+	public int updatePetsitterService(PetsitterService ps) {
+		Connection con = getConnection();
+		int result = 0;
+		
+		int psResult1 = new PetsitterServiceDao().updatePetsitterService(con, ps);
+		
+		if(psResult1 > 0){
+			// 펫시터 기본 서비스 데이터 삽입 성공시 상세 서비스 데이터 삽입
+			int psResult2 = new PetsitterServiceDetailDao().updatePetsitterServiceDetail(con, ps);
+			
+			if(psResult2 > 0){
+				// 펫시터 상세 서비스 데이터 삽입 성공시
+				commit(con);
+				result = psResult1 + psResult2;
+			}else{
+				// 아니라면
+				rollback(con);
+			}
+			
+		}else{
+			rollback(con);
+		}
+		
+		close(con);
+		
+		return result;
+	}
 }
