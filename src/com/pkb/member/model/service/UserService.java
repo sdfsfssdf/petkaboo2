@@ -524,4 +524,13 @@ public class UserService {
 		return result;
 	}
 
+	public Board selectPenaltyMemberOne(int article_no) {
+		Connection con = getConnection();
+		Board b = new UserDAO().selectPenaltyMemberOne(con, article_no);
+		
+		close(con);
+		
+		return b;
+	}
+
 }

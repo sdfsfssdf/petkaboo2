@@ -3,27 +3,25 @@ package com.pkb.payment.model.vo;
 import java.sql.Date;
 
 public class Payment implements java.io.Serializable {
-	
-	private int pay_no;					//결제번호
-	private int user_no;				//회원번호
-	private int pay_amount;				//충전금액
-	private Date pay_date;				//결제일자
-	private String pay_method;			//결제수단
-	private int payment_type;			//결제구분(현금/카드/환불)
-	private int payment_cash_status; 	//(현금일경우)//무통장입금
-	private Date payment_cash_date; 	//결제신청날짜 (현금일경우)
-	private String card_apply_no;		//카드승인번호 (카드일경우)
-	private int pay_recordno;			//결제이력번호
-	private int money_no;				//사이버머니잔액일련번호
-	private int money;					//보유금액
-	private int service_charge;			//계약요금
-	private int pet_count;				//마릿수
-	
-	public Payment(){}
+
+	private int pay_no; // 결제번호
+	private int user_no; // 회원번호
+	private int pay_amount; // 충전금액
+	private Date pay_date; // 결제일자
+	private String pay_method; // 구분(충전(C), 사용(U), 환불(R))
+	private int payment_type; // 결제 구분(카드 0, 현금 1/ nullable)
+	private int payment_cash_status; // (현금일경우/nullable)//무통장입금
+	private Date payment_cash_date; // 결제신청날짜 (현금일경우/nullable)
+	private String card_apply_no; // 카드승인번호 (카드일경우/nullable)
+	private String imp_uid; // 아임포트에서 보내주는 결제 고유번호
+	private int enter_account_no; // 입금계좌 (출금정보 테이블의 관리자 정보 고유번호 )
+
+	public Payment() {
+	}
 
 	public Payment(int pay_no, int user_no, int pay_amount, Date pay_date, String pay_method, int payment_type,
-			int payment_cash_status, Date payment_cash_date, String card_apply_no, int pay_recordno, int money_no,
-			int money, int service_charge, int pet_count) {
+			int payment_cash_status, Date payment_cash_date, String card_apply_no, String imp_uid,
+			int enter_account_no) {
 		super();
 		this.pay_no = pay_no;
 		this.user_no = user_no;
@@ -34,11 +32,8 @@ public class Payment implements java.io.Serializable {
 		this.payment_cash_status = payment_cash_status;
 		this.payment_cash_date = payment_cash_date;
 		this.card_apply_no = card_apply_no;
-		this.pay_recordno = pay_recordno;
-		this.money_no = money_no;
-		this.money = money;
-		this.service_charge = service_charge;
-		this.pet_count = pet_count;
+		this.imp_uid = imp_uid;
+		this.enter_account_no = enter_account_no;
 	}
 
 	public int getPay_no() {
@@ -77,24 +72,12 @@ public class Payment implements java.io.Serializable {
 		return card_apply_no;
 	}
 
-	public int getPay_recordno() {
-		return pay_recordno;
+	public String getImp_uid() {
+		return imp_uid;
 	}
 
-	public int getMoney_no() {
-		return money_no;
-	}
-
-	public int getMoney() {
-		return money;
-	}
-
-	public int getService_charge() {
-		return service_charge;
-	}
-
-	public int getPet_count() {
-		return pet_count;
+	public int getEnter_account_no() {
+		return enter_account_no;
 	}
 
 	public void setPay_no(int pay_no) {
@@ -133,24 +116,12 @@ public class Payment implements java.io.Serializable {
 		this.card_apply_no = card_apply_no;
 	}
 
-	public void setPay_recordno(int pay_recordno) {
-		this.pay_recordno = pay_recordno;
+	public void setImp_uid(String imp_uid) {
+		this.imp_uid = imp_uid;
 	}
 
-	public void setMoney_no(int money_no) {
-		this.money_no = money_no;
-	}
-
-	public void setMoney(int money) {
-		this.money = money;
-	}
-
-	public void setService_charge(int service_charge) {
-		this.service_charge = service_charge;
-	}
-
-	public void setPet_count(int pet_count) {
-		this.pet_count = pet_count;
+	public void setEnter_account_no(int enter_account_no) {
+		this.enter_account_no = enter_account_no;
 	}
 
 	@Override
@@ -158,11 +129,7 @@ public class Payment implements java.io.Serializable {
 		return "Payment [pay_no=" + pay_no + ", user_no=" + user_no + ", pay_amount=" + pay_amount + ", pay_date="
 				+ pay_date + ", pay_method=" + pay_method + ", payment_type=" + payment_type + ", payment_cash_status="
 				+ payment_cash_status + ", payment_cash_date=" + payment_cash_date + ", card_apply_no=" + card_apply_no
-				+ ", pay_recordno=" + pay_recordno + ", money_no=" + money_no + ", money=" + money + ", service_charge="
-				+ service_charge + ", pet_count=" + pet_count + "]";
+				+ ", imp_uid=" + imp_uid + ", enter_account_no=" + enter_account_no + "]";
 	}
-	
-	
 
-	
 }

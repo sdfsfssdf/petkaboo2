@@ -105,7 +105,7 @@
           			 <input type="hidden" value="<%=proHistory.get(i).getFile_no() %>">
                 	<a class="thumbnail" ><img class="subImage<%=i%>" data-toggle="modal" data-target="#myModal<%=i %>" alt="" src="<%=request.getContextPath()%>/images/profileImagesUpload/<%=proHistory.get(i).getFile_name() %>"></a>
               </div>
-       
+       		
           		<%} %>
             	</div>
           	</div>
@@ -346,7 +346,7 @@
 						$('#modifycancelBtn').show();
 					})
 					
-					$('#modifycencleBtn').click(function(){
+					$('#modifycancelBtn').click(function(){
 						$('#modifySuccessBtn').hide();
 						$('#modifycancelBtn').hide();
 						$('.modifyData').hide();

@@ -3,6 +3,12 @@
 <!DOCTYPE html>
 <html>
 <head>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <meta charset="UTF-8">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <title>Insert title here</title>
@@ -36,10 +42,42 @@
 </style>
 </head>
 <body>
+	<%@include file="../main/header.jsp" %>
+	<%@include file="leftMenu.jsp" %>
 	<div class="outer">
 	<div class="first-row">
 	<div class="table1">
-	<h2><b>사이버머니 관리</b></h2>
+	<h2>사이버머니 관리</h2>
+	<p>사이버머니 내역과 간단한 통계를 확인, 조회할 수 있습니다.</p>
+	<hr>
+		<div>
+			<table class="table table-hover" >
+				<tr class="head" align="center">
+					<th>오늘의 충전 건 수</th>
+					<th>총 충전 금액</th>
+					<th>오늘의  거래 금액</th>
+					<th>구분</th>
+					<th>거래액</th>
+					<th>실수입</th>
+				</tr>
+				<tr align="center">
+					<td>1</td>
+					<td>2</td>
+					<td>3</td>
+					<td>4</td>
+					<td>5</td>
+					<td>6</td>
+				</tr>
+				<tr align="center">
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td>합계 : </td>
+					<td>10000원</td>
+				</tr>
+			</table>
+		</div>
 	<hr>
 		<table id="cMoneyManage">
 			<tr class="head" >

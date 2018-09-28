@@ -63,7 +63,7 @@
 	}
 	
 	.leftWrapArea{
-		height:1050px !important;  
+		height:1450px !important;  
 	}
 </style>
 </head>
@@ -78,7 +78,7 @@
 	<hr>
 	<div style="display:inline-block; width:47%; height:300px; overflow:auto" >
 		<h4 style="display:inline-block">최근 탈퇴/제재 : <%if(rList != null ){%> <%=rList.size()%> <%} %>  명</h4>
-		<table class="table table-hover" align="center" >
+		<table class="table table-hover" align="center" id="recentlyMemberListTable" >
 			<tr class="head">
 				<th>회원번호</th>
 				<th>아이디</th>
@@ -88,6 +88,7 @@
 			<%if(rList != null){
 			for(int i = 0; i < rList.size();i ++) {%>
 				<tr align="center">
+					<input type="hidden" value="<%=rList.get(i).getArticle_no() %>">
 					<td><%=rList.get(i).getArticle_title().substring(1,rList.get(i).getArticle_title().indexOf("/")) %></td>
 					<td><%=rList.get(i).getArticle_title().substring(rList.get(i).getArticle_title().indexOf("/")+1,rList.get(i).getArticle_title().lastIndexOf(")")) %></td>
 					<td><%=rList.get(i).getArticle_date() %></td>
@@ -217,7 +218,7 @@
 	
 	<hr>
 	<h3>전체 제재/탈퇴 이력</h3>
-		<table class="table table-hover" align="center" >
+		<table class="table table-hover" align="center" id="penaltyMemberListTable">
 			<tr class="head">
 				<th>회원번호</th>
 				<th>아이디</th>
@@ -228,6 +229,7 @@
 			<%if(mlist != null){
 			for(int i = 0; i < mlist.size();i ++) {%>
 				<tr align="center">
+					<input type="hidden" value="<%=mlist.get(i).getArticle_no()%>">
 					<td><%=mlist.get(i).getArticle_title().substring(1,mlist.get(i).getArticle_title().indexOf("/")) %></td>
 					<td><%=mlist.get(i).getArticle_title().substring(mlist.get(i).getArticle_title().indexOf("/")+1,mlist.get(i).getArticle_title().lastIndexOf(")")) %></td>
 					<td><%=mlist.get(i).getArticle_date() %></td>
@@ -254,15 +256,70 @@
 			<%} %>
 		</table>
 	</div>
-<!-- 	<div class="searchArea" align="center">
-			<input type="search">
-			<button type="submit">검색하기</button>
-	</div> -->
+	
+	<script>
+		$(function(){
+			
+			$('#penaltyMemberListTable td').click(function(){
+				var num = $(this).parent().children("input[type=hidden]").val();
+				console.log(num);
+				$.ajax({
+					url:"selectPenaltyOne.me",
+					data : {
+						selectNum : num
+					},
+					type : "get",
+					success : function(data){
+						console.log("전송 성공")
+						$('#reasonArea').show();
+						$('#targetUser').val("");
+						$('#targetUser').val(data.article_title);
+						console.log(data.article_title);
+						$('#reasonTextArea').val("");
+						$('#reasonTextArea').val(data.article_contents);
+						$('.leftWrapArea').css('height',1300);
+						var offset = $('#reasonArea').offset();
+						$('html, body').animate({scrollTop : offset.top}, 'slow');
+					}, error : function(status, msg){
+						console.log("전송 실패")
+					}
+				})
+			})
+			
+			$('#recentlyMemberListTable td').click(function(){
+				var num = $(this).parent().children("input[type=hidden]").val();
+				console.log(num);
+				$.ajax({
+					url:"selectPenaltyOne.me",
+					data : {
+						selectNum : num
+					},
+					type : "get",
+					success : function(data){
+						console.log("전송 성공")
+						$('#reasonArea').show();
+						$('#targetUser').val("");
+						$('#targetUser').val(data.article_title);
+						console.log(data.article_title);
+						$('#reasonTextArea').val("");
+						$('#reasonTextArea').val(data.article_contents);
+						$('.leftWrapArea').css('height',1300);
+						var offset = $('#reasonArea').offset();
+						$('html, body').animate({scrollTop : offset.top}, 'slow');
+					}, error : function(status, msg){
+						console.log("전송 실패")
+					}
+				})
+			})
+		})
+	</script>
+	
+
 	<!-- 페이지 처리 -->
 		<div class="spaceDiv" align="center">
 			<div class="pigingArea">
 				<button class="btn btn-default"
-					onclick="location.href='<%=request.getContextPath()%>/selectList.me?currentPage=1'"><<</button>
+					onclick="location.href='<%=request.getContextPath()%>/selectPenaltyList.me?currentPage=1'"><<</button>
 				<%
 					if (currentPage <= 1) {
 				%>
@@ -271,7 +328,7 @@
 					} else {
 				%>
 				<button class="btn btn-default"
-					onclick="location.href='<%=request.getContextPath()%>/selectList.me?currentPage=<%=currentPage - 1%>'"><</button>
+					onclick="location.href='<%=request.getContextPath()%>/selectPenaltyList.me?currentPage=<%=currentPage - 1%>'"><</button>
 				<%
 					}
 				%>
@@ -286,7 +343,7 @@
 					} else {
 				%>
 				<button class="btn btn-default"
-					onclick="location.href='<%=request.getContextPath()%>/selectList.me?currentPage=<%=p%>'"><%=p%></button>
+					onclick="location.href='<%=request.getContextPath()%>/selectPenaltyList.me?currentPage=<%=p%>'"><%=p%></button>
 				<%
 					}
 				%>
@@ -302,16 +359,23 @@
 					} else {
 				%>
 				<button class="btn btn-default"
-					onclick="location.href='<%=request.getContextPath()%>/selectList.me?currentPage=<%=currentPage + 1%>'">></button>
+					onclick="location.href='<%=request.getContextPath()%>/selectPenaltyList.mee?currentPage=<%=currentPage + 1%>'">></button>
 				<%
 					}
 				%>
-
 				<button class="btn btn-default"
-					onclick="location.href='<%=request.getContextPath()%>/selectList.me?currentPage=<%=maxPage%>'">>></button>
+					onclick="location.href='<%=request.getContextPath()%>/selectPenaltyList.me?currentPage=<%=maxPage%>'">>></button>
 			</div>
 	</div>
-</div>
+		<div id="reasonArea" style="display:none; width:100%; height:200px;">
+			<hr>
+			<h3>탈퇴/제대 대상</h3>
+			<input type="text" class="form-control" id="targetUser" readonly/>
+			<br>
+			<p>세부 사유</p>
+			<textarea class="form-control" id="reasonTextArea" rows="10" readonly></textarea>	
+		</div>
+	</div>
 </body>
 </html>
 
