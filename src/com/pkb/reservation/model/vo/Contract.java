@@ -12,15 +12,16 @@ public class Contract implements java.io.Serializable {
 	private Date contract_end;			//계약종료일
 	private String contract_status;		//계약상태
 	private int contract_star;			//계약평점
+	private String userAddress;			//소비자 주소
+	private String userPhone;			//소비자 휴대폰번호
 	
 
-	
 	public Contract(){}
 
 
-
 	public Contract(int contract_no, int user_no, int pet_no, int pet_service_regno, Date contract_date,
-			Date contract_start, Date contract_end, String contract_status, int contract_star) {
+			Date contract_start, Date contract_end, String contract_status, int contract_star, String userAddress,
+			String userPhone) {
 		super();
 		this.contract_no = contract_no;
 		this.user_no = user_no;
@@ -31,8 +32,9 @@ public class Contract implements java.io.Serializable {
 		this.contract_end = contract_end;
 		this.contract_status = contract_status;
 		this.contract_star = contract_star;
+		this.userAddress = userAddress;
+		this.userPhone = userPhone;
 	}
-
 
 
 	public int getContract_no() {
@@ -40,11 +42,9 @@ public class Contract implements java.io.Serializable {
 	}
 
 
-
 	public int getUser_no() {
 		return user_no;
 	}
-
 
 
 	public int getPet_no() {
@@ -52,11 +52,9 @@ public class Contract implements java.io.Serializable {
 	}
 
 
-
 	public int getPet_service_regno() {
 		return pet_service_regno;
 	}
-
 
 
 	public Date getContract_date() {
@@ -64,11 +62,9 @@ public class Contract implements java.io.Serializable {
 	}
 
 
-
 	public Date getContract_start() {
 		return contract_start;
 	}
-
 
 
 	public Date getContract_end() {
@@ -76,11 +72,9 @@ public class Contract implements java.io.Serializable {
 	}
 
 
-
 	public String getContract_status() {
 		return contract_status;
 	}
-
 
 
 	public int getContract_star() {
@@ -88,11 +82,19 @@ public class Contract implements java.io.Serializable {
 	}
 
 
+	public String getUserAddress() {
+		return userAddress;
+	}
+
+
+	public String getUserPhone() {
+		return userPhone;
+	}
+
 
 	public void setContract_no(int contract_no) {
 		this.contract_no = contract_no;
 	}
-
 
 
 	public void setUser_no(int user_no) {
@@ -100,11 +102,9 @@ public class Contract implements java.io.Serializable {
 	}
 
 
-
 	public void setPet_no(int pet_no) {
 		this.pet_no = pet_no;
 	}
-
 
 
 	public void setPet_service_regno(int pet_service_regno) {
@@ -112,11 +112,9 @@ public class Contract implements java.io.Serializable {
 	}
 
 
-
 	public void setContract_date(Date contract_date) {
 		this.contract_date = contract_date;
 	}
-
 
 
 	public void setContract_start(Date contract_start) {
@@ -124,11 +122,9 @@ public class Contract implements java.io.Serializable {
 	}
 
 
-
 	public void setContract_end(Date contract_end) {
 		this.contract_end = contract_end;
 	}
-
 
 
 	public void setContract_status(String contract_status) {
@@ -136,11 +132,19 @@ public class Contract implements java.io.Serializable {
 	}
 
 
-
 	public void setContract_star(int contract_star) {
 		this.contract_star = contract_star;
 	}
 
+
+	public void setUserAddress(String userAddress) {
+		this.userAddress = userAddress;
+	}
+
+
+	public void setUserPhone(String userPhone) {
+		this.userPhone = userPhone;
+	}
 
 
 	@Override
@@ -148,8 +152,11 @@ public class Contract implements java.io.Serializable {
 		return "Contract [contract_no=" + contract_no + ", user_no=" + user_no + ", pet_no=" + pet_no
 				+ ", pet_service_regno=" + pet_service_regno + ", contract_date=" + contract_date + ", contract_start="
 				+ contract_start + ", contract_end=" + contract_end + ", contract_status=" + contract_status
-				+ ", contract_star=" + contract_star + "]";
+				+ ", contract_star=" + contract_star + ", userAddress=" + userAddress + ", userPhone=" + userPhone
+				+ "]";
 	}
+	
+	
 
 
 

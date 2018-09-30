@@ -164,8 +164,7 @@ a:hover {
 		</div>
 		<br /> <br /> <br /> <br /> <br />
 
-		<form name="form1" action="<%=request.getContextPath()%>/insertCtr.ct"
-			method="post">
+		
 			
 			
 			<br/>
@@ -183,15 +182,13 @@ a:hover {
 					<br />
 					
 				</div>
-				<br />
+		
 				
 				
-				<div class="div1 div5">
-				<br />
-				<br />
+			
 				
 				
-				
+		<%-- 		
 					<div class=phone>
 					&nbsp;&nbsp;&nbsp;<label>예약 전 휴대폰 인증을 진행합니다.</label>
 										 <%String name = (int)(Math.random()*(999999-100000+1))+100000+""; %>
@@ -221,13 +218,9 @@ a:hover {
 										
 										</form>
 									</div>
-									
-				</div>
-				<br>
-					
+									 --%>
 			
-			
-				<br />
+		<br><br>
 				<div class="div2">
 				
 				<br />
@@ -238,7 +231,9 @@ a:hover {
 			
 				
 					<br />
-					<form name="form1" class="rsvinfo" action="<%=request.getContextPath()%>/insertCtr.ct" method="post">
+					<form name="form1" action="<%=request.getContextPath()%>/insertCtr.ct" method="post">
+
+					
 					<h4>&nbsp;&nbsp;선택하신 펫시터입니다.</h4>
 					<table style="display: inline-block">
 						<tr>
@@ -265,14 +260,14 @@ a:hover {
 					<br />
 					<h4>&nbsp;&nbsp;1.지역을 알려주세요</h4>
 					<br /> 
-					<input type="text" id="sample6_postcode" name="zipNo" placeholder="우편번호">
-					<input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기">
+					&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" id="sample6_postcode" name="zipNo" placeholder="우편번호">
+					&nbsp;&nbsp;&nbsp;&nbsp;<input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기">
 					<br> 
-						<input type="text" id="sample6_address" name="useraddress1" placeholder="주소"> 
-						<input type="text" id="sample6_address2" name="useraddress2" placeholder="상세주소">
+						&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" id="sample6_address" name="useraddress1" placeholder="주소"> 
+						&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" id="sample6_address2" name="useraddress2" placeholder="상세주소">
 
 
-					&nbsp;&nbsp;&nbsp;<input type="checkbox" /> &nbsp;&nbsp;기본주소로 설정하기
+				<!-- 	&nbsp;&nbsp;&nbsp;<input type="checkbox" /> &nbsp;&nbsp;기본주소로 설정하기 -->
 					<br /> <br /> <br />
 				</div>
 				
@@ -301,14 +296,14 @@ a:hover {
 				<div class="div1 div5">
 				<br />
 				<h4>&nbsp;&nbsp;3.연락받을 휴대전화 번호를 알려주세요</h4>
-				&nbsp;&nbsp;&nbsp;&nbsp;<select name="phoneNum" id="phoneNum">
-					<option value="">010</option>
-					<option value="">011</option>
-					<option value="">017</option>
-					<option value="">016</option>
-					<option value="">019</option>
+				&nbsp;&nbsp;&nbsp;&nbsp;<select name="phoneNum1" id="phoneNum1">
+					<option value="010">010</option>
+					<option value="011">011</option>
+					<option value="017">017</option>
+					<option value="016">016</option>
+					<option value="019">019</option>
 				</select> &nbsp;&nbsp;&nbsp;&nbsp;
-				<input type="text" placeholder=" ' - , . / '를 제외한 나머지 번호 입력" style="width: 250px;" />&nbsp;&nbsp;
+				<input type="text" name="phoneNum2" placeholder=" ' - , . / '를 제외한 나머지 번호 입력" style="width: 250px;" />&nbsp;&nbsp;
 				<br /> 
 				<br /> <br />
 			    </div>
@@ -333,15 +328,15 @@ a:hover {
 				</fieldset>
 				
 					<input type="hidden" id="revLevel" name="revLevel" value="2">
-					<input type="hidden" id="no" name="no" value="<%= p.getPet_service_regno() %>">	
-					<input type="hidden" id="petUserno" name="petUserno" value="<%= p.getUser_no()%>">
-					<input type="hidden" id="petUsername" name="petUsername" value="<%=p.getUser_name()%>">	
-					<input type="hidden" id="ContractType" name="ContractType" value="<%=p.getContract_type()%>">
+					<input type="hidden" id="no" name="no" value="<%= p.getPet_service_regno() %>">
+					<input type="hidden" id="pet_category" name="pet_category" value="<%=p.getPet_category() %>">
+					
+
 					<br /> <br />
 				
 				<button class="btn btn-default" type="submit" id="submit">제출</button>
 				<button class="btn btn-default" type="reset" id="reset">취소</button>
-			</form>
+		</form>
 			</div>
 
 	
