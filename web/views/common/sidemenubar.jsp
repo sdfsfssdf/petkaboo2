@@ -116,7 +116,7 @@ ul.sub li:hover > ul.sub-sub{display:block;}
 							<div class="title">서비스 관리</div>
 							<ul class="sub">
 								<li><a onclick="rsv()">예약현황</a></li>
-								<li><a href="<%=request.getContextPath()%>/selectCyberMoneyHistory.cm">거래내역</a></li>
+								<li><a href="<%=request.getContextPath()%>/selectCyberMoneyHistory.pm">거래내역</a></li>
 								<li><a href="/pkb/views/myPage/onebyoneQNAWrite.jsp" >1:1 문의</a></li>
 								<li><a href="<%=request.getContextPath()%>/selectOnebyOneList.bo">내 질문 내역</a></li>
 							</ul>
