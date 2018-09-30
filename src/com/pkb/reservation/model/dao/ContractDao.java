@@ -10,9 +10,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Properties;
 
-import com.pkb.pet.model.vo.Pet;
+import com.pkb.member.model.vo.User;
 import com.pkb.petsitterService.model.vo.PetsitterService;
 import com.pkb.reservation.model.vo.Contract;
 
@@ -35,7 +36,7 @@ public class ContractDao {
 		}
 	}
 	
-	public int insertContractPetsitting(Connection con, Contract c, PetsitterService p) {
+	public int insertContractPetsitting(Connection con, Contract c) {
 		PreparedStatement pstmt = null;
 		int result = 0;
 		
@@ -45,7 +46,7 @@ public class ContractDao {
 			pstmt = con.prepareStatement(query);
 			
 			pstmt.setInt(1, c.getUser_no());
-			pstmt.setInt(2, p.getPet_service_regno());
+			pstmt.setInt(2, c.getPet_service_regno());
 			pstmt.setDate(3, c.getContract_start());
 			pstmt.setDate(4, c.getContract_end());
 			
@@ -63,51 +64,18 @@ public class ContractDao {
 		return result;
 	}
 
-	public Contract selectContractPetsitting(Connection con, Contract c, PetsitterService p) {
-		Contract c2 = null;
+	public int insertContractServiceHistory(Connection con, int contract_no) {
+		
 		PreparedStatement pstmt = null;
-		ResultSet rset = null;
-		PetsitterService p2 = null;
-
+		int result2 = 0;
 		
-		String query = prop.getProperty("selectContractPetsitting");
+		String query = prop.getProperty("insertContractServiceHistory");
 		
-		try {
-			pstmt = con.prepareStatement(query);
-			pstmt.setInt(1, c.getContract_no());
-	
-			
-			rset = pstmt.executeQuery();
-			
-			if(rset.next()){
-				c2 = new Contract();
-				
-				c2.setContract_no(rset.getInt("contract_no"));
-				c2.setUser_no(rset.getInt("user_no"));
-				c2.setPet_no(rset.getInt("pet_no"));
-				c2.setPet_service_regno(rset.getInt("pet_service_regno"));
-				c2.setContract_date(rset.getDate("contract_date"));
-				c2.setContract_start(rset.getDate("contract_start"));
-				c2.setContract_end(rset.getDate("contract_end"));
-				c2.setContract_status(rset.getString("contract_status"));
-				c2.setContract_star(rset.getInt("contrct_star"));
-				c2.setAddress(rset.getString("address"));
-				c2.setUser_name(rset.getString("user_name"));
-				
-			}
-			
-			
-		} catch (SQLException e) {
-			
-			e.printStackTrace();
-		} finally {
-			close(pstmt);
-			close(rset);
-			
-		}
+		pstmt = con.prepareStatement(query);
 		
 		
-		return c2;
+		
+		return 0;
 	}
 
 }

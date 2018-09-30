@@ -11,6 +11,20 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+
+
+
+<!-- 수정함 -->
+<script language = javascript>
+function btn_click(str){
+	if(str == "Reservation"){
+		form.action="<%=request.getContextPath()%>/selectRecPay.rp";
+	}else if(str == "Review"){
+	form.action="<%=request.getContextPath()%>/review.wr";
+	}
+}
+</script>
+<!-- 수정함 -->
 <title>Insert title here</title>
 
 <style>
@@ -82,7 +96,7 @@
 			<%
 			if( rsvList.size() != 0) {idx= i ;}%>
 		<!--  이거 테이블도 여러개지만 반복문으로 처리할 것... -->
-		<form action="<%=request.getContextPath()%>/review.wr" method="post">
+		<form name="form" method="post"> <!-- 수정함 -->
 		<input type="text" name="idx" id="idx" value="<%=i %>">
 		<input type="text" name="contractNo" value="<%=rsvList.get(i).getContract_no() %>">
 		<input type="text" name="petName" value="<%=rsvList.get(i).getPet_name() %>">
@@ -106,10 +120,15 @@
 				</tr>
 				<tr>
 					<td colspan="3"><button type="button" class="btn btn-warning<%=i %>" data-toggle="modal" data-target="#myModal">예약보기</button>
-					<button type="button" class="btn btn-success">바로예약</button>
-					<button type="submit" class="btn btn-info" >리뷰남기기</button></td>
+					
+					
+			<!-- 수정함 -->
+					<input type="hidden" name="contract_no" id="contract_no" value="<%=rsvList.get(i).getContract_no() %>">
+					<input type="hidden" name="user_no" id="user_no" value="<%=loginUser.getUser_no() %>">
+					<input type="submit" id = "goReserv" name = "goReserv" class="btn btn-success" value="바로예약" onclick='btn_click("Reservation")'>
+					<input type="submit" id = "goRev" name="goRev" class="btn btn-info" value="리뷰남기기" onclick='btn_click("Review")'></td>
 				</tr>
-				
+			<!-- 수정함 -->
 
 			</table>
 			</form>

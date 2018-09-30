@@ -1,9 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8" import="com.pkb.member.model.vo.*"%>
+	pageEncoding="UTF-8" import="com.pkb.member.model.vo.*, com.pkb.petsitterService.model.vo.*, com.pkb.payment.model.vo.*"%>
 <%
 	User user = (User)(session.getAttribute("loginUser"));
-	
+	Payment py = (Payment)request.getAttribute("py");
+/* 	PetsitterService p = (PetsitterService)request.getAttribute("p"); */
 %>
+
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -211,7 +213,7 @@ img {
 						<br>
 						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 						<label>보유 포인트 </label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						<input type="text" readonly>&nbsp;&nbsp;&nbsp;원&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<input type="text" value=<%=user.getMoney() %>readonly> &nbsp;&nbsp;&nbsp;원&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 							
 							<br>
 							<br>
