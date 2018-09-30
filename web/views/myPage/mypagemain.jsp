@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -270,7 +271,7 @@ th, td {
 					<div class="point">
 
 						<label>보유중인 포인트 </label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input
-							type="text" readonly>&nbsp;&nbsp;&nbsp;원&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							type="text" value="<%=loginUser.getMoney() %>" readonly>&nbsp;&nbsp;&nbsp;원&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 							
 							<br>
 							<br>
@@ -299,7 +300,7 @@ th, td {
 
 					<br> <br>
 
-					<div class="notice">
+					<!-- <div class="notice">
 						<span class="noticespan">공지사항</span> <br> <br> <br>
 						<form action="">
 							<table align="center" class="noticetable">
@@ -320,7 +321,7 @@ th, td {
 								</tr>
 							</table>
 						</form>
-					</div>
+					</div> -->
 				</div>
 
 
@@ -329,62 +330,24 @@ th, td {
 				
 					<div class="container">
 
-
-						<ul class="nav nav-tabs">
-							<li class="active"><a data-toggle="tab" href="#recharge" style="font-weight:bold">충전내역</a></li>
-							<li><a data-toggle="tab" href="#use" style="font-weight:bold">사용내역</a></li>
-
-						</ul>
-
+						
 						<div class="tab-content">
-							<div id="recharge" class="tab-pane fade in active">
-								<div class="recharge1-1">
 									<br>
 
-
-									<form class="lookup1">
-										<span>조회기간</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type="radio"
-											name="lookup" value="today" checked>오늘&nbsp;&nbsp;&nbsp;&nbsp;
-										<input type="radio" name="lookup" value="week">일주일&nbsp;&nbsp;&nbsp;&nbsp;
-										<input type="radio" name="lookup" value="month">1개월&nbsp;&nbsp;&nbsp;&nbsp;
-										<input type="radio" name="lookup" value="allterm">전체&nbsp;&nbsp;&nbsp;&nbsp;
-									</form>
-								</div>
+									<form class="lookup1" action="<%=request.getContextPath()%>/selectCyberMoneyHistory.pm">
+										<span>조회기간</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+										<input type="radio" name="pay_date" value="today" checked>오늘&nbsp;&nbsp;&nbsp;&nbsp;
+										<input type="radio" name="pay_date" value="week">일주일&nbsp;&nbsp;&nbsp;&nbsp;
+										<input type="radio" name="pay_date" value="month">1개월&nbsp;&nbsp;&nbsp;&nbsp;
+										<input type="radio" name="pay_date" value="allterm">전체&nbsp;&nbsp;&nbsp;&nbsp;
+										<button type="submit">검색하기</button>
 								<br>
-								<div class="recharge1-2">
 
-									<form class="lookup1">
-										<span>조회내용</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type="radio"
-											name="lookup" value="allcont" checked>전체&nbsp;&nbsp;&nbsp;&nbsp;
-										<input type="radio" name="lookup" value="rechargecont">충전내역만&nbsp;&nbsp;&nbsp;&nbsp;
-										<input type="radio" name="lookup" value="usecont">사용내역만&nbsp;&nbsp;&nbsp;&nbsp;
+										<span>조회내용</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+										<input type="radio" name="pay_method" value="allcont" checked>전체&nbsp;&nbsp;&nbsp;&nbsp;
+										<input type="radio" name="pay_method" value="rechargecont">충전내역만&nbsp;&nbsp;&nbsp;&nbsp;
+										<input type="radio" name="pay_method" value="usecont">사용내역만&nbsp;&nbsp;&nbsp;&nbsp;
 									</form>
-								</div>
-							</div>
-
-							<div id="use" class="tab-pane fade">
-
-								<div class="use1-1">
-									<br>
-									<form class="lookup2">
-										<span>조회기간</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type="radio"
-											name="lookup" value="today" checked>오늘&nbsp;&nbsp;&nbsp;&nbsp;
-										<input type="radio" name="lookup" value="week">일주일&nbsp;&nbsp;&nbsp;&nbsp;
-										<input type="radio" name="lookup" value="month">1개월&nbsp;&nbsp;&nbsp;&nbsp;
-										<input type="radio" name="lookup" value="allterm">전체&nbsp;&nbsp;&nbsp;&nbsp;
-									</form>
-								</div>
-								<div class="use1-2">
-									<br>
-									<form class="lookup2">
-										<span>조회내용</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type="radio"
-											name="lookup" value="allcont" checked>전체&nbsp;&nbsp;&nbsp;&nbsp;
-										<input type="radio" name="lookup" value="rechargecont">충전내역만&nbsp;&nbsp;&nbsp;&nbsp;
-										<input type="radio" name="lookup" value="usecont">사용내역만&nbsp;&nbsp;&nbsp;&nbsp;
-									</form>
-								</div>
-
-							</div>
 
 						</div>
 
