@@ -257,16 +257,9 @@ padding:20px;
 							</div>
 						</div>
 						<div id="fileArea">
-							<input type="file" id="imgInp" name="licenseImg" multiple="multiple" accept=".jpg,.gif,.png"  onchange="loadImg(this,1)">
+							<input type="file" style="margin-left:500px"id="imgInp" name="licenseImg" multiple="multiple" accept=".jpg,.gif,.png"  onchange="loadImg(this,1)">
 						</div>
-						<div class=submitandcancle>
-							<button type="submit"
-								style="font-weight: lighter">등록하기</button>
-							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-							<button  id="cancel" onclick="#"
-								style="font-weight: lighter">취소하기</button>
-						</div>
-
+					<br>
 					<div class=submitandcancle>
 						<button type="submit" id="submit" onclick="#"
 							style="font-weight: lighter">등록하기</button>

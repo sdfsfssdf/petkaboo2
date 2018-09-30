@@ -302,7 +302,7 @@ margin-top:20px;
 							</div>
 							
 							<div class=modanddelete>
-								<input type="file" id="imgInp" name="profile" onchange="loadImg()" style="font-weight:lighter">사진변경</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<!-- <button id="delete" style="font-weight:lighter">삭제</button> -->
+								<input type="file" id="imgInp" name="profile"  onchange="loadImg()" style="font-weight:lighter; margin-left:300px"></button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<!-- <button id="delete" style="font-weight:lighter">삭제</button> -->
 							</div>					
 							</td>
 						</tr>

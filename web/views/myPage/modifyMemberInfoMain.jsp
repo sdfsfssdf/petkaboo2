@@ -5,6 +5,7 @@
 <%@ page import="com.pkb.member.model.vo.User" %>
 <% 
 	String fileName = (String)request.getAttribute("fileName");
+	String acc = (String)request.getAttribute("acc");
 %>
 <!DOCTYPE html>
 <html>
@@ -331,14 +332,33 @@ a:hover, a:active, a:focus {
 										<% } %> readonly>
 								</div>
 								<div class=maddress>
-									<span style="text-align: left">주소 : </span>&nbsp;<input
+									<span style="text-align: left">주소  </span>&nbsp;<input
+										type="text" name="nimknamespann" size="80" maxlength="100"
+										style="width: 400px; color: black; margin: 0; padding: 0; height: 35px; border-width: 0; background-color: #eee;"	
+										<% if(loginUser != null){
+											String[] fullAdd = null;
+											String address = "주소를 입력해 주세요";
+											String zipcode = "우편번호를 수정해 주세요";
+											
+											if(loginUser.getAddress().contains("^")){
+												fullAdd = loginUser.getAddress().split("\\^");
+												address = fullAdd[0];
+												zipcode = fullAdd[1];
+											}
+										%>
+										value="<%=address%>"
+										>
+										<%} %>
+								</div>
+								<div class=macc>
+									<span style="text-align: left">계좌  </span>&nbsp;<input
 										type="text" name="nimknamespann" size="80" maxlength="60"
 										style="width: 350px; color: black; margin: 0; padding: 0; height: 35px; border-width: 0; background-color: #eee;"	
 										<% if(loginUser != null){%>
-											value="<%=loginUser.getAddress()%>"
+											value="<%=loginUser.getAccount_no()%> <%=loginUser.getBank_name()%>"
 										<% } %>	 readonly>
 								</div>
-
+				
 
 							</div>
 							<!-- 수정버튼 -->
@@ -385,7 +405,11 @@ a:hover, a:active, a:focus {
 									<a href="#">휴대폰 인증하기</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input
 										type="text" name="phone" size="80" maxlength="60"
 										style="width: 300px; color: black; margin: 0; padding: 0; height: 35px; border-width: 0; background-color: #eee;"
-										value="미인증" readonly="">
+										value=<%if(loginUser.getPhone()!=null){%>
+										"인증"<%}else{%>
+										"미인증"
+										<%}%>
+										 readonly="">
 								</div>
 							</div>
 	

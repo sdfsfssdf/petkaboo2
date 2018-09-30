@@ -29,7 +29,7 @@ public class SendPwd extends HttpServlet{
 			throws ServletException, IOException{
 		// 사용자에게 보낼 메시지를 기입합니다.
 		String email = request.getParameter("email");
-		String newPwd = (String)request.getSession().getAttribute("newPwd");
+		String sendPwd = (String)request.getSession().getAttribute("sendPwd");
 		
 		String host = "http://localhost:8001/pkb";
 		
@@ -39,7 +39,7 @@ public class SendPwd extends HttpServlet{
 
 		String subject = "펫카부 임시 비밀번호 이메일입니다.";
 
-		String content = "펫카부 임시비밀번호 입니다. "+ newPwd + "  로그인 후 비밀번호를 바꿔주세요"+
+		String content = "펫카부 임시비밀번호 입니다. "+ sendPwd + "  로그인 후 비밀번호를 바꿔주세요"+
 				"<a href='" + host + "/views/common/login.jsp'>로그인하러가기</a>";
 							
 		System.out.println("들어옴?");
