@@ -1,7 +1,9 @@
 package com.pkb.payment.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -63,6 +65,7 @@ public class InsertRechargeServlet extends HttpServlet {
 		py.setPay_amount(pay_amount);			//충전금액
 		py.setPayment_type(payment_type);		//결제구분
 		py.setCard_apply_no(apply_no);			//카드승인 번호
+		py.setImp_uid(imp_uid);					//아임포트 고유번호
 		
 		System.out.println("py객체 들어왔어? : " + py);
 		
@@ -71,10 +74,27 @@ public class InsertRechargeServlet extends HttpServlet {
 		String page = "";
 		
 		if(result > 0){
-		
-			
+			//보유한 금액이 증가한 후에 액션을 어떻게.. alert창 띄운 후에 select?겠지?? 이부분 물어볼 것 !!
+
+			PrintWriter out = response.getWriter();
+
+			out.println("<script>");
+
+			out.println("alert('충전이 완료되었습니다'); location.href='/selectRecPay.rp';");
+
+
+			out.println("</script>");
+	
+			//response.sendRedirect(request.getContextPath()+ "/selectRecharge.rc");
+				
+		}else{
+			request.setAttribute("msg", "충전 실패!");
+			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
 			
 		}
+		
+		RequestDispatcher view = request.getRequestDispatcher(page);
+		view.forward(request, response);
 	}
 	
 

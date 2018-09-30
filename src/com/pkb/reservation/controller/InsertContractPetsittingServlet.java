@@ -2,6 +2,7 @@ package com.pkb.reservation.controller;
 
 import java.io.IOException;
 import java.sql.Date;
+import java.util.HashMap;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -65,9 +66,9 @@ public class InsertContractPetsittingServlet extends HttpServlet {
 			page ="views/searchPetsitter/petSittingRsvApply.jsp";	
 			request.setAttribute("p", p);		
 			
-			}else if(revLevel == 2){
+			}else if(revLevel == 2){ //예약!
 				//입력한 계약 타입
-				
+				System.out.println("예약 들어감");
 				//입력한 주소
 				String zipNo = request.getParameter("zipNo");
 				String address1 = request.getParameter("useraddress1");
@@ -85,61 +86,44 @@ public class InsertContractPetsittingServlet extends HttpServlet {
 				String phone1 = request.getParameter("phoneNum1");
 				String phone2 = request.getParameter("phoneNum2");
 				String totalPhone = phone1 + "-" + phone2;
+				System.out.println(totalPhone);
 				
 				//로그인 유저 세션
 				HttpSession session = request.getSession();
 				User loginUser = (User)session.getAttribute("loginUser");
-				String user_no = String.valueOf(loginUser.getUser_no());
-				
-				
-				
-				System.out.println(totalAddress);
-				System.out.println(contract_start);
-				System.out.println(contract_end);
-				System.out.println(totalPhone);
+				String user_no2 = String.valueOf(loginUser.getUser_no());
+				int user_no = 0;
+				user_no = Integer.parseInt(user_no2);
 				
 				Contract c = new Contract();
 				
-				
-				c.setAddress(totalAddress);
+				c.setUser_no(user_no);
+				c.setPet_service_regno(servno);
 				c.setContract_start(contract_start);
 				c.setContract_end(contract_end);
-				c.setPhone(totalPhone);
-				c.setUser_no(Integer.parseInt(user_no));
+				c.setUserPhone(totalPhone);
+				c.setUserAddress(totalAddress);
+				System.out.println("c객체 잘 잇어? : " + c);
 				
-				System.out.println("c객체 잘담았나 : " + c);
-				
-				int result = new ContractService().insertContractPetsitting(c, p);
-				
-			
-				if(result > 0){
-					/*response.sendRedirect(request.getContextPath() + "/selectCtrPetsitting.ct");*/
+				int result = new ContractService().insertContractPetsitting(c);
 					
-					System.out.println("c객체 잘 잇어? : " + c);
-					Contract c2 = new ContractService().selectContractPetsitting(c);
+				System.out.println("여기 왔다");
+				if(result > 0){	
 					
+					page = "views/status/RsvStatement.jsp";
+					response.sendRedirect(request.getContextPath() + "/selectCtrPetsitting.ct");
 					
 				}else{
 					request.setAttribute("msg", "예약 실패");
 					request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
 				}
 			
-			}else{
-			page = "views/common/errorPage.jsp";
-			request.setAttribute("msg", "펫시터 상세 정보 조회 실패");
-		}
-		
-		RequestDispatcher view = request.getRequestDispatcher(page);
-		view.forward(request, response);
+			}
+			RequestDispatcher view = request.getRequestDispatcher(page);
+			view.forward(request, response);
 	}
 		
 }	
-		
-		//불러올 펫시터 정보
-		/*String petUser_name = request.getParameter("petUser_name");
-		String petUser_address = request.getParameter("petUser_address");*/
-		
-		
 		
 		
 
