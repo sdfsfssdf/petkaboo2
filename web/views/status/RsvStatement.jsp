@@ -1,5 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8" import="com.pkb.petsitterService.model.vo.*, com.pkb.reservation.model.vo.*"%>
+	
+		<% 
+   PetsitterService p = (PetsitterService)request.getAttribute("p");
+   Contract c = (Contract)request.getAttribute("c");
+%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -63,10 +68,10 @@
 
 .PSid {
 	width: 90%;
-	height: 150px;
+	height: 250px;
 	background: lightgray;
 	display: inline-block;
-	margin-top: 20px;
+	margin-top: 50px;
 	margin-left: 5%;
 	margin-right: 5%;
 	border-radius:20px;
@@ -112,6 +117,7 @@ img{
 		<div class="body">
 			<br />
 			<br />
+			
 			<h4></h4>
 			<div class="status-icon">
 				<img class="icon"
@@ -130,53 +136,63 @@ img{
 			<br />
 			<div class="RsvStatement">
 				<div class="PSid">
-					
-					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label>펫시터 정보</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img width="140px" height="140px" border-radius="100px" display="inline-block" src="https://scontent.cdninstagram.com/vp/d432a9c5818f68d1dcfd3860935145f2/5BDCF333/t51.2885-15/sh0.08/e35/p640x640/34982645_1703252956454507_5788207006821122048_n.jpg" alt="" />
-					<label>&nbsp;&nbsp;&nbsp;&nbsp;이름 : </label><input
-									type="text" name="petUser_name" size='18'
-									style="background-color: transparent; border-style: none;"
-									readonly onfocus="this.blur();">
-					<label>&nbsp;&nbsp;&nbsp;&nbsp;주소 : </label><input type="text" name="petUser_address" size='30'
-								style="background-color: transparent; border-style: none;"
-								readonly onfocus="this.blur();">
+						<br>
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label>펫시터 정보</label><br><div style="float:left; margin-left:15px "><img width="180px" height="180px" border-radius="100px" display="inline-block" src="https://scontent.cdninstagram.com/vp/d432a9c5818f68d1dcfd3860935145f2/5BDCF333/t51.2885-15/sh0.08/e35/p640x640/34982645_1703252956454507_5788207006821122048_n.jpg" alt="" /></div>
+						&nbsp;&nbsp;<label>&nbsp;&nbsp;닉네임&nbsp;&nbsp;:&nbsp;&nbsp;<%=c.getPetNickname() %><br><br><br>&nbsp;&nbsp;주소&nbsp;&nbsp;:&nbsp;&nbsp;<%
+					String addressSplit = c.getPetAddress();
+					String address;
+					int index = addressSplit.indexOf("^");
+					address = addressSplit.substring(0, index);
+				
+					%> <%=address %><br><br><br>&nbsp;&nbsp;연락처&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;&nbsp;<%=c.getPetPhone() %></label>
+					<br>
+					<label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+								<label>&nbsp;&nbsp;&nbsp;&nbsp;</label>
+								<br />
+				<br />
+				<br />
 				</div>
-				<br />
-				<br />
-
+			
 				
 				<div class="RsvDetailed">
 					<br />
 					<br />
 					<br />
-					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label>&nbsp;&nbsp;&nbsp;&nbsp;예약신청일 : </label><input
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label>&nbsp;&nbsp;&nbsp;&nbsp;예약신청일 &nbsp;&nbsp;:&nbsp;&nbsp;<%=c.getContract_date() %></label><input
 									type="text" name="contract_date" size='18'
 									style="background-color: transparent; border-style: none;"
 									readonly onfocus="this.blur();">
 					<br />
 					<br />
 					<br />
-					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label>&nbsp;&nbsp;&nbsp;&nbsp;주소 : </label><input
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label>&nbsp;&nbsp;&nbsp;&nbsp;주소&nbsp;&nbsp;:&nbsp;&nbsp;<%
+					String addressSplit2 = c.getUserAddress();
+					String address2;
+					int index2 = addressSplit.indexOf("^");
+					address2 = addressSplit.substring(0, index);
+				
+					%><%=address2 %> </label><input
 									type="text" name="useraddress" size='18'
 									style="background-color: transparent; border-style: none;"
 									readonly onfocus="this.blur();">
 					<br />
 					<br />
 					<br />
-					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label>&nbsp;&nbsp;&nbsp;&nbsp;펫시팅 시작일 : </label><input
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label>&nbsp;&nbsp;&nbsp;&nbsp;펫시팅 시작일&nbsp;&nbsp;:&nbsp;&nbsp;<%=c.getContract_start() %></label><input
 									type="text" name="contract_start" size='18'
 									style="background-color: transparent; border-style: none;"
 									readonly onfocus="this.blur();">
 					<br />
 					<br />
 					<br />
-					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label>&nbsp;&nbsp;&nbsp;&nbsp;펫시팅 종료일 : </label><input
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label>&nbsp;&nbsp;&nbsp;&nbsp;펫시팅 종료일&nbsp;&nbsp;:&nbsp;&nbsp;<%=c.getContract_end() %></label><input
 									type="text" name="contract_end" size='18'
 									style="background-color: transparent; border-style: none;"
 									readonly onfocus="this.blur();">
 					<br />
 					<br />
 					<br />
-					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label>&nbsp;&nbsp;&nbsp;&nbsp;신청자 : </label><input
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label>&nbsp;&nbsp;&nbsp;&nbsp;신청자&nbsp;&nbsp;:&nbsp;&nbsp;<%=c.getUserName() %></label><input
 									type="text" name="user_name" size='18'
 									style="background-color: transparent; border-style: none;"
 									readonly onfocus="this.blur();">

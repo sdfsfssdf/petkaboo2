@@ -2,18 +2,21 @@
 package com.pkb.payment.model.service;
 
 
+import static com.pkb.common.JDBCTemplate.close;
+import static com.pkb.common.JDBCTemplate.commit;
+import static com.pkb.common.JDBCTemplate.getConnection;
+import static com.pkb.common.JDBCTemplate.rollback;
+
 import java.sql.Connection;
-
-import com.pkb.payment.model.dao.PaymentDao;
-import com.pkb.payment.model.vo.Payment;
-
-import static com.pkb.common.JDBCTemplate.*;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 
-
+import com.pkb.payment.model.dao.PaymentDao;
+import com.pkb.payment.model.dao.PaymentDao2;
+import com.pkb.payment.model.vo.CyberMoney;
 import com.pkb.payment.model.vo.PayHistory;
+import com.pkb.payment.model.vo.Payment;
+import com.pkb.payment.model.vo.PaymentInfo;
 
 public class PaymentService {
 
@@ -75,17 +78,7 @@ public class PaymentService {
       return result3; //*??
    }
 
-public HashMap<String, Object> selectRecPay(int contract_no, int user_no) {
-   Connection con = getConnection();
-   
-   HashMap<String, Object> rp = new PaymentDao().selectRecPay(contract_no, user_no, con);
-   if(rp != null){
-      
-      
-   }
-   
-   return rp;
-}
+
   
   public ArrayList<Payment> selectListInquiry(Payment payment) {
       Connection con = getConnection();
@@ -97,5 +90,27 @@ public HashMap<String, Object> selectRecPay(int contract_no, int user_no) {
       
       return inquiry;
    }
+
+
+
+public CyberMoney searchCyberMoney(int user_no) {
+	Connection con = getConnection();
+	
+	CyberMoney cm = new PaymentDao().searchCyberMoney(con, user_no);
+	
+	close(con);
+	
+	return cm;
+}
+
+public PaymentInfo searchRecPayInfo(int contract_no, int user_no) {
+	Connection con = getConnection();
+	
+	PaymentInfo pi = new PaymentDao().searchRecPayInfo(con, contract_no, user_no);
+	
+	close(con);
+	
+	return pi;
+}
   
 }

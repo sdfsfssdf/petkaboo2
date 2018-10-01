@@ -1,8 +1,8 @@
 package com.pkb.payment.controller;
 
 import java.io.IOException;
-import java.util.HashMap;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -12,18 +12,19 @@ import javax.servlet.http.HttpSession;
 
 import com.pkb.member.model.vo.User;
 import com.pkb.payment.model.service.PaymentService;
+import com.pkb.payment.model.vo.PaymentInfo;
 
 /**
  * Servlet implementation class SelectRecPayServlet
  */
-@WebServlet("/selectRecPay.rp")
-public class SelectRecPayServlet extends HttpServlet {
+@WebServlet("/searchRecPayInfo.py")
+public class SearchRecPayInfoServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public SelectRecPayServlet() {
+    public SearchRecPayInfoServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,6 +33,7 @@ public class SelectRecPayServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
 		String contract_no2 = request.getParameter("contract_no");
 		int contract_no = Integer.parseInt(contract_no2);
 		HttpSession session = request.getSession();
@@ -39,8 +41,21 @@ public class SelectRecPayServlet extends HttpServlet {
 		
 		System.out.println(contract_no + "랑" + user_no + "들어옴");
 		
-	
-		HashMap<String, Object> rp = new PaymentService().selectRecPay(contract_no, user_no);
+		PaymentInfo pi = new PaymentService().searchRecPayInfo(contract_no, user_no);
+		
+		String page="";
+		if(pi != null){
+			page = "views/status/requestPayment.jsp";
+			request.setAttribute("pi", pi);
+			
+		}else{
+			page = "views/common/errorPage.jsp";
+			request.setAttribute("msg", "조회실패");
+			
+		}
+		
+		RequestDispatcher view = request.getRequestDispatcher(page);
+		view.forward(request, response);
 	}
 
 	/**
