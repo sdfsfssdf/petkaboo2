@@ -1,6 +1,5 @@
 package com.pkb.petsitterService.model.vo;
 
-import java.sql.Connection;
 import java.sql.Date;
 
 public class PetsitterService {

@@ -73,8 +73,10 @@
     			<label><b>정렬: </b></label>
     			<input type ="radio" name="arrayCondition" value="priceAsc"><label for = "priceAsc">가격 높은 순</label>
     			<input type ="radio" name="arrayCondition" value="priceDesc"><label for = "priceDesc">가격 낮은 순</label>
+    			<!--
     			<input type ="radio" name="arrayCondition" value="distAsc"><label for = "distAsc">거리 가까운 순</label>
     			<input type ="radio" name="arrayCondition" value="distDesc"><label for = "distDesc">거리 먼 순</label>
+				 -->
 			</td>
 		</tr>
 	</table>
