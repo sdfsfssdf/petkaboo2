@@ -368,9 +368,18 @@ public class PaymentDao {
 				} else {
 					sb.append("AND PAY_METHOD = 'C' ");
 				}
+			} else if ( division.equals("wait")){
+				if (sb == null) {
+					sb = new StringBuilder();
+					sb.append("WHERE PAY_METHOD = 'F' ");
+				} else {
+					sb.append("AND PAY_METHOD = 'F' ");
+				}
 			}
 			if(sb !=null){
-				query = query + sb.toString();
+				query = query + sb.toString()+" ORDER BY P.PAY_DATE DESC";
+			} else {
+				query = query + " ORDER BY P.PAY_DATE DESC";
 			}
 			System.out.println(query);
 			rs = stmt.executeQuery(query);
@@ -538,12 +547,19 @@ public class PaymentDao {
 				} else {
 					sb.append("AND PAY_METHOD = 'C' ");
 				}
+			}else if ( division.equals("wait")){
+				if (sb == null) {
+					sb = new StringBuilder();
+					sb.append("WHERE PAY_METHOD = 'F' ");
+				} else {
+					sb.append("AND PAY_METHOD = 'F' ");
+				}
 			}
 			
 			if(sb !=null){
-				query = query + sb.toString() + " )) WHERE RNUM BETWEEN "+startRow + " AND " + endRow;
+				query = query + sb.toString() + " ORDER BY P.PAY_DATE DESC)) WHERE RNUM BETWEEN "+startRow + " AND " + endRow;
 			} else {
-				query = query + " )) WHERE RNUM BETWEEN "+startRow + " AND " + endRow;
+				query = query + " ORDER BY P.PAY_DATE DESC)) WHERE RNUM BETWEEN "+startRow + " AND " + endRow;
 			}
 
 			System.out.println(query);

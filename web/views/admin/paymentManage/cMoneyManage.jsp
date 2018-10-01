@@ -5,7 +5,7 @@
 	HashMap<String, Object> totalInfo = (HashMap<String,Object>)request.getAttribute("totalInfo");
 	HashMap<String,Integer> todayInfo = (HashMap<String,Integer>)totalInfo.get("todayInfo");
 	ArrayList<Payment> plist = (ArrayList<Payment>)totalInfo.get("plist");
-	ArrayList<HashMap<String,String>> ilist = (ArrayList<HashMap<String.String>>)totalInfo.get("incomeList");
+	ArrayList<HashMap<String,String>> ilist = (ArrayList<HashMap<String,String>>)totalInfo.get("incomeList");
 	Paging pg = (Paging) request.getAttribute("pg");
 	int listCount = pg.getListCount();
 	int currentPage = pg.getCurrentPage();
@@ -53,13 +53,14 @@
 	}
 	
 	.leftWrapArea{
-      height:1100px !important;      
+      height:1250px !important;      
 }
 </style>
 </head>
 <body>
 	<%@include file="../main/header.jsp" %>
 	<%@include file="leftMenu.jsp" %>
+	<% int totalIncom = 0; %>
 	<div class="outer">
 	<div class="first-row">
 	<div class="table1">
@@ -95,10 +96,31 @@
 							<td><%=ilist.get(0).get("count") %></td>
 							<td><%=ilist.get(0).get("totalIncome") %></td>
 							<td><%=ilist.get(0).get("rate") %>%</td>
-							<td><%=(Integer.parseDouble(ilist.get(0).get("totalIncome"))*(Integer.parseInt(ilist.get(0).get("rate"))%></td>
+							<td><%=((Double.parseDouble(ilist.get(0).get("totalIncome")))*(Double.parseDouble(ilist.get(0).get("rate")) * 0.01))%></td>
+							<% totalIncom += ((Double.parseDouble(ilist.get(0).get("totalIncome")))*(Double.parseDouble(ilist.get(0).get("rate")) * 0.01)); %>
 						</tr>
 					<%} else  {%>
-					
+						<tr align="center">
+							<td rowspan="<%=ilist.size()%>"><%=todayInfo.get("count") %></td>
+							<td rowspan="<%=ilist.size()%>"><%=todayInfo.get("totalAmout") %></td>
+							<td><%=ilist.get(0).get("category")%></td>
+							<td><%=ilist.get(0).get("count") %></td>
+							<td><%=ilist.get(0).get("totalIncome") %></td>
+							<td><%=ilist.get(0).get("rate") %>%</td>
+							<td><%=((Double.parseDouble(ilist.get(0).get("totalIncome")))*(Double.parseDouble(ilist.get(0).get("rate")) * 0.01))%></td>
+							<% totalIncom += ((Double.parseDouble(ilist.get(0).get("totalIncome")))*(Double.parseDouble(ilist.get(0).get("rate")) * 0.01)); %>
+						</tr>
+						
+						<%for ( int i = 1 ; i < ilist.size(); i ++) {%>
+							<tr align="center">
+								<td><%=ilist.get(i).get("category")%></td>
+								<td><%=ilist.get(i).get("count") %></td>
+								<td><%=ilist.get(i).get("totalIncome") %></td>
+								<td><%=ilist.get(i).get("rate") %>%</td>
+								<td><%=((Double.parseDouble(ilist.get(i).get("totalIncome")))*(Double.parseDouble(ilist.get(i).get("rate")) * 0.01))%></td>
+								<% totalIncom += ((Double.parseDouble(ilist.get(i).get("totalIncome")))*(Double.parseDouble(ilist.get(i).get("rate")) * 0.01)); %>
+							</tr>
+						<%} %>
 					<%} %>
 				<%} %>
 				
@@ -107,8 +129,9 @@
 					<td></td>
 					<td></td>
 					<td></td>
-					<td>합계 : </td>
-					<td>10000원</td>
+					<td></td>
+					<td>수입 합계 : </td>
+					<td><%=totalIncom%>원</td>
 				</tr>
 			</table>
 		</div>
@@ -130,6 +153,7 @@
 					<input type="radio" name="division" id="allDiv" value="all" checked><label for="allDiv">전체</label>&nbsp;&nbsp;&nbsp;&nbsp;
 					<input type="radio" name="division" id="use" value="use"><label for="use">사용 내역</label>&nbsp;&nbsp;&nbsp;&nbsp;
 					<input type="radio" name="division" id="cencel" value="cencel"><label for="cencel" >환불 내역</label>&nbsp;&nbsp;&nbsp;&nbsp;
+					<input type="radio" name="division" id="wait" value="wait"><label for="wait" >환불대기 내역</label>&nbsp;&nbsp;&nbsp;&nbsp;
 					<input type="radio" name="division" id="reCharge" value="reCharge"><label for="reCharge">충전 내역</label>&nbsp;&nbsp;&nbsp;&nbsp;
 			<button style="float:right; margin-right:20px;">검색하기</button>
 		</div>
@@ -169,8 +193,10 @@
 							<div style="background:green; color:white ; border-radius:20px; width:80%">충전</div></td>
 						<%} else if (plist.get(i).getPay_method().equals("U")){ %>
 							<td> <div style="background:gray; color:white ; border-radius:20px; width:80%">사용</div></td>	
-						<%} else { %>
+						<%} else if (plist.get(i).getPay_method().equals("R")){ %>
 							<td><div style="background:red; color:white ; border-radius:20px; width:80%">환불</div></td>
+						<%} else {%>
+							<td><div style="background:orange; color:white ; border-radius:20px; width:80%">환불대기</div></td>
 						<%} %>
 					
 				</tr>

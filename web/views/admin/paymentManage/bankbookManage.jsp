@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<!DOCTYPE html>
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <script
@@ -62,11 +62,11 @@
 	<div class="outer">
 		<div class="first-row">
 			<div class="table1">
-				<h2>환불/출금요청 관리</h2>
-				<p>환불/출금 요청 정보를 확인할 수 있습니다.</p>
+				<h2>무통장 입금 관리</h2>
+				<p>무통장 입금 신청 내역 확인과 입금완료 처리가 가능합니다.</p>
 				<hr>
 				<div style="display: inline-block; width: 47%; height: 300px; overflow: auto">
-					<h4 style="display:inline-block">오늘 환불 요청  : 0 건</h4>
+					<h4 style="display:inline-block">오늘   : 0 건</h4>
 					<table  class="table table-hover">
 						<tr class="head">
 							<th width="10%">번호</th>
@@ -100,16 +100,3 @@
 	</div>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
