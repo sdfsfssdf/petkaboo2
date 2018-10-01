@@ -36,10 +36,6 @@ public class SearchPaymentListServlet extends HttpServlet {
 		String method = request.getParameter("method");
 		String division = request.getParameter("division");
 		
-		System.out.println(date);
-		System.out.println(method);
-		System.out.println(division);
-		
 		Paging pg = new Paging(1, 10);
 
 		if (request.getParameter("currentPage") != null) {

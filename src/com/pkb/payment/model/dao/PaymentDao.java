@@ -308,13 +308,13 @@ public class PaymentDao {
 	}
 
 	public int getSearchListCount(Connection con, String date, String method, String division) {
-		PreparedStatement pstmt = null;
+		Statement stmt = null;
 		ResultSet rs = null;
 		String query = prop.getProperty("getSearchListCount");
 		int count = 0;
 		StringBuilder sb = null;
 		try {
-			pstmt = con.prepareStatement(query);
+			stmt = con.createStatement();
 			if (!date.equals("all")) {
 				sb = new StringBuilder();
 				if (date.equals("today")) {
@@ -370,13 +370,11 @@ public class PaymentDao {
 				}
 			}
 			if(sb !=null){
-				System.out.println(sb.toString() + " 조건쓰");
-				pstmt.setString(1, sb.toString());
-			} else {
-				pstmt.setString(1, " ");
+				query = query + sb.toString();
 			}
-			rs = pstmt.executeQuery();
-
+			System.out.println(query);
+			rs = stmt.executeQuery(query);
+		
 			if (rs.next()) {
 				count = rs.getInt(1);
 			}
@@ -385,7 +383,7 @@ public class PaymentDao {
 			e.printStackTrace();
 		} finally {
 			close(rs);
-			close(pstmt);
+			close(stmt);
 		}
 		return count;
 	}
@@ -474,7 +472,7 @@ public class PaymentDao {
 	public ArrayList<Payment> searchMainInfo(Connection con, int currentPage, int limit, String date, String method,
 			String division) {
 		// TODO Auto-generated method stub
-		PreparedStatement pstmt = null;
+		Statement stmt = null;
 		ResultSet rs = null;
 		ArrayList<Payment> plist = null;
 		Payment p = null;
@@ -482,7 +480,7 @@ public class PaymentDao {
 		StringBuilder sb = null;
 		
 		try {
-			pstmt = con.prepareStatement(query);
+			stmt = con.prepareStatement(query);
 
 			int startRow = (currentPage - 1) * limit + 1;
 			int endRow = startRow + limit - 1;
@@ -541,16 +539,15 @@ public class PaymentDao {
 					sb.append("AND PAY_METHOD = 'C' ");
 				}
 			}
+			
 			if(sb !=null){
-				System.out.println(sb.toString() + " 조건쓰");
-				pstmt.setString(1, sb.toString());
+				query = query + sb.toString() + " )) WHERE RNUM BETWEEN "+startRow + " AND " + endRow;
 			} else {
-				pstmt.setString(1, " ");
+				query = query + " )) WHERE RNUM BETWEEN "+startRow + " AND " + endRow;
 			}
-			pstmt.setInt(2, startRow);
-			pstmt.setInt(3, endRow);
 
-			rs = pstmt.executeQuery();
+			System.out.println(query);
+			rs = stmt.executeQuery(query);
 			plist = new ArrayList<Payment>();
 
 			while (rs.next()) {
@@ -577,9 +574,38 @@ public class PaymentDao {
 			e.printStackTrace();
 		} finally {
 			close(rs);
-			close(pstmt);
+			close(stmt);
 		}
 
 		return plist;
+	}
+
+	public ArrayList<HashMap<String, String>> selectTodayIncomeList(Connection con) {
+		// TODO Auto-generated method stub
+		Statement stmt = null;
+		ResultSet rs = null;
+		ArrayList<HashMap<String,String>> list = null;
+		HashMap<String,String> infoMap = null;
+		String query = prop.getProperty("selectTodayIncome");
+		
+		try {
+			stmt = con.createStatement();
+			rs = stmt.executeQuery(query);
+			
+			list = new ArrayList<HashMap<String,String>>();
+			while(rs.next()){
+				infoMap = new HashMap<String,String>();
+				infoMap.put("count", String.valueOf(rs.getInt(1)));
+				infoMap.put("totalIncome", String.valueOf(rs.getInt(2)));
+				infoMap.put("category", rs.getString("PET_CATEGORYNAME"));
+				infoMap.put("rate", rs.getString("FEE_RATE"));
+				
+				list.add(infoMap);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return list;
 	}
 }
