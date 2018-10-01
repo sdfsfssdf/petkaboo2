@@ -5,11 +5,13 @@ import static com.pkb.common.JDBCTemplate.*;
 import java.sql.Connection;
 import java.util.ArrayList;
 
+import com.pkb.petsitterService.model.dao.PetsitterContractDao;
 import com.pkb.petsitterService.model.dao.PetsitterDiaryDao;
 import com.pkb.petsitterService.model.dao.PetsitterServiceDao;
 import com.pkb.petsitterService.model.dao.PetsitterServiceDetailDao;
 import com.pkb.petsitterService.model.vo.PetsitterDiary;
 import com.pkb.petsitterService.model.vo.PetsitterService;
+import com.pkb.reservation.model.vo.Contract;
 
 public class PetsitterMainService {
 
@@ -125,5 +127,15 @@ public class PetsitterMainService {
 		
 		// 반드시 수정
 		return myList;
+	}
+
+	public Contract selectOneContract(int psrno, int petsitterno) {
+		Connection con = getConnection();
+		
+		Contract c = new PetsitterContractDao().selectOne(con, psrno, petsitterno);
+		
+		close(con);
+		
+		return c;
 	}
 }
