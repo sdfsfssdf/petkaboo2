@@ -582,4 +582,24 @@ public class PaymentDao {
 
 		return plist;
 	}
+
+	public int insertUseMoney(Connection con, int user_no, int contract_no) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+	    String query = prop.getProperty("insertUseMoney");
+		
+	    try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, user_no);
+			
+			result = pstmt.executeUpdate();
+			
+			
+	    } catch (SQLException e) {
+			
+			e.printStackTrace();
+		}
+		return result;
+	}
 }

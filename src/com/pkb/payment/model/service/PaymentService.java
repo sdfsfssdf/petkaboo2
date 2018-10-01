@@ -2,21 +2,18 @@
 package com.pkb.payment.model.service;
 
 
-import java.sql.Connection;
-
-import com.pkb.payment.model.dao.PaymentDao;
-import com.pkb.payment.model.dao.PaymentDao2;
-import com.pkb.payment.model.vo.Payment;
-
-import static com.pkb.common.JDBCTemplate.*;
-
+import static com.pkb.common.JDBCTemplate.close;
+import static com.pkb.common.JDBCTemplate.commit;
+import static com.pkb.common.JDBCTemplate.getConnection;
+import static com.pkb.common.JDBCTemplate.rollback;
 
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.HashMap;
-import com.pkb.payment.model.vo.CyberMoney;
 
-import com.pkb.payment.model.vo.PayHistory;
+import com.pkb.payment.model.dao.PaymentDao;
+import com.pkb.payment.model.dao.PaymentDao2;
+import com.pkb.payment.model.vo.CyberMoney;
 import com.pkb.payment.model.vo.Payment;
 import com.pkb.payment.model.vo.PaymentInfo;
 
@@ -49,40 +46,7 @@ public class PaymentService {
 		return count;
 	}
 
-	public int insertRecharge(Payment py, int user_no) {
-		Connection con = getConnection();
-
-		int result = new PaymentDao().insertRecharge(con, py);
-
-		int result2 = 0;
-		int result3 = 0;
-		if (result > 0) { // 결제 테이블 insert한 결과가 1일시
-			result2 = new PaymentDao().insertPayHistory(con, user_no);
-
-			if (result2 > 0) {
-				// 사이버머니 이력 테이블에 insert한 결과가 1일시
-
-				result3 = new PaymentDao().updateCybermoney(con, user_no, py);
-
-				if (result3 > 0) { // 잔액 업데이트한 결과가 1일시
-
-					commit(con);
-				} else {
-					rollback(con);
-				}
-				close(con);
-
-			} else {
-				rollback(con);
-			}
-
-		} else {
-			rollback(con);
-		}
-
-		return result3; // *??
-	}
-
+	
 	public HashMap<String, Object> selectRecPay(int contract_no, int user_no) {
 		Connection con = getConnection();
 
@@ -130,40 +94,40 @@ public class PaymentService {
 		return totalInfo;
 	}
   
-   public int insertRecharge(Payment py, int user_no) {
-      Connection con = getConnection();
-      
-      int result = new PaymentDao().insertRecharge(con, py);
-      
-      int result2 = 0;
-      int result3 = 0;
-      if(result > 0){ //결제 테이블 insert한 결과가 1일시
-         result2 = new PaymentDao().insertPayHistory(con, user_no); 
-         
-         if(result2 > 0){
-            //사이버머니 이력 테이블에 insert한 결과가 1일시
-            
-            result3 = new PaymentDao().updateCybermoney(con, user_no, py);
-            
-            if(result3 > 0){ //잔액 업데이트한 결과가 1일시
-               
-               commit(con);
-            }else{
-               rollback(con);
-            }
-            close(con);
-            
-         }else{
-            rollback(con);
-         }
-         
-      }else{
-         rollback(con);
-      }
-      
-      
-      return result3; //*??
-   }
+	public int insertRecharge(Payment py, int user_no) {
+		Connection con = getConnection();
+
+		int result = new PaymentDao().insertRecharge(con, py);
+
+		int result2 = 0;
+		int result3 = 0;
+		if (result > 0) { // 결제 테이블 insert한 결과가 1일시
+			result2 = new PaymentDao().insertPayHistory(con, user_no);
+
+			if (result2 > 0) {
+				// 사이버머니 이력 테이블에 insert한 결과가 1일시
+
+				result3 = new PaymentDao().updateCybermoney(con, user_no, py);
+
+				if (result3 > 0) { // 잔액 업데이트한 결과가 1일시
+
+					commit(con);
+				} else {
+					rollback(con);
+				}
+				close(con);
+
+			} else {
+				rollback(con);
+			}
+
+		} else {
+			rollback(con);
+		}
+
+		return result3; // *??
+	}
+
   
     public CyberMoney searchCyberMoney(int user_no) {
    Connection con = getConnection();
@@ -184,9 +148,18 @@ public PaymentInfo searchRecPayInfo(int contract_no, int user_no) {
    
    return pi;
 }
+
+public int insertUseMoney(int user_no, int contract_no) {
+	Connection con = getConnection();
+	
+	int result = new PaymentDao().insertUseMoney(con, user_no, contract_no);
+	
+	
+	return 0;
+}
   
 }
   
   
 
-}
+

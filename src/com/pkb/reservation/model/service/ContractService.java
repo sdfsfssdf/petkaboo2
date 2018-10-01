@@ -23,16 +23,7 @@ public class ContractService {
 		
 		if(result > 0){
 			
-			int result2 = new ContractDao().insertContractServiceHistory(con, c.getContract_no());
-			
-			if(result2 > 0){
-				
-				
-				commit(con);
-				
-			}else{
-				rollback(con);
-			}
+			commit(con);
 			
 		}else{
 			rollback(con);
