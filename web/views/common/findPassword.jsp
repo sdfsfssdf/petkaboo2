@@ -55,13 +55,16 @@
 		<div class="col-lg-4"></div>
 		<div class="col-lg-4">
 			<div class="jumbotron" style="padding-top: 20px;">
-				<form method="post" action="<%=request.getContextPath()%>/findPwd.fp">
+				<form method="post" action="<%=request.getContextPath()%>/findPwd.me">
 					<h3 style="text-align:center;">비밀번호 찾기</h3>
 					<div class="form-group">
 						<input type="text" class="form-control" placeholder="아이디" name="email" maxlength="100">
 					</div>
 					<div class="form-group">
 						<input type="text" class="form-control" placeholder="이름" name="name" maxlength="100">
+						<%String newPwd =(int)(Math.random()*(999999-100000+1))+100000+"a";%>
+						<input type="hidden" name="newPwd" value="<%=newPwd%>">
+						<input type="hidden" name="sendPwd" value="<%=newPwd%>">
 					</div>
 					<input type="submit" class="btn btn-primary form-control" value="새 비밀번호 받기">
 				</form>

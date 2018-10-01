@@ -18,7 +18,7 @@
 
 		script.println("alert('관리자 확인후 인증이 완료됩니다.');");
 
-		script.println("location.href = '../myPage/modifyMemberInfoMain.jsp'");
+		script.println("location.href = '/pkb/modify.mb'");
 
 		script.println("</script>");
 

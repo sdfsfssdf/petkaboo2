@@ -37,13 +37,12 @@ public class SelectCyberMoneyHistoryServlet extends HttpServlet {
 		
 		User loginUser = (User) request.getSession().getAttribute("loginUser");
 		System.out.println("보이냐 보이면 끝 :" + loginUser.getMoney());
+		String pay_date = request.getParameter("pay_date");
+		String pay_method=request.getParameter("pay_method");
 		
-		Payment payment = new Payment();
-		payment.setUser_no(loginUser.getUser_no());
-		payment.setPay_date(java.sql.Date.valueOf(request.getParameter("pay_date")));
-		payment.setPay_method(request.getParameter("pay_method"));
 		
-		ArrayList<Payment> inquiry= new PaymentService().selectListInquiry(payment);
+		
+		ArrayList<Payment> inquiry= new PaymentService().selectListInquiry(pay_date,pay_method);
 		
 		System.out.println();
 		String page = "";

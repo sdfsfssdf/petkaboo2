@@ -353,9 +353,9 @@ th, td {
 								<br>
 
 										<span>조회내용</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-										<input type="radio" name="pay_method" value="allcont" checked>전체&nbsp;&nbsp;&nbsp;&nbsp;
-										<input type="radio" name="pay_method" value="rechargecont">충전내역만&nbsp;&nbsp;&nbsp;&nbsp;
-										<input type="radio" name="pay_method" value="usecont">사용내역만&nbsp;&nbsp;&nbsp;&nbsp;
+										<input type="radio" name="pay_method" value="all" checked>전체&nbsp;&nbsp;&nbsp;&nbsp;
+										<input type="radio" name="pay_method" value="recharge">충전내역만&nbsp;&nbsp;&nbsp;&nbsp;
+										<input type="radio" name="pay_method" value="use">사용내역만&nbsp;&nbsp;&nbsp;&nbsp;
 									</form>
 
 						</div>

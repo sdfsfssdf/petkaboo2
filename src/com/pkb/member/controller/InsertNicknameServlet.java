@@ -86,7 +86,6 @@ public class InsertNicknameServlet extends HttpServlet {
 			ArrayList<ImgFile> list= new UserService().selectlist(u);
 			
 			String fileName =  list.get(0).getFile_name();
-			
 			ImgFile profile = new UserService().selectUserProfile(u);
 		
 			String page = "";
@@ -94,12 +93,13 @@ public class InsertNicknameServlet extends HttpServlet {
 				u.setNickname(nickname);
 				// 키값은 중복이 안된다. 
 				session.setAttribute("loginUser", u);
-				request.setAttribute("profile", profile);
+				session.setAttribute("profile", profile);
 				if(fileName == null){
+					System.out.println("fileName 은 널이 아니라구");
 					fileName = "profileBasicImage.png";
 				}
-				request.setAttribute("fileName", fileName);
-				page = "views/myPage/modifyMemberInfoMain.jsp";
+				session.setAttribute("fileName", fileName);
+				page = "/modify.mb";
 		}else if(result == 0){
 			System.out.println("실패");		
 		}

@@ -72,6 +72,8 @@ public class UserDAO {
 				loginUser.setEmail_hash(rset.getString("email_hash"));
 				loginUser.setArticle_no(rset.getInt("article_no"));
 				loginUser.setMoney(rset.getInt("money"));
+				loginUser.setAccount_no(rset.getString("account_no"));
+				loginUser.setBank_name(rset.getString("bank_name"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -1674,5 +1676,28 @@ public class UserDAO {
 		}
 		return result;
 	}
+
+	public int insertAcc(Connection con, int userNo, String bankName, String acc) {
+		PreparedStatement pstmt = null;
+		
+		int result = 0;
+		
+		String query = prop.getProperty("InsertAcc");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, acc);
+			pstmt.setString(2, bankName);
+			pstmt.setInt(3, userNo);
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally{
+			close(pstmt);
+		}
+		return result;
+	}
+
 
 }
