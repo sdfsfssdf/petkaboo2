@@ -1,8 +1,6 @@
 package com.pkb.payment.controller;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.servlet.RequestDispatcher;
@@ -11,44 +9,44 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import static com.pkb.common.JDBCTemplate.*;
 
 import com.pkb.common.Paging;
-import com.pkb.notice.model.service.NoticeService;
-import com.pkb.notice.model.vo.Notice;
-import com.pkb.payment.model.dao.PaymentDao;
 import com.pkb.payment.model.service.PaymentService;
-import com.pkb.payment.model.vo.PayHistory;
 
 /**
- * Servlet implementation class SelectPaymentMainInfoServlet
+ * Servlet implementation class SearchPaymentListServlet
  */
-@WebServlet("/selectMain.pe")
-public class SelectPaymentMainInfoServlet extends HttpServlet {
+@WebServlet("/searchList.pa")
+public class SearchPaymentListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+       
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public SearchPaymentListServlet() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
 
 	/**
-	 * @see HttpServlet#HttpServlet()
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	public SelectPaymentMainInfoServlet() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-
-	/**
-	 * @return
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String date = request.getParameter("date");
+		String method = request.getParameter("method");
+		String division = request.getParameter("division");
+		
+		System.out.println(date);
+		System.out.println(method);
+		System.out.println(division);
+		
 		Paging pg = new Paging(1, 10);
 
 		if (request.getParameter("currentPage") != null) {
 			pg.setCurrentPage(Integer.parseInt(request.getParameter("currentPage")));
 		}
 
-		pg.setListCount(new PaymentService().getListCount());
+		pg.setListCount(new PaymentService().getSearchListCount(date,method,division));
 
 		pg.setMaxPage((int) ((double) pg.getListCount() / pg.getLimit() + 0.9));
 
@@ -60,7 +58,7 @@ public class SelectPaymentMainInfoServlet extends HttpServlet {
 			pg.setEndPage(pg.getMaxPage());
 		}
 
-		HashMap<String, Object> totalInfo = new PaymentService().selectMainInfo(pg.getCurrentPage(), pg.getLimit());
+		HashMap<String, Object> totalInfo = new PaymentService().searchMainInfo(pg.getCurrentPage(), pg.getLimit(),date,method,division);
 
 		String page = "";
 		if(totalInfo != null){
@@ -76,11 +74,9 @@ public class SelectPaymentMainInfoServlet extends HttpServlet {
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-	 *      response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
