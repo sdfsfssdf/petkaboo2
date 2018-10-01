@@ -71,11 +71,11 @@
 			<div class="afterLoginArea">
 				<a href="<%=request.getContextPath()%>/views/myPage/mypagemain.jsp">
 				<% if (loginUser.getNickname() != null) { %>
-				<b><%= loginUser.getNickname() %>
+				<b><%= loginUser.getNickname() %></b>
 				<% } else { %>
-				<b><%= loginUser.getEmail() %>
+				<b><%= loginUser.getEmail() %></b>
 				<% } %>
-				</a></b>님 환영합니다!&nbsp;
+				</a>님 환영합니다!&nbsp;
 				<b>보유 사이버머니:</b> <%= loginUser.getMoney() %>원&nbsp;
 				&nbsp;|&nbsp;
 				<button name="logout" onclick="location.href='<%=request.getContextPath()%>/logout.me'">로그아웃</button>

@@ -5,8 +5,10 @@ import static com.pkb.common.JDBCTemplate.*;
 import java.sql.Connection;
 import java.util.ArrayList;
 
+import com.pkb.petsitterService.model.dao.PetsitterDiaryDao;
 import com.pkb.petsitterService.model.dao.PetsitterServiceDao;
 import com.pkb.petsitterService.model.dao.PetsitterServiceDetailDao;
+import com.pkb.petsitterService.model.vo.PetsitterDiary;
 import com.pkb.petsitterService.model.vo.PetsitterService;
 
 public class PetsitterMainService {
@@ -112,5 +114,16 @@ public class PetsitterMainService {
 		close(con);
 		
 		return result;
+	}
+
+	public ArrayList<PetsitterDiary> searchDiary(String user_no, String email) {
+		Connection con = getConnection();
+		
+		ArrayList<PetsitterDiary> myList = new PetsitterDiaryDao().searchDiary(con, user_no, email);
+		
+		close(con);
+		
+		// 반드시 수정
+		return myList;
 	}
 }
