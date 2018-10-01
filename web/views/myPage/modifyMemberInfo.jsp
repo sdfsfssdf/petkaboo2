@@ -400,7 +400,17 @@ border: 1px solid black; */
 										        <input type="hidden" name="action" value="go">
 										        <input type="hidden" name="msg" value="인증번호는 <%=name%> 입니다. 인증번호를 입력해주세요"></textarea>
 										     	<br>
-										     	<span style="align:left;">현재번호 : <%=loginUser.getPhone() %></span>
+										     	<%
+										     		String phone = null;
+										     		if(u.getPhone() == null){
+										     			phone = "미등록";
+										     		}
+										     		else{
+										     			phone = u.getPhone();
+										     		}
+										     	%>
+										     	
+										     	<span style="align:left;">현재번호 :<%=phone %></span>
 										     	<span style="margin= 0px 0px 0px 0px">바꿀 번호 : </span>
 										     	<input type="text" style="align:left;" id="ineedyou" name="rphone" placeholder="010-0000-0000형식으로 입력해주세요">
 										        <input type="hidden" name="sphone1" value="010">
