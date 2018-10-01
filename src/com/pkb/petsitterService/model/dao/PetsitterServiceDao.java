@@ -45,6 +45,7 @@ public class PetsitterServiceDao {
 		
 		String query = prop.getProperty("insertPetsitterService");
 		System.out.println(ps);
+		
 		try {
 			pstmt = con.prepareStatement(query);
 			pstmt.setInt(1, ps.getUser_no());
