@@ -64,7 +64,8 @@ public class InsertContractPetsittingServlet extends HttpServlet {
 			
 			}else if(revLevel == 1){
 			
-			page ="views/searchPetsitter/petSittingRsvApply.jsp";	
+			//page ="views/searchPetsitter/petSittingRsvApply.jsp";
+			page = "views/status/contractProcess.jsp";
 			request.setAttribute("p", p);		
 			
 			}else if(revLevel == 2){ //예약!
@@ -116,7 +117,7 @@ public class InsertContractPetsittingServlet extends HttpServlet {
 					Contract c2 = new ContractService().searchContractPetsitting(user_no, servno);
 					
 					if(c2 != null){
-						page = "views/status/RsvStatement.jsp";
+						page = "views/status/contractProcess.jsp";
 						request.setAttribute("c", c2);
 						
 					}else{

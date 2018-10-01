@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8" import="com.pkb.member.model.vo.*, com.pkb.petsitterService.model.vo.*, com.pkb.payment.model.vo.*"%>
+	pageEncoding="UTF-8" import="com.pkb.member.model.vo.*, com.pkb.petsitterService.model.vo.*, com.pkb.payment.model.vo.*, java.util.TimeZone, java.text.SimpleDateFormat"%>
 <%
 	User user = (User)(session.getAttribute("loginUser"));
 	Payment py = (Payment)request.getAttribute("py");
@@ -161,6 +161,7 @@ img {
 
 			</div>
 			<br /> <br /> <br /> <br />
+			 <form name = "requestPayment" action="<%=request.getContextPath()%>/insertPayReque.py">
 			<div class="RsvStatement">
 				<div class="PSid">
 					<br /> <br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -185,6 +186,9 @@ img {
 					address = addressSplit.substring(0, index);
 				
 					%> <%=address %></label> <br /> <br />
+					
+					
+					
 					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label>펫시팅 시작일 &nbsp;&nbsp;:&nbsp;&nbsp; <%=pi.getContract_start() %> <input
 						type="text" size='18'
@@ -200,9 +204,10 @@ img {
 						type="text" size='18'
 						style="background-color: transparent; border-style: none;"
 						readonly onfocus="this.blur();"></label> <br /> <br />
-
+						
 				</div>
 				<div class="RsvDetailed">
+		
 					<br /> <br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label>요금 상세</label>
 					<br /> <br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -264,10 +269,13 @@ img {
 					<hr />
 					<br />
 					
-				
+					
+					
+					<input type="hidden" name="user_no" value="<%=pi.getUser_no() %>">
+					<input type="hidden" name="contract_no" value="<%=pi.getContract_no()%>">
 					<button class="btn btn-default btnSt" type="submit">결제하기</button>
 					<button class="btn btn-default btnSt" type="reset">취소</button>
-					
+					</form>
 				
 	
 					

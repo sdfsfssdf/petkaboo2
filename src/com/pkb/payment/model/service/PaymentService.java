@@ -152,4 +152,15 @@ public class PaymentService {
 		return pi;
 	}
 
+  
+  public int insertUseMoney(int user_no, int contract_no) {
+   Connection con = getConnection();
+   
+   int result = new PaymentDao().insertUseMoney(con, user_no, contract_no);
+   
+   
+   return 0;
+}
+  
+}
 }

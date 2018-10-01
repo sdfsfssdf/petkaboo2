@@ -15,6 +15,16 @@
 
 
 <!-- 수정함 -->
+<%-- <script language = javascript>
+function btn_click(str){
+	if(str == "Reservation"){
+		form.action="<%=request.getContextPath()%>/selectRecPay.rp";
+	}else if(str == "Review"){
+	form.action="<%=request.getContextPath()%>/review.wr";
+	}
+}
+</script> --%>
+<!-- 수정함 -->
 <title>Insert title here</title>
 
 <style>
@@ -86,6 +96,7 @@
 			<%
 			if( rsvList.size() != 0) {idx= i ;}%>
 		<!--  이거 테이블도 여러개지만 반복문으로 처리할 것... -->
+
 		<form name="form" id="form1" action="" method="post" onsubmit="return false;"> <!-- 수정함 -->
 		<input type="text" name="idx" id="idx" value="<%=i %>">
 		<input type="text" name="contractNo" value="<%=rsvList.get(i).getContract_no() %>">
@@ -179,6 +190,7 @@
     </div>
   </div>
   
+
 <script language = javascript>
 function btn_click(str){
 	alert("들와ㅅㅂ");
@@ -199,7 +211,7 @@ function btn_click(str){
 </script>
 <!-- 수정함 -->
 
-
+  </script>
   
 </body>
 </html>
