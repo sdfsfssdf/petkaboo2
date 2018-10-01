@@ -1,24 +1,24 @@
 
 package com.pkb.payment.model.service;
 
+import java.sql.Connection;
 
-import static com.pkb.common.JDBCTemplate.close;
-import static com.pkb.common.JDBCTemplate.commit;
-import static com.pkb.common.JDBCTemplate.getConnection;
-import static com.pkb.common.JDBCTemplate.rollback;
+import com.pkb.payment.model.dao.PaymentDao;
+import com.pkb.payment.model.dao.PaymentDao2;
+import com.pkb.payment.model.vo.Payment;
+
+import static com.pkb.common.JDBCTemplate.*;
 
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.HashMap;
-
-import com.pkb.payment.model.dao.PaymentDao;
-import com.pkb.payment.model.dao.PaymentDao2;
 import com.pkb.payment.model.vo.CyberMoney;
+
+import com.pkb.payment.model.vo.PayHistory;
 import com.pkb.payment.model.vo.Payment;
 import com.pkb.payment.model.vo.PaymentInfo;
 
 public class PaymentService {
-
 
 	public HashMap<String, Object> selectMainInfo(int currPage, int limit) {
 		Connection con = getConnection();
@@ -28,10 +28,17 @@ public class PaymentService {
 
 		if (todayInfo != null) {
 			ArrayList<Payment> plist = new PaymentDao().selectTotalList(con, currPage, limit);
-			totalInfo = new HashMap<String, Object>();
-			totalInfo.put("todayInfo", todayInfo);
-			totalInfo.put("plist", plist);
-
+			
+			if(plist != null){
+				ArrayList<HashMap<String,String>> incomeList = new PaymentDao().selectTodayIncomeList(con);
+				
+				if(incomeList != null){	
+					totalInfo = new HashMap<String, Object>();
+					totalInfo.put("todayInfo", todayInfo);
+					totalInfo.put("plist", plist);
+					totalInfo.put("incomeList", incomeList);
+				}
+			}
 		}
 
 		close(con);
@@ -46,7 +53,6 @@ public class PaymentService {
 		return count;
 	}
 
-	
 	public HashMap<String, Object> selectRecPay(int contract_no, int user_no) {
 		Connection con = getConnection();
 
@@ -60,18 +66,16 @@ public class PaymentService {
 
 	public ArrayList<Payment> selectListInquiry(String pay_date, String pay_method) {
 		Connection con = getConnection();
-		ArrayList<Payment> inquiry = new PaymentDao2().selectListInquiry(pay_date,pay_method, con);
-
+		ArrayList<Payment> inquiry = new PaymentDao2().selectListInquiry(pay_date, pay_method, con);
 
 		close(con);
 
 		return inquiry;
 	}
 
-
 	public int getSearchListCount(String date, String method, String division) {
 		Connection con = getConnection();
-		int count = new PaymentDao().getSearchListCount(con,date,method,division);
+		int count = new PaymentDao().getSearchListCount(con, date, method, division);
 		close(con);
 		return count;
 	}
@@ -83,7 +87,7 @@ public class PaymentService {
 		HashMap<String, Integer> todayInfo = new PaymentDao().selectTodayPaymentHistoryList(con);
 
 		if (todayInfo != null) {
-			ArrayList<Payment> plist = new PaymentDao().searchMainInfo(con, currentPage, limit,date,method,division);
+			ArrayList<Payment> plist = new PaymentDao().searchMainInfo(con, currentPage, limit, date, method, division);
 			totalInfo = new HashMap<String, Object>();
 			totalInfo.put("plist", plist);
 			totalInfo.put("todayInfo", todayInfo);
@@ -93,7 +97,7 @@ public class PaymentService {
 
 		return totalInfo;
 	}
-  
+
 	public int insertRecharge(Payment py, int user_no) {
 		Connection con = getConnection();
 
@@ -128,38 +132,35 @@ public class PaymentService {
 		return result3; // *??
 	}
 
+	public CyberMoney searchCyberMoney(int user_no) {
+		Connection con = getConnection();
+
+		CyberMoney cm = new PaymentDao().searchCyberMoney(con, user_no);
+
+		close(con);
+
+		return cm;
+	}
+
+	public PaymentInfo searchRecPayInfo(int contract_no, int user_no) {
+		Connection con = getConnection();
+
+		PaymentInfo pi = new PaymentDao().searchRecPayInfo(con, contract_no, user_no);
+
+		close(con);
+
+		return pi;
+	}
+
   
-    public CyberMoney searchCyberMoney(int user_no) {
+  public int insertUseMoney(int user_no, int contract_no) {
    Connection con = getConnection();
    
-   CyberMoney cm = new PaymentDao().searchCyberMoney(con, user_no);
+   int result = new PaymentDao().insertUseMoney(con, user_no, contract_no);
    
-   close(con);
    
-   return cm;
-}
-
-public PaymentInfo searchRecPayInfo(int contract_no, int user_no) {
-   Connection con = getConnection();
-   
-   PaymentInfo pi = new PaymentDao().searchRecPayInfo(con, contract_no, user_no);
-   
-   close(con);
-   
-   return pi;
-}
-
-public int insertUseMoney(int user_no, int contract_no) {
-	Connection con = getConnection();
-	
-	int result = new PaymentDao().insertUseMoney(con, user_no, contract_no);
-	
-	
-	return 0;
+   return 0;
 }
   
 }
-  
-  
-
-
+}

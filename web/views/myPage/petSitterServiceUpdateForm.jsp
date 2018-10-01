@@ -55,7 +55,7 @@ hr{
 	<% } else { %>
 	<%@ include file="/views/common/sidemenubar.jsp"%>
 	<div class="MyPetsitterInfoheader" id="MyPetsitterInfoheader">
-		<h2><b>내 펫시터 등록 정보 수정</b></h2>
+		<h2><b>내 펫시터 등록 정보 및 진행 상황</b></h2>
 		<hr>
 	</div>
 		<% 
@@ -102,7 +102,8 @@ hr{
 			<th width="200px">예약가능 요일</th>
 			<th width="150px">시작 가능일</th>
 			<th width="150px">종료일</th>
-			<th width="100px">서비스가격</th>			
+			<th width="100px">서비스가격</th>
+			<th width="50px">상태</th>			
 		</tr>
 		<% for(PetsitterService p : list){ %>
 		<tr>
@@ -135,6 +136,14 @@ hr{
 			<td><%= p.getContract_start() %></td>
 			<td><%= p.getContract_end() %></td>
 			<td><%= p.getService_charge() %></td>
+			<td>
+				<form name="selectContract" method="post" action="<%=request.getContextPath()%>/searchMyContract.do">
+					<!-- button 영역 차후 수정 -->
+					<input type="hidden" name="contractno" value="<%= p.getPet_service_regno()%>">
+					<input type="hidden" name="petsitterno" value="<%= loginUser.getUser_no() %>">
+					<button>계약상태 조회</button>
+				</form>
+			</td>
 		</tr>
 		<% } %>
 	</table>

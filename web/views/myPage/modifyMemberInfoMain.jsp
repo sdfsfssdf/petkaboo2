@@ -335,12 +335,14 @@ a:hover, a:active, a:focus {
 									<span style="text-align: left">주소  </span>&nbsp;<input
 										type="text" name="nimknamespann" size="80" maxlength="100"
 										style="width: 400px; color: black; margin: 0; padding: 0; height: 35px; border-width: 0; background-color: #eee;"	
-										<% if(loginUser != null){
-											String[] fullAdd = null;
-											String address = "주소를 입력해 주세요";
-											String zipcode = "우편번호를 수정해 주세요";
-											
-											if(loginUser.getAddress().contains("^")){
+								 		<% 
+								 			String[] fullAdd = null;
+											String address = null;
+											String zipcode = null;
+								 		if(loginUser.getAddress() == null){
+								 			address = "주소를 입력해 주세요";
+								 			zipcode = "우편번호를 수정해 주세요";
+								 		}else if(loginUser.getAddress().contains("^")){
 												fullAdd = loginUser.getAddress().split("\\^");
 												address = fullAdd[0];
 												zipcode = fullAdd[1];
@@ -348,15 +350,25 @@ a:hover, a:active, a:focus {
 										%>
 										value="<%=address%>"
 										>
-										<%} %>
+										
 								</div>
 								<div class=macc>
 									<span style="text-align: left">계좌  </span>&nbsp;<input
 										type="text" name="nimknamespann" size="80" maxlength="60"
 										style="width: 350px; color: black; margin: 0; padding: 0; height: 35px; border-width: 0; background-color: #eee;"	
-										<% if(loginUser != null){%>
-											value="<%=loginUser.getAccount_no()%> <%=loginUser.getBank_name()%>"
-										<% } %>	 readonly>
+										<% 
+											String accNo = "";
+											String bankName = "";
+											if(loginUser.getAccount_no() == null){
+											accNo = "계좌를 등록해주세요";
+											bankName = " ";
+											}else{
+												accNo = loginUser.getAccount_no();
+												bankName = loginUser.getBank_name();
+											}
+										%>
+											value="<%=accNo %><%=bankName%>"
+											readonly>
 								</div>
 				
 
