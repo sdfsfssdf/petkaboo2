@@ -9,6 +9,7 @@
 	ArrayList<ImgFile> proHistory = (ArrayList<ImgFile>)loginInfo.get("profileHistory");
 	CyberMoney money = (CyberMoney)loginInfo.get("money");
 	ArrayList<Pet> plist = (ArrayList<Pet>)loginInfo.get("pet");
+	
 %>
 <!DOCTYPE">
 <html>
@@ -31,6 +32,7 @@
 	margin-right: auto;
 	margin-top: 20px;
 }
+
 
 .outer2 {
 	float: left;
