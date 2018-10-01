@@ -15,16 +15,6 @@
 
 
 <!-- 수정함 -->
-<script language = javascript>
-function btn_click(str){
-	if(str == "Reservation"){
-		form.action="<%=request.getContextPath()%>/selectRecPay.rp";
-	}else if(str == "Review"){
-	form.action="<%=request.getContextPath()%>/review.wr";
-	}
-}
-</script>
-<!-- 수정함 -->
 <title>Insert title here</title>
 
 <style>
@@ -160,7 +150,7 @@ function btn_click(str){
          
           	<div class="modalTopImg"></div>
           	<div class="modalTopContent"><label>이름 : </label><%=rsvList.get(idx).getUser_name() %><br>
-          	<input type="text" id="idx2" name="idx2" value="<%=idx%>">
+          	<input type="text" id="idx2" name="idx2" value="<%=1%>">
           		 <label>주소 : </label><%=rsvList.get(idx).getAddress()%> <br>
           	</div>	
           </div>
@@ -189,9 +179,18 @@ function btn_click(str){
     </div>
   </div>
   
-  <script>
+<script language = javascript>
+function btn_click(str){
+	if(str == "Reservation"){
+		form.action="<%=request.getContextPath()%>/selectRecPay.rp";
+	}else if(str == "Review"){
+	form.action="<%=request.getContextPath()%>/review.wr";
+	}
+}
+</script>
+<!-- 수정함 -->
 
-  </script>
+
   
 </body>
 </html>

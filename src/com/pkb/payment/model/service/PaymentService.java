@@ -19,6 +19,7 @@ public class PaymentService {
 	public HashMap<String, Object> selectMainInfo(int currPage, int limit) {
 		Connection con = getConnection();
 		HashMap<String, Object> totalInfo = null;
+
 		HashMap<String, Integer> todayInfo = new PaymentDao().selectTodayPaymentHistoryList(con);
 
 		if (todayInfo != null) {
@@ -26,6 +27,7 @@ public class PaymentService {
 			totalInfo = new HashMap<String, Object>();
 			totalInfo.put("todayInfo", todayInfo);
 			totalInfo.put("plist", plist);
+
 		}
 
 		close(con);
@@ -85,14 +87,16 @@ public class PaymentService {
 		return rp;
 	}
 
-	public ArrayList<Payment> selectListInquiry(Payment payment) {
+	public ArrayList<Payment> selectListInquiry(String pay_date, String pay_method) {
 		Connection con = getConnection();
-		ArrayList<Payment> inquiry = new PaymentDao2().selectListInquiry(payment, con);
+		ArrayList<Payment> inquiry = new PaymentDao2().selectListInquiry(pay_date,pay_method, con);
+
 
 		close(con);
 
 		return inquiry;
 	}
+
 
 	public int getSearchListCount(String date, String method, String division) {
 		Connection con = getConnection();
@@ -110,8 +114,8 @@ public class PaymentService {
 		if (todayInfo != null) {
 			ArrayList<Payment> plist = new PaymentDao().searchMainInfo(con, currentPage, limit,date,method,division);
 			totalInfo = new HashMap<String, Object>();
-			totalInfo.put("todayInfo", todayInfo);
 			totalInfo.put("plist", plist);
+			totalInfo.put("todayInfo", todayInfo);
 		}
 
 		close(con);
