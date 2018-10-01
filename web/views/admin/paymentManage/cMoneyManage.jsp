@@ -5,6 +5,7 @@
 	HashMap<String, Object> totalInfo = (HashMap<String,Object>)request.getAttribute("totalInfo");
 	HashMap<String,Integer> todayInfo = (HashMap<String,Integer>)totalInfo.get("todayInfo");
 	ArrayList<Payment> plist = (ArrayList<Payment>)totalInfo.get("plist");
+	ArrayList<HashMap<String,String>> ilist = (ArrayList<HashMap<String.String>>)totalInfo.get("incomeList");
 	Paging pg = (Paging) request.getAttribute("pg");
 	int listCount = pg.getListCount();
 	int currentPage = pg.getCurrentPage();
@@ -70,19 +71,37 @@
 				<tr class="head" align="center">
 					<th>오늘의 충전 건 수</th>
 					<th>총 충전 금액</th>
-					<th>오늘의  거래 금액</th>
 					<th>구분</th>
+					<th>총 거래 건 수</th>
 					<th>거래액</th>
+					<th>수수료</th>
 					<th>실수입</th>
 				</tr>
-				<tr align="center">
-					<td><%=todayInfo.get("count") %></td>
-					<td><%=todayInfo.get("totalAmout") %></td>
-					<td>3</td>
-					<td>4</td>
-					<td>5</td>
-					<td>6</td>
-				</tr>
+				<%if(ilist == null) { %>
+					<tr align="center">
+						<td><%=todayInfo.get("count") %></td>
+						<td><%=todayInfo.get("totalAmout") %></td>
+						<td>-</td>
+						<td>-</td>
+						<td>-</td>
+						<td>-</td>
+					</tr>
+				<%} else { %>
+					<%if(ilist.size() == 1) {%>
+						<tr align="center">
+							<td ><%=todayInfo.get("count") %></td>
+							<td ><%=todayInfo.get("totalAmout") %></td>
+							<td><%=ilist.get(0).get("category")%></td>
+							<td><%=ilist.get(0).get("count") %></td>
+							<td><%=ilist.get(0).get("totalIncome") %></td>
+							<td><%=ilist.get(0).get("rate") %>%</td>
+							<td><%=(Integer.parseDouble(ilist.get(0).get("totalIncome"))*(Integer.parseInt(ilist.get(0).get("rate"))%></td>
+						</tr>
+					<%} else  {%>
+					
+					<%} %>
+				<%} %>
+				
 				<tr align="center">
 					<td></td>
 					<td></td>
@@ -148,7 +167,7 @@
 						<%if(plist.get(i).getPay_method().equals("C")){ %>
 							<td>
 							<div style="background:green; color:white ; border-radius:20px; width:80%">충전</div></td>
-						<%} else if (plist.get(i).getPay_method().equals("R")){ %>
+						<%} else if (plist.get(i).getPay_method().equals("U")){ %>
 							<td> <div style="background:gray; color:white ; border-radius:20px; width:80%">사용</div></td>	
 						<%} else { %>
 							<td><div style="background:red; color:white ; border-radius:20px; width:80%">환불</div></td>
@@ -211,10 +230,6 @@
 				<button class="btn btn-default"
 					onclick="location.href='<%=request.getContextPath()%>/selectMain.pe?currentPage=<%=maxPage%>'">>></button>
 			</div>
-	<div class="searchArea" align="center">
-			<input type="search">
-			<button type="submit">검색하기</button>
-	</div>
 	</div>
 </div>
 </body>
