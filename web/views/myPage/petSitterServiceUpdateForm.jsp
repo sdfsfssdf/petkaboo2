@@ -5,14 +5,7 @@
 <%@page import="java.sql.Connection"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" import="java.util.*, com.pkb.petsitterService.model.vo.*"%>
-<% ArrayList<PetsitterService> list = (ArrayList<PetsitterService>)request.getAttribute("list");
-	PageInfo pi = (PageInfo)request.getAttribute("pi");
-	int listCount = pi.getListCount();
-	int currentPage = pi.getCurrentPage();
-	int maxPage = pi.getMaxPage();
-	int startPage = pi.getStartPage();
-	int endPage = pi.getEndPage();
-%>
+<% ArrayList<PetsitterService> list = (ArrayList<PetsitterService>)request.getAttribute("list"); %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -34,6 +27,14 @@ hr{
 	margin-left:20%;
 	width:auto;
 	border:1px solid black;
+}
+#MyPetsitterInfoTable th{
+	text-align:center;
+	background:black;
+	color:white;
+}
+#MyPetsitterInfoTable td{
+	text-align:center;
 }
 </style>
 </head>
@@ -138,33 +139,6 @@ hr{
 		<% } %>
 	</table>
 	</div>
-			<%-- 페이지 처리 --%>
-			<div class="pagingArea" align="center">
-			<button onclick="location.href='<%=request.getContextPath()%>/PetSitter.all?currentPage=1'"><<</button>
-			<% if(currentPage <= 1){ %>
-				<button disabled><</button>		
-			<% }else{ %>
-				<button onclick="location.href='<%=request.getContextPath()%>/PetSitter.all?currentPage=<%=currentPage - 1 %>'"><</button>
-			<% } %>
-			<%
-				for(int p = startPage; p <= endPage; p++){
-					if(p == currentPage){
-			%>
-				<button disabled><%= p %></button>
-			<% } else {%>
-				<button onclick="location.href='<%=request.getContextPath()%>/PetSitter.all?currentPage=<%=p %>'"><%= p %></button>
-			<% } %>			
-			
-			<% } %>
-			
-			<% if(currentPage >= maxPage){ %>
-				<button disabled>></button>
-			<% } else { %>
-				<button onclick="location.href='<%=request.getContextPath()%>/PetSitter.all?currentPage=<%=currentPage + 1 %>'">></button>
-			<% } %>
-			<button onclick="location.href='<%=request.getContextPath()%>/PetSitter.all?currentPage=<%=maxPage%>'">>></button>
-			</div>
-			<%-- 페이지 처리 끝 --%>
 	<script>
 		$(function(){
 			$(".MyPetsitterInfoTable td").click(function(){

@@ -19,10 +19,15 @@ public class PaymentService {
 	public HashMap<String, Object> selectMainInfo(int currPage, int limit) {
 		Connection con = getConnection();
 		HashMap<String, Object> totalInfo = null;
-		ArrayList<PayHistory> phlist = new PaymentDao().selectTodayPaymentHistoryList(con);
 
-		if (phlist != null) {
+		HashMap<String, Integer> todayInfo = new PaymentDao().selectTodayPaymentHistoryList(con);
+
+		if (todayInfo != null) {
 			ArrayList<Payment> plist = new PaymentDao().selectTotalList(con, currPage, limit);
+			totalInfo = new HashMap<String, Object>();
+			totalInfo.put("todayInfo", todayInfo);
+			totalInfo.put("plist", plist);
+
 		}
 
 		close(con);
@@ -86,9 +91,36 @@ public class PaymentService {
 		Connection con = getConnection();
 		ArrayList<Payment> inquiry = new PaymentDao2().selectListInquiry(pay_date,pay_method, con);
 
+
 		close(con);
 
 		return inquiry;
+	}
+
+
+	public int getSearchListCount(String date, String method, String division) {
+		Connection con = getConnection();
+		int count = new PaymentDao().getSearchListCount(con,date,method,division);
+		close(con);
+		return count;
+	}
+
+	public HashMap<String, Object> searchMainInfo(int currentPage, int limit, String date, String method,
+			String division) {
+		Connection con = getConnection();
+		HashMap<String, Object> totalInfo = null;
+		HashMap<String, Integer> todayInfo = new PaymentDao().selectTodayPaymentHistoryList(con);
+
+		if (todayInfo != null) {
+			ArrayList<Payment> plist = new PaymentDao().searchMainInfo(con, currentPage, limit,date,method,division);
+			totalInfo = new HashMap<String, Object>();
+			totalInfo.put("plist", plist);
+			totalInfo.put("todayInfo", todayInfo);
+		}
+
+		close(con);
+
+		return totalInfo;
 	}
 
 }

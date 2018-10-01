@@ -1,7 +1,5 @@
 
-
 package com.pkb.payment.model.dao;
-
 
 import static com.pkb.common.JDBCTemplate.close;
 
@@ -26,38 +24,32 @@ import com.pkb.reservation.model.vo.Contract;
 
 public class PaymentDao {
 	private Properties prop = new Properties();
-	
-	public PaymentDao(){
+
+	public PaymentDao() {
 		String fileName = PaymentDao.class.getResource("/sql/payment/payment-query.properties").getPath();
-		
+
 		try {
 			prop.load(new FileReader(fileName));
-		
+
 		} catch (IOException e) {
-		
+
 			e.printStackTrace();
 		}
 	}
-	
-	
-	public ArrayList<PayHistory> selectTodayPaymentHistoryList(Connection con) {
+
+	public HashMap<String, Integer> selectTodayPaymentHistoryList(Connection con) {
 		Statement stmt = null;
 		ResultSet rs = null;
-		PayHistory ph = null;
-		ArrayList<PayHistory> phlist = null;
-		String query = prop.getProperty("selectTodayPaymentHistoryList");
+		HashMap<String, Integer> todayInfo = null;
+		String query = prop.getProperty("selectPaymentHistoryList");
 
 		try {
 			stmt = con.createStatement();
 			rs = stmt.executeQuery(query);
-			phlist = new ArrayList<PayHistory>();
+			todayInfo = new HashMap<String, Integer>();
 			while (rs.next()) {
-				ph = new PayHistory();
-				ph.setPay_no(rs.getInt("pay_no"));
-				ph.setPay_recordno(rs.getInt("pay_recordno"));
-				ph.setUser_no(rs.getInt("user_no"));
-
-				phlist.add(ph);
+				todayInfo.put("count", rs.getInt(1));
+				todayInfo.put("totalAmout", rs.getInt(2));
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -66,7 +58,7 @@ public class PaymentDao {
 			close(rs);
 			close(stmt);
 		}
-		return phlist;
+		return todayInfo;
 	}
 
 	public ArrayList<HashMap<String, Object>> selectTotalList(Connection con) {
@@ -94,7 +86,7 @@ public class PaymentDao {
 			close(stmt);
 		}
 		return count;
-  }
+	}
 
 	public ArrayList<Payment> selectTotalList(Connection con, int currPage, int limit) {
 		// TODO Auto-generated method stub
@@ -107,30 +99,32 @@ public class PaymentDao {
 		try {
 			pstmt = con.prepareStatement(query);
 
-			int startRow = (currentPage - 1) * limit + 1;
+			int startRow = (currPage - 1) * limit + 1;
 			int endRow = startRow + limit - 1;
 
 			pstmt.setInt(1, startRow);
 			pstmt.setInt(2, endRow);
 
 			rs = pstmt.executeQuery();
-			list = new ArrayList<Notice>();
+			plist = new ArrayList<Payment>();
 
 			while (rs.next()) {
-				nt = new Notice();
+				p = new Payment();
 
-				nt.setArticle_no(rs.getInt("ARTICLE_NO"));
-				nt.setUser_name(rs.getString("NICKNAME"));
-				nt.setArticle_date(rs.getDate("ARTICLE_DATE"));
-				nt.setArticle_title(rs.getString("ARTICLE_TITLE"));
-				nt.setArticle_contents(rs.getString("ARTICLE_CONTENTS"));
-				nt.setArticle_type(rs.getString("ARTICLE_TYPE"));
-				nt.setArticle_lv(rs.getInt("ARTICLE_LV"));
-				nt.setArticle_refno(rs.getInt("article_refno"));
-				nt.setArticle_status(rs.getInt("article_status"));
-				nt.setArticle_modify_date(rs.getDate("ARTICLE_MODIFY_DATE"));
+				p.setPay_no(rs.getInt("pay_no"));
+				p.setUser_no(rs.getInt("user_no"));
+				p.setPay_amount(rs.getInt("pay_amount"));
+				p.setPay_date(rs.getDate("pay_date"));
+				p.setPay_method(rs.getString("pay_method"));
+				p.setPayment_type(rs.getInt("payment_type"));
+				p.setPayment_cash_status(rs.getInt("payment_cash_status"));
+				p.setPayment_cash_date(rs.getDate("payment_cash_date"));
+				p.setCard_apply_no(rs.getString("card_apply_no"));
+				p.setImp_uid(rs.getString("import_auth_no"));
+				p.setAccount_no(rs.getString("account_no"));
+				p.setEmail(rs.getString("email"));
 
-				list.add(nt);
+				plist.add(p);
 			}
 
 		} catch (SQLException e) {
@@ -141,18 +135,17 @@ public class PaymentDao {
 			close(pstmt);
 		}
 
-		return list;
+		return plist;
 	}
-  
-  public int insertRecharge(Connection con, Payment py) {
+
+	public int insertRecharge(Connection con, Payment py) {
 		PreparedStatement pstmt = null;
 		int result = 0;
-		
-		
+
 		String query = prop.getProperty("insertRecharge");
-		
+
 		try {
-			
+
 			pstmt = con.prepareStatement(query);
 			pstmt.setInt(1, py.getUser_no());
 			pstmt.setInt(2, py.getPay_amount());
@@ -160,72 +153,64 @@ public class PaymentDao {
 			pstmt.setString(4, py.getCard_apply_no());
 			pstmt.setString(5, py.getImp_uid());
 			result = pstmt.executeUpdate();
-			
+
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
-			
+
 			close(pstmt);
-			
+
 		}
-		
+
 		return result;
 	}
-
 
 	public int insertPayHistory(Connection con, int user_no) {
 		PreparedStatement pstmt = null;
 		int result2 = 0;
-		
+
 		String query = prop.getProperty("insertPayHistory");
-		
-		
+
 		try {
 			pstmt = con.prepareStatement(query);
 			pstmt.setInt(1, user_no);
-			
+
 			result2 = pstmt.executeUpdate();
-			
+
 		} catch (SQLException e) {
-			
+
 			e.printStackTrace();
 		} finally {
 			close(pstmt);
 		}
-		
+
 		return result2;
 	}
-
 
 	public int updateCybermoney(Connection con, int user_no, Payment py) {
 		PreparedStatement pstmt = null;
 		int result3 = 0;
-		
+
 		String query = prop.getProperty("updateCybermoney");
-		
-		
+
 		try {
 			pstmt = con.prepareStatement(query);
 			pstmt.setInt(1, py.getPay_amount());
 			pstmt.setInt(2, user_no);
-			
+
 			result3 = pstmt.executeUpdate();
-			
-		
+
 		} catch (SQLException e) {
-			
+
 			e.printStackTrace();
-		} finally{
+		} finally {
 			close(pstmt);
-			
-			
+
 		}
-		
-		
+
 		return result3;
 	}
-
 
 	public HashMap<String, Object> selectRecPay(int contract_no, int user_no, Connection con) {
 		PreparedStatement pstmt = null;
@@ -235,18 +220,18 @@ public class PaymentDao {
 		Contract c = null;
 		PetsitterService p = null;
 		CyberMoney cm = null;
-		
+
 		String query = prop.getProperty("selectRecPay");
-		
-		try{
+
+		try {
 			pstmt = con.prepareStatement(query);
 			pstmt.setInt(1, contract_no);
 			pstmt.setInt(2, user_no);
 			rset = pstmt.executeQuery();
-			
+
 			rp = new HashMap<String, Object>();
-			
-			if(rset.next()){
+
+			if (rset.next()) {
 				user = new User();
 				c = new Contract();
 				p = new PetsitterService();
@@ -303,24 +288,216 @@ public class PaymentDao {
 				cm.setMoney_no(rset.getInt("money_no"));
 				cm.setUser_no(rset.getInt("user_no"));
 				cm.setMoney(rset.getInt("money"));
-				
+
 				rp.put("user", user);
 				rp.put("contract", c);
 				rp.put("psv", p);
 				rp.put("money", cm);
-				
-				}
-			}catch(SQLException e){
-				
-				e.printStackTrace();
-			} finally {
-				close(rset);
-				close(pstmt);
+
 			}
-			
-		
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+
 		return rp;
 	}
 
+	public int getSearchListCount(Connection con, String date, String method, String division) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String query = prop.getProperty("getSearchListCount");
+		int count = 0;
+		StringBuilder sb = null;
+		try {
+			pstmt = con.prepareStatement(query);
+			if (!date.equals("all")) {
+				sb = new StringBuilder();
+				if (date.equals("today")) {
+					sb.append(
+							"WHERE TO_CHAR(PAY_DATE,'YYYYmmdd') BETWEEN TO_CHAR(SYSDATE,'YYYYmmdd') AND TO_CHAR(SYSDATE,'YYYYmmdd') ");
+				} else if (date.equals("week")) {
+					sb.append(
+							"WHERE TO_CHAR(PAY_DATE,'YYYYmmdd') BETWEEN TO_CHAR(SYSDATE-7,'YYYYmmdd') AND TO_CHAR(SYSDATE,'YYYYmmdd') ");
+				} else if (date.equals("month")) {
+					sb.append(
+							"WHERE TO_CHAR(PAY_DATE,'YYYYmmdd') BETWEEN TO_CHAR(SYSDATE-30,'YYYYmmdd') AND TO_CHAR(SYSDATE,'YYYYmmdd') ");
+				} else if(date.equals("year")){
+					sb.append(
+							"WHERE TO_CHAR(PAY_DATE,'YYYYmmdd') BETWEEN TO_CHAR(SYSDATE-365,'YYYYmmdd') AND TO_CHAR(SYSDATE,'YYYYmmdd') ");
+				}
+			}
+			if (method.equals("creditCard")) {
+				if (sb == null) {
+					sb = new StringBuilder();
+					sb.append("WHERE PAYMENT_TYPE = 0 ");
+				} else {
+					sb.append("AND PAYMENT_TYPE = 0 ");
+				}
+			} else if (method.equals("bankBook")) {
+				if (sb == null) {
+					sb = new StringBuilder();
+					sb.append("WHERE PAYMENT_TYPE = 1 ");
+				} else {
+					sb.append("AND PAYMENT_TYPE = 1 ");
+				}
+			}
 
+			if (division.equals("use")) {
+				if (sb == null) {
+					sb = new StringBuilder();
+					sb.append("WHERE PAY_METHOD = 'U' ");
+				} else {
+					sb.append("AND PAY_METHOD = 'U' ");
+				}
+			} else if (division.equals("cencel")) {
+				if (sb == null) {
+					sb = new StringBuilder();
+					sb.append("WHERE PAY_METHOD = 'R' ");
+				} else {
+					sb.append("AND PAY_METHOD = 'R' ");
+				}
+			} else if(division.equals("reCharge")) {
+				if (sb == null) {
+					sb = new StringBuilder();
+					sb.append("WHERE PAY_METHOD = 'C' ");
+				} else {
+					sb.append("AND PAY_METHOD = 'C' ");
+				}
+			}
+			if(sb !=null){
+				System.out.println(sb.toString() + " 조건쓰");
+				pstmt.setString(1, sb.toString());
+			} else {
+				pstmt.setString(1, " ");
+			}
+			rs = pstmt.executeQuery();
+
+			if (rs.next()) {
+				count = rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(rs);
+			close(pstmt);
+		}
+		return count;
+	}
+
+	public ArrayList<Payment> searchMainInfo(Connection con, int currentPage, int limit, String date, String method,
+			String division) {
+		// TODO Auto-generated method stub
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		ArrayList<Payment> plist = null;
+		Payment p = null;
+		String query = prop.getProperty("selectSearchList");
+		StringBuilder sb = null;
+		
+		try {
+			pstmt = con.prepareStatement(query);
+
+			int startRow = (currentPage - 1) * limit + 1;
+			int endRow = startRow + limit - 1;
+
+			if (!date.equals("all")) {
+				sb = new StringBuilder();
+				if (date.equals("today")) {
+					sb.append(
+							"WHERE TO_CHAR(PAY_DATE,'YYYYmmdd') BETWEEN TO_CHAR(SYSDATE,'YYYYmmdd') AND TO_CHAR(SYSDATE,'YYYYmmdd') ");
+				} else if (date.equals("week")) {
+					sb.append(
+							"WHERE TO_CHAR(PAY_DATE,'YYYYmmdd') BETWEEN TO_CHAR(SYSDATE-7,'YYYYmmdd') AND TO_CHAR(SYSDATE,'YYYYmmdd') ");
+				} else if (date.equals("month")) {
+					sb.append(
+							"WHERE TO_CHAR(PAY_DATE,'YYYYmmdd') BETWEEN TO_CHAR(SYSDATE-30,'YYYYmmdd') AND TO_CHAR(SYSDATE,'YYYYmmdd') ");
+				} else if(date.equals("year")){
+					sb.append(
+							"WHERE TO_CHAR(PAY_DATE,'YYYYmmdd') BETWEEN TO_CHAR(SYSDATE-365,'YYYYmmdd') AND TO_CHAR(SYSDATE,'YYYYmmdd') ");
+				}
+			}
+			if (method.equals("creditCard")) {
+				if (sb == null) {
+					sb = new StringBuilder();
+					sb.append("WHERE PAYMENT_TYPE = 0 ");
+				} else {
+					sb.append("AND PAYMENT_TYPE = 0 ");
+				}
+			} else if (method.equals("bankBook")) {
+				if (sb == null) {
+					sb = new StringBuilder();
+					sb.append("WHERE PAYMENT_TYPE = 1 ");
+				} else {
+					sb.append("AND PAYMENT_TYPE = 1 ");
+				}
+			}
+
+			if (division.equals("use")) {
+				if (sb == null) {
+					sb = new StringBuilder();
+					sb.append("WHERE PAY_METHOD = 'U' ");
+				} else {
+					sb.append("AND PAY_METHOD = 'U' ");
+				}
+			} else if (division.equals("cencel")) {
+				if (sb == null) {
+					sb = new StringBuilder();
+					sb.append("WHERE PAY_METHOD = 'R' ");
+				} else {
+					sb.append("AND PAY_METHOD = 'R' ");
+				}
+			} else if(division.equals("reCharge")) {
+				if (sb == null) {
+					sb = new StringBuilder();
+					sb.append("WHERE PAY_METHOD = 'C' ");
+				} else {
+					sb.append("AND PAY_METHOD = 'C' ");
+				}
+			}
+			if(sb !=null){
+				System.out.println(sb.toString() + " 조건쓰");
+				pstmt.setString(1, sb.toString());
+			} else {
+				pstmt.setString(1, " ");
+			}
+			pstmt.setInt(2, startRow);
+			pstmt.setInt(3, endRow);
+
+			rs = pstmt.executeQuery();
+			plist = new ArrayList<Payment>();
+
+			while (rs.next()) {
+				p = new Payment();
+
+				p.setPay_no(rs.getInt("pay_no"));
+				p.setUser_no(rs.getInt("user_no"));
+				p.setPay_amount(rs.getInt("pay_amount"));
+				p.setPay_date(rs.getDate("pay_date"));
+				p.setPay_method(rs.getString("pay_method"));
+				p.setPayment_type(rs.getInt("payment_type"));
+				p.setPayment_cash_status(rs.getInt("payment_cash_status"));
+				p.setPayment_cash_date(rs.getDate("payment_cash_date"));
+				p.setCard_apply_no(rs.getString("card_apply_no"));
+				p.setImp_uid(rs.getString("import_auth_no"));
+				p.setAccount_no(rs.getString("account_no"));
+				p.setEmail(rs.getString("email"));
+
+				plist.add(p);
+			}
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(rs);
+			close(pstmt);
+		}
+
+		return plist;
+	}
 }

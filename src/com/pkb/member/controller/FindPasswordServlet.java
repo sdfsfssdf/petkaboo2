@@ -15,7 +15,7 @@ import com.pkb.member.model.service.UserService;
 /**
  * Servlet implementation class FindPasswordServlet
  */
-@WebServlet("/findPwd.fp")
+@WebServlet("/findPwd.me")
 public class FindPasswordServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     
@@ -27,15 +27,18 @@ public class FindPasswordServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String email = request.getParameter("email");
 		String name = request.getParameter("name");
-		String newPwd = (int)(Math.random()*(999999-100000+1))+100000+"a";
+		String newPwd = request.getParameter("newPwd");
+		String sendPwd = request.getParameter("sendPwd");
+		System.out.println(email);
+		System.out.println(name);
 		int result = new UserService().findPwd(email,name);
-		
+		System.out.println(result+"성공이지?");
 		if(result>0){
 			int result1 = new UserService().changePwd(newPwd, email);
 			if(result1 >0){
 			HttpSession session = request.getSession();
 			request.setAttribute("email", email);
-			session.setAttribute("newPwd", newPwd);
+			session.setAttribute("sendPwd", sendPwd);
 			SendPwd se = new SendPwd();
 			se.doGet(request, response);
 			response.sendRedirect("/pkb/views/member/newPwdCheck.jsp");

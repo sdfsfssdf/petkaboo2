@@ -1,3 +1,5 @@
+<%@page import="com.google.gson.Gson"%>
+<%@page import="com.pkb.petsitterService.model.vo.PetsitterDiary"%>
 <%@page import="com.pkb.common.JDBCTemplate"%>
 <%@page import="com.pkb.petsitterService.model.vo.PetCategory"%>
 <%@page import="java.sql.ResultSet"%>
@@ -8,8 +10,7 @@
 	pageEncoding="UTF-8"%>
 <%@ page import="java.util.*, java.text.*, com.pkb.common.JDBCTemplate.*" %>
 <%
-	String fileName = null;
-	System.out.println(request.getAttribute("fileName"));
+	ArrayList<PetsitterDiary> myList = (ArrayList<PetsitterDiary>)request.getAttribute("myList");
 %>
 <!DOCTYPE html>
 <html>
@@ -23,7 +24,7 @@
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>펫시터 등록</title>
+<title>펫시터 등록 서비스 수정</title>
 <style>
 .contentArea{
 	margin-top:10px;
@@ -41,7 +42,10 @@ th, tr, td{
 </style>
 </head>
 <body>
-	<%@ include file="/views/common/menubar.jsp"%>
+<!-- 임시코드를 여기에 넣어서 시험 -->
+
+<!-- 임시코드 끝 -->
+	<%@ include file="/views/common/menubar.jsp" %>
 	<%
 		if(loginUser == null || loginUser.getUser_grade() != 3){
 	%>
@@ -49,7 +53,12 @@ th, tr, td{
 		alert('펫시터 회원만 이용할 수 있습니다!');
 		window.location.href = '<%=request.getContextPath()%>/index.jsp';
 	</script>
-	<% } else {%>
+	<% } else if(loginUser.getUser_no() != p.getUser_no()) {%>
+	<script>
+		alert('잘못된 접근입니다!');
+		window.location.href = '<%=request.getContextPath()%>/index.jsp';
+	</script>
+	<% } else { %>
 	<%@ include file="/views/common/sidemenubar.jsp"%>
 	<% 
 		// PetCategory DB 조회
@@ -85,13 +94,11 @@ th, tr, td{
 			JDBCTemplate.close(rset);
 		}
 
-		Calendar cal = Calendar.getInstance();
+/* 		Calendar cal = Calendar.getInstance();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		String startDate = sdf.format(cal.getTime());
 		cal.add(Calendar.DATE, 7);
-		String endDate = sdf.format(cal.getTime());
-		
-		if(fileName == null){
+		String endDate = sdf.format(cal.getTime()); */
 		
 		// fileName 조회
 		con = null;
@@ -99,6 +106,8 @@ th, tr, td{
 		rset = null;
 		
 		query = "SELECT FILE_NAME FROM TB_FILE WHERE FILE_NO = " + loginUser.getFile_no() + " AND USER_NO = " + loginUser.getUser_no();
+		
+		String fileName = null;
 		
 		try{
 			
@@ -116,18 +125,20 @@ th, tr, td{
 			JDBCTemplate.close(pstmt);
 			JDBCTemplate.close(rset);
 		}
-		
-		} // if문의 끝
 
+		// System.out.println("fileName: " + fileName);
+		
 	%>
 	<div class="contentArea">
-		<h2><b>펫시터 서비스 등록</b></h2>
-		<p>펫시터 서비스를 등록할 수 있습니다.</p>
+		<h2><b>펫시터 서비스 업데이트</b></h2>
+		<p>등록한 펫시터 서비스 상세 내용을 수정할 수 있습니다.</p>
 		<div id="insertFormArea">
-			<form id="insertForm" method="post" action="<%=request.getContextPath()%>/insertPetService.do">
+			<form id="insertForm" method="post" action="<%=request.getContextPath()%>/UpdatePetService.do">
 				<table id="insertTable">
 					<tr>
-						<% System.out.println("fileName: " + fileName); %>
+						<td>
+						<input type="hidden" id="user_no" name="user_no" value="<%= p.getUser_no() %>">
+						<input type="hidden" id="pet_service_regno" name="pet_service_regno" value="<%= p.getPet_service_regno() %>">
 						<td rowspan="13">
 						<%if(fileName != null) {%>
 						<Img class=profileImg style="width:200px;height:200px; border-radius:150px" src="<%=request.getContextPath()%>/images/profileImagesUpload/<%=fileName%>">
@@ -140,15 +151,16 @@ th, tr, td{
 						<td><label>이름 </label>
 						</td>
 						<td>
-						<%=loginUser.getUser_name() %></td>
+						<%= p.getUser_name() %>
+						</td>
 					</tr>
 					<%	
 							String[] fullAddress = null;
 							String address = "잘못된 주소";
 							String zipcode = "잘못된 우편번호";
 							
-							if(loginUser.getAddress().contains("^")){
-							fullAddress = loginUser.getAddress().split("\\^");
+							if(p.getAddress().contains("^")){
+							fullAddress = p.getAddress().split("\\^");
 							address = fullAddress[0];
 							zipcode = fullAddress[1];
 							}
@@ -216,7 +228,7 @@ th, tr, td{
 						<label>서비스 시작 가능일</label>
 						</td>
 						<td>
-						<input type="date" id="contract_start" name="contract_start" value="<%= startDate %>">
+						<input type="date" id="contract_start" name="contract_start" value="<%= p.getContract_start() %>">
 						</td>
 						</tr>
 					<tr>
@@ -224,7 +236,7 @@ th, tr, td{
 						<label>서비스 종료일</label>
 						</td>
 						<td>
-						<input type="date" id="contract_end" name="contract_end" value="<%= endDate %>">
+						<input type="date" id="contract_end" name="contract_end" value="<%= p.getContract_end() %>">
 						</td>
 					</tr>					
 			<tr>
@@ -232,22 +244,22 @@ th, tr, td{
 					<label>펫시팅 이용가격 </label>
 				</td>
 				<td>
-					<input type="number" id="service_charge" name="service_charge">
+					<input type="number" id="service_charge" name="service_charge" value="<%= p.getService_charge() %>">
 				</td>
 			</tr>
 			<tr>
 				<td><label>최대 서비스 가능 동물 수</label>
 				</td>
-				<td> <input type="number" id="pet_count" name="pet_count"></td>
+				<td> <input type="number" id="pet_count" name="pet_count" value="<%= p.getPet_count() %>"></td>
 			</tr>
 			<tr>
 				<td><label>서비스 내용</label></td>
-						<td> <input type="text"
-					id="service_detail" name="service_detail"></td>
+						<td> 
+						<input type="text" id="service_detail" name="service_detail" value="<%= p.getService_detail() %>"></td>
 							<tr>
 				<td><label>제한 사항</label></td>
 						<td> <input type="text"
-					id="service_restrict" name="service_restrict"></td>	
+					id="service_restrict" name="service_restrict" value="<%= p.getService_restrict() %>"></td>	
 			</tr>	
 			</tr>														
 				</table>	
@@ -257,7 +269,7 @@ th, tr, td{
 		<br>
 		<div class="btnsArea" align="center">
 			&nbsp;
-			<button type="submit" id="submit" onclick="insertService()" class="btn btn-success write">등록하기</button>
+			<button type="submit" id="submit" onclick="insertService()" class="btn btn-success write">수정하기</button>
 			&nbsp;
 			<button type="button" class="btn btn-danger cancel">취소하기</button>
 		</div>
