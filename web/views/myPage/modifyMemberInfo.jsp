@@ -396,33 +396,37 @@ border: 1px solid black; */
 										
 										 <%String name = (int)(Math.random()*(999999-100000+1))+100000+""; %>
 										    <form method="post" name="smsForm" action="smssend.jsp">
+										       <div class="phoneArea" align=left>
 										        <input type="hidden" name="action" value="go">
 										        <input type="hidden" name="msg" value="인증번호는 <%=name%> 입니다. 인증번호를 입력해주세요"></textarea>
 										     	<br>
-										     	<span style="float=left">현재번호 :<%=loginUser.getPhone() %></span>
-										     	<span style="margin= 0px 0px 0px 0px">번호:</span>
-										     	<input type="text" id="ineedyou" name="rphone" placeholder="010-0000-0000형식으로 입력해주세요">
+										     	<span style="align:left;">현재번호 : <%=loginUser.getPhone() %></span>
+										     	<span style="margin= 0px 0px 0px 0px">바꿀 번호 : </span>
+										     	<input type="text" style="align:left;" id="ineedyou" name="rphone" placeholder="010-0000-0000형식으로 입력해주세요">
 										        <input type="hidden" name="sphone1" value="010">
 										        <input type="hidden" name="sphone2" value="6551">
 										        <input type="hidden" name="sphone3" value="5979">
 										        <input type="hidden" name="name" value="<%=name%>">
-										        <input type="submit" id="send" value="전송">
+										        
+										        <input type="submit" id="send" style="background-color: #cfb7af;
+															color:white; border-radius: 0.5em; width:50px; border:none; height:30px; font-family: 'Jua', sans-serif;"value="전송">
+										     	</div>
 										    </form>
-										
+											
 										<!-- 수정완료 수정취소 -->
 										<form method="post" action="<%=request.getContextPath()%>/smsCheck.sc">
 										<div class="phone3">
 											<p style="font-size: 15px">인증번호 입력</p>
 											<input type="text" id="code" name="inputNum" size='20' maxlength='20' style="width: 300px; height: 30px; margin: 0; color: black; border-width: 1px">
 										</div>
-										<div class=modifyphone>
-											<button type="submit"
-												style="font-weight: lighter">수정완료</button>
+										<div class=submitandcancle>
+											<button type="submit" id="submit" onclick="#"
+												style="font-weight: lighter">수정하기</button>
 											&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-											<button type="button" id="cancelphone" onclick="#"
-												style="font-weight: lighter">수정취소</button>
+											<button type="submit" id="cancel" onclick="#"
+												style="font-weight: lighter">취소하기</button>
 										</div>
-										</form>
+									</form>
 									</div>
 									
 
@@ -444,12 +448,19 @@ border: 1px solid black; */
 										<% }} %>	 readonly><br>
 				<form method="get" action="<%=request.getContextPath()%>/modifyAdd.ma">			
 				<input type="text" id="postcode"  name="postcode" style="width: 100px; height: 30px;" placeholder="우편번호">
-				<input type="button" onclick="sample6_execDaumPostcode()" style="width: 100px; height: 30px;" value="주소 찾기"><br>
-				<input type="text" id="address"  name="address" style="width: 300px; height: 30px;"  placeholder="주소" >
+				<input type="button" onclick="sample6_execDaumPostcode()" style="background-color: #cfb7af;
+															color:white; border-radius: 0.5em; width:100px; border:none; height:30px; font-family: 'Jua', sans-serif;" value="주소 찾기"><br>
+				<input type="text" id="address"  name="address" value="<%=loginUser.getAddress() %>" style="width: 300px; height: 30px;"  placeholder="주소" >
 				<input type="text" id="addressDetail" name="addressDetail" style="width: 300px; height: 30px;"  placeholder="상세주소">
+					<div class=submitandcancle>
+						<button type="submit" id="submit" style="font-weight: lighter">적용</button>
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<button type="submit" id="cancel" onclick="#"
+							style="font-weight: lighter">취소</button>
+					</div>
+				</form>
 								</div>
 							</td>
-		
 						</tr>
 						<tr>
 							<td width=300px; height=70px>비밀번호</td>
@@ -460,16 +471,25 @@ border: 1px solid black; */
 							</div>
 							</td>
 						</tr>
+						<tr>
+							<td width=300px; height=70px>계좌번호</td>
+							<td colspan="2" width=800px; height=70px>
+							<div class="modifypassword" align="left">
+							<form method="post" action="<%=request.getContextPath()%>/changeAcc.ca">
+							<select name="bankName" style="height:30px; margin:0px;">
+								<option value="국민">국민</option>
+								<option value="신한">신한</option>
+								<option value="농협">농협</option>
+							</select>
+							<input type="text" name="acc" style="height:30px; width:200px; margin:0px;">
+							<button type="submit" style="background-color: #cfb7af;
+															color:white; border-radius: 0.5em; width:50px; border:none; height:30px; font-family: 'Jua', sans-serif;">적용</button>
+							</form>
+							</div>
+						</tr>
 					</table>
-					<div class=submitandcancle>
-						<button type="submit" id="submit" style="font-weight: lighter">적용</button>
-						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						<button type="submit" id="cancel" onclick="#"
-							style="font-weight: lighter">취소</button>
-					</div>
-				</form>
 				</div>
-
+				
 				<!-- 구분선 -->
 				<br> <br> <br> <br> <br>
 				<hr

@@ -25,6 +25,8 @@ public class User implements Serializable{
 	private int article_no;
 	private String sms_number;
 	private int money;
+	private String account_no;
+	private String bank_name;
 	
 	public User(){}
 	
@@ -37,7 +39,7 @@ public class User implements Serializable{
 	public User(int user_no, String email, String user_pwd, int user_type, String user_name, String phone,
 			Date birthday, String gender, String address, String sms_chk, String email_chk, Date enrollDate,
 			String nickname, int user_grade, String pet_auth, int user_status, int file_no, String email_hash,
-			int article_no, String sms_number, int money) {
+			int article_no, String sms_number, int money, String account_no, String bank_name) {
 		this.user_no = user_no;
 		this.email = email;
 		this.user_pwd = user_pwd;
@@ -59,6 +61,8 @@ public class User implements Serializable{
 		this.article_no = article_no;
 		this.sms_number = sms_number;
 		this.money = money;
+		this.account_no = account_no;
+		this.bank_name = bank_name;
 	}
 
 	public int getUser_no() {
@@ -229,6 +233,22 @@ public class User implements Serializable{
 		this.money = money;
 	}
 
+	public String getAccount_no() {
+		return account_no;
+	}
+
+	public void setAccount_no(String account_no) {
+		this.account_no = account_no;
+	}
+
+	public String getBank_name() {
+		return bank_name;
+	}
+
+	public void setBank_name(String bank_name) {
+		this.bank_name = bank_name;
+	}
+
 	@Override
 	public String toString() {
 		return "User [user_no=" + user_no + ", email=" + email + ", user_pwd=" + user_pwd + ", user_type=" + user_type
@@ -236,8 +256,7 @@ public class User implements Serializable{
 				+ ", address=" + address + ", sms_chk=" + sms_chk + ", email_chk=" + email_chk + ", enrollDate="
 				+ enrollDate + ", nickname=" + nickname + ", user_grade=" + user_grade + ", pet_auth=" + pet_auth
 				+ ", user_status=" + user_status + ", file_no=" + file_no + ", email_hash=" + email_hash
-				+ ", article_no=" + article_no + ", sms_number=" + sms_number + ", money=" + money + "]";
+				+ ", article_no=" + article_no + ", sms_number=" + sms_number + ", money=" + money + ", account_no="
+				+ account_no + ", bank_name=" + bank_name + "]";
 	}
-
-
 }
