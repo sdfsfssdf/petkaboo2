@@ -172,14 +172,16 @@ a:hover {
 			<div id="body-div">
 				<div class="div1">
 					<br /> <br />
-					<p>&nbsp;&nbsp;&nbsp;예약 전 확인 해주세요</p>
+					<label>&nbsp;&nbsp;&nbsp;예약 전 확인 해주세요</label>
 					<br />
-					<p>
+					<br>
+					<label>
 						&nbsp;&nbsp; 더이상 우리의 소중한 아이를 낯선곳에 맡기지 마세요. <br>
-						&nbsp;&nbsp;평소와 똑같이 집에서 산책하고 놀아주는 펫카부가 있습니다.
-					</p>
+						&nbsp;&nbsp;&nbsp;평소와 똑같이 집에서 산책하고 놀아주는 펫카부가 있습니다.
+					</label>
 					<br />
 					<br />
+					<br>
 					
 				</div>
 		
@@ -230,7 +232,6 @@ a:hover {
 				<label class=howToPs><input type="radio" name="contract_type" value="방문" />부르기 </label> -->
 			
 				
-					<br />
 					<form name="form1" action="<%=request.getContextPath()%>/insertCtr.ct" method="post">
 
 					
@@ -242,12 +243,18 @@ a:hover {
 								src="http://momojeri.com/web/product/big/201607/33_shop1_658629.jpg"
 								class="PSphoto img-circle img-responsive" alt="Responsive image" />
 							</td>
-							<td><label>&nbsp;&nbsp;&nbsp;&nbsp;이름 : </label></td>
-							<td><%=p.getNickname() %></td>
+							<td><label>&nbsp;&nbsp;&nbsp;&nbsp;닉네임 &nbsp;&nbsp;:&nbsp;&nbsp; </label></td>
+							<td><label><%=p.getNickname() %></label></td>
 						</tr>
 						<tr>
-							<td><label>&nbsp;&nbsp;&nbsp;&nbsp;주소 : </label></td>
-							<td><%=p.getAddress() %></td>
+							<td><label>&nbsp;&nbsp;&nbsp;&nbsp;주소 &nbsp;&nbsp;:&nbsp;&nbsp; </label></td>
+							<td><label><%
+					String addressSplit = p.getAddress();
+					String address;
+					int index = addressSplit.indexOf("^");
+					address = addressSplit.substring(0, index);
+				
+					%> <%=address %></label></td>
 						</tr>
 
 					</table>
@@ -258,13 +265,13 @@ a:hover {
 				
 				<div class="div1 div3">
 					<br />
-					<h4>&nbsp;&nbsp;1.지역을 알려주세요</h4>
+					<h4>&nbsp;&nbsp;1. 지역을 알려주세요</h4>
 					<br /> 
-					&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" id="sample6_postcode" name="zipNo" placeholder="우편번호">
-					&nbsp;&nbsp;&nbsp;&nbsp;<input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기">
+					&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" id="sample6_postcode" name="zipNo" placeholder="우편번호" style="height:35px;" required readonly >
+					&nbsp;&nbsp;<input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기" style="height:35px;" required readonly>
 					<br> 
-						&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" id="sample6_address" name="useraddress1" placeholder="주소"> 
-						&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" id="sample6_address2" name="useraddress2" placeholder="상세주소">
+						&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" id="sample6_address" name="useraddress1" placeholder="주소" style="height:35px;" required readonly> 
+						&nbsp;&nbsp;<input type="text" id="sample6_address2" name="useraddress2" placeholder="상세주소" style="height:35px;" required>
 
 
 				<!-- 	&nbsp;&nbsp;&nbsp;<input type="checkbox" /> &nbsp;&nbsp;기본주소로 설정하기 -->
@@ -279,11 +286,11 @@ a:hover {
 				
 				<div class="div1 div4">
 					<br />
-					<h4>&nbsp;&nbsp;2.날짜를 알려주세요</h4>
+					<h4>&nbsp;&nbsp;2. 날짜를 알려주세요</h4>
 					&nbsp;&nbsp;&nbsp;&nbsp; <input type="Date" placeholder="시작 날짜 입력"
-						style="width: 200px;" name="startdate" required /> - <input
-						type="Date" placeholder="종료 날짜 입력" style="width: 200px;"
-						name="enddate" required /> <br /> <br /> <br />
+						style="width: 200px; height:35px;" name="startdate" required /> - <input
+						type="Date" placeholder="종료 날짜 입력" style="width: 200px;  height:35px;"
+						name="enddate"  required /> <br /> <br /> <br />
 				</div>
 				
 				
@@ -295,15 +302,15 @@ a:hover {
 				
 				<div class="div1 div5">
 				<br />
-				<h4>&nbsp;&nbsp;3.연락받을 휴대전화 번호를 알려주세요</h4>
-				&nbsp;&nbsp;&nbsp;&nbsp;<select name="phoneNum1" id="phoneNum1">
+				<h4>&nbsp;&nbsp;3. 연락받을 휴대전화 번호를 알려주세요</h4>
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<select name="phoneNum1" id="phoneNum1" style=" height:35px;" required>
 					<option value="010">010</option>
 					<option value="011">011</option>
 					<option value="017">017</option>
 					<option value="016">016</option>
 					<option value="019">019</option>
-				</select> &nbsp;&nbsp;&nbsp;&nbsp;
-				<input type="text" name="phoneNum2" placeholder=" ' - , . / '를 제외한 나머지 번호 입력" style="width: 250px;" />&nbsp;&nbsp;
+				</select> &nbsp;
+				<input type="text" name="phoneNum2" placeholder=" ' - , . / '를 제외한 나머지 번호 입력" style="width: 300px;  height:35px;" required/>&nbsp;&nbsp;
 				<br /> 
 				<br /> <br />
 			    </div>
@@ -329,6 +336,8 @@ a:hover {
 				
 					<input type="hidden" id="revLevel" name="revLevel" value="2">
 					<input type="hidden" id="no" name="no" value="<%= p.getPet_service_regno() %>">
+					<input type="hidden" id="petName" name="petName" value="<%=p.getUser_name() %>">
+					<input type="hidden" id="petAddress" name="petAddress" value="<%=p.getAddress()%>">
 					<input type="hidden" id="pet_category" name="pet_category" value="<%=p.getPet_category() %>">
 					
 

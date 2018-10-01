@@ -3,9 +3,15 @@
 <%
 	User user = (User)(session.getAttribute("loginUser"));
 	Payment py = (Payment)request.getAttribute("py");
+	PaymentInfo pi = (PaymentInfo)request.getAttribute("pi");
 /* 	PetsitterService p = (PetsitterService)request.getAttribute("p"); */
 %>
+<%-- 	<%=if(py != null) {
+		alert('충전이 완료되었습니다');
+	
+	}else{ %>
 
+	<%} %> --%>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -15,12 +21,12 @@
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <!-- iamport.payment.js -->
-<script type="text/javascript"
+<!-- <script type="text/javascript"
 	src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 <script>
 	var IMP = window.IMP; // 생략가능
 	IMP.init('imp97048672');
-</script>
+</script> -->
 
 
 <!-- 합쳐지고 최소화된 최신 CSS -->
@@ -157,77 +163,90 @@ img {
 			<br /> <br /> <br /> <br />
 			<div class="RsvStatement">
 				<div class="PSid">
-					<br /> <br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label>예약번호 :
-						<input type="text" size='18'
-						style="background-color: transparent; border-style: none;"
-						readonly onfocus="this.blur();">
+					<br /> <br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label style="font-size:15px";>예약번호 : <%=pi.getContract_no() %>
+						
 					</label>
 				</div>
 				<br />
 
 
 				<div class="RsvDetailed">
-					<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label>예약신청일 : <input
+					<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label>예약신청일 &nbsp;&nbsp;:&nbsp;&nbsp; <%=pi.getContract_date() %><input
 						type="text" size='18'
 						style="background-color: transparent; border-style: none;"
 						readonly onfocus="this.blur();"></label> <br /> <br />
-					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label>주소 : <input
-						type="text" size='50'
-						style="background-color: transparent; border-style: none;"
-						readonly onfocus="this.blur();"></label> <br /> <br />
-					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label>펫시팅 시작일 : <input
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label>주소 &nbsp;&nbsp;:&nbsp;&nbsp;<%
+					String addressSplit = pi.getUserAddress();
+					String address;
+					int index = addressSplit.indexOf("^");
+					address = addressSplit.substring(0, index);
+				
+					%> <%=address %></label> <br /> <br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label>펫시팅 시작일 &nbsp;&nbsp;:&nbsp;&nbsp; <%=pi.getContract_start() %> <input
 						type="text" size='18'
 						style="background-color: transparent; border-style: none;"
 						readonly onfocus="this.blur();"></label> <br /> <br />
-					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label>펫시팅 종료일 : <input
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label>펫시팅 종료일 &nbsp;&nbsp;:&nbsp;&nbsp; <%=pi.getContract_end() %><input
 						type="text" size='18'
 						style="background-color: transparent; border-style: none;"
 						readonly onfocus="this.blur();"></label> <br /> <br />
-					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label>신청자 : <input
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label>신청자 &nbsp;&nbsp;:&nbsp;&nbsp; <%=pi.getUserName() %><input
 						type="text" size='18'
 						style="background-color: transparent; border-style: none;"
 						readonly onfocus="this.blur();"></label> <br /> <br />
 
 				</div>
 				<div class="RsvDetailed">
-					<br /> <br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label>요금 상세</label>
-					<br /> <br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label>목록 : <input
-						type="text" size='18'
-						style="background-color: transparent; border-style: none;"
-						readonly onfocus="this.blur();"></label> <br /> <br />
-					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label>목록 : <input
-						type="text" size='18'
-						style="background-color: transparent; border-style: none;"
-						readonly onfocus="this.blur();"></label> <br /> <br />
-					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<br /> <br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label>요금 상세</label>
+					<br /> <br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label>목록 &nbsp;&nbsp;:&nbsp;&nbsp; <%=pi.getPet_categoryname() %> &nbsp; <%=pi.getPet_count() %> 마리
+					<%String ct = pi.getContract_type(); 
+					if(ct == "C"){
+						ct = "위탁";
+					}else{
+						ct = "방문";
+					}
+					%>
+					&nbsp;&nbsp;<%=ct %>&nbsp;서비스&nbsp; <%=pi.getService_charge() %> 원</label> <br /> <br />
+					
 					<hr />
 					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 					&nbsp;&nbsp;&nbsp;&nbsp;
 					
+					<br />
 					
-					
-					<label>결제 포인트  </label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					<input type="text" readonly>&nbsp;&nbsp;&nbsp;원
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label>결제 포인트  </label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<input type="text" value="<%=pi.getService_charge() * pi.getPet_count()%>" readonly>&nbsp;&nbsp;&nbsp;원
 						<br>
 						<div class="point">
 						<br>
 						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 						<label>보유 포인트 </label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						<input type="text" value=<%=user.getMoney() %>readonly> &nbsp;&nbsp;&nbsp;원&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<input type="text" value="<%=user.getMoney() %>"readonly> &nbsp;&nbsp;원&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 							
 							<br>
-							<br>
-							<form method="post" action="<%=request.getContextPath()%>/insertRecharge.rc" id="testForm">
+					
+							<%-- <form method="post" action="<%=request.getContextPath()%>/insertRecharge.rc" id="testForm">
 							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 							<label>충전할 금액 </label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							<input type="hidden" name="contract_no" value="1">
 							<input type="text" value="" name="paid_amount" id="paid_amount">
 							<input type="hidden" id="imp_uid" name="imp_uid">&nbsp;&nbsp;원&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 							<input type="hidden" id="pay_type" name="pay_type">
 							<input type="hidden" id="apply_num" name="apply_num">
+							<input type="hidden" name="check" value=2>
 							</form>
-							<br>
+							<br> --%>
 							
-							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<!-- 	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 							<label class=howToPs><input type="radio" id="card1"
 						value="card" name="howToPS" />&nbsp;카드결제&nbsp;</label>&nbsp;&nbsp;&nbsp;&nbsp;
 
@@ -236,7 +255,7 @@ img {
 				
 				
 					<button id="clickrecharge">충전하기</button>
-							
+							 -->
 						
 					</div>
 
@@ -244,6 +263,8 @@ img {
 					<br />
 					<hr />
 					<br />
+					
+				
 					<button class="btn btn-default btnSt" type="submit">결제하기</button>
 					<button class="btn btn-default btnSt" type="reset">취소</button>
 					
@@ -289,7 +310,7 @@ img {
 
 
 
-<script>
+<%-- <script>
 
 
 		$(function() {
@@ -334,7 +355,7 @@ img {
 								}
 							})
 		})
-	</script>
+	</script> --%>
 	<%
 		} else {
 	%>

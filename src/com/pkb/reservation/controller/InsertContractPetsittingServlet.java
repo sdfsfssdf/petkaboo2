@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.swing.text.View;
 
 import com.pkb.member.model.vo.User;
 import com.pkb.petsitterService.model.service.PetsitterMainService;
@@ -50,8 +51,8 @@ public class InsertContractPetsittingServlet extends HttpServlet {
 		// 테스트코드
 		System.out.println("revLevel" + revLevel);
 		
-		String page = null;
-		
+		String page = "";
+	
 		if(p != null){
 			
 			if(revLevel == 0){
@@ -108,19 +109,37 @@ public class InsertContractPetsittingServlet extends HttpServlet {
 				int result = new ContractService().insertContractPetsitting(c);
 					
 				System.out.println("여기 왔다");
+				
+				
 				if(result > 0){	
 					
-					page = "views/status/RsvStatement.jsp";
-					response.sendRedirect(request.getContextPath() + "/selectCtrPetsitting.ct");
+					Contract c2 = new ContractService().searchContractPetsitting(user_no, servno);
 					
-				}else{
-					request.setAttribute("msg", "예약 실패");
-					request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
-				}
+					if(c2 != null){
+						page = "views/status/RsvStatement.jsp";
+						request.setAttribute("c", c2);
+						
+					}else{
+						page= "views/common/errorPage.jsp";
+						request.setAttribute("msg", "예약 조회실패");
+					
+					}
+					
 			
+				}else{
+					page= "views/common/errorPage.jsp";
+					request.setAttribute("msg", "예약 실패");
+		
+										
+					
+				}
+				
+				  RequestDispatcher view = request.getRequestDispatcher(page);
+	               view.forward(request, response);
+				
+		
 			}
-			RequestDispatcher view = request.getRequestDispatcher(page);
-			view.forward(request, response);
+			
 	}
 		
 }	

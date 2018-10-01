@@ -1,6 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8" import="com.pkb.payment.model.vo.*, java.util.*"%>
+	<% 
+   CyberMoney cm = (CyberMoney)request.getAttribute("cm");
+	String check = (String)request.getAttribute("check");
+	
+%>
 
+ 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -277,6 +283,8 @@ th, td {
 							<br>
 							<form method="post" action="<%=request.getContextPath()%>/insertRecharge.rc" id="testForm">
 							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							<input type="hidden" name="user_no" value="<%=loginUser.getUser_no() %>">
+							<input type="hidden" name="check" value=1>
 							<label>충전할 금액 </label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 							<input type="text" value="" name="paid_amount" id="paid_amount">
 							<input type="hidden" id="imp_uid" name="imp_uid">&nbsp;&nbsp;원&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -294,9 +302,10 @@ th, td {
 				
 				
 					<button id="clickrecharge">충전하기</button>
-							
+						
 						
 					</div>
+
 
 					<br> <br>
 
@@ -433,6 +442,16 @@ th, td {
 			</div>
 		</div>
 	</div>
+	<div id="id01" class="w3-modal">
+  <div class="w3-modal-content">
+    <div class="w3-container">
+      <span onclick="document.getElementById('id01').style.display='none'" 
+      class="w3-closebtn">&times;</span>
+      <p>Some text in the Modal..</p>
+      <p>Some text in the Modal..</p>
+    </div>
+  </div>
+</div>
 <script>
 
 
@@ -441,10 +460,15 @@ th, td {
 					.click(
 							function() {
 								if (!$("input:radio[name=howToPS]:checked").val()) {
-									alert('충전에 필요한 결제수단을 선택해주세요');
+									alert('충전에 필요한 결제수단을 선택해주세요.');
 									return false;
 								} else if ($("input:radio[name=howToPS]:checked").val() == "card") {
+									
 									var paid_amount = document.getElementById('paid_amount').value;
+									if(paid_amount == null || paid_amount == ""){
+										alert('금액을 입력해주세요')
+									}
+									
 									IMP.request_pay(
 													{
 														pg : 'jtnet',
@@ -472,13 +496,24 @@ th, td {
 													})
 
 								} else {
-
+									
+									
+									
+										
 									
 
 								}
 							})
 		})
 	</script>
+	<%if(cm != null){ %>
+ <script>
+ 	alert('충전이 완료되었습니다.');
+ 	
+ </script>
+ <%} %>
+ 
+	
 	<%
 		} else {
 

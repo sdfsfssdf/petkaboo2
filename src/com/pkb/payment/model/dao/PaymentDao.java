@@ -19,6 +19,7 @@ import com.pkb.notice.model.vo.Notice;
 import com.pkb.payment.model.vo.CyberMoney;
 import com.pkb.payment.model.vo.PayHistory;
 import com.pkb.payment.model.vo.Payment;
+import com.pkb.payment.model.vo.PaymentInfo;
 import com.pkb.petsitterService.model.vo.PetsitterService;
 import com.pkb.reservation.model.vo.Contract;
 
@@ -220,7 +221,7 @@ public class PaymentDao {
 		Contract c = null;
 		PetsitterService p = null;
 		CyberMoney cm = null;
-
+    
 		String query = prop.getProperty("selectRecPay");
 
 		try {
@@ -388,6 +389,87 @@ public class PaymentDao {
 		}
 		return count;
 	}
+
+	public CyberMoney searchCyberMoney(Connection con, int user_no) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		CyberMoney cm = null;
+		
+		String query = prop.getProperty("searchCyberMoney");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, user_no);
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()){
+				cm = new CyberMoney();
+				cm.setMoney_no(rset.getInt("money_no"));
+				cm.setUser_no(rset.getInt("user_no"));
+				cm.setMoney(rset.getInt("money"));
+				
+				
+			}
+		
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+		} finally{
+			close(rset);
+			close(pstmt);
+			
+			
+		}
+		
+		return cm;
+	}
+
+
+	public PaymentInfo searchRecPayInfo(Connection con, int contract_no, int user_no) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		PaymentInfo pi = null;
+		
+		String query = prop.getProperty("searchRecPayInfo");
+		
+		try {
+			
+
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, contract_no);
+			pstmt.setInt(2, user_no);
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()){
+				pi = new PaymentInfo();
+				
+				pi.setUserAddress(rset.getString("address"));
+				pi.setUserName(rset.getString("user_name"));
+				pi.setContract_no(rset.getInt("contract_no"));
+				pi.setContract_date(rset.getDate("contract_date"));
+				pi.setContract_start(rset.getDate("contract_start"));
+				pi.setContract_end(rset.getDate("contract_end"));
+				pi.setContract_status(rset.getString("contract_status"));
+				pi.setPet_service_regno(rset.getInt("pet_service_regno"));
+				pi.setContract_type(rset.getString("contract_type"));
+				pi.setService_charge(rset.getInt("service_charge"));
+				pi.setPet_count(rset.getInt("pet_count"));
+				pi.setService_status(rset.getString("service_status"));
+				pi.setPet_categoryname(rset.getString("pet_categoryname"));
+				
+			}
+				
+			}catch(SQLException e){
+				e.printStackTrace();
+			}finally{
+				close(rset);
+				close(pstmt);
+			}
+			
+		
+		return pi;
+	}
+
 
 	public ArrayList<Payment> searchMainInfo(Connection con, int currentPage, int limit, String date, String method,
 			String division) {
