@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.pkb.member.model.service.UserService;
+import com.pkb.member.model.vo.User;
 
 /**
  * Servlet implementation class ChangePwdServlet
@@ -29,13 +30,18 @@ public class ChangePwdServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String newPwd = request.getParameter("newPwd");
-		String email = (String)request.getSession().getAttribute("email");
+		User loginUser = (User)request.getSession().getAttribute("loginUser");
+		String email = loginUser.getEmail();
 		
 		int result = new UserService().changePwd(newPwd, email);
 		
+		String page="";
+		
 		if(result>0){
-			System.out.println("변경완료");
+			page = "views/member/changePwdCheck.jsp";
+			response.sendRedirect(page);
 		}else{
+			page = "views/common/errorPage.jsp";
 			System.out.println("실패");
 		}
 	}

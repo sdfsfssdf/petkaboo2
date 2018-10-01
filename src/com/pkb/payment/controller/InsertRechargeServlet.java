@@ -83,10 +83,11 @@ public class InsertRechargeServlet extends HttpServlet {
 			CyberMoney cm = new PaymentService().searchCyberMoney(user_no);
 			
 			if(cm != null){
-				String check2 = "check";
-				page = "views/myPage/mypagemain.jsp";
+				/*String check2 = "check";
+				page = "views/myPage/mypagemain.jsp";*/
 				request.setAttribute("cm", cm);
-				request.setAttribute("check", check2);
+				response.sendRedirect("views/myPage/mypagemain.jsp");
+				/*request.setAttribute("check", check2);*/
 			}else{
 				page="views/common/errorPage";
 				request.setAttribute("msg", "충전 실패");

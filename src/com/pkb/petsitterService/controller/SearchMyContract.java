@@ -1,4 +1,4 @@
-package com.pkb.payment.controller;
+package com.pkb.petsitterService.controller;
 
 import java.io.IOException;
 
@@ -8,23 +8,22 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-import com.pkb.member.model.vo.User;
-import com.pkb.payment.model.service.PaymentService;
-import com.pkb.payment.model.vo.PaymentInfo;
+import com.pkb.petsitterService.model.service.PetsitterMainService;
+import com.pkb.petsitterService.model.vo.PetsitterService;
+import com.pkb.reservation.model.vo.Contract;
 
 /**
- * Servlet implementation class SelectRecPayServlet
+ * Servlet implementation class SearchMyContract
  */
-@WebServlet("/searchRecPayInfo.py")
-public class SearchRecPayInfoServlet extends HttpServlet {
+@WebServlet("/searchMyContract.do")
+public class SearchMyContract extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public SearchRecPayInfoServlet() {
+    public SearchMyContract() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -33,33 +32,33 @@ public class SearchRecPayInfoServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// 테스트 코드
+		System.out.println(request.getParameter("contractno"));
+		System.out.println(request.getParameter("petsitterno"));
 		
-		String contract_no2 = request.getParameter("contract_no");
-		int contract_no = Integer.parseInt(contract_no2);
-		HttpSession session = request.getSession();
-		int user_no = ((User)(session.getAttribute("loginUser"))).getUser_no();
+		int psrno = Integer.parseInt(request.getParameter("contractno"));
+		int petsitterno = Integer.parseInt(request.getParameter("petsitterno"));
+		String page = null;
 		
-		System.out.println(contract_no + "랑" + user_no + "들어옴");
+		PetsitterService p = new PetsitterMainService().selectOne(psrno);
+		Contract c = null;
 		
-		PaymentInfo pi = new PaymentService().searchRecPayInfo(contract_no, user_no);
-		
-		
-		
-		String page="";
-		if(pi != null){
-			page = "views/status/contractProcess.jsp";
-			request.setAttribute("pi", pi);
-			
+		// 조회된 펫시터 서비스가 있다면
+		if(p != null){
+			c = new PetsitterMainService().selectOneContract(psrno, petsitterno);
+			page ="views/searchPetsitter/petSittingRsvApply.jsp";	
+			request.setAttribute("p", p);		
 		}else{
 			page = "views/common/errorPage.jsp";
-			request.setAttribute("msg", "조회실패");
-			
+			request.setAttribute("msg", "펫시터 상세 정보 조회 실패");
 		}
 		
 		RequestDispatcher view = request.getRequestDispatcher(page);
 		view.forward(request, response);
+		
+	
+		
 	}
-
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)

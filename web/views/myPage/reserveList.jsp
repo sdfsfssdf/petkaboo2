@@ -15,6 +15,16 @@
 
 
 <!-- 수정함 -->
+<%-- <script language = javascript>
+function btn_click(str){
+	if(str == "Reservation"){
+		form.action="<%=request.getContextPath()%>/selectRecPay.rp";
+	}else if(str == "Review"){
+	form.action="<%=request.getContextPath()%>/review.wr";
+	}
+}
+</script> --%>
+<!-- 수정함 -->
 <title>Insert title here</title>
 
 <style>
@@ -86,7 +96,8 @@
 			<%
 			if( rsvList.size() != 0) {idx= i ;}%>
 		<!--  이거 테이블도 여러개지만 반복문으로 처리할 것... -->
-		<form name="form" method="post"> <!-- 수정함 -->
+
+		<form name="form" id="form1" action="" method="post" onsubmit="return false;"> <!-- 수정함 -->
 		<input type="text" name="idx" id="idx" value="<%=i %>">
 		<input type="text" name="contractNo" value="<%=rsvList.get(i).getContract_no() %>">
 		<input type="text" name="petName" value="<%=rsvList.get(i).getPet_name() %>">
@@ -115,8 +126,8 @@
 			<!-- 수정함 -->
 					<input type="hidden" name="contract_no" id="contract_no" value="<%=rsvList.get(i).getContract_no() %>">
 					<input type="hidden" name="user_no" id="user_no" value="<%=loginUser.getUser_no() %>">
-					<input type="submit" id = "goReserv" name = "goReserv" class="btn btn-success" value="바로예약" onclick='btn_click("Reservation")'>
-					<input type="submit" id = "goRev" name="goRev" class="btn btn-info" value="리뷰남기기" onclick='btn_click("Review")'></td>
+					<input type="button" id = "goReserv" name = "goReserv" class="btn btn-success" value="바로예약" onclick='btn_click("Reservation")'>
+					<input type="button" id = "goRev" name="goRev" class="btn btn-info" value="리뷰남기기" onclick='btn_click("Review")'></td>
 				</tr>
 			<!-- 수정함 -->
 
@@ -179,18 +190,28 @@
     </div>
   </div>
   
+
 <script language = javascript>
 function btn_click(str){
+	alert("들와ㅅㅂ");
+	var form = document.form1;
 	if(str == "Reservation"){
 		form.action="<%=request.getContextPath()%>/selectRecPay.rp";
 	}else if(str == "Review"){
 	form.action="<%=request.getContextPath()%>/review.wr";
 	}
+	alert("dddddd");
+	alert(form.contract_no.value);
+	
+	form.submit();
+	
 }
+
+
 </script>
 <!-- 수정함 -->
 
-
+  </script>
   
 </body>
 </html>

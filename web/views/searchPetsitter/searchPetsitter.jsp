@@ -185,6 +185,7 @@ table.listArea td {
 <script type="text/javascript"
 	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=7fe9ccb116e5c90860fd1bde084cf5a1"></script>
 </head>
+<!--
 <script>
 	window.onload = function test1() {
 		navigator.geolocation.getCurrentPosition(function(position) {
@@ -228,6 +229,7 @@ table.listArea td {
 		});
 	}
 </script>
+ -->
 <body>
 	<%@include file="/views/common/menubar.jsp"%>
 	<div class="SearchFormArea">
@@ -235,6 +237,7 @@ table.listArea td {
 	</div>
 	<div class="SearchBodyArea">
 	<div id="map" style="width:400px; height:400px;">
+	<!-- 
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=발급받은 APP KEY를 넣으시면 됩니다.">
 	</script>
 	<script>
@@ -244,9 +247,10 @@ table.listArea td {
 					  };
 		var map = new daum.maps.Map(container, options);
 	</script>
-	 
+	 -->
+	  
 	</div>	
-	<button id="test">위도 경도 변환 사용해보기.</button>
+	<!-- <button id="test">위도 경도 변환 사용해보기.</button>
 	<script>
 		$(function(){
 			$('#test').click(function(){
@@ -255,6 +259,7 @@ table.listArea td {
 		})
 
 	</script>
+	 -->
 		<div class="new-ps-body">
 				<% for(PetsitterService p : list){ %>
 				<table id="listArea" class="listArea">

@@ -1,26 +1,26 @@
-package com.pkb.member.controller;
+package com.pkb.payment.controller;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.pkb.member.model.service.UserService;
-import com.pkb.member.model.vo.User;
+import com.pkb.payment.model.service.PaymentService;
 
 /**
- * Servlet implementation class ChangePwdServlet
+ * Servlet implementation class InsertPaymentGoServlet
  */
-@WebServlet("/checkPwd.me")
-public class CheckPwdServlet extends HttpServlet {
+@WebServlet("/insertUseMoney.py")
+public class InsertUseMoneyServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public CheckPwdServlet() {
+    public InsertUseMoneyServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -29,19 +29,17 @@ public class CheckPwdServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String currentPwd = request.getParameter("user_pwd");
-		User loginUser = (User)request.getSession().getAttribute("loginUser");
-		String email = loginUser.getEmail();
+		int user_no = Integer.parseInt(request.getParameter("user_no"));
+		int contract_no = Integer.parseInt(request.getParameter("contract_no"));
 		
-		int result = new UserService().checkPwd(currentPwd,email);
-		System.out.println("비번확인"+result);
-		if(result == 1){
-			response.getWriter().print(result);
-			request.getRequestDispatcher("changePwd.me").forward(request, response);
-		}else{
-			response.getWriter().print(result);
-			response.sendRedirect("views/myPage/modifyPassword.jsp");
-		}
+		System.out.println("잘 넘어오나");
+		
+		int result = new PaymentService().insertUseMoney(user_no, contract_no);
+		
+		
+		
+		
+		
 	}
 
 	/**

@@ -2,6 +2,7 @@ package com.pkb.payment.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -10,6 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.pkb.common.Paging;
 import com.pkb.member.model.vo.User;
 import com.pkb.payment.model.service.PaymentService;
 import com.pkb.payment.model.vo.Payment;
@@ -33,28 +35,48 @@ public class SelectCyberMoneyHistoryServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("일단 내역서 서블릿부터 만든다");
-		
 		User loginUser = (User) request.getSession().getAttribute("loginUser");
-		System.out.println("보이냐 보이면 끝 :" + loginUser.getMoney());
-		String pay_date = request.getParameter("pay_date");
-		String pay_method=request.getParameter("pay_method");
-		
-		
-		
-		ArrayList<Payment> inquiry= new PaymentService().selectListInquiry(pay_date,pay_method);
-		
-		System.out.println();
-		String page = "";
-		
-//		if(balance !=null){
-		page="views/myPage/mypagemain.jsp";
-//		}else{
-//			page="views/common/errorPage.jsp";
-//		}
 
+//		여기부터 복사
+		String pay_date = request.getParameter("pay_date");
+		String pay_method = request.getParameter("pay_method");
+		
+		
+		System.out.println(pay_date);
+		System.out.println(pay_method);
+		
+		Paging pg = new Paging(1, 10);
+
+		if (request.getParameter("currentPage") != null) {
+			pg.setCurrentPage(Integer.parseInt(request.getParameter("currentPage")));
+		}
+
+		pg.setListCount(new PaymentService().selectListInquiryCount(loginUser.getUser_no(),pay_date,pay_method));
+
+		pg.setMaxPage((int) ((double) pg.getListCount() / pg.getLimit() + 0.9));
+
+		pg.setStartPage((((int) ((double) pg.getCurrentPage() / pg.getLimit() + 0.9)) - 1) * pg.getLimit() + 1);
+
+		pg.setEndPage(pg.getStartPage() + pg.getLimit() - 1);
+
+		if (pg.getMaxPage() < pg.getEndPage()) {
+			pg.setEndPage(pg.getMaxPage());
+		}
+
+		HashMap<String, Object> totalInfo = new PaymentService().searchMainInfo(pg.getCurrentPage(), pg.getLimit(),pay_date,pay_method);
+
+		String page = "";
+		if(totalInfo != null){
+			page = "views/admin/paymentManage/cMoneyManage.jsp";
+			request.setAttribute("totalInfo", totalInfo);
+			request.setAttribute("pg", pg);
+		} else {
+			page = "views/common/errorPage.jsp";
+			request.setAttribute("msg", "(관리자 페이지)사이버머니 관리페이지 조회 실패 ");
+		}
 		RequestDispatcher view = request.getRequestDispatcher(page);
 		view.forward(request, response);
+		
 	}
 
 	/**
