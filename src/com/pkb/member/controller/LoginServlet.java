@@ -16,25 +16,15 @@ import com.pkb.member.model.service.UserService;
 import com.pkb.member.model.vo.User;
 
 
-
-/**
- * Servlet implementation class LoginServlet
- */
 @WebServlet("/login.me")
 public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
     public LoginServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//request.setCharacterEncoding("UTF-8");
 		
@@ -75,10 +65,20 @@ public class LoginServlet extends HttpServlet {
 		if(loginUser != null){
 			HttpSession session = request.getSession();
 			session.setAttribute("loginUser", loginUser);
+			
 			if(loginUser.getUser_type()==9){
 				response.sendRedirect("views/admin/main/adminMain.jsp");
 			}else{
-			response.sendRedirect("index.jsp");
+				if(loginUser.getUser_status()==4){
+					request.getSession().invalidate();
+					response.sendRedirect("views/member/warnedPage.jsp");	
+				}
+				else if(loginUser.getUser_status()==2){
+					request.getSession().invalidate();
+					response.sendRedirect("views/member/leaveMemberPage.jsp");
+				}else if(loginUser.getUser_status()==1){
+					response.sendRedirect("index.jsp");
+				}
 			}
 		}else{
 			request.setAttribute("msg", "로그인 실패!");

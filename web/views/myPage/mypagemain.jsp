@@ -7,12 +7,14 @@
 
 	System.out.println(list);
 	
+
 /* 	Paging pg = (Paging) request.getAttribute("pg");
 	int listCount = pg.getListCount();
 	int currentPage = pg.getCurrentPage();
 	int maxPage = pg.getMaxPage();
 	int startPage = pg.getStartPage();
 	int endPage = pg.getEndPage(); */
+
 %>
 
  
@@ -462,7 +464,9 @@ th, td {
   </div>
   
   <!-- 페이지 처리 -->
+
 		<%-- <div class="spaceDiv" align="center">
+
 			<div class="pigingArea">
 				<button class="btn btn-default"
 					onclick="location.href='<%=request.getContextPath()%>/selectCyberMoneyHistory.pm?currentPage=1'"><<</button>
@@ -513,8 +517,10 @@ th, td {
 				<button class="btn btn-default"
 					onclick="location.href='<%=request.getContextPath()%>/selectCyberMoneyHistory.pm?currentPage=<%=maxPage%>'">>></button>
 			</div>
+
 	</div>
    --%>
+
 </div>
 <script>
 

@@ -125,6 +125,7 @@ public class PaymentDao3 {
 				p.setImp_uid(rs.getString("import_auth_no"));
 				p.setAccount_no(rs.getString("account_no"));
 				p.setEmail(rs.getString("email"));
+				
 
 				plist.add(p);
 			}
@@ -216,6 +217,9 @@ public class PaymentDao3 {
 				hmap.put("contract_start", rs.getString("contract_start"));
 				hmap.put("contract_end", rs.getString("contract_end"));
 				hmap.put("email",rs.getString("email"));
+				hmap.put("pet_count", rs.getInt("pet_count")+"");
+				hmap.put("service_charge", rs.getInt("service_charge")+"");
+				hmap.put("pay_method", rs.getString("pay_method"));
 				totalList.add(hmap);
 			}
 		} catch (SQLException e) {
@@ -272,7 +276,6 @@ public class PaymentDao3 {
 			
 			while(rs.next()){
 				hmap = new HashMap<String,String>();
-				hmap = new HashMap<String,String>();
 				hmap.put("pay_no", rs.getInt("pay_no")+"");
 				hmap.put("user_no", rs.getInt("user_no")+"");
 				hmap.put("pay_amount", rs.getInt("pay_amount")+"");
@@ -281,6 +284,9 @@ public class PaymentDao3 {
 				hmap.put("contract_start", rs.getString("contract_start"));
 				hmap.put("contract_end", rs.getString("contract_end"));
 				hmap.put("email",rs.getString("email"));
+				hmap.put("pet_count", rs.getInt("pet_count")+"");
+				hmap.put("service_charge", rs.getInt("service_charge")+"");
+				hmap.put("pay_method", rs.getString("pay_method"));
 				totalList.add(hmap);
 			}
 		} catch (SQLException e) {

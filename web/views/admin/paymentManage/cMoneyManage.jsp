@@ -6,6 +6,8 @@
 	HashMap<String,Integer> todayInfo = (HashMap<String,Integer>)totalInfo.get("todayInfo");
 	ArrayList<Payment> plist = (ArrayList<Payment>)totalInfo.get("plist");
 	ArrayList<HashMap<String,String>> ilist = (ArrayList<HashMap<String,String>>)totalInfo.get("incomeList");
+	System.out.println(ilist.size());
+	System.out.println(ilist);
 	Paging pg = (Paging) request.getAttribute("pg");
 	int listCount = pg.getListCount();
 	int currentPage = pg.getCurrentPage();
@@ -78,10 +80,11 @@
 					<th>수수료</th>
 					<th>실수입</th>
 				</tr>
-				<%if(ilist == null) { %>
+				<%if(ilist == null || ilist.size() == 0) { %>
 					<tr align="center">
 						<td><%=todayInfo.get("count") %></td>
 						<td><%=todayInfo.get("totalAmout") %></td>
+						<td>-</td>
 						<td>-</td>
 						<td>-</td>
 						<td>-</td>
@@ -92,12 +95,20 @@
 						<tr align="center">
 							<td ><%=todayInfo.get("count") %></td>
 							<td ><%=todayInfo.get("totalAmout") %></td>
-							<td><%=ilist.get(0).get("category")%></td>
-							<td><%=ilist.get(0).get("count") %></td>
-							<td><%=ilist.get(0).get("totalIncome") %></td>
-							<td><%=ilist.get(0).get("rate") %>%</td>
-							<td><%=((Double.parseDouble(ilist.get(0).get("totalIncome")))*(Double.parseDouble(ilist.get(0).get("rate")) * 0.01))%></td>
-							<% totalIncom += ((Double.parseDouble(ilist.get(0).get("totalIncome")))*(Double.parseDouble(ilist.get(0).get("rate")) * 0.01)); %>
+							<%if(ilist.get(0) == null) {%>
+								<td>-</td>
+								<td>-</td>
+								<td>-</td>
+								<td>-</td>
+								<td>-</td>
+							<%} else {%>
+								<td><%=ilist.get(0).get("category")%></td>
+								<td><%=ilist.get(0).get("count") %></td>
+								<td><%=ilist.get(0).get("totalIncome") %></td>
+								<td><%=ilist.get(0).get("rate") %>%</td>
+								<td><%=((Double.parseDouble(ilist.get(0).get("totalIncome")))*(Double.parseDouble(ilist.get(0).get("rate")) * 0.01))%></td>
+								<% totalIncom += ((Double.parseDouble(ilist.get(0).get("totalIncome")))*(Double.parseDouble(ilist.get(0).get("rate")) * 0.01)); %>
+							<%} %>
 						</tr>
 					<%} else  {%>
 						<tr align="center">
