@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8" import="com.pkb.payment.model.vo.*, java.util.*,com.pkb.common.Paging,java.util.*"%>
 	<% 
   	 CyberMoney cm = (CyberMoney)request.getAttribute("cm");
+
 	String check = (String)request.getAttribute("check");
 	ArrayList<Payment> list = (ArrayList<Payment>)request.getAttribute("list");
 
@@ -9,11 +10,14 @@
 	
 
 /* 	Paging pg = (Paging) request.getAttribute("pg");
+
 	int listCount = pg.getListCount();
 	int currentPage = pg.getCurrentPage();
 	int maxPage = pg.getMaxPage();
 	int startPage = pg.getStartPage();
+
 	int endPage = pg.getEndPage(); */
+
 
 %>
 
@@ -463,9 +467,11 @@ th, td {
     </div>
   </div>
   
+
   <!-- 페이지 처리 -->
 
 		<%-- <div class="spaceDiv" align="center">
+
 
 			<div class="pigingArea">
 				<button class="btn btn-default"
@@ -518,8 +524,10 @@ th, td {
 					onclick="location.href='<%=request.getContextPath()%>/selectCyberMoneyHistory.pm?currentPage=<%=maxPage%>'">>></button>
 			</div>
 
+
 	</div>
    --%>
+
 
 </div>
 <script>

@@ -116,10 +116,7 @@ nav {
 	width: 1%;
 	height: 1%;
 }
-.new-ps-body{
-	width:55%;
-	margin-left:8%;
-}
+
 #map {
 	position:absolute;
 	right:10%;
@@ -137,19 +134,22 @@ table.listArea {
     text-align: center;
     line-height: 1.5;
     border-top: 1px solid #ccc;
-    border-left: 3px solid #369;
+    border-left: 1px solid #ccc;
     margin-top:4%;
     margin-left:5%;
+    font-size:13px;
+    
 }
 table.listArea th {
     width: 147px;
     padding: 10px;
-    font-weight: bold;
     vertical-align: top;
-    color: #153d73;
+    color: black;
     border-right: 1px solid #ccc;
     border-bottom: 1px solid #ccc;
     text-align:center;
+   
+    
 }
 table.listArea td {
     width: 349px;
@@ -157,10 +157,53 @@ table.listArea td {
     vertical-align: top;
     border-right: 1px solid #ccc;
     border-bottom: 1px solid #ccc;
+    font-weight:lighter;
 }
 
 .SearchFormArea{
 	
+}
+
+#map{
+float:left;
+
+
+}
+
+.content-left {
+	width: 10%;
+	float: left;
+	border: 1px solid transparent;
+}
+
+.content-right {
+	width: 10%;
+	float: left;
+	border: 1px solid transparent;
+}
+
+.content-center1 {
+	width: 50%;
+	float: left;
+	/* text-align:center; */
+	margin: 0 auto;
+}
+
+.content-center2 {
+	width: 30%;
+	float: left;
+	/* text-align:center; */
+	margin: 0 auto;
+}
+
+button{
+	border-style:none;
+	background-color:white;
+	
+}
+
+button:hover{
+	color:#89c5f5;
 }
 
 </style>
@@ -286,9 +329,14 @@ var map = new daum.maps.Map(mapContainer, mapOption);
 
 	</script>
 	 -->
-		<div class="new-ps-body">
+	 
+	 
+	 <div class=content-left></div>
+
+			<div class="content-center1">
+		<div class="new-ps-body" >
 				<% for(PetsitterService p : list){ %>
-				<table id="listArea" class="listArea">
+				<table id="listArea" class="listArea" style="cursor:pointer;">
 					<tr>
 						<td colspan="2">
 						<div id="profileImage">
@@ -307,11 +355,11 @@ var map = new daum.maps.Map(mapContainer, mapOption);
 						</td>
 					</tr>
 					<tr>
-						<th scope="row">닉네임</th>
+						<th scope="row" style="font-weight:lighter">닉네임</th>
 						<td><%= p.getNickname() %></td>
 					</tr>
 					<tr>
-						<th scope="row">성별</th>	
+						<th scope="row" style="font-weight:lighter">성별</th>	
 						<% if(p.getGender().equals("M")){ %>
 						<td>남</td>
 						<% } else { %>
@@ -319,7 +367,7 @@ var map = new daum.maps.Map(mapContainer, mapOption);
 						<% } %>
 					</tr>
 					<tr>
-						<th scope="row">동물</th>
+						<th scope="row" style="font-weight:lighter">동물</th>
 						<% 
 						switch(p.getPet_category()){ 
 						case 1:%><td>강아지</td><%;break; 
@@ -330,7 +378,7 @@ var map = new daum.maps.Map(mapContainer, mapOption);
 						default:%><td>DB읽기에러</td><%;break;} %>
 					</tr>
 					<tr>
-						<th scope="row">주소</th>
+						<th scope="row" style="font-weight:lighter">주소</th>
 						<td>
 						<% 
 							String maskedAddress = "";
@@ -351,7 +399,7 @@ var map = new daum.maps.Map(mapContainer, mapOption);
 						</td>
 					</tr>
 					<tr>
-						<th scope="row">서비스</th>
+						<th scope="row" style="font-weight:lighter">서비스</th>
 						<td>
 						<% 
 							String serviceDetail = null;
@@ -365,7 +413,7 @@ var map = new daum.maps.Map(mapContainer, mapOption);
 						</td>
 					</tr>
 					<tr>
-						<th scope="row">제한사항</th>
+						<th scope="row" style="font-weight:lighter">제한사항</th>
 						<td>
 						<% 
 							String serviceRes = null;
@@ -408,6 +456,14 @@ var map = new daum.maps.Map(mapContainer, mapOption);
 			</div>
 		</div>
 </div>
+<div class="center2">
+
+<div id="map" style="width:500px;height:450px;"></div>
+
+</div>
+
+<div class=content-right></div>
+
 	<script>
 		$('#myModal').on('shown.bs.modal', function() {
 			$('#myInput').trigger('focus')
@@ -418,6 +474,7 @@ var map = new daum.maps.Map(mapContainer, mapOption);
 				location.href = "<%=request.getContextPath()%>/selectOne.do?no=" + num;
 			});
 	</script>
+
 	<div id="map" style="width:500px;height:400px;"></div>
 	<script>
 		function init()
@@ -434,6 +491,7 @@ var map = new daum.maps.Map(mapContainer, mapOption);
 		}
 		window.addEventListener("load",init);
 	</script>
+
 	<script type="text/javascript"
 	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=7fe9ccb116e5c90860fd1bde084cf5a1"></script>
 	<script>
@@ -450,8 +508,10 @@ var map = new daum.maps.Map(mapContainer, mapOption);
 // 주소-좌표 변환 객체를 생성합니다
 var geocoder = new daum.maps.services.Geocoder();
 
+
 <%for (int i = 0 ; i < list.size(); i ++ ) {%>
 geocoder.addressSearch('<%=list.get(i).getAddress() %>', function(result, status) {
+
 
     // 정상적으로 검색이 완료됐으면 
      if (status === daum.maps.services.Status.OK) {
@@ -466,7 +526,9 @@ geocoder.addressSearch('<%=list.get(i).getAddress() %>', function(result, status
         // 인포윈도우로 장소에 대한 설명을 표시합니다
         
         var infowindow = new daum.maps.InfoWindow({
+
             content: '<%=list.get(i).getNickname()%>'
+
         });
         infowindow.open(map, marker);
 
