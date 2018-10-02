@@ -1,5 +1,7 @@
 package com.pkb.payment.model.dao;
 
+import static com.pkb.common.JDBCTemplate.close;
+
 import java.io.FileReader;
 import java.io.IOException;
 import java.sql.Connection;
@@ -8,11 +10,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Properties;
 
 import com.pkb.payment.model.vo.Payment;
-
-import static com.pkb.common.JDBCTemplate.close;
 public class PaymentDao3 {
 	private Properties prop = new Properties();
 
@@ -191,5 +192,104 @@ public class PaymentDao3 {
 		}
 
 		return result;
+	}
+
+	public ArrayList<HashMap<String,String>> selectTodayRefund(Connection con) {
+		Statement stmt = null;
+		ArrayList<HashMap<String,String>> totalList = null;
+		HashMap<String,String> hmap = null;
+		ResultSet rs = null;
+		String query = prop.getProperty("selectTodayRefund");
+		
+		try {
+			stmt = con.createStatement();
+			rs = stmt.executeQuery(query);
+			
+			totalList = new ArrayList<HashMap<String,String>>();
+			while(rs.next()){
+				hmap = new HashMap<String,String>();
+				hmap.put("pay_no", rs.getInt("pay_no")+"");
+				hmap.put("user_no", rs.getInt("user_no")+"");
+				hmap.put("pay_amount", rs.getInt("pay_amount")+"");
+				hmap.put("pay_date", rs.getString("pay_date"));
+				hmap.put("contract_date", rs.getString("contract_date"));
+				hmap.put("contract_start", rs.getString("contract_start"));
+				hmap.put("contract_end", rs.getString("contract_end"));
+				hmap.put("email",rs.getString("email"));
+				totalList.add(hmap);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally{
+			close(rs);
+			close(stmt);
+		}
+		
+		return totalList;
+	}
+
+	public int getRefundListCound(Connection con) {
+		Statement stmt = null;
+		ResultSet rs = null;
+		String query = prop.getProperty("getRefundListCound");
+		int count = 0;
+		try {
+			stmt = con.createStatement();
+			rs = stmt.executeQuery(query);
+
+			if (rs.next()) {
+				count = rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(rs);
+			close(stmt);
+		}
+		return count;
+	}
+
+	public ArrayList<HashMap<String, String>> selectRefundList(Connection con, int curr, int limit) {
+		PreparedStatement pstmt = null;
+		ArrayList<HashMap<String,String>> totalList = null;
+		HashMap<String,String> hmap = null;
+		ResultSet rs = null;
+		String query = prop.getProperty("selectRefundList");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			int startRow = (curr - 1) * limit + 1;
+			int endRow = startRow + limit - 1;
+
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
+			
+			rs = pstmt.executeQuery();
+			
+			totalList = new ArrayList<HashMap<String,String>>();
+			
+			while(rs.next()){
+				hmap = new HashMap<String,String>();
+				hmap = new HashMap<String,String>();
+				hmap.put("pay_no", rs.getInt("pay_no")+"");
+				hmap.put("user_no", rs.getInt("user_no")+"");
+				hmap.put("pay_amount", rs.getInt("pay_amount")+"");
+				hmap.put("pay_date", rs.getString("pay_date"));
+				hmap.put("contract_date", rs.getString("contract_date"));
+				hmap.put("contract_start", rs.getString("contract_start"));
+				hmap.put("contract_end", rs.getString("contract_end"));
+				hmap.put("email",rs.getString("email"));
+				totalList.add(hmap);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(rs);
+			close(pstmt);
+		}
+		return totalList;
 	}
 }

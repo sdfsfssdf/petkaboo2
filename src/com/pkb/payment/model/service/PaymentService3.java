@@ -1,12 +1,13 @@
 package com.pkb.payment.model.service;
-import static com.pkb.common.JDBCTemplate.*;
+import static com.pkb.common.JDBCTemplate.close;
+import static com.pkb.common.JDBCTemplate.commit;
 import static com.pkb.common.JDBCTemplate.getConnection;
+import static com.pkb.common.JDBCTemplate.rollback;
 
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import com.pkb.payment.model.dao.PaymentDao;
 import com.pkb.payment.model.dao.PaymentDao3;
 import com.pkb.payment.model.vo.Payment;
 public class PaymentService3 {
@@ -53,6 +54,34 @@ public class PaymentService3 {
 		
 		close(con);
 		return result2 ;
+	}
+
+	public HashMap<String, Object> selectTotalInfo(int curr, int limit) {
+		Connection con = getConnection();
+		HashMap<String,Object> totalInfo = null;
+		ArrayList<HashMap<String,String>> todayList = new PaymentDao3().selectTodayRefund(con);
+		
+		if(todayList != null){
+			ArrayList<HashMap<String,String>> totalList = new PaymentDao3().selectRefundList(con,curr,limit);
+			
+			if(totalList !=null){
+				totalInfo = new HashMap<String,Object>();
+				totalInfo.put("todayList", todayList);
+				totalInfo.put("totalList", totalList);
+			}
+		}
+		
+		close(con);
+		
+		return totalInfo;
+	}
+
+	public int getRefundListCount() {
+		Connection con = getConnection();
+		
+		int count = new PaymentDao3().getRefundListCound(con);
+		close(con);
+		return count;
 	}
 
 }
