@@ -36,7 +36,7 @@
          <br>
             <div class="text"><a href="<%=request.getContextPath()%>/selectMain.pe">사이버머니 관리</a></div>
             <br>
-            <div class="text"><a href="<%=request.getContextPath()%>/views/admin/paymentManage/refundManage.jsp">환불/출금 관리</a></div>
+            <div class="text"><a href="<%=request.getContextPath()%>/refundMain.pa">환불요청 관리</a></div>
             <br>
             <div class="text"><a href="<%=request.getContextPath()%>/bankBook.pa">무통장 입금 관리</a></div>
       </div>
