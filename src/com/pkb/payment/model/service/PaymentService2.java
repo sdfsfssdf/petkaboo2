@@ -57,9 +57,9 @@ public class PaymentService2 {
       return rp;
    }
 
-   public ArrayList<Payment> selectListInquiry(int user_no,String pay_date, String pay_method) {
+   public ArrayList<Payment> selectListInquiry(int user_no,String pay_date, String pay_method,int currentPage, int limit) {
       Connection con = getConnection();
-      ArrayList<Payment> inquiry = new PaymentDao2().selectListInquiry(user_no, pay_date, pay_method, con);
+      ArrayList<Payment> inquiry = new PaymentDao2().selectListInquiry(user_no, pay_date, pay_method, con, currentPage, limit);
 
       close(con);
 

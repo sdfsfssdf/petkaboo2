@@ -68,7 +68,7 @@ public class SelectCyberMoneyHistoryServlet extends HttpServlet {
 
 		String page = "";
 		if(totalInfo != null){
-			page = "views/myPage/mypagepain.jsp";
+			page = "views/myPage/mypagemain.jsp";
 			request.setAttribute("totalInfo", totalInfo);
 			request.setAttribute("pg", pg);
 		} else {

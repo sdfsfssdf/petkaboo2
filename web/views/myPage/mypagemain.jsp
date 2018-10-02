@@ -1,9 +1,19 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8" import="com.pkb.payment.model.vo.*, java.util.*"%>
+	pageEncoding="UTF-8" import="com.pkb.payment.model.vo.*, java.util.*,com.pkb.common.Paging,java.util.*"%>
 	<% 
-   CyberMoney cm = (CyberMoney)request.getAttribute("cm");
+  	 CyberMoney cm = (CyberMoney)request.getAttribute("cm");
 	String check = (String)request.getAttribute("check");
 	
+	HashMap<String, Object> totalInfo = (HashMap<String,Object>)request.getAttribute("totalInfo");
+	HashMap<String,Integer> todayInfo = (HashMap<String,Integer>)totalInfo.get("todayInfo");
+	ArrayList<Payment> plist = (ArrayList<Payment>)totalInfo.get("plist");
+	ArrayList<HashMap<String,String>> ilist = (ArrayList<HashMap<String,String>>)totalInfo.get("incomeList");
+	Paging pg = (Paging) request.getAttribute("pg");
+	int listCount = pg.getListCount();
+	int currentPage = pg.getCurrentPage();
+	int maxPage = pg.getMaxPage();
+	int startPage = pg.getStartPage();
+	int endPage = pg.getEndPage();
 %>
 
  
@@ -433,7 +443,7 @@ th, td {
 			<div class="content-right">
 			
 			</div> -->
-
+	
 
 			
 			<!-- footer -->
@@ -451,6 +461,61 @@ th, td {
       <p>Some text in the Modal..</p>
     </div>
   </div>
+  
+  <!-- 페이지 처리 -->
+		<div class="spaceDiv" align="center">
+			<div class="pigingArea">
+				<button class="btn btn-default"
+					onclick="location.href='<%=request.getContextPath()%>/selectCyberMoneyHistory.pm?currentPage=1'"><<</button>
+				<%
+					if (currentPage <= 1) {
+				%>
+				<button class="btn btn-default" disabled><</button>
+				<%
+					} else {
+				%>
+				<button class="btn btn-default"
+					onclick="location.href='<%=request.getContextPath()%>/selectCyberMoneyHistory.pm?currentPage=<%=currentPage - 1%>'"><</button>
+				<%
+					}
+				%>
+
+				<%
+					for (int p = startPage; p <= endPage; p++) {
+						if (p == currentPage) {
+				%>
+
+				<button class="btn btn-default" disabled><%=p%></button>
+				<%
+					} else {
+				%>
+				<button class="btn btn-default"
+					onclick="location.href='<%=request.getContextPath()%>/selectCyberMoneyHistory.pm?currentPage=<%=p%>'"><%=p%></button>
+				<%
+					}
+				%>
+				<%
+					}
+				%>
+
+				<%
+					if (currentPage >= maxPage) {
+				%>
+				<button class="btn btn-default" disabled>></button>
+				<%
+					} else {
+				%>
+				<button class="btn btn-default"
+					onclick="location.href='<%=request.getContextPath()%>/selectCyberMoneyHistory.pm?currentPage=<%=currentPage + 1%>'">></button>
+				<%
+					}
+				%>
+
+				<button class="btn btn-default"
+					onclick="location.href='<%=request.getContextPath()%>/selectCyberMoneyHistory.pm?currentPage=<%=maxPage%>'">>></button>
+			</div>
+	</div>
+  
 </div>
 <script>
 
