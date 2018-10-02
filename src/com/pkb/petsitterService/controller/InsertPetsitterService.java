@@ -100,10 +100,10 @@ public class InsertPetsitterService extends HttpServlet {
 		}else{
 			page = "views/common/errorPage.jsp";
 			request.setAttribute("msg", "펫시터 등록 실패!");
+			RequestDispatcher view = request.getRequestDispatcher(page);
+			view.forward(request, response);
 		}
 		
-		RequestDispatcher view = request.getRequestDispatcher(page);
-		view.forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

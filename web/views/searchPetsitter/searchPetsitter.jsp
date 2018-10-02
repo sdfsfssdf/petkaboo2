@@ -166,7 +166,7 @@ table.listArea td {
 </style>
 <!-- services와 clusterer, drawing 라이브러리 불러오기 -->
 <script type="text/javascript"
-	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=APIKEY&libraries=services,clusterer,drawing"></script>
+	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=7fe9ccb116e5c90860fd1bde084cf5a1&libraries=services,clusterer,drawing"></script>
 <link rel="stylesheet"
 	href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
 	integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU"
@@ -182,61 +182,87 @@ table.listArea td {
 	src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
 	integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
 	crossorigin="anonymous"></script>
-<script type="text/javascript"
-	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=7fe9ccb116e5c90860fd1bde084cf5a1"></script>
+
 </head>
-<!--
+
+
+<body>
 <script>
-	window.onload = function test1() {
+
+var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+mapOption = {
+    center: new daum.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+    level: 3 // 지도의 확대 레벨
+};  
+
+//지도를 생성합니다    
+var map = new daum.maps.Map(mapContainer, mapOption); 
+</script>	
+	<%-- window.onload = function test1() {
 		navigator.geolocation.getCurrentPosition(function(position) {
 			/* 			alert("위도 : " + position.coords.latitude + "\n" + "경도 : "
 			 + position.coords.longitude); */
 
 			var lat = position.coords.latitude;
 			var lon = position.coords.longitude;
-
-			//location.href = "http://map.daum.net/link/map/나의위치," + lat + "," + lon;
-
-			var container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
-			var options = { //지도를 생성할 때 필요한 기본 옵션
-				center : new daum.maps.LatLng(lat, lon), //지도의 중심좌표.
-				level : 3
-			//지도의 레벨(확대, 축소 정도)
-			};
-
-			var map = new daum.maps.Map(container, options); //지도 생성 및 객체 리턴
 			
-			// 일반 지도와 스카이뷰로 지도 타입을 전환할 수 있는 지도타입 컨트롤을 생성합니다
-			var mapTypeControl = new daum.maps.MapTypeControl();
+			var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+			    mapOption = {
+			        center: new daum.maps.LatLng(lat, lon), // 지도의 중심좌표
+			        level: 3 // 지도의 확대 레벨
+			    };  
 
-			// 지도에 컨트롤을 추가해야 지도위에 표시됩니다
-			// daum.maps.ControlPosition은 컨트롤이 표시될 위치를 정의하는데 TOPRIGHT는 오른쪽 위를 의미합니다
-			map.addControl(mapTypeControl, daum.maps.ControlPosition.TOPRIGHT);
+			// 지도를 생성합니다    
+			var map = new daum.maps.Map(mapContainer, mapOption); 
 
-			// 지도 확대 축소를 제어할 수 있는  줌 컨트롤을 생성합니다
-			var zoomControl = new daum.maps.ZoomControl();
-			map.addControl(zoomControl, daum.maps.ControlPosition.RIGHT);
 			
+			var geocoder = new daum.maps.services.Geocoder();
+			
+			
+				var listData = [
+					<%for(int i =0; i< list.size(); i++){%>
+				    {
+				        groupAddress: <%=list.get(i).getAddress()%>, 
+				    }<%if(i<list.size()-1){%>,<%}%>
+				    <%}%>
+				];
+			    
+			for (var i=0; i < listData.length ; i++) {
+			// 주소로 좌표를 검색합니다
+			geocoder.addressSearch(listData[i].groupAddress, function(result, status) {
 
-			var markerPosition = new daum.maps.LatLng(lat, lon);
+			    // 정상적으로 검색이 완료됐으면 
+			     if (status === daum.maps.services.Status.OK) {
 
-			// 마커를 생성합니다
-			var marker = new daum.maps.Marker({
-				position : markerPosition
-			});
+			        var coords = new daum.maps.LatLng(result[0].y, result[0].x);
 
-			marker.setMap(map);
-		});
-	}
-</script>
- -->
-<body>
+			        // 결과값으로 받은 위치를 마커로 표시합니다
+			        var marker = new daum.maps.Marker({
+			            map: map,
+			            position: coords
+			        });
+
+			        // 인포윈도우로 장소에 대한 설명을 표시합니다
+			        var infowindow = new daum.maps.InfoWindow({
+			            content: result[0].y + "," + result[0].x
+			        });
+			        infowindow.open(map, marker);
+
+			        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+			        map.setCenter(coords);
+			    } 
+			})
+
+			};    
+
+	</script>
+	 --%>
 	<%@include file="/views/common/menubar.jsp"%>
 	<div class="SearchFormArea">
 		<%@ include file="petSitterSearchForm.jsp" %>
 	</div>
 	<div class="SearchBodyArea">
-	<div id="map" style="width:400px; height:400px;">
+	
 	<!-- 
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=발급받은 APP KEY를 넣으시면 됩니다.">
 	</script>
@@ -391,6 +417,74 @@ table.listArea td {
 				var num = $(this).children("input").val();
 				location.href = "<%=request.getContextPath()%>/selectOne.do?no=" + num;
 			});
+	</script>
+	<div id="map" style="width:500px;height:400px;"></div>
+	<script type="text/javascript"
+	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=7fe9ccb116e5c90860fd1bde084cf5a1"></script>
+	<script>
+	var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+    mapOption = {
+        center: new daum.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+        level: 3 // 지도의 확대 레벨
+    };  
+
+// 지도를 생성합니다    
+var map = new daum.maps.Map(mapContainer, mapOption); 
+
+// 주소-좌표 변환 객체를 생성합니다
+var geocoder = new daum.maps.services.Geocoder();
+	var listData = [
+		<%-- <%for(int i =0; i< list.size(); i++){%>
+	    {
+	        groupAddress: '<%=list.get(i).getAddress()%>', 
+	    },
+	  
+	    <%if(i<list.size()-1){%>,<%}%>
+	    <%}%> --%>
+	    <%for (int i = 0 ; i < list.size(); i ++ ) {%>
+	   <%--  [<%=list.get(i).getAddress().substring(0, 5)%>,<%=list.get(i).getNickname()%>] --%>
+	   {
+		   address :"<%=list.get(i).getAddress() %>",
+		   nickName : "<%=list.get(i).getNickname()%>"
+	   }
+	    <%if(i<list.size()-1){%>
+	    	,
+	    <%}%>
+	    
+	    <%}%>
+	];
+var tempNickName = '';
+for (var i=0; i < listData.length ; i++) {
+// 주소로 좌표를 검색합니다
+tempNickName = listData[i].nickName;
+
+geocoder.addressSearch(listData[i].address, function(result, status) {
+
+    // 정상적으로 검색이 완료됐으면 
+     if (status === daum.maps.services.Status.OK) {
+
+        var coords = new daum.maps.LatLng(result[0].y, result[0].x);
+
+        // 결과값으로 받은 위치를 마커로 표시합니다
+        var marker = new daum.maps.Marker({
+            map: map,
+            position: coords
+		
+        });
+        // 인포윈도우로 장소에 대한 설명을 표시합니다
+        
+        var infowindow = new daum.maps.InfoWindow({
+            content: tempNickName
+        });
+        infowindow.open(map, marker);sfe
+
+        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+        map.setCenter(coords);
+    } 
+})
+
+
+};    
 	</script>
 </body>
 </html>
