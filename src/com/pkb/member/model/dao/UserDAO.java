@@ -1368,25 +1368,25 @@ public class UserDAO {
 		return maplist;
 	}
 
-
 	public int findPwd(Connection con, String email, String name) {
 		PreparedStatement pstmt = null;
 		int result = 0;
-		
+
 		String query = prop.getProperty("findPwd");
 		try {
 			pstmt = con.prepareStatement(query);
 			pstmt.setString(1, email);
 			pstmt.setString(2, name);
-			
+
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
-		} finally{
-      close(pstmt);
-    }
-    return result ;
-  }
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
 	public int[] updateDiapauseMember(Connection con, String[] selectUserNos) {
 		PreparedStatement pstmt = null;
 		int[] result = null;
@@ -1482,12 +1482,12 @@ public class UserDAO {
 		ArrayList<Board> blist = null;
 		Board b = null;
 		String query = prop.getProperty("selectRecentlyList");
-		
+
 		try {
 			stmt = con.createStatement();
 			rs = stmt.executeQuery(query);
 			blist = new ArrayList<Board>();
-			while(rs.next()){
+			while (rs.next()) {
 				b = new Board();
 				b.setArticle_no(rs.getInt("ARTICLE_NO"));
 				b.setUser_no(rs.getInt("user_no"));
@@ -1509,7 +1509,7 @@ public class UserDAO {
 			close(rs);
 			close(stmt);
 		}
-		
+
 		return blist;
 	}
 
@@ -1519,12 +1519,12 @@ public class UserDAO {
 		ArrayList<Board> blist = null;
 		Board b = null;
 		String query = prop.getProperty("selectSEList");
-		
+
 		try {
 			stmt = con.createStatement();
 			rs = stmt.executeQuery(query);
 			blist = new ArrayList<Board>();
-			while(rs.next()){
+			while (rs.next()) {
 				b = new Board();
 				b.setArticle_no(rs.getInt("ARTICLE_NO"));
 				b.setUser_no(rs.getInt("user_no"));
@@ -1546,7 +1546,7 @@ public class UserDAO {
 			close(rs);
 			close(stmt);
 		}
-		
+
 		return blist;
 	}
 
@@ -1554,10 +1554,10 @@ public class UserDAO {
 		PreparedStatement pstmt = null;
 		int[] result = null;
 		String query = prop.getProperty("updateSanctions");
-		
+
 		try {
 			pstmt = con.prepareStatement(query);
-			String[] temp ;
+			String[] temp;
 			for (int i = 0; i < selectUserNos.length; i++) {
 				temp = selectUserNos[i].split("/");
 				pstmt.setInt(1, Integer.parseInt(temp[0]));
@@ -1575,15 +1575,14 @@ public class UserDAO {
 		return result;
 	}
 
-
 	public int[] updateBoardStatus(Connection con, String[] selectUserNos) {
 		PreparedStatement pstmt = null;
 		int[] result = null;
 		String query = prop.getProperty("updateSanBoardStatus");
-		
+
 		try {
 			pstmt = con.prepareStatement(query);
-			String[] temp ;
+			String[] temp;
 			for (int i = 0; i < selectUserNos.length; i++) {
 				temp = selectUserNos[i].split("/");
 				pstmt.setInt(1, Integer.parseInt(temp[1]));
@@ -1605,13 +1604,13 @@ public class UserDAO {
 		ResultSet rs = null;
 		String query = prop.getProperty("selectPenaltyMemberOne");
 		Board b = null;
-		
+
 		try {
 			pstmt = con.prepareStatement(query);
 			pstmt.setInt(1, article_no);
 			rs = pstmt.executeQuery();
-			
-			if(rs.next()){
+
+			if (rs.next()) {
 				b = new Board();
 				b.setArticle_no(rs.getInt("ARTICLE_NO"));
 				b.setUser_no(rs.getInt("user_no"));
@@ -1623,7 +1622,7 @@ public class UserDAO {
 				b.setArticle_refno(rs.getInt("article_refno"));
 				b.setArticle_status(rs.getInt("article_status"));
 				b.setArticle_modify_date(rs.getDate("ARTICLE_MODIFY_DATE"));
-				
+
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -1633,22 +1632,21 @@ public class UserDAO {
 		return b;
 	}
 
-
 	public int insertLoginHistory(Connection con, User u, String ip, String reply) {
 		PreparedStatement pstmt = null;
 		int result = 0;
-		
+
 		String query = prop.getProperty("insertLoginHistory");
-		
+
 		try {
 			pstmt = con.prepareStatement(query);
 			pstmt.setString(1, ip);
 			pstmt.setString(2, reply);
-			
+
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
-		} finally{
+		} finally {
 			close(pstmt);
 		}
 		return result;
@@ -1657,19 +1655,19 @@ public class UserDAO {
 	public int loginHistory(Connection con, User loginUser, String ip, String reply) {
 		PreparedStatement pstmt = null;
 		int result = 0;
-		
+
 		String query = prop.getProperty("UpdateLoginHistory");
 
 		try {
-			pstmt= con.prepareStatement(query);
+			pstmt = con.prepareStatement(query);
 			pstmt.setString(1, ip);
 			pstmt.setString(2, reply);
 			pstmt.setInt(3, loginUser.getUser_no());
 			result = pstmt.executeUpdate();
-			System.out.println("result"+result);
+			System.out.println("result" + result);
 		} catch (SQLException e) {
 			e.printStackTrace();
-		} finally{
+		} finally {
 			close(pstmt);
 		}
 		return result;
@@ -1677,21 +1675,21 @@ public class UserDAO {
 
 	public int insertAcc(Connection con, int userNo, String bankName, String acc) {
 		PreparedStatement pstmt = null;
-		
+
 		int result = 0;
-		
+
 		String query = prop.getProperty("InsertAcc");
-		
+
 		try {
 			pstmt = con.prepareStatement(query);
 			pstmt.setString(1, acc);
 			pstmt.setString(2, bankName);
 			pstmt.setInt(3, userNo);
-			
+
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
-		} finally{
+		} finally {
 			close(pstmt);
 		}
 		return result;
@@ -1728,37 +1726,131 @@ public class UserDAO {
 		ArrayList<ApplyHistory> alist = null;
 		ApplyHistory ap = null;
 		String query = prop.getProperty("selectPetsitterRequestList");
-		
+
 		try {
 			pstmt = con.prepareStatement(query);
 			int startRow = (currentPage - 1) * limit + 1;
 			int endRow = startRow + limit - 1;
 			pstmt.setInt(1, startRow);
 			pstmt.setInt(2, endRow);
-			
-			rs= pstmt.executeQuery();
+
+			rs = pstmt.executeQuery();
 			alist = new ArrayList<ApplyHistory>();
-			while(rs.next()){
+			while (rs.next()) {
 				ap = new ApplyHistory();
 				ap.setApply_record_no(rs.getInt("apply_record_no"));
 				ap.setApply_no(rs.getInt("apply_no"));
 				ap.setApply_rec_date(rs.getDate("apply_rec_date"));
 				ap.setApply_rec_status(rs.getString("apply_rec_status"));
 				ap.setApply_refuse(rs.getString("apply_refuse"));
-				
+				ap.setUser_no(rs.getInt("user_no"));
+				ap.setEmail(rs.getString("email"));
+
 				alist.add(ap);
 			}
-			
+
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} finally{
+		} finally {
 			close(pstmt);
 			close(rs);
 		}
-		
+
 		return alist;
 	}
 
+	public int refusalPetsitterRequest(Connection con, int no, String content) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String query = prop.getProperty("refusalPetsitterRequest");
+
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, content);
+			pstmt.setInt(2, no);
+
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+
+		return result;
+	}
+
+	public int approvalPetsitterRequest(Connection con, int record_no) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String query = prop.getProperty("approvalPetsitterRequest");
+
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, record_no);
+
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+
+		return result;
+	}
+
+	public int updateUserGrade(Connection con, int record_no) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String query = prop.getProperty("updateUserGrade");
+
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, record_no);
+
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+
+		return result;
+	}
+
+	public ApplyHistory selectOneApplyHistory(Connection con, String selectNum) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		ApplyHistory ah = null;
+		String query = prop.getProperty("selectOneApplyHistory");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, Integer.parseInt(selectNum));
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()){
+				ah = new ApplyHistory();
+				ah.setApply_record_no(rs.getInt("apply_record_no"));
+				ah.setApply_no(rs.getInt("apply_no"));
+				ah.setApply_rec_date(rs.getDate("apply_rec_date"));
+				ah.setApply_rec_status(rs.getString("apply_rec_status"));
+				ah.setApply_refuse(rs.getString("apply_refuse"));
+				ah.setUser_no(rs.getInt("user_no"));
+				ah.setEmail(rs.getString("email"));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(rs);
+			close(pstmt);
+		} 
+		
+		return ah;
+	}
 
 }

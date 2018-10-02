@@ -593,4 +593,50 @@ public class UserService {
 		return alist;
 	}
 
+	public int refusalPetsitterRequest(int no, String content) {
+		Connection con = getConnection();
+		
+		int result = new UserDAO().refusalPetsitterRequest(con,no,content);
+		
+		if(result > 0){
+			commit(con);
+		} else {
+			rollback(con);
+		}
+		
+		close(con);
+		
+		return result;
+	}
+
+	public int approvalPetsitterRequest(int record_no) {
+		Connection con = getConnection();
+		int result = new UserDAO().approvalPetsitterRequest(con, record_no);
+		int result2 = 0;
+		if(result > 0){
+			result2 = new UserDAO().updateUserGrade(con,record_no);
+			if(result2 > 0){
+				
+				commit(con);
+			} else{
+				rollback(con);
+			}
+		} else {
+			rollback(con);
+		}
+		
+		close(con);
+		
+		return result2;
+	}
+
+	public ApplyHistory selectOneApplyHistory(String selectNum) {
+		Connection con = getConnection();
+		ApplyHistory ah = new UserDAO().selectOneApplyHistory(con,selectNum);
+		
+		close(con);
+		
+		return ah;
+	}
+
 }
