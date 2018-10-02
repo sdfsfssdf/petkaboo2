@@ -4,6 +4,7 @@ import java.sql.Date;
 
 public class Contract implements java.io.Serializable {
 	private static final long serialVersionUID = -5252671657642151168L;
+	
 	private int contract_no;			//계약번호
 	private int user_no;				//회원번호
 	private int pet_service_regno;		//펫시터서비스등록번호
@@ -25,13 +26,16 @@ public class Contract implements java.io.Serializable {
 	private String petPhone;			//펫시터 핸드폰번호
 	private String petNickname;			//펫시터 닉네임
 	private String petGender;			//펫시터 성별
+	private String pet_categoryName;	//펫 종류
+	private String contract_type;		//계약 종류
 	
 	public Contract(){}
 
 	public Contract(int contract_no, int user_no, int pet_service_regno, Date contract_date, Date contract_start,
 			Date contract_end, String contract_status, int contract_star, int pet_no, String userAddress,
 			String userPhone, String userName, String userNickname, String userGender, int pet_user_no, String pet_name,
-			Date pet_birth, String petAddress, String petPhone, String petNickname, String petGender) {
+			Date pet_birth, String petAddress, String petPhone, String petNickname, String petGender,
+			String pet_categoryName, String contract_type) {
 		super();
 		this.contract_no = contract_no;
 		this.user_no = user_no;
@@ -54,6 +58,8 @@ public class Contract implements java.io.Serializable {
 		this.petPhone = petPhone;
 		this.petNickname = petNickname;
 		this.petGender = petGender;
+		this.pet_categoryName = pet_categoryName;
+		this.contract_type = contract_type;
 	}
 
 	public static long getSerialversionuid() {
@@ -144,6 +150,14 @@ public class Contract implements java.io.Serializable {
 		return petGender;
 	}
 
+	public String getPet_categoryName() {
+		return pet_categoryName;
+	}
+
+	public String getContract_type() {
+		return contract_type;
+	}
+
 	public void setContract_no(int contract_no) {
 		this.contract_no = contract_no;
 	}
@@ -228,6 +242,14 @@ public class Contract implements java.io.Serializable {
 		this.petGender = petGender;
 	}
 
+	public void setPet_categoryName(String pet_categoryName) {
+		this.pet_categoryName = pet_categoryName;
+	}
+
+	public void setContract_type(String contract_type) {
+		this.contract_type = contract_type;
+	}
+
 	@Override
 	public String toString() {
 		return "Contract [contract_no=" + contract_no + ", user_no=" + user_no + ", pet_service_regno="
@@ -237,9 +259,9 @@ public class Contract implements java.io.Serializable {
 				+ ", userName=" + userName + ", userNickname=" + userNickname + ", userGender=" + userGender
 				+ ", pet_user_no=" + pet_user_no + ", pet_name=" + pet_name + ", pet_birth=" + pet_birth
 				+ ", petAddress=" + petAddress + ", petPhone=" + petPhone + ", petNickname=" + petNickname
-				+ ", petGender=" + petGender + "]";
+				+ ", petGender=" + petGender + ", pet_categoryName=" + pet_categoryName + ", contract_type="
+				+ contract_type + "]";
 	}
-
 
 
 

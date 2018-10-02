@@ -9,7 +9,7 @@
 <style>
 	.searchbody{
 		margin-top:1px;
-		background-color:brown;
+		background-color:#89c5f5;
 		height:400px;
 		padding:10%;
 	}
@@ -18,7 +18,7 @@
 	}
 	.searchBar{
 		width:600px;
-		height:50px;
+		height:45px;
 	}
 	.center-searchBar{
 	display:inline-block;
@@ -26,31 +26,41 @@
 	}
 	input::placeholder {
 	text-align:center;
-  	font-weight: bold;
-  	font-size: 100%;
+  	font-size: 18px;
 	}
 	#goSearch {
 		margin-left:10px;
 		font-size:150%;
 		font-weight:bold;
-		color:white;
-		background:yellowgreen;
+		color:#89c5f5;
+		background:white;
 		border-radius:5px;
 		width:100px;
-		height:50px;
+		height:45px;
 		text-align:center;
-  		display:inline-block;
-  		vertical-align:30%;
-  		padding-top:6px;
+  		float:left;
+  		/* vertical-align:30%; */
+  		padding-top:8px;
 	}
 	#goSearch:hover {
 		cursor:pointer;
 		background:white;
-		color:yellowgreen;
+		color:black;
 	}
 	#goSearch span{
-		vertical-align:middle;
+		/* vertical-align:middle; */
+		font-size:18px;
+		
 	}	
+	
+	.input-searchBar{
+	float:left;
+	}
+	input{    
+	outline: none;
+    transition: border .12s ease-in-out;
+}
+	
 </style>
 </head>
 <body>
@@ -58,10 +68,15 @@
 <div class="searchbody">
 <form id="searchForm" action="<%=request.getContextPath()%>/search.do" method="get">
 <div class="center-searchArea">
-	<h1 style="color:white;"><strong>지금 바로 펫시터를 찾아보세요</strong></h1>
+	<p style="color:white; font-size:23px;">지금 바로 펫시터를 찾아보세요</p>
 	<div class="center-searchBar">
-	<input class="searchBar" name="searchKeyword" type="text" style="font-size:200%; font-weight:bold;" placeholder="원하는 펫시팅 조건을 검색해 보세요" autocomplete="off">
-	<div id="goSearch" onclick="goSearch()"><span>검색하기</span></div><div></div></div>
+	<div class="input-searchBar">
+	<input class="searchBar" name="searchKeyword" type="text" style="font-size:20px; font-weight:lighter; border:1px solid white;" placeholder="원하는 펫시팅 조건을 검색해 보세요" autocomplete="off">
+	</div>
+	<div id="goSearch" onclick="goSearch()" style="height:45px;">
+	<span>검색</span>
+	</div>
+	</div>
 	</div>
 </form>
 </div>

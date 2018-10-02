@@ -109,13 +109,25 @@ ul.sub li:hover > ul.sub-sub{display:block;}
 								<li><a href="<%=request.getContextPath()%>/search.do?user_no=<%=loginUser.getUser_no()%>">펫시터 정보 수정</a></li>
 								<li><a href="#">수입 현황</a></li>
 								<li><a href="#">돌봄일지</a></li>
+								<li>
+								<form class="psContractManage" action="<%=request.getContextPath()%>/psContract.do" method="post">
+								<input type="hidden" name="user_no" value="<%= loginUser.getUser_no() %>">
+								<button>계약 현황 보기</button>
+								</form>
+								</li>
 							</ul>
 						</li>
 							<% } %>
 						<li class="group">
 							<div class="title">서비스 관리</div>
 							<ul class="sub">
-								<li><a onclick="rsv()">예약현황</a></li>
+								<li>
+								<form class="getMyContractList" action="<%=request.getContextPath()%>/psContract.do" method="post">
+								<input type="hidden" name="user_no" value="<%= loginUser.getUser_no() %>">
+								<input type="hidden" name="request_client_list" value="1">
+								<button class="getMyContractButton">내 계약 관리</button>
+								</form>
+								</li>
 								<li><a href="<%=request.getContextPath()%>/selectCyberMoneyHistory.pm">거래내역</a></li>
 								<li><a href="/pkb/views/myPage/onebyoneQNAWrite.jsp" >1:1 문의</a></li>
 								<li><a href="<%=request.getContextPath()%>/selectOnebyOneList.bo">내 질문 내역</a></li>
