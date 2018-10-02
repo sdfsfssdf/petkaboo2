@@ -474,55 +474,44 @@ var map = new daum.maps.Map(mapContainer, mapOption);
 				location.href = "<%=request.getContextPath()%>/selectOne.do?no=" + num;
 			});
 	</script>
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
+	<div id="map" style="width:500px;height:400px;"></div>
+	<script>
+		function init()
+		{
+			window.navigator.geolocation.getCurrentPosition(current_position);	
+		}
+		function current_position(position){
+			var latitude = position.coords.latitude;
+			var longitude = position.coords.longitude;
+			console.log(latitude);
+			console.log(longitude);
+			
+			var centre = new daum.maps.LatLng(latitude,longitude);
+		}
+		window.addEventListener("load",init);
+	</script>
+
 	<script type="text/javascript"
 	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=7fe9ccb116e5c90860fd1bde084cf5a1"></script>
 	<script>
-	var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
-    mapOption = {
-        center: new daum.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
-        level: 3 // 지도의 확대 레벨
-    };  
+	
+var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+			mapOption = {
+			center: new daum.maps.LatLng(33.450701, 126.570667),
+	        level: 3 // 지도의 확대 레벨
+    	};  
 
 // 지도를 생성합니다    
 var map = new daum.maps.Map(mapContainer, mapOption); 
 
 // 주소-좌표 변환 객체를 생성합니다
 var geocoder = new daum.maps.services.Geocoder();
-	var listData = [
-		<%-- <%for(int i =0; i< list.size(); i++){%>
-	    {
-	        groupAddress: '<%=list.get(i).getAddress()%>', 
-	    },
-	  
-	    <%if(i<list.size()-1){%>,<%}%>
-	    <%}%> --%>
-	    <%for (int i = 0 ; i < list.size(); i ++ ) {%>
-	   <%--  [<%=list.get(i).getAddress().substring(0, 5)%>,<%=list.get(i).getNickname()%>] --%>
-	   {
-		   address :"<%=list.get(i).getAddress() %>",
-		   nickName : "<%=list.get(i).getNickname()%>"
-	   }
-	    <%if(i<list.size()-1){%>
-	    	,
-	    <%}%>
-	    
-	    <%}%>
-	];
-for (var i=0; i < listData.length ; i++) {
-// 주소로 좌표를 검색합니다
-var tempNickName = '';
-tempNickName = listData[i].nickName;
 
-geocoder.addressSearch(listData[i].address, function(result, status) {
+
+<%for (int i = 0 ; i < list.size(); i ++ ) {%>
+geocoder.addressSearch('<%=list.get(i).getAddress() %>', function(result, status) {
+
 
     // 정상적으로 검색이 완료됐으면 
      if (status === daum.maps.services.Status.OK) {
@@ -533,22 +522,21 @@ geocoder.addressSearch(listData[i].address, function(result, status) {
         var marker = new daum.maps.Marker({
             map: map,
             position: coords
-		
         });
         // 인포윈도우로 장소에 대한 설명을 표시합니다
         
         var infowindow = new daum.maps.InfoWindow({
-        content: tempNickName
+
+            content: '<%=list.get(i).getNickname()%>'
+
         });
-        infowindow.open(map, marker);sfe
+        infowindow.open(map, marker);
 
         // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
-        map.setCenter(coords);
+        map.setCenter(centre);
     } 
 })
-
-
-};    
+<%}%>
 	</script>
 </body>
 </html>

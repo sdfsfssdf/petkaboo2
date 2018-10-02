@@ -128,14 +128,14 @@ public class PaymentDao2 {
 	}
 
 	public int selectListInquiryCount(Connection con, int user_no, String pay_date, String pay_method) {
-		PreparedStatement pstmt = null;
+		Statement stmt = null;
 		ResultSet rs = null;
 		String query = prop.getProperty("getSelectListInquiryCount");
 		int count = 0;
 		StringBuilder sb = null;
 		
 		try {
-			pstmt = con.prepareStatement(query);
+			stmt = con.prepareStatement(query);
 			if (!pay_date.equals("all")) {
 				sb = new StringBuilder();
 				if (pay_date.equals("today")) {
@@ -160,13 +160,6 @@ public class PaymentDao2 {
 				} else {
 					sb.append("AND PAY_METHOD = 'U' ");
 				}
-			} else if (pay_method.equals("cencel")) {
-				if (sb == null) {
-					sb = new StringBuilder();
-					sb.append("WHERE PAY_METHOD = 'R' ");
-				} else {
-					sb.append("AND PAY_METHOD = 'R' ");
-				}
 			} else if(pay_method.equals("reCharge")) {
 				if (sb == null) {
 					sb = new StringBuilder();
@@ -176,12 +169,13 @@ public class PaymentDao2 {
 				}
 			}
 			if(sb !=null){
-				System.out.println(sb.toString() + " 조건쓰");
-				pstmt.setString(1, sb.toString());
+				
+				query = query + sb.toString() + " AND USER_NO = " + user_no;
+				
 			} else {
-				pstmt.setString(1, " ");
+				query = query+ " WHERE USER_NO = " + user_no;
 			}
-			rs = pstmt.executeQuery();
+			rs = stmt.executeQuery(query);
 
 			if (rs.next()) {
 				count = rs.getInt(1);
@@ -191,7 +185,7 @@ public class PaymentDao2 {
 			e.printStackTrace();
 		} finally {
 			close(rs);
-			close(pstmt);
+			close(stmt);
 		}
 		System.out.println("count="+count);
 		return count;
@@ -268,7 +262,7 @@ public class PaymentDao2 {
 			}
 			
 			if(sb !=null){
-				query = query + sb.toString() + " )) WHERE RNUM BETWEEN "+startRow + " AND " + endRow;
+				query = query + sb.toString() + " AND USER_NO = USER )) WHERE RNUM BETWEEN "+startRow + " AND " + endRow;
 			} else {
 				query = query + " )) WHERE RNUM BETWEEN "+startRow + " AND " + endRow;
 			}
@@ -304,6 +298,92 @@ public class PaymentDao2 {
 			close(stmt);
 		}
 
+		return plist;
+	}
+
+	public ArrayList<Payment> selectTodayPaymentHistoryList(Connection con, int user_no, int currentPage, int limit, String pay_date,
+			String pay_method) {
+		   Statement stmt = null;
+		   ArrayList<Payment> plist = null;
+		   ResultSet rs = null;
+		   Payment p = null;
+		   String query = prop.getProperty("selectListInquiry");
+		   StringBuilder sb = null;
+		   try {
+			stmt = con.createStatement();
+			int startRow = (currentPage - 1) * limit + 1;
+			int endRow = startRow + limit - 1;
+			if (!pay_date.equals("all")) {
+				sb = new StringBuilder();
+				if (pay_date.equals("today")) {
+					sb.append(
+							"WHERE TO_CHAR(PAY_DATE,'YYYYmmdd') BETWEEN TO_CHAR(SYSDATE,'YYYYmmdd') AND TO_CHAR(SYSDATE,'YYYYmmdd') ");
+				} else if (pay_date.equals("week")) {
+					sb.append(
+							"WHERE TO_CHAR(PAY_DATE,'YYYYmmdd') BETWEEN TO_CHAR(SYSDATE-7,'YYYYmmdd') AND TO_CHAR(SYSDATE,'YYYYmmdd') ");
+				} else if (pay_date.equals("month")) {
+					sb.append(
+							"WHERE TO_CHAR(PAY_DATE,'YYYYmmdd') BETWEEN TO_CHAR(SYSDATE-30,'YYYYmmdd') AND TO_CHAR(SYSDATE,'YYYYmmdd') ");
+				} else if(pay_date.equals("year")){
+					sb.append(
+							"WHERE TO_CHAR(PAY_DATE,'YYYYmmdd') BETWEEN TO_CHAR(SYSDATE-365,'YYYYmmdd') AND TO_CHAR(SYSDATE,'YYYYmmdd') ");
+				}
+			}
+
+			if (pay_method.equals("use")) {
+				if (sb == null) {
+					sb = new StringBuilder();
+					sb.append("WHERE PAY_METHOD = 'U' ");
+				} else {
+					sb.append("AND PAY_METHOD = 'U' ");
+				}
+			} else if(pay_method.equals("reCharge")) {
+				if (sb == null) {
+					sb = new StringBuilder();
+					sb.append("WHERE PAY_METHOD = 'C' ");
+				} else {
+					sb.append("AND PAY_METHOD = 'C' ");
+				}
+			}
+			if(sb !=null){
+				
+				query = query + sb.toString() +" AND USER_NO = " + user_no + " ORDER BY PAY_DATE DESC )) WHERE RNUM BETWEEN " + startRow + " AND " + endRow;
+				
+			} else {
+				query = query+"WHERE USER_NO = " + user_no + " ORDER BY PAY_DATE DESC )) WHERE RNUM BETWEEN " + startRow + " AND " + endRow;
+			}
+			System.out.println("query="+query);
+			rs = stmt.executeQuery(query);
+			
+			plist = new ArrayList<Payment>();
+			
+			while(rs.next()){
+		           
+				p = new Payment();
+				p.setPay_no(rs.getInt("pay_no"));
+				p.setUser_no(rs.getInt("user_no"));
+				p.setPay_amount(rs.getInt("pay_amount"));
+				p.setPay_date(rs.getDate("pay_date"));
+				p.setPay_method(rs.getString("pay_method"));
+				p.setPayment_type(rs.getInt("payment_type"));
+				p.setPayment_cash_status(rs.getInt("payment_cash_status"));
+				p.setPayment_cash_date(rs.getDate("payment_cash_date"));
+				p.setCard_apply_no(rs.getString("card_apply_no"));
+				p.setImp_uid(rs.getString("import_auth_no"));
+				p.setEnter_account_no(rs.getInt("payment_dist_account"));
+				
+				plist.add(p);
+				
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally{
+			close(rs);
+			close(stmt);
+			
+		}
+		   
 		return plist;
 	}
 }
