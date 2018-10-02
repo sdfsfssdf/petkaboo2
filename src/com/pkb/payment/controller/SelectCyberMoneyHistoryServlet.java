@@ -2,7 +2,6 @@ package com.pkb.payment.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -13,7 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.pkb.common.Paging;
 import com.pkb.member.model.vo.User;
-import com.pkb.payment.model.service.PaymentService;
 import com.pkb.payment.model.service.PaymentService2;
 import com.pkb.payment.model.vo.Payment;
 
@@ -63,14 +61,15 @@ public class SelectCyberMoneyHistoryServlet extends HttpServlet {
 		if (pg.getMaxPage() < pg.getEndPage()) {
 			pg.setEndPage(pg.getMaxPage());
 		}
-
-		HashMap<String, Object> totalInfo = new PaymentService2().searchMainInfo(pg.getCurrentPage(), pg.getLimit(),pay_date,pay_method);
+		System.out.println(pg.getListCount());
+		ArrayList<Payment> list = new PaymentService2().searchMainInfo(loginUser.getUser_no(),pg.getCurrentPage(), pg.getLimit(),pay_date,pay_method);
 
 		String page = "";
-		if(totalInfo != null){
+		if(list != null){
 			page = "views/myPage/mypagemain.jsp";
-			request.setAttribute("totalInfo", totalInfo);
 			request.setAttribute("pg", pg);
+			request.setAttribute("list", list);
+			System.out.println(list);
 		} else {
 			page = "views/common/errorPage.jsp";
 			request.setAttribute("msg", "사이버머니 조회페이지 조회 실패 ");
