@@ -73,9 +73,9 @@ public class PaymentService2 {
       return count;
    }
 
-   public HashMap<String, Object> searchMainInfo(int currentPage, int limit, String date, String method,
-         String division) {
-      Connection con = getConnection();
+   /*public HashMap<String, Object> searchMainInfo(int currentPage, int limit, String date, String method,
+         String division) */{
+      /*Connection con = getConnection();
       HashMap<String, Object> totalInfo = null;
       HashMap<String, Integer> todayInfo = new PaymentDao().selectTodayPaymentHistoryList(con);
 
@@ -88,7 +88,7 @@ public class PaymentService2 {
 
       close(con);
 
-      return totalInfo;
+      return totalInfo;*/
    }
 
    public int insertRecharge(Payment py, int user_no) {
@@ -152,7 +152,24 @@ public int selectListInquiryCount(int user_no, String pay_date, String pay_metho
      return count;
 }
 
+public HashMap<String, Object> searchMainInfo(int currentPage, int limit, String pay_date, String pay_method) {
+	Connection con = getConnection();
+    HashMap<String, Object> totalInfo = null;
+    HashMap<String, Integer> todayInfo = new PaymentDao().selectTodayPaymentHistoryList(con);
+
+    if (todayInfo != null) {
+       ArrayList<Payment> plist = new PaymentDao2().searchMainInfo(con, currentPage, limit, pay_date, pay_method);
+       totalInfo = new HashMap<String, Object>();
+       totalInfo.put("plist", plist);
+       totalInfo.put("todayInfo", todayInfo);
+    }
+
+    close(con);
+
+    return totalInfo;
+}
+
 
 
 }
-}
+

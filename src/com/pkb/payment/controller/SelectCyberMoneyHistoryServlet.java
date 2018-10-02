@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.pkb.common.Paging;
 import com.pkb.member.model.vo.User;
 import com.pkb.payment.model.service.PaymentService;
+import com.pkb.payment.model.service.PaymentService2;
 import com.pkb.payment.model.vo.Payment;
 
 /**
@@ -51,7 +52,7 @@ public class SelectCyberMoneyHistoryServlet extends HttpServlet {
 			pg.setCurrentPage(Integer.parseInt(request.getParameter("currentPage")));
 		}
 
-		pg.setListCount(new PaymentService().selectListInquiryCount(loginUser.getUser_no(),pay_date,pay_method));
+		pg.setListCount(new PaymentService2().selectListInquiryCount(loginUser.getUser_no(),pay_date,pay_method));
 
 		pg.setMaxPage((int) ((double) pg.getListCount() / pg.getLimit() + 0.9));
 
@@ -63,16 +64,16 @@ public class SelectCyberMoneyHistoryServlet extends HttpServlet {
 			pg.setEndPage(pg.getMaxPage());
 		}
 
-		HashMap<String, Object> totalInfo = new PaymentService().searchMainInfo(pg.getCurrentPage(), pg.getLimit(),pay_date,pay_method);
+		HashMap<String, Object> totalInfo = new PaymentService2().searchMainInfo(pg.getCurrentPage(), pg.getLimit(),pay_date,pay_method);
 
 		String page = "";
 		if(totalInfo != null){
-			page = "views/admin/paymentManage/cMoneyManage.jsp";
+			page = "views/myPage/mypagepain.jsp";
 			request.setAttribute("totalInfo", totalInfo);
 			request.setAttribute("pg", pg);
 		} else {
 			page = "views/common/errorPage.jsp";
-			request.setAttribute("msg", "(관리자 페이지)사이버머니 관리페이지 조회 실패 ");
+			request.setAttribute("msg", "사이버머니 조회페이지 조회 실패 ");
 		}
 		RequestDispatcher view = request.getRequestDispatcher(page);
 		view.forward(request, response);
