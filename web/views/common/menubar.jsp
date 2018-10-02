@@ -85,8 +85,8 @@
 			}
 		%>
 		</div>
-		<div id="upperLogo">
-			<h1>PETKABOO</h1>
+		<div id="upperLogo" >
+		 	<img src="./images/mainPageImgs/Logo.png" width="19%;" />
 		</div>
 		<div class="upperMenu" id="upperMenu">
 		<ul class="menu">
