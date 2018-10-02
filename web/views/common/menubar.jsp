@@ -23,8 +23,12 @@
 }
 #upperMenu {
 	width:50%;
-	height:50px;
+	height:20px;
+	color:#6f6f6f;
+	
 }
+
+
 
 #upperMenu ul{ 
 	list-style-type:none;
@@ -32,6 +36,8 @@
 	padding-left:0px;
 	/* 우측 정렬 하기 */
 	float:left;
+	font-size:10px;
+	color:#6f6f6f;
 }
 
 #upperMenu ul li{
@@ -50,7 +56,31 @@
 #upperMenu a:link {font-size:1.5em; color: #333333;}
 #upperMenu a:visited {text-decoration: none; color: #333333;}
 #upperMenu a:active {text-decoration: none; color: #333333;}
-#upperMenu a:hover {text-decoration: none; color: red;}
+#upperMenu a:hover {text-decoration: none; color: #89c5f5;}
+
+
+.login, .memberJoin, .logout {
+background-color:white;
+border-style:none;
+
+}
+
+.login:hover, .memberJoin:hover, .logout:hover{
+color:#89c5f5;
+border-style: 1px solid white;
+
+}
+
+.login:active, .memberJoin:active, .logout:active{
+border-style: 1px solid white;
+ 
+
+}
+*{
+outline-style: none;
+}
+
+
 </style>
 </head>
 <body>
@@ -60,34 +90,36 @@
 			if(loginUser == null){
 		   %>
 			<div class="beforeLoginArea">
-				<button name="login" onclick="location.href='<%=request.getContextPath()%>/views/common/login.jsp'">로그인</button>	
+				<button name="login" class="login" onclick="location.href='<%=request.getContextPath()%>/views/common/login.jsp'">로그인</button>	
 				&nbsp;|&nbsp;
-				<button name="memberJoin" onclick="location.href='<%=request.getContextPath()%>/views/member/joinForm.jsp'">회원가입</button>
+				<button name="memberJoin" class="memberJoin" onclick="location.href='<%=request.getContextPath()%>/views/member/joinForm.jsp'">회원가입</button>
 				&nbsp;
 			</div>
 		<%
 			}else{
 		%>	
 			<div class="afterLoginArea">
-				<a href="<%=request.getContextPath()%>/views/myPage/mypagemain.jsp">
+				<a href="<%=request.getContextPath()%>/views/myPage/mypagemain.jsp" style="color:#2c96ed;">
 				<% if (loginUser.getNickname() != null) { %>
 				<b><%= loginUser.getNickname() %></b>
 				<% } else { %>
 				<b><%= loginUser.getEmail() %></b>
 				<% } %>
-				</a>님 환영합니다!&nbsp;
+				</a>님 환영합니다!&nbsp;&nbsp;
 				<b>보유 사이버머니:</b> <%= loginUser.getMoney() %>원&nbsp;
-				&nbsp;|&nbsp;
-				<button name="logout" onclick="location.href='<%=request.getContextPath()%>/logout.me'">로그아웃</button>
+				&nbsp;|
+				<button name="logout" class="logout" onclick="location.href='<%=request.getContextPath()%>/logout.me'">로그아웃</button>
 				&nbsp;
 			</div>
 		<%
 			}
 		%>
 		</div>
-		<div id="upperLogo" >
+		<a href="index.jsp">
+		<div id="upperLogo" style="margin-top:40px; margin-bottom:50px;">
 		 	<img src="./images/mainPageImgs/Logo.png" width="19%;" />
 		</div>
+		</a>
 		<div class="upperMenu" id="upperMenu">
 		<ul class="menu">
 			<li><a href="<%=request.getContextPath()%>/index.jsp">HOME</a></li>

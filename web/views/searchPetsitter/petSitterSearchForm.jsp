@@ -11,6 +11,8 @@
 		background-color:#89c5f5;
 		height:300px;
 		padding:1%;
+		margin-top:10px;
+		margin-bottom:50px;
 	}
 	.center-searchArea{
 	text-align:center;

@@ -2,9 +2,9 @@
 	pageEncoding="UTF-8" import="com.pkb.payment.model.vo.*, java.util.*,com.pkb.common.Paging,java.util.*"%>
 	<% 
   	 CyberMoney cm = (CyberMoney)request.getAttribute("cm");
-	String check = (String)request.getAttribute("check");
+
 	
-	HashMap<String, Object> totalInfo = (HashMap<String,Object>)request.getAttribute("totalInfo");
+	/* HashMap<String, Object> totalInfo = (HashMap<String,Object>)request.getAttribute("totalInfo");
 	HashMap<String,Integer> todayInfo = (HashMap<String,Integer>)totalInfo.get("todayInfo");
 	ArrayList<Payment> plist = (ArrayList<Payment>)totalInfo.get("plist");
 	ArrayList<HashMap<String,String>> ilist = (ArrayList<HashMap<String,String>>)totalInfo.get("incomeList");
@@ -13,7 +13,7 @@
 	int currentPage = pg.getCurrentPage();
 	int maxPage = pg.getMaxPage();
 	int startPage = pg.getStartPage();
-	int endPage = pg.getEndPage();
+	int endPage = pg.getEndPage();  */
 %>
 
  
@@ -462,7 +462,7 @@ th, td {
     </div>
   </div>
   
-  <!-- 페이지 처리 -->
+  <%-- <!-- 페이지 처리 -->
 		<div class="spaceDiv" align="center">
 			<div class="pigingArea">
 				<button class="btn btn-default"
@@ -514,7 +514,7 @@ th, td {
 				<button class="btn btn-default"
 					onclick="location.href='<%=request.getContextPath()%>/selectCyberMoneyHistory.pm?currentPage=<%=maxPage%>'">>></button>
 			</div>
-	</div>
+	</div> --%>
   
 </div>
 <script>
