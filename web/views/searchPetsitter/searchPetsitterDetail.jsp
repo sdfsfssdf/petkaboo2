@@ -128,8 +128,8 @@
 		<div name="space"></div>
 		<div class="buttons" id="buttons" name="buttons">
 		<form class="orderInfo" id="orderInfo" name="orderInfo" method="post" action="<%=request.getContextPath()%>/selectOne.do">
-		<input type="hidden" id="revLevel" name="revLevel" value="1">
-		<input type="hidden" id="no" name="no" value="<%= p.getPet_service_regno() %>">
+		<input type="text" id="revLevel" name="revLevel" value="1">
+		<input type="text" id="no" name="no" value="<%= p.getPet_service_regno() %>">
 		<button class="pre-order" id="pre-order" onclick="submit()">예약하기</button>
 		</form>
 		<%

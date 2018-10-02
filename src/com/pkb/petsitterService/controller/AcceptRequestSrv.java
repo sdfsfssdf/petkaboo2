@@ -34,12 +34,19 @@ public class AcceptRequestSrv extends HttpServlet {
 		System.out.println("psrno는: " + request.getParameter("psrno"));
 		System.out.println("client_user_no는: " + request.getParameter("client_user_no"));
 		System.out.println("contractNo는: " + request.getParameter("contractNo"));
-
+		String acceptReq = null;
+		int result = 0;
 		int client_user_no = Integer.parseInt(request.getParameter("client_user_no"));
 		int contractno = Integer.parseInt(request.getParameter("contractNo"));
 		int ps_userno = Integer.parseInt(request.getParameter("pst_user_no"));
 		
-		int result = new ContractMainService().acceptReq(contractno, client_user_no);
+		if(request.getParameter("acceptReq") != null && request.getParameter("acceptReq").equals("수락")){
+			acceptReq = "E";
+			result = new ContractMainService().acceptReq(contractno, client_user_no, acceptReq);				
+		} else {
+			acceptReq = "C";
+			result = new ContractMainService().refuseReq(contractno, client_user_no, acceptReq);
+		}
 		
 		// 성공처리
 		if(result > 0){

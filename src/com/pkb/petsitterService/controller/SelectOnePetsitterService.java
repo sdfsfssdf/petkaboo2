@@ -43,6 +43,9 @@ public class SelectOnePetsitterService extends HttpServlet {
 		
 		PetsitterService p = new PetsitterMainService().selectOne(psrno);
 		
+		System.out.println("revLevel: " + revLevel);
+		System.out.println("selectOnePetsitterService: " + p);
+		
 		if(p != null){
 			
 			if(revLevel == 0){
@@ -51,21 +54,26 @@ public class SelectOnePetsitterService extends HttpServlet {
 				
 			page ="views/searchPetsitter/searchPetsitterDetail.jsp";
 			request.setAttribute("p", p);
+			RequestDispatcher view = request.getRequestDispatcher(page);
+			view.forward(request, response);
 			
 			}else if(revLevel == 1){
 			
 			page ="views/searchPetsitter/petSittingApplyProcess.jsp";	
-			request.setAttribute("p", p);		
+			request.setAttribute("p", p);
+			RequestDispatcher view = request.getRequestDispatcher(page);
+			view.forward(request, response);
 			
 			}
 			
 		}else{
 			page = "views/common/errorPage.jsp";
 			request.setAttribute("msg", "펫시터 상세 정보 조회 실패");
+			RequestDispatcher view = request.getRequestDispatcher(page);
+			view.forward(request, response);
 		}
 		
-		RequestDispatcher view = request.getRequestDispatcher(page);
-		view.forward(request, response);
+		
 	}
 
 	/**

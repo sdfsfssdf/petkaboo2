@@ -43,16 +43,17 @@ public class PaymentRequest extends HttpServlet {
 		
 		c = new ContractMainService().selectOne(psrno, user_no);
 		
-		if(c != null && c.getContract_status().equals("V")){
-			// 검색 결과 값이 있고 상태값이 V라면 사이버머니 조회해 오기
+		if(c != null && c.getService_status() != null && c.getService_status().equals("W")){
+			// 검색 결과 값이 있고 service_status 값이 W라면 사이버머니 조회해 오기
 			cMoney = new ContractMainService().checkCMoney(user_no);
 			
 			if(cMoney != null){
 				// 그래서 조회한 사이버머니 테이블이 있다면 서비스 가격 계산
-				// 여기까지는 잘 됨
 				System.out.println("사이버머니 조회 성공 " + cMoney);
 				
-				
+				page = "views/myPage/paymentProceed.jsp";
+				request.setAttribute("c", c);
+				request.setAttribute("cMoney", cMoney);	
 				
 			} else {
 				page = "views/common/errorPage.jsp";

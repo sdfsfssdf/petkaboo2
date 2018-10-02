@@ -10,7 +10,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <% 
-   PetsitterService p = (PetsitterService)request.getAttribute("p");
+    PetsitterService p = (PetsitterService)request.getAttribute("p");
 	Contract c = (Contract)request.getAttribute("c");
 	String checkApply = (String)request.getAttribute("afterApply");
 	String errorCode = (String)request.getAttribute("errorCode");
@@ -72,7 +72,7 @@
 			</tr>
 		</table>
 	</div>
-	<% } else if(c.getContract_status().equals("W")) { %>
+	<% } else if(c != null && c.getService_status().equals("W")) { %>
 	<div id="paymentDiv">
 	<b>펫시터가 계약신청을 수락했습니다. 결제가 필요합니다.</b>
 	</div>
