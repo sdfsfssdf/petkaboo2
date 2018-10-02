@@ -42,7 +42,7 @@ public class PetsitterContractDao {
 		ResultSet rset = null;
 		Contract c = null;
 		
-		String query = prop.getProperty("selectOneContract");
+		String query = prop.getProperty("selectMyContract");
 		
 		try {
 			pstmt = con.prepareStatement(query);

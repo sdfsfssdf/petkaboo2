@@ -3,6 +3,7 @@ package com.pkb.petsitterService.controller;
 import java.io.IOException;
 import java.sql.Date;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -97,9 +98,12 @@ public class InsertPetsitterService extends HttpServlet {
 			// selectList.bo를 펫시터 목록 조회 서블릿으로 대체
 			response.sendRedirect(request.getContextPath() + "/PetSitter.all");
 		}else{
+			page = "views/common/errorPage.jsp";
 			request.setAttribute("msg", "펫시터 등록 실패!");
-			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
-		}		
+		}
+		
+		RequestDispatcher view = request.getRequestDispatcher(page);
+		view.forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
