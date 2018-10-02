@@ -28,6 +28,8 @@ public class Contract implements java.io.Serializable {
 	private String petGender;			//펫시터 성별
 	private String pet_categoryName;	//펫 종류
 	private String contract_type;		//계약 종류
+	private String service_status;		//서비스 상태
+	private int service_charge;			//서비스 가격
 	
 	public Contract(){}
 
@@ -35,7 +37,7 @@ public class Contract implements java.io.Serializable {
 			Date contract_end, String contract_status, int contract_star, int pet_no, String userAddress,
 			String userPhone, String userName, String userNickname, String userGender, int pet_user_no, String pet_name,
 			Date pet_birth, String petAddress, String petPhone, String petNickname, String petGender,
-			String pet_categoryName, String contract_type) {
+			String pet_categoryName, String contract_type, String service_status, int service_charge) {
 		super();
 		this.contract_no = contract_no;
 		this.user_no = user_no;
@@ -60,6 +62,8 @@ public class Contract implements java.io.Serializable {
 		this.petGender = petGender;
 		this.pet_categoryName = pet_categoryName;
 		this.contract_type = contract_type;
+		this.service_status = service_status;
+		this.service_charge = service_charge;
 	}
 
 	public static long getSerialversionuid() {
@@ -158,6 +162,14 @@ public class Contract implements java.io.Serializable {
 		return contract_type;
 	}
 
+	public String getService_status() {
+		return service_status;
+	}
+
+	public int getService_charge() {
+		return service_charge;
+	}
+
 	public void setContract_no(int contract_no) {
 		this.contract_no = contract_no;
 	}
@@ -250,6 +262,14 @@ public class Contract implements java.io.Serializable {
 		this.contract_type = contract_type;
 	}
 
+	public void setService_status(String service_status) {
+		this.service_status = service_status;
+	}
+
+	public void setService_charge(int service_charge) {
+		this.service_charge = service_charge;
+	}
+
 	@Override
 	public String toString() {
 		return "Contract [contract_no=" + contract_no + ", user_no=" + user_no + ", pet_service_regno="
@@ -260,9 +280,9 @@ public class Contract implements java.io.Serializable {
 				+ ", pet_user_no=" + pet_user_no + ", pet_name=" + pet_name + ", pet_birth=" + pet_birth
 				+ ", petAddress=" + petAddress + ", petPhone=" + petPhone + ", petNickname=" + petNickname
 				+ ", petGender=" + petGender + ", pet_categoryName=" + pet_categoryName + ", contract_type="
-				+ contract_type + "]";
+				+ contract_type + ", service_status=" + service_status + ", service_charge=" + service_charge + "]";
 	}
-
-
+	
+	
 
 }

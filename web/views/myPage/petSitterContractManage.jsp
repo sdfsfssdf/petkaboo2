@@ -55,14 +55,18 @@
 			<td><%= c.getContract_end() %></td>
 			<td><%= c.getContract_date() %></td>
 			<% if(c.getContract_status().equals("W")) { %>
-			<form id="acceptReq" action="<%=request.getContextPath()%>/acceptReq.do" method="post">
-			<input type="hidden" id="acceptReqYN" name="acceptReq" value="Y">
-			<input type="hidden" id="pst_user_no" name="pst_user_no" value="<%= loginUser.getUser_no() %>">
-			<input type="hidden" id="psrno" name="psrno" value="<%= c.getPet_service_regno() %>">
-			<input type="hidden" id="client_user_no" name="client_user_no" value="<%= c.getUser_no() %>">
-			<input type="hidden" id="contractNo" name="contractNo" value="<%= c.getContract_no() %>">			
-			<td><button>요청수락</button></td>
+			<td>
+			<form id="acceptRequest" action="<%=request.getContextPath()%>/acceptReq.do" method="post">
+				<input type="hidden" id="pst_user_no" name="pst_user_no" value="<%= loginUser.getUser_no() %>">
+				<input type="hidden" id="psrno" name="psrno" value="<%= c.getPet_service_regno() %>">
+				<input type="hidden" id="client_user_no" name="client_user_no" value="<%= c.getUser_no() %>">
+				<input type="hidden" id="contractNo" name="contractNo" value="<%= c.getContract_no() %>">			
+				<input type="submit" name="acceptReq" value="수락">
+				<input type="submit" name="acceptReq" value="취소">
 			</form>
+			</td>
+			<% } else if (c.getContract_status().equals("E")){ %>
+			<td>결제상태: <%= c.getService_status() %></td>
 			<% } else { %>
 			<td><%= c.getContract_status() %></td>
 			<% } %>

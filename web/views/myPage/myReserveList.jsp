@@ -46,7 +46,7 @@
 		<tr>
 			<td><%= c.getPet_service_regno() %></td>
 			<td><%= c.getPet_categoryName() %></td>
-			<% if(c.getContract_type().equals("c")){ %>
+			<% if(c != null && c.getContract_type().equals("c")){ %>
 			<td>위탁</td>
 			<% } else { %>
 			<td>방문</td>
@@ -54,14 +54,15 @@
 			<td><%= c.getContract_start() %></td>
 			<td><%= c.getContract_end() %></td>
 			<td><%= c.getContract_date() %></td>
-			<% if(c.getContract_status().equals("V")) { %>
+			<% if(c.getService_status() != null && c.getService_status().equals("W")) { %>
+			<td>
 			<form id="paymentReq" action="<%=request.getContextPath()%>/paymentReq.do" method="post">
 			<input type="hidden" id="pst_user_no" name="pst_user_no" value="<%= c.getPet_user_no() %>">
 			<input type="hidden" id="psrno" name="psrno" value="<%= c.getPet_service_regno() %>">
 			<input type="hidden" id="user_no" name="user_no" value="<%= loginUser.getUser_no() %>">
 			<input type="hidden" id="contractNo" name="contractNo" value="<%= c.getContract_no() %>">			
-			<td><button>결제요청</button></td>
-			</form>
+			<button>결제요청</button>
+			</form></td>
 			<% } else { %>
 			<td><%= c.getContract_status() %></td>
 			<% } %>

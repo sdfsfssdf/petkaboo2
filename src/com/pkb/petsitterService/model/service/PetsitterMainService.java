@@ -71,6 +71,8 @@ public class PetsitterMainService {
 		
 		p = new PetsitterServiceDao().selectOne(con, psrno);
 		
+		close(con);
+		
 		return p;
 	}
 
@@ -79,6 +81,8 @@ public class PetsitterMainService {
 		
 		ArrayList<PetsitterService> list = new PetsitterServiceDao().searchList(con, searchKeyword, gender, arrayCondition);
 		
+		close(con);
+		
 		return list;
 	}
 
@@ -86,6 +90,8 @@ public class PetsitterMainService {
 		Connection con = getConnection();
 		
 		ArrayList<PetsitterService> list = new PetsitterServiceDao().searchList(con, user_no);
+		
+		close(con);
 		
 		return list;
 	}

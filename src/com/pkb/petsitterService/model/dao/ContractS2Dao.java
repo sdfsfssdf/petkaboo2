@@ -103,6 +103,14 @@ public class ContractS2Dao {
 				c.setPetAddress(rset.getString("pet_address"));
 				c.setPetPhone(rset.getString("pet_phone"));
 				c.setPetGender(rset.getString("pet_gender"));
+				c.setPet_categoryName(rset.getString("pet_categoryname"));
+				c.setContract_type(rset.getString("contract_type"));
+				c.setService_charge(rset.getInt("service_charge"));
+
+				if(rset.getString("service_status") != null){
+					c.setService_status(rset.getString("service_status"));
+				}
+				
 				}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -154,6 +162,11 @@ public class ContractS2Dao {
 				c.setPetGender(rset.getString("gender"));
 				c.setPet_categoryName(rset.getString("pet_categoryname"));
 				c.setContract_type(rset.getString("contract_type"));
+				c.setService_charge(rset.getInt("service_charge"));
+				
+				if(rset.getString("service_status") != null){
+					c.setService_status(rset.getString("service_status"));
+				}				
 				cList.add(c);
 			}
 			
@@ -170,7 +183,7 @@ public class ContractS2Dao {
 		return cList;
 	}
 
-	public int AcceptReq(Connection con, int contractno, int client_user_no) {
+	public int AcceptReq(Connection con, int contractno, int client_user_no, String acceptReq) {
 		PreparedStatement pstmt = null;
 		int result  = 0;
 		
@@ -179,8 +192,9 @@ public class ContractS2Dao {
 		try {
 			pstmt = con.prepareStatement(query);
 			
-			pstmt.setInt(1, contractno);
-			pstmt.setInt(2, client_user_no);
+			pstmt.setString(1, acceptReq);
+			pstmt.setInt(2, contractno);
+			pstmt.setInt(3, client_user_no);
 			
 			result = pstmt.executeUpdate();
 			
@@ -233,6 +247,12 @@ public class ContractS2Dao {
 				c.setPetGender(rset.getString("gender"));
 				c.setPet_categoryName(rset.getString("pet_categoryname"));
 				c.setContract_type(rset.getString("contract_type"));
+				c.setService_charge(rset.getInt("service_charge"));
+				
+				if(rset.getString("service_status") != null){
+					c.setService_status(rset.getString("service_status"));
+				}
+				
 				cList.add(c);
 			}
 			
@@ -282,5 +302,159 @@ public class ContractS2Dao {
 		
 		return cMoney;
 	}
+
+	public int refuseReq(Connection con, int contractno, int client_user_no, String acceptReq) {
+		PreparedStatement pstmt = null;
+		int result  = 0;
+		
+		String query = prop.getProperty("RefuseReqContract");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			
+			pstmt.setString(1, acceptReq);
+			pstmt.setInt(2, contractno);
+			pstmt.setInt(3, client_user_no);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public int createService(Connection con, int contractno) {
+		PreparedStatement pstmt = null;
+		int result  = 0;
+		
+		String query = prop.getProperty("createService");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			
+			pstmt.setInt(1, contractno);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}		
+		
+		return result;
+	}
+
+	public int insertPayment(Connection con, int contractno, int user_no, int fullPrice) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String query = prop.getProperty("insertPayment");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			
+			pstmt.setInt(1, user_no);
+			pstmt.setInt(2, fullPrice);
+			pstmt.setString(3, "U");
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}				
+		
+		return result;
+	}
+
+	public int insertPayhistory(Connection con, int contractno, int user_no, int fullPrice) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String query = prop.getProperty("insertPayhistory");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			
+			pstmt.setInt(1, user_no);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}	
+		
+		return result;
+	}
+
+	public int proceedCybermoney(Connection con, int contractno, int user_no, int fullPrice) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String query = prop.getProperty("proceedCybermoney");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, fullPrice);
+			pstmt.setInt(2, user_no);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}	
+		
+		return result;
+	}
+
+	public int insertContractmoney(Connection con, int contractno, int user_no, int fullPrice) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String query = prop.getProperty("insertContractmoney");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, contractno);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}	
+		
+		return result;
+	}
+
+	public int updateService(Connection con, int contractno, int user_no, int fullPrice) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String query = prop.getProperty("updateService");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, "E");
+			pstmt.setInt(2, contractno);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}	
+		
+		return result;
+	}
+
+
 
 }

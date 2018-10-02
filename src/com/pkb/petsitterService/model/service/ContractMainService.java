@@ -37,6 +37,8 @@ public class ContractMainService {
 		
 		c = new ContractS2Dao().selectOne(con, parseInt, parseInt2);
 		
+		close(con);
+		
 		return c;
 	}
 
@@ -50,14 +52,22 @@ public class ContractMainService {
 		return cList;
 	}
 
-	public int acceptReq(int contractno, int client_user_no) {
+	public int acceptReq(int contractno, int client_user_no, String acceptReq) {
 		Connection con = getConnection();
 		int result = 0;
+		int result2 = 0;
 		
-		result = new ContractS2Dao().AcceptReq(con, contractno, client_user_no);
+		result = new ContractS2Dao().AcceptReq(con, contractno, client_user_no, acceptReq);
 		
 		if(result > 0){
-			commit(con);
+			
+			result2 = new ContractS2Dao().createService(con, contractno);
+			
+			if(result2 > 0){
+				commit(con);
+			}else{
+				rollback(con);
+			}
 		} else {
 			rollback(con);
 		}
@@ -83,7 +93,76 @@ public class ContractMainService {
 		
 		cMoney = new ContractS2Dao().checkCMoney(con, user_no);
 		
+		close(con);
+		
 		return cMoney;
+	}
+
+	public int refuseReq(int contractno, int client_user_no, String acceptReq) {
+		Connection con = getConnection();
+		int result = 0;
+		
+		result = new ContractS2Dao().refuseReq(con, contractno, client_user_no, acceptReq);
+		
+		if(result > 0){
+			commit(con);
+		} else {
+			rollback(con);
+		}
+		
+		close(con);
+		
+		return result;
+	}
+
+	public int paymentProceed(int contractno, int user_no, int fullPrice) {
+		Connection con = getConnection();
+		int result = 0;
+		int step1 = 0;
+		int step2 = 0;
+		int step3 = 0;
+		int step4 = 0;
+		int step5 = 0;
+		
+		step1 = new ContractS2Dao().insertPayment(con, contractno, user_no, fullPrice);
+		
+		if(step1 > 0){
+			// 1단계 성공시
+			step2 = new ContractS2Dao().insertPayhistory(con, contractno, user_no, fullPrice);			
+			if(step2 > 0){
+				// 2단계 성공시
+				step3 = new ContractS2Dao().proceedCybermoney(con, contractno, user_no, fullPrice);
+				if(step3 > 0){
+					// 3단계 성공시
+					step4 = new ContractS2Dao().insertContractmoney(con, contractno, user_no, fullPrice);
+					if(step4 > 0){
+						// 4단계 성공시
+						step5 = new ContractS2Dao().updateService(con, contractno, user_no, fullPrice);
+						if(step5 > 0){
+							// 5단계 성공시 커밋
+							commit(con);
+							result = step1 + step2 + step3 + step4 + step5;
+						}else{
+							rollback(con);
+						}
+					}else{
+						rollback(con);
+					}
+				}else{
+					rollback(con);
+				}
+			}else{
+				// 2단계 실패시
+				rollback(con);
+			}	
+		}else{
+			// 1단계 실패시
+			rollback(con);
+		}
+		
+		close(con);
+			
+		return result;
 	}
 
 }
