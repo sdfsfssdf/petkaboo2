@@ -5,7 +5,6 @@ import static com.pkb.common.JDBCTemplate.close;
 import java.io.FileReader;
 import java.io.IOException;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -16,14 +15,13 @@ import java.util.HashMap;
 import java.util.Properties;
 
 import com.pkb.board.model.vo.Board;
+import com.pkb.member.model.vo.ApplyHistory;
 import com.pkb.member.model.vo.CyberMoney;
 import com.pkb.member.model.vo.ImgFile;
 import com.pkb.member.model.vo.LoginHistory;
 import com.pkb.member.model.vo.Pet;
 import com.pkb.member.model.vo.User;
 import com.pkb.reservation.model.vo.Reservation;
-import com.sun.corba.se.spi.orbutil.fsm.Guard.Result;
-import com.sun.xml.internal.ws.api.message.Packet.Status;
 
 public class UserDAO {
 
@@ -1697,6 +1695,69 @@ public class UserDAO {
 			close(pstmt);
 		}
 		return result;
+	}
+
+	public int getPetsitterRequestCount(Connection con) {
+		Statement stmt = null;
+		ResultSet rs = null;
+		String query = prop.getProperty("petsitterRequestCount");
+
+		int listCount = 0;
+
+		try {
+			stmt = con.createStatement();
+			rs = stmt.executeQuery(query);
+
+			if (rs.next()) {
+				listCount = rs.getInt(1);
+			}
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(rs);
+			close(stmt);
+		}
+		return listCount;
+	}
+
+	public ArrayList<ApplyHistory> selectPetsitterRequest(Connection con, int currentPage, int limit) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		ArrayList<ApplyHistory> alist = null;
+		ApplyHistory ap = null;
+		String query = prop.getProperty("selectPetsitterRequestList");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			int startRow = (currentPage - 1) * limit + 1;
+			int endRow = startRow + limit - 1;
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
+			
+			rs= pstmt.executeQuery();
+			alist = new ArrayList<ApplyHistory>();
+			while(rs.next()){
+				ap = new ApplyHistory();
+				ap.setApply_record_no(rs.getInt("apply_record_no"));
+				ap.setApply_no(rs.getInt("apply_no"));
+				ap.setApply_rec_date(rs.getDate("apply_rec_date"));
+				ap.setApply_rec_status(rs.getString("apply_rec_status"));
+				ap.setApply_refuse(rs.getString("apply_refuse"));
+				
+				alist.add(ap);
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally{
+			close(pstmt);
+			close(rs);
+		}
+		
+		return alist;
 	}
 
 

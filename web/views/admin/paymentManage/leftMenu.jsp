@@ -38,7 +38,7 @@
             <br>
             <div class="text"><a href="<%=request.getContextPath()%>/views/admin/paymentManage/refundManage.jsp">환불/출금 관리</a></div>
             <br>
-            <div class="text"><a href="<%=request.getContextPath()%>/views/admin/paymentManage/bankbookManage.jsp">무통장 입금 관리</a></div>
+            <div class="text"><a href="<%=request.getContextPath()%>/bankBook.pa">무통장 입금 관리</a></div>
       </div>
    </div>
 </body>
