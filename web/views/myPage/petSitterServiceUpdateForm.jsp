@@ -137,10 +137,10 @@ hr{
 			<td><%= p.getContract_end() %></td>
 			<td><%= p.getService_charge() %></td>
 			<td>
-				<form name="selectContract" method="post" action="<%=request.getContextPath()%>/searchMyContract.do">
+				<form name="selectContract" method="post" action="<%=request.getContextPath()%>/psContract.do">
 					<!-- button 영역 차후 수정 -->
 					<input type="hidden" name="contractno" value="<%= p.getPet_service_regno()%>">
-					<input type="hidden" name="petsitterno" value="<%= loginUser.getUser_no() %>">
+					<input type="hidden" name="user_no" value="<%= loginUser.getUser_no() %>">
 					<button>계약상태 조회</button>
 				</form>
 			</td>

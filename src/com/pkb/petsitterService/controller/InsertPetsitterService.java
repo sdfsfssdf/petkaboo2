@@ -97,13 +97,13 @@ public class InsertPetsitterService extends HttpServlet {
 		if(result > 0){
 			// selectList.bo를 펫시터 목록 조회 서블릿으로 대체
 			response.sendRedirect(request.getContextPath() + "/PetSitter.all");
+			return;
 		}else{
 			page = "views/common/errorPage.jsp";
 			request.setAttribute("msg", "펫시터 등록 실패!");
+			RequestDispatcher view = request.getRequestDispatcher(page);
+			view.forward(request, response);
 		}
-		
-		RequestDispatcher view = request.getRequestDispatcher(page);
-		view.forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

@@ -72,6 +72,10 @@
 			</tr>
 		</table>
 	</div>
+	<% } else if(c.getContract_status().equals("W")) { %>
+	<div id="paymentDiv">
+	<b>펫시터가 계약신청을 수락했습니다. 결제가 필요합니다.</b>
+	</div>
 	<% } else if(p == null) {%>
 	<script>
 		alert('비정상적인 접근');
