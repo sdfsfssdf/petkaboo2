@@ -221,7 +221,7 @@ public class PaymentDao {
 		Contract c = null;
 		PetsitterService p = null;
 		CyberMoney cm = null;
-    
+
 		String query = prop.getProperty("selectRecPay");
 
 		try {
@@ -326,7 +326,7 @@ public class PaymentDao {
 				} else if (date.equals("month")) {
 					sb.append(
 							"WHERE TO_CHAR(PAY_DATE,'YYYYmmdd') BETWEEN TO_CHAR(SYSDATE-30,'YYYYmmdd') AND TO_CHAR(SYSDATE,'YYYYmmdd') ");
-				} else if(date.equals("year")){
+				} else if (date.equals("year")) {
 					sb.append(
 							"WHERE TO_CHAR(PAY_DATE,'YYYYmmdd') BETWEEN TO_CHAR(SYSDATE-365,'YYYYmmdd') AND TO_CHAR(SYSDATE,'YYYYmmdd') ");
 				}
@@ -361,14 +361,14 @@ public class PaymentDao {
 				} else {
 					sb.append("AND PAY_METHOD = 'R' ");
 				}
-			} else if(division.equals("reCharge")) {
+			} else if (division.equals("reCharge")) {
 				if (sb == null) {
 					sb = new StringBuilder();
 					sb.append("WHERE PAY_METHOD = 'C' ");
 				} else {
 					sb.append("AND PAY_METHOD = 'C' ");
 				}
-			} else if ( division.equals("wait")){
+			} else if (division.equals("wait")) {
 				if (sb == null) {
 					sb = new StringBuilder();
 					sb.append("WHERE PAY_METHOD = 'F' ");
@@ -376,14 +376,14 @@ public class PaymentDao {
 					sb.append("AND PAY_METHOD = 'F' ");
 				}
 			}
-			if(sb !=null){
-				query = query + sb.toString()+" ORDER BY P.PAY_DATE DESC";
+			if (sb != null) {
+				query = query + sb.toString() + " ORDER BY P.PAY_DATE DESC";
 			} else {
 				query = query + " ORDER BY P.PAY_DATE DESC";
 			}
 			System.out.println(query);
 			rs = stmt.executeQuery(query);
-		
+
 			if (rs.next()) {
 				count = rs.getInt(1);
 			}
@@ -401,55 +401,51 @@ public class PaymentDao {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		CyberMoney cm = null;
-		
+
 		String query = prop.getProperty("searchCyberMoney");
-		
+
 		try {
 			pstmt = con.prepareStatement(query);
 			pstmt.setInt(1, user_no);
 			rset = pstmt.executeQuery();
-			
-			while(rset.next()){
+
+			while (rset.next()) {
 				cm = new CyberMoney();
 				cm.setMoney_no(rset.getInt("money_no"));
 				cm.setUser_no(rset.getInt("user_no"));
 				cm.setMoney(rset.getInt("money"));
-				
-				
+
 			}
-		
+
 		} catch (SQLException e) {
-			
+
 			e.printStackTrace();
-		} finally{
+		} finally {
 			close(rset);
 			close(pstmt);
-			
-			
+
 		}
-		
+
 		return cm;
 	}
-
 
 	public PaymentInfo searchRecPayInfo(Connection con, int contract_no, int user_no) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		PaymentInfo pi = null;
-		
+
 		String query = prop.getProperty("searchRecPayInfo");
-		
+
 		try {
-			
 
 			pstmt = con.prepareStatement(query);
 			pstmt.setInt(1, contract_no);
 			pstmt.setInt(2, user_no);
 			rset = pstmt.executeQuery();
-			
-			while(rset.next()){
+
+			while (rset.next()) {
 				pi = new PaymentInfo();
-				
+
 				pi.setUserAddress(rset.getString("address"));
 				pi.setUserName(rset.getString("user_name"));
 				pi.setContract_no(rset.getInt("contract_no"));
@@ -463,20 +459,18 @@ public class PaymentDao {
 				pi.setPet_count(rset.getInt("pet_count"));
 				pi.setService_status(rset.getString("service_status"));
 				pi.setPet_categoryname(rset.getString("pet_categoryname"));
-				
+
 			}
-				
-			}catch(SQLException e){
-				e.printStackTrace();
-			}finally{
-				close(rset);
-				close(pstmt);
-			}
-			
-		
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+
 		return pi;
 	}
-
 
 	public ArrayList<Payment> searchMainInfo(Connection con, int currentPage, int limit, String date, String method,
 			String division) {
@@ -487,7 +481,7 @@ public class PaymentDao {
 		Payment p = null;
 		String query = prop.getProperty("selectSearchList");
 		StringBuilder sb = null;
-		
+
 		try {
 			stmt = con.prepareStatement(query);
 
@@ -505,7 +499,7 @@ public class PaymentDao {
 				} else if (date.equals("month")) {
 					sb.append(
 							"WHERE TO_CHAR(PAY_DATE,'YYYYmmdd') BETWEEN TO_CHAR(SYSDATE-30,'YYYYmmdd') AND TO_CHAR(SYSDATE,'YYYYmmdd') ");
-				} else if(date.equals("year")){
+				} else if (date.equals("year")) {
 					sb.append(
 							"WHERE TO_CHAR(PAY_DATE,'YYYYmmdd') BETWEEN TO_CHAR(SYSDATE-365,'YYYYmmdd') AND TO_CHAR(SYSDATE,'YYYYmmdd') ");
 				}
@@ -540,14 +534,14 @@ public class PaymentDao {
 				} else {
 					sb.append("AND PAY_METHOD = 'R' ");
 				}
-			} else if(division.equals("reCharge")) {
+			} else if (division.equals("reCharge")) {
 				if (sb == null) {
 					sb = new StringBuilder();
 					sb.append("WHERE PAY_METHOD = 'C' ");
 				} else {
 					sb.append("AND PAY_METHOD = 'C' ");
 				}
-			}else if ( division.equals("wait")){
+			} else if (division.equals("wait")) {
 				if (sb == null) {
 					sb = new StringBuilder();
 					sb.append("WHERE PAY_METHOD = 'F' ");
@@ -555,11 +549,12 @@ public class PaymentDao {
 					sb.append("AND PAY_METHOD = 'F' ");
 				}
 			}
-			
-			if(sb !=null){
-				query = query + sb.toString() + " ORDER BY P.PAY_DATE DESC)) WHERE RNUM BETWEEN "+startRow + " AND " + endRow;
+
+			if (sb != null) {
+				query = query + sb.toString() + " ORDER BY P.PAY_DATE DESC)) WHERE RNUM BETWEEN " + startRow + " AND "
+						+ endRow;
 			} else {
-				query = query + " ORDER BY P.PAY_DATE DESC)) WHERE RNUM BETWEEN "+startRow + " AND " + endRow;
+				query = query + " ORDER BY P.PAY_DATE DESC)) WHERE RNUM BETWEEN " + startRow + " AND " + endRow;
 			}
 
 			System.out.println(query);
@@ -596,55 +591,55 @@ public class PaymentDao {
 		return plist;
 	}
 
-
 	public ArrayList<HashMap<String, String>> selectTodayIncomeList(Connection con) {
 		// TODO Auto-generated method stub
 		Statement stmt = null;
 		ResultSet rs = null;
-		ArrayList<HashMap<String,String>> list = null;
-		HashMap<String,String> infoMap = null;
+		ArrayList<HashMap<String, String>> list = null;
+		HashMap<String, String> infoMap = null;
 		String query = prop.getProperty("selectTodayIncome");
-		
+
 		try {
 			stmt = con.createStatement();
 			rs = stmt.executeQuery(query);
-			
-			list = new ArrayList<HashMap<String,String>>();
-			while(rs.next()){
-				infoMap = new HashMap<String,String>();
+
+			list = new ArrayList<HashMap<String, String>>();
+			while (rs.next()) {
+				infoMap = new HashMap<String, String>();
 				infoMap.put("count", String.valueOf(rs.getInt(1)));
 				infoMap.put("totalIncome", String.valueOf(rs.getInt(2)));
 				infoMap.put("category", rs.getString("PET_CATEGORYNAME"));
 				infoMap.put("rate", rs.getString("FEE_RATE"));
-				
+
 				list.add(infoMap);
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} finally {
+			close(rs);
+			close(stmt);
 		}
 		return list;
 
 	}
-  
-  public int insertUseMoney(Connection con, int user_no, int contract_no) {
-      PreparedStatement pstmt = null;
-      int result = 0;
-      
-       String query = prop.getProperty("insertUseMoney");
-      
-       try {
-         pstmt = con.prepareStatement(query);
-         pstmt.setInt(1, user_no);
-         
-         result = pstmt.executeUpdate();
-         
-         
-       } catch (SQLException e) {
-         
-         e.printStackTrace();
-      }
-      return result;
-   }
-}
+
+	public int insertUseMoney(Connection con, int user_no, int contract_no) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+
+		String query = prop.getProperty("insertUseMoney");
+
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, user_no);
+
+			result = pstmt.executeUpdate();
+
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+		return result;
+	}
 }

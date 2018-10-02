@@ -28,11 +28,11 @@ public class PaymentService {
 
 		if (todayInfo != null) {
 			ArrayList<Payment> plist = new PaymentDao().selectTotalList(con, currPage, limit);
-			
-			if(plist != null){
-				ArrayList<HashMap<String,String>> incomeList = new PaymentDao().selectTodayIncomeList(con);
-				
-				if(incomeList != null){	
+
+			if (plist != null) {
+				ArrayList<HashMap<String, String>> incomeList = new PaymentDao().selectTodayIncomeList(con);
+
+				if (incomeList != null) {
 					totalInfo = new HashMap<String, Object>();
 					totalInfo.put("todayInfo", todayInfo);
 					totalInfo.put("plist", plist);
@@ -152,15 +152,12 @@ public class PaymentService {
 		return pi;
 	}
 
-  
-  public int insertUseMoney(int user_no, int contract_no) {
-   Connection con = getConnection();
-   
-   int result = new PaymentDao().insertUseMoney(con, user_no, contract_no);
-   
-   
-   return 0;
-}
-  
-}
+	public int insertUseMoney(int user_no, int contract_no) {
+		Connection con = getConnection();
+
+		int result = new PaymentDao().insertUseMoney(con, user_no, contract_no);
+
+		return 0;
+	}
+
 }

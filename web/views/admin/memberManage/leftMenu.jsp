@@ -41,6 +41,8 @@
            	<div class="text"><a href="<%=request.getContextPath()%>/selectPenaltyList.me">제재/탈퇴 회원관리</a></div>
             <br> 
            	<div class="text"><a href="<%=request.getContextPath()%>/diapauseList.me">휴면회원관리</a></div>
+           	<br>
+           	<div class="text"><a href="<%=request.getContextPath()%>/petsitterRequest.me">펫시터신청관리</a></div>
       </div>
    </div>
 </body>

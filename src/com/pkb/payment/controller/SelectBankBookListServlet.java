@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.pkb.common.Paging;
 import com.pkb.payment.model.service.PaymentService;
+import com.pkb.payment.model.service.PaymentService3;
 
 /**
  * Servlet implementation class SelectBankBookListServlet
@@ -38,7 +39,7 @@ public class SelectBankBookListServlet extends HttpServlet {
 			pg.setCurrentPage(Integer.parseInt(request.getParameter("currentPage")));
 		}
 
-		pg.setListCount(new PaymentService().getListCount());
+		pg.setListCount(new PaymentService3().getBankBookListCount());
 
 		pg.setMaxPage((int) ((double) pg.getListCount() / pg.getLimit() + 0.9));
 
@@ -50,16 +51,16 @@ public class SelectBankBookListServlet extends HttpServlet {
 			pg.setEndPage(pg.getMaxPage());
 		}
 
-		HashMap<String, Object> totalInfo = new PaymentService().selectMainInfo(pg.getCurrentPage(), pg.getLimit());
+		HashMap<String, Object> totalInfo = new PaymentService3().selectBankBookInfo(pg.getCurrentPage(), pg.getLimit());
 
 		String page = "";
 		if(totalInfo != null){
-			page = "views/admin/paymentManage/cMoneyManage.jsp";
+			page = "views/admin/paymentManage/bankbookManage.jsp";
 			request.setAttribute("totalInfo", totalInfo);
 			request.setAttribute("pg", pg);
 		} else {
 			page = "views/common/errorPage.jsp";
-			request.setAttribute("msg", "(관리자 페이지)사이버머니 관리페이지 조회 실패 ");
+			request.setAttribute("msg", "(관리자 페이지)무통장 입금내역 조회 실패 ");
 		}
 		RequestDispatcher view = request.getRequestDispatcher(page);
 		view.forward(request, response);
