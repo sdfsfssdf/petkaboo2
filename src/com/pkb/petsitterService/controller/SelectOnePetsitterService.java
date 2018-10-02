@@ -54,7 +54,7 @@ public class SelectOnePetsitterService extends HttpServlet {
 			
 			}else if(revLevel == 1){
 			
-			page ="views/searchPetsitter/petSittingRsvApply.jsp";	
+			page ="views/searchPetsitter/petSittingApplyProcess.jsp";	
 			request.setAttribute("p", p);		
 			
 			}
