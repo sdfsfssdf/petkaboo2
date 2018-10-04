@@ -167,10 +167,12 @@
 		<form id="psInfo" name="psInfo" action="<%=request.getContextPath()%>/views/myPage/petSitterServiceUpdateDetailForm.jsp" method="POST">
 		<input type="hidden" id="psi" name="psi" maxlength="1000" value='<%= psi %>'>
 		<button class="modify" name="modify" id="modify" onclick="modify()" style="background:#9bcdf7; color:white; border-style:#9bcdf7;">수정하기</button>
+
 		</form>
 		</td>
 		</tr>
 		</table>
+
 		<% } %>
 		</div>			
 		</div>

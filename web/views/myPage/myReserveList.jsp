@@ -31,6 +31,8 @@
 	<h2>유효한 계약 정보가 아직 없습니다</h2>
 	</div>
 	<% } else { %>	
+	<div class="content-left"></div>
+	<div class="content-center">
 	<div class="myContractDiv">
 		<table id="myContractInfoTable">
 			<tr>
@@ -70,6 +72,12 @@
 	<% } %>
 	</table>
 	</div>
-	<% } } %>
+	</div>
+	<div class="content-right"></div>
+	<% }%>
+	<!-- footer -->
+				<%@ include file="/views/common/footer.jsp" %>
+	
+	<%  } %>
 </body>
 </html>
