@@ -65,9 +65,18 @@
 				<input type="submit" name="acceptReq" value="취소">
 			</form>
 			</td>
-			<% } else if (c.getContract_status().equals("E")){ %>
-			<td>결제상태: <%= c.getService_status() %></td>
-			<% } else { %>
+			<% } else if (c.getService_status().equals("E")){ %>
+			<td>결제완료. 펫시팅 진행 중
+			<form id="endContract" action="<%=request.getContextPath()%>/endContract.do" method="post">
+				<input type="hidden" name="client_user_no" value="<%= c.getUser_no() %>">
+				<input type="hidden" id="psrno" name="psrno" value="<%= c.getPet_service_regno() %>">
+				<input type="hidden" name="contractNo" value="<%= c.getContract_no() %>">
+				<input type="submit" name="endContract" value="완료">
+			</form>
+			</td>
+			<% } else if(c.getService_status().equals("X")) { %>
+			<td><b>종료</b></td>
+			<% } else {%>
 			<td><%= c.getContract_status() %></td>
 			<% } %>
 		</tr>	

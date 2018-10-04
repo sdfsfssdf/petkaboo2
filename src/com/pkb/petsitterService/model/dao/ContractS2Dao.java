@@ -455,6 +455,27 @@ public class ContractS2Dao {
 		return result;
 	}
 
+	public int endContract(Connection con, int user_no, int client_user_no, int psrno, int contractNo) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String query = prop.getProperty("endContract");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, "X");
+			pstmt.setInt(2, contractNo);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}	
+		
+		return result;
+	}
+
 
 
 }
