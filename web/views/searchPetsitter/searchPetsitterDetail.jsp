@@ -27,6 +27,8 @@
 	width:100%;
 	display:inline-block;
 	text-align:center;
+	margin-top:140px;
+	height:500px;
 }
 
 #serviceDetail {
@@ -35,7 +37,7 @@
 	height:250px;
 	margin:auto;
 	text-align:center;
-	border:1px solid black;
+	border:2px dashed #9bcdf7;
 }
 #serviceDetail th{
 	text-align:center;
@@ -46,13 +48,32 @@
 	width:200px;
 	height:250px;
 	text-align:center;
-	border:1px solid black;
+	
 }
 #servicePhoto tr{
 	margin:5px;
 }
 #buttons {
 	display:inline-block;
+	
+}
+
+.pre-order, .modify{
+ 	display: inline-block;
+    padding: 6px 12px;
+    margin-bottom: 0;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.42857143;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    touch-action: manipulation;
+    cursor: pointer;
+	user-select: none;
+	border: 1px solid transparent;
+    border-radius: 4px;
+
 }
 </style>
 <body>
@@ -126,11 +147,14 @@
 			</tr>
 		</table>
 		<div name="space"></div>
+		<br>
 		<div class="buttons" id="buttons" name="buttons">
 		<form class="orderInfo" id="orderInfo" name="orderInfo" method="post" action="<%=request.getContextPath()%>/selectOne.do">
-		<input type="text" id="revLevel" name="revLevel" value="1">
-		<input type="text" id="no" name="no" value="<%= p.getPet_service_regno() %>">
-		<button class="pre-order" id="pre-order" onclick="submit()">예약하기</button>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		<input type="text" id="revLevel" name="revLevel" value="1" size=15px;>
+		<input type="text" id="no" name="no"  size=15px; value="<%= p.getPet_service_regno() %>">
+		<button class="pre-order" id="pre-order" onclick="submit()" style="background:#9bcdf7; color:white; border-style:#9bcdf7;">예약하기</button>
 		</form>
 		<%
 			if(loginUser != null && loginUser.getUser_no() == p.getUser_no()){
@@ -138,10 +162,15 @@
 				String psi = gson.toJson(p);
 				System.out.println("psi: " + psi);
 		%>
+		<br>
+		<br>
+	
 		<div>
 			<form id="psInfo" name="psInfo" action="<%=request.getContextPath()%>/views/myPage/petSitterServiceUpdateDetailForm.jsp" method="POST">
 			<input type="hidden" id="psi" name="psi" maxlength="1000" value='<%= psi %>'>
-			<button class="modify" name="modify" id="modify" onclick="modify()">수정하기</button>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		<button class="modify" name="modify" id="modify" onclick="modify()" style="background:#9bcdf7; color:white; border-style:#9bcdf7;">수정하기</button>
 			</form>
 		</div>
 		<% }else{ %>
@@ -149,6 +178,11 @@
 		<% } %>
 		</div>			
 		</div>
+		<!-- fixed 창 -->
+			<%@ include file="../common/fixed.jsp"%>
+<!-- footer -->
+				<%@ include file="/views/common/footer.jsp" %>
+		
 <script>
 	function submit(){
 		$("#orderInfo").submit();

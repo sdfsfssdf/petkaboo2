@@ -26,7 +26,7 @@
 	border-radius: 20px;
 	width: 190px;
 	height: 300px;
-	background: rgb(207, 183, 175);
+	background: #9bcdf7;
 	text-align: center;
 }
 </style>
@@ -40,7 +40,7 @@
 		</p>
 		<p
 			style="color: white; font-size: 24px; font-weight: 600; line-height: 120%; font-family: 'Jua', sans-serif;">
-			02-1588-5555<br><a href="../myPage/onebyoneQNAWrite.jsp" style="font-family:'Jua', sans-serif; color:#704d43;">Click</a>
+			02-1588-2222<br><a href="../myPage/onebyoneQNAWrite.jsp" style="font-family:'Jua', sans-serif; color:white">Click</a>
 		</p>
 		<p
 			style="color: white; font-size: 14px; font-weight: 400; line-height: 120%; font-family: 'Jua', sans-serif;">
@@ -48,7 +48,7 @@
 		</p>
 		<p
 			style="color: white; font-size: 14px; font-weight: 500; line-height: 120%; font-family: 'Jua', sans-serif;">
-			카카오톡ID<br>온마음펫시터
+			카카오톡ID<br>펫카부
 		</p>
 		<p
 			style="color: white; font-size: 14px; font-weight: 400; line-height: 120%; font-family: 'Jua', sans-serif;">

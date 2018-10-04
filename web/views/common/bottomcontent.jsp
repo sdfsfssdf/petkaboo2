@@ -28,13 +28,13 @@
 	<div class="bottom-content">
 		<br>
 		<div class="bottom-content1">
-			<img src="../images/info1.png" width="65%" height="250px">
+			<img src="/pkb/images/myPageImgs/info1.png" width="65%" height="250px">
 		</div>
 
 
 
 		<div class="bottom-content1">
-			<img src="../images/info2.png" width="65%" height="250px">
+			<img src="/pkb/images/myPageImgs/info2.png" width="65%" height="250px">
 		</div>
 	</div>
 </body>

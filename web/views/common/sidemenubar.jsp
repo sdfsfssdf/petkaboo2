@@ -8,7 +8,8 @@
 <title>마이페이지 사이드바 메뉴</title>
 <style>
 .side-menu {
-	margin: 20px auto;
+	margin: 80px auto;
+	
 	height: 800px;
 	padding: 0;
 	height: 700px;
@@ -38,7 +39,7 @@ li.group {
 li.group div.title {
 	height: 50px;
 	line-height: 50px;
-	background: #cfb7af;
+	background: #9bcdf7;
 	cursor: pointer;
 	color:white;
 	font-size:18px;
@@ -69,7 +70,7 @@ ul.sub li a {
 }
 
 ul.sub li:hover {
-	background: #cfb7af;
+	background: #9bcdf7;
 }
 
 /* 드롭다운메뉴 */
@@ -86,7 +87,7 @@ ul.sub-sub{
 }
 
 ul.sub-sub li:hover{
-background: #cfb7af;
+background: #9bcdf7;
 font-family:'Jua', sans-serif;
 }
 
@@ -94,6 +95,26 @@ ul.sub ul.sub-sub{display:none;}
 
 ul.sub li:hover > ul.sub-sub{display:block;} 
 
+
+.getMyContractButton{
+	background:transparent;
+	border-style:none;
+	font-size:16px;
+
+}
+.getMyContractButton:hover{
+	color:black;
+}
+
+.lookcont:active{
+outline:none;
+cursor:pointer;
+}
+
+.lookcont:hover{
+outline:none;
+cursor:pointer;
+}
 </style>
 </head>
 <body>
@@ -112,7 +133,7 @@ ul.sub li:hover > ul.sub-sub{display:block;}
 								<li>
 								<form class="psContractManage" action="<%=request.getContextPath()%>/psContract.do" method="post">
 								<input type="hidden" name="user_no" value="<%= loginUser.getUser_no() %>">
-								<button>계약 현황 보기</button>
+								<button class="lookcont" style="border-style:none; background-color:transparent; font-size:16px">계약 현황 보기</button>
 								</form>
 								</li>
 							</ul>
@@ -125,7 +146,7 @@ ul.sub li:hover > ul.sub-sub{display:block;}
 								<form class="getMyContractList" action="<%=request.getContextPath()%>/psContract.do" method="post">
 								<input type="hidden" name="user_no" value="<%= loginUser.getUser_no() %>">
 								<input type="hidden" name="request_client_list" value="1">
-								<button class="getMyContractButton">내 계약 관리</button>
+								<button class="getMyContractButton" style="background:transparent; border-style:none; font-size:16px; font-family: 'Jua', sans-serif;">내 계약 관리</button>
 								</form>
 								</li>
 								<li><a href="<%=request.getContextPath()%>/selectCyberMoneyHistory.pm">거래내역</a></li>
@@ -147,7 +168,7 @@ ul.sub li:hover > ul.sub-sub{display:block;}
 								
 								</li>
 								
-								<li><a href="/pkb/views/myPage/registerPet.jsp">내 반려동물 등록</a></li>
+								<!-- <li><a href="/pkb/views/myPage/registerPet.jsp">내 반려동물 등록</a></li> -->
 							</ul>
 						</li>
 					</ul>

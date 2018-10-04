@@ -120,13 +120,13 @@ background-color:#eee;  */
 	margin-top: 30px;
 }
 
-#footer {
+/* #footer {
 	float: left;
 	width: 100%;
 	height: 250px;
 	margin: 100px 0 30px 0;
 	background: #e1e1e1
-}
+} */
 
 /* 적용 취소 부분 */
 .submitandcancle {
@@ -136,29 +136,27 @@ background-color:#eee;  */
 
 #submit, #cancel {
 	display: inline-block;
-	text-align: center;
-	vertical-align: middle;
-	text-decoration: none;
-	font-size: 17px;
-	color: white;
-	border: none;
-	border-radius: 0.5em;
-	width: 118px;
-	height: 38px;
-	line-height: 38px;
-	background-color: #cfb7af;
-	font-family: 'Jua', sans-serif;
+    padding: 6px 12px;
+    margin-bottom: 0;
+    width:60px;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.42857143;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    touch-action: manipulation;
+    cursor: pointer;
+user-select: none;
+border: 1px solid transparent;
+    border-radius: 4px;
 }
 
-#submit:hover, #cancel:hover {
-	color: black;
-	opacity: 0.7;
-	font-family: 'Jua', sans-serif;
-}
+
 
 .passwordform1{
 text-align:center;
-width:35%;
+width:40%;
 height:100px;
 background-color:white; 
 border-width:1px;
@@ -185,14 +183,12 @@ margin:auto;
 
 
 	<div id="wrap">
-		<div id="header">
-			<h1 align="center">펫카부</h1>
-		</div>
+		
 		<div id="container1">
 
 			<!-- 메뉴파일 -->
 			<%@ include file="../common/menubar.jsp"%>
-			<!-- fixed 창 -->
+				<!-- fixed 창 -->
 			<%@ include file="../common/fixed.jsp"%>
 			<!-- 사이드 메뉴 부분 -->
 			<div class="content-left">
@@ -200,14 +196,13 @@ margin:auto;
 			</div>
 			<!-- 센터 컨텐츠 -->
 			<div class="content-center">
-				<br> <br>
+				<br> <br><br>
 				<!-- 마이페이지 타이틀부분 -->
-				<div class="title">
-					<h3 align="center"
-						style="font-weight: bold; font-family: 'Jua', sans-serif;">마이페이지</h3>
+				
+					
 					<hr
 						style="border: thin solid lightgray !important; display: inline-block !important; width: 100% !important;" />
-				</div>
+				
 				<br>
 				<!-- 비밀번호 변경 -->
 				&nbsp;&nbsp;&nbsp;&nbsp;<span
@@ -247,10 +242,10 @@ margin:auto;
 				
 					<div class=submitandcancle>
 						<button id="submit" onclick="checkPwd();"
-							style="font-weight: lighter">확인</button>
+							style="font-weight: lighter; background:#9bcdf7; color:white; border:1px solid #9bcdf7;">확인</button>
 						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 						<button type="submit" id="cancel" onclick="#"
-							style="font-weight: lighter">취소</button>
+							style="font-weight: lighter; background:white; color:#9bcdf7; border:1px solid #9bcdf7;">취소</button>
 
 					</div>
 				</form>	
@@ -280,10 +275,9 @@ margin:auto;
 
 
 
+	
 			<!-- footer -->
-			<div id="footer">
-				<h1>footer</h1>
-			</div>
+				<%@ include file="/views/common/footer.jsp" %>
 		</div>
 	</div>
 	<script>	

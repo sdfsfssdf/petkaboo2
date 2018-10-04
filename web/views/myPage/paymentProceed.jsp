@@ -15,6 +15,63 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
 <meta charset="UTF-8">
 <title>최종 결제 확인</title>
+<style>
+.content-left {
+	width: 20%;
+	float: left;
+	border: 1px solid transparent;
+	
+}
+
+.content-right {
+	width: 20%;
+	float: left;
+	height:350px;
+	border: 1px solid transparent;
+
+}
+
+.content-center {
+	width: 60%;
+	float: left;
+	height:350px;
+	margin-top:150px;
+	align:center;
+	margin-left:250px;
+}
+
+.wrap{
+	width:100%;
+	height:1000px;
+}
+
+.paymentProceedDiv{
+	width:100%;
+	align:center;
+
+}
+
+.paying{
+display: inline-block;
+    padding: 6px 12px;
+    margin-bottom: 0;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.42857143;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    touch-action: manipulation;
+    cursor: pointer;
+	user-select: none;
+	border: 1px solid transparent;
+    border-radius: 4px;
+
+}
+
+
+
+</style>
 </head>
 <body>
 	<!-- menubar include -->
@@ -31,44 +88,67 @@
 		long diff = (c.getContract_end().getTime() - c.getContract_start().getTime()); 
 		int diffDays = (int)(diff / (24 * 60 * 60 * 1000));
 	%>
-	<div class="paymentProceedDiv">
-		<table id="paymentProceedInfoTable">
-			<tr>
-				<td><b><%= c.getPetNickname() %></b> 펫시터와의 계약을 결제합니다.</td>
+	
+	<div class="wrap">
+		
+	<div class="content-left"><%@ include file="../common/sidemenubar.jsp"%></div>
+	<div class="content-center">
+
+	<div class="paymentProceedDiv"  >
+<table id="paymentProceedInfoTable" rules="none" style="border:2px dashed #9bcdf7; ">
+			<tr >
+				<td><br><br>&nbsp;&nbsp;&nbsp;&nbsp;<b><%= c.getPetNickname() %></b> 펫시터와의 계약을 결제합니다<br><br>
+		
+			
+		
+				&nbsp;&nbsp;&nbsp;&nbsp;아래 내용을 정확히 확인하시고 결제 버튼을 누르세요.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br><br></td>
 			</tr>
 			<tr>
-				<td>아래 내용을 정확히 확인하시고 결제 버튼을 누르세요.</td>
+				<td>&nbsp;&nbsp;&nbsp;&nbsp;<b><%= c.getPet_categoryName() %></b><b> <%= c.getPet_no() %></b>마리를</td>
 			</tr>
 			<tr>
-				<td><b><%= c.getPet_categoryName() %></b><b> <%= c.getPet_no() %></b>마리를</td>
+				<td>&nbsp;&nbsp;&nbsp;&nbsp;<b><%= c.getContract_start() %></b>일 부터 <b><%= c.getContract_end() %></b>일 까지 총 <%= diffDays %>일간,</td>
 			</tr>
 			<tr>
-				<td><b><%= c.getContract_start() %></b>일 부터 <b><%= c.getContract_end() %></b>일 까지 총 <%= diffDays %>일간,</td>
-			</tr>
-			<tr>
-				<td>일 <b><%= c.getService_charge() %></b>원에 <% if(c.getContract_type() != null && c.getContract_type().equals("c")) {	%>
-				위탁 <% } else { %> 방문 <% } %> 서비스로 계약합니다.</td>
+				<td>&nbsp;&nbsp;&nbsp;&nbsp;일 <b><%= c.getService_charge() %></b>원에 <% if(c.getContract_type() != null && c.getContract_type().equals("c")) {	%>
+				위탁 <% } else { %> 방문 <% } %> 서비스로 계약합니다.<br><br></td>
 			</tr>
 			<tr>
 				<% int fullPrice = c.getService_charge() * c.getPet_no() * diffDays; %>
-				<td>총 금액: <%= fullPrice %>원</td>
+				<td>&nbsp;&nbsp;&nbsp;&nbsp;<b>총 금액&nbsp;&nbsp;:&nbsp;&nbsp;</b><%= fullPrice %>원</td>
 			</tr>
 			<tr>
-				<td><b>
+				<td>&nbsp;&nbsp;&nbsp;<b>
 				<% if(loginUser.getNickname() != null) { %>
 				<%= loginUser.getNickname() %>
 				<% } else { %>
 				<%= loginUser.getEmail() %><% } %>
-				</b>님의 잔여 사이버머니: <%= cm.getMoney() %>원 </td>
+				</b>님의 잔여 사이버머니: <%= cm.getMoney() %>원 <br><br><br></td>
 			</tr>
+			<br>
 		</table>
+		
 		<form id="paymentProceed" action="<%=request.getContextPath()%>/PaymentProceed.do" method="post">
 		<input type="hidden" name="contractno" value="<%= c.getContract_no() %>">
 		<input type="hidden" name="user_no" value="<%= loginUser.getUser_no() %>">
 		<input type="hidden" name="fullPrice" value="<%= fullPrice %>">
-		<button>결제 진행</button>
+		<br>
+		<br>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button class="paying" 
+		style="background-color:#9bcdf7; color:white; border:1px solid #9bcdf7;">결제 진행</button>
+		<br>
 		</form>
+		<br><br>
 	</div>
+	</div>
+	
+	<div class="content-right"></div>
+	</div>
+	
+
 	<% } %>
+	<%@ include file="/views/common/footer.jsp" %>
 </body>
 </html>

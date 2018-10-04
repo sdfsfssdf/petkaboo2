@@ -119,13 +119,13 @@ background-color:#eee;  */
 	margin-top: 30px;
 }
 
-#footer {
+/* #footer {
 	float: left;
 	width: 100%;
 	height: 250px;
 	margin: 100px 0 30px 0;
 	background: #e1e1e1
-}
+} */
 
 /* 적용 취소 부분 */
 .submitandcancle {
@@ -134,27 +134,28 @@ background-color:#eee;  */
 }
 
 #submit, #cancel, #regphoto {
-	display: inline-block;
-	text-align: center;
-	vertical-align: middle;
-	text-decoration: none;
-	font-size: 17px;
-	color: white;
-	border: none;
-	border-radius: 0.5em;
-	width: 118px;
-	height: 38px;
-	line-height: 38px;
-	background-color: #cfb7af;
-	font-family: 'Jua', sans-serif;
+	 display: inline-block;
+    padding: 6px 12px;
+    margin-bottom: 0;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.42857143;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    touch-action: manipulation;
+    cursor: pointer;
+	user-select: none;
+	border: 1px solid transparent;
+    border-radius: 4px;
 }
-
+/* 
 #submit:hover, #cancel:hover {
 	color: black;
 	opacity: 0.7;
 	font-family: 'Jua', sans-serif;
 }
-
+ */
 #regphoto {
 	display: inline-block;
 	text-align: center;
@@ -192,10 +193,9 @@ padding:20px;
 	text-align: center;
 	width: 37%;
 	height: 240px;
-	background-color: #eee;
 	margin: auto;
 	margin-top: 30px;
-	border: 1px solid lightgray;
+
 }
 </style>
 </head>
@@ -203,9 +203,7 @@ padding:20px;
 
 
 	<div id="wrap">
-		<div id="header">
-			<h1 align="center">펫카부</h1>
-		</div>
+
 		<div id="container1">
 
 			<!-- 메뉴파일 -->
@@ -223,15 +221,14 @@ padding:20px;
 			<!-- 센터 컨텐츠 -->
 			<div class="content-center">
 
-				<br> <br>
+				<br> <br> <br>
 
 				<!-- 마이페이지 타이틀부분 -->
-				<div class="title">
-					<h3 align="center"
-						style="font-weight: bold; font-family: 'Jua', sans-serif;">마이페이지</h3>
+			
+					
 					<hr
 						style="border: thin solid lightgray !important; display: inline-block !important; width: 100% !important;" />
-				</div>
+			
 
 				<br>
 
@@ -246,20 +243,25 @@ padding:20px;
 						method="post" encType="multipart/form-data">
 						<!-- 주민등록증 미리보기 부분 -->
 						<div class=identifyform2>
-							<span>주민등록증 미리보기 사진</span>
+							<p>미리보기</p>
+							<br>
 							<div id="contentImgArea">
 								<img id="foo" width = "295.5px" height="220px">
 							</div>
 						</div>
+						<br>
+						<br>
 						<div id="fileArea">
 							<input type="file" style="margin-left:500px"id="imgInp" name="identifyImg" multiple="multiple" accept=".jpg,.gif,.png"  onchange="loadImg(this,1)">
 						</div>
+						<br>
+						<br>
 							<div class=submitandcancle>
 						<button type="submit" id="submit" onclick="#"
-							style="font-weight: lighter">등록하기</button>
+							style="background:#9bcdf7; color:white; border:1px solid #9bcdf7;">등록하기</button>
 						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 						<button type="submit" id="cancel" onclick="#"
-							style="font-weight: lighter">취소하기</button>
+							style="background:white; color:#9bcdf7; border:1px solid #9bcdf7;">취소하기</button>
 
 					</div>
 					</form>
@@ -290,9 +292,8 @@ padding:20px;
 			<div class="content-right">
 			</div> -->
 			<!-- footer -->
-			<div id="footer">
-				<h1>footer</h1>
-			</div>
+		<!-- footer -->
+				<%@ include file="/views/common/footer.jsp" %>
 		</div>
 	</div>
 <script>

@@ -86,7 +86,7 @@ public class InsertRechargeServlet extends HttpServlet {
 				/*String check2 = "check";
 				page = "views/myPage/mypagemain.jsp";*/
 				request.setAttribute("cm", cm);
-				response.sendRedirect("views/myPage/mypagemain.jsp");
+				response.sendRedirect("/pkb/views/status/rechargeOk.jsp");
 				/*request.setAttribute("check", check2);*/
 			}else{
 				page="views/common/errorPage";
@@ -119,11 +119,11 @@ public class InsertRechargeServlet extends HttpServlet {
 		}else{
 			request.setAttribute("msg", "충전 실패!");
 			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
-			
+			RequestDispatcher view = request.getRequestDispatcher(page);
+			view.forward(request, response);
 		}
 		
-		RequestDispatcher view = request.getRequestDispatcher(page);
-		view.forward(request, response);
+		
 	}
 	
 
