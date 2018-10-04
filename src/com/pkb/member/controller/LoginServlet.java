@@ -67,7 +67,7 @@ public class LoginServlet extends HttpServlet {
 			session.setAttribute("loginUser", loginUser);
 			
 			if(loginUser.getUser_type()==9){
-				response.sendRedirect("views/admin/main/adminMain.jsp");
+				response.sendRedirect(request.getContextPath()+"/adminMain.me?ip="+ip);
 			}else{
 				if(loginUser.getUser_status()==4){
 					request.getSession().invalidate();

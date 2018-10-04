@@ -1853,4 +1853,186 @@ public class UserDAO {
 		return ah;
 	}
 
+	public Integer getMemberCount(Connection con) {
+		Statement stmt = null;
+		ResultSet rs= null;
+		Integer count = null;
+		String query = prop.getProperty("memberCount");
+		
+		try {
+			stmt = con.createStatement();
+			rs = stmt.executeQuery(query);
+			
+			if(rs.next()){
+				count = rs.getInt(1);
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(rs);
+			close(stmt);
+		}
+		
+		return count;
+	}
+
+	public Integer getPetsitterCount(Connection con) {
+		Statement stmt = null;
+		ResultSet rs= null;
+		Integer count = null;
+		String query = prop.getProperty("petsitterCount");
+		
+		try {
+			stmt = con.createStatement();
+			rs = stmt.executeQuery(query);
+			
+			if(rs.next()){
+				count = rs.getInt(1);
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(rs);
+			close(stmt);
+		}
+		
+		return count;
+	}
+
+	public Integer getNewMemberCount(Connection con) {
+		Statement stmt = null;
+		ResultSet rs= null;
+		Integer count = null;
+		String query = prop.getProperty("newMemberCount");
+		
+		try {
+			stmt = con.createStatement();
+			rs = stmt.executeQuery(query);
+			
+			if(rs.next()){
+				count = rs.getInt(1);
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(rs);
+			close(stmt);
+		}
+		
+		return count;
+	}
+
+	public String getLastLoginDate(Connection con, User u) {
+		PreparedStatement pstmt = null;
+		String date = null;
+		ResultSet rs = null;
+		String query = prop.getProperty("getLastLoginDate");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, u.getUser_no());
+			
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()){
+				date = rs.getString("login_date");
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return date;
+	}
+
+	public int[] writeDiapauseReason(Connection con, int adminNo, String[] selectUserNos) {
+		PreparedStatement pstmt = null;
+		int result[] = null;
+		String query = prop.getProperty("writeDiapauseReason");
+
+		try {
+			pstmt = con.prepareStatement(query);
+			for (int i = 0; i < selectUserNos.length; i++) {
+				pstmt.setInt(1, adminNo);
+				pstmt.setString(2, "(" + selectUserNos[i] + ")" + "계정 휴면처리");
+				pstmt.setString(3, "휴면처리 되었습니다.");
+				pstmt.addBatch();
+			}
+			result = pstmt.executeBatch();
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+	public ArrayList<HashMap<String, Object>> selectStatisticInfo(Connection con) {
+		Statement stmt = null;
+		ArrayList<HashMap<String,Object>> totalInfo = null;
+		HashMap<String,Object> info = null;
+		ResultSet rs = null;
+		String query = prop.getProperty("selectStatistcMember");
+		
+		try {
+			stmt = con.createStatement();
+			
+			rs = stmt.executeQuery(query);
+			totalInfo = new ArrayList<HashMap<String,Object>>();
+			while(rs.next()){
+				info = new HashMap<String,Object>();
+				info.put("count", rs.getInt(1)+"");
+				info.put("type",rs.getString("ARTICLE_TYPE" ));
+				info.put("date", rs.getString(3));
+				totalInfo.add(info);
+				
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(stmt);
+			close(rs);
+		}
+		return totalInfo;
+	}
+
+	public int selectStatisticInfoByJoinMember(Connection con, ArrayList<HashMap<String, Object>> totalInfo) {
+		Statement stmt = null;
+		HashMap<String,Object> info = null;
+		ResultSet rs = null;
+		String query = prop.getProperty("selectStatisticInfoByJoinMember");
+		int cnt = 0;
+		try {
+			stmt = con.createStatement();
+			
+			rs = stmt.executeQuery(query);
+		
+			while(rs.next()){
+				info = new HashMap<String,Object>();
+				info.put("count", 1);
+				info.put("type","M");
+				info.put("date", 3);
+				cnt ++;
+				totalInfo.add(info);
+				
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(stmt);
+			close(rs);
+		}
+		return cnt;
+	}
+
 }

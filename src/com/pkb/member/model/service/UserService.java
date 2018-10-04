@@ -16,6 +16,9 @@ import com.pkb.member.model.vo.ImgFile;
 import com.pkb.member.model.vo.Pet;
 import com.pkb.member.model.vo.User;
 import com.pkb.member.util.SHA256;
+import com.pkb.payment.model.dao.PaymentDao;
+import com.pkb.payment.model.dao.PaymentDao3;
+import com.pkb.payment.model.vo.Payment;
 import com.pkb.reservation.model.vo.Reservation;
 
 public class UserService {
@@ -474,17 +477,23 @@ public class UserService {
 		return result;
 	}
 
-	public int[] updateDiapauseMember(String[] selectUserNos) {
+	public int[] updateDiapauseMember(String[] selectUserNos, int adminNo) {
 		Connection con = getConnection();
 		int[] result = new UserDAO().updateDiapauseMember(con, selectUserNos);
+		int[] result2 = null;
 		if (result.length > 0) {
-			commit(con);
+			result2 = new UserDAO().writeDiapauseReason(con, adminNo, selectUserNos);
+			if (result2.length > 0) {
+				commit(con);
+			} else {
+				rollback(con);
+			}
 		} else {
 			rollback(con);
 		}
 		close(con);
 
-		return result;
+		return result2;
 	}
 
 	public int getPenaltyMemberCount() {
@@ -585,27 +594,27 @@ public class UserService {
 
 	public ArrayList<ApplyHistory> selectPetsitterRequest(int currentPage, int limit) {
 		Connection con = getConnection();
-		
-		ArrayList<ApplyHistory> alist = new UserDAO().selectPetsitterRequest(con,currentPage,limit);
-		
+
+		ArrayList<ApplyHistory> alist = new UserDAO().selectPetsitterRequest(con, currentPage, limit);
+
 		close(con);
-		
+
 		return alist;
 	}
 
 	public int refusalPetsitterRequest(int no, String content) {
 		Connection con = getConnection();
-		
-		int result = new UserDAO().refusalPetsitterRequest(con,no,content);
-		
-		if(result > 0){
+
+		int result = new UserDAO().refusalPetsitterRequest(con, no, content);
+
+		if (result > 0) {
 			commit(con);
 		} else {
 			rollback(con);
 		}
-		
+
 		close(con);
-		
+
 		return result;
 	}
 
@@ -613,30 +622,100 @@ public class UserService {
 		Connection con = getConnection();
 		int result = new UserDAO().approvalPetsitterRequest(con, record_no);
 		int result2 = 0;
-		if(result > 0){
-			result2 = new UserDAO().updateUserGrade(con,record_no);
-			if(result2 > 0){
-				
+		if (result > 0) {
+			result2 = new UserDAO().updateUserGrade(con, record_no);
+			if (result2 > 0) {
+
 				commit(con);
-			} else{
+			} else {
 				rollback(con);
 			}
 		} else {
 			rollback(con);
 		}
-		
+
 		close(con);
-		
+
 		return result2;
 	}
 
 	public ApplyHistory selectOneApplyHistory(String selectNum) {
 		Connection con = getConnection();
-		ApplyHistory ah = new UserDAO().selectOneApplyHistory(con,selectNum);
-		
+		ApplyHistory ah = new UserDAO().selectOneApplyHistory(con, selectNum);
+
+		close(con);
+
+		return ah;
+	}
+
+	public HashMap<String, Object> getAdminMainInfo(User u) {
+		Connection con = getConnection();
+
+		HashMap<String, Object> totalInfo = null;
+		Integer memberCount = new UserDAO().getMemberCount(con);
+		if (memberCount != null) {
+			Integer petsitterCount = new UserDAO().getPetsitterCount(con);
+			if (petsitterCount != null) {
+				ArrayList<HashMap<String, String>> incomeList = new PaymentDao().selectTodayIncomeList(con);
+				if (incomeList != null) {
+					Integer newMemberCount = new UserDAO().getNewMemberCount(con);
+					if (newMemberCount != null) {
+						String loginDate = new UserDAO().getLastLoginDate(con, u);
+						if (loginDate != null) {
+							HashMap<String, Integer> todayInfo = new PaymentDao().selectTodayPaymentHistoryList(con);
+							if (todayInfo != null) {
+								ArrayList<HashMap<String, Object>> needMemberList = new UserDAO()
+										.selectNeedDiapauseMemberList(con);
+								if (needMemberList != null) {
+
+									ArrayList<Board> recentlyList = new UserDAO().selectRecentlyList(con);
+									if (recentlyList != null) {
+
+										ArrayList<Board> sanctinsExpirationList = new UserDAO().selectSEList(con);
+										if (sanctinsExpirationList != null) {
+											ArrayList<Payment> plist = new PaymentDao3().selectTodayInfo(con);
+											if (plist != null) {
+												totalInfo = new HashMap<String, Object>();
+												totalInfo.put("memberCount", memberCount);
+												totalInfo.put("petsitterCount", petsitterCount);
+												totalInfo.put("incomList", incomeList);
+												totalInfo.put("newMemberCount", newMemberCount);
+												totalInfo.put("loginDate", loginDate);
+												totalInfo.put("todayInfo", todayInfo);
+												totalInfo.put("needMemberList", needMemberList);
+												totalInfo.put("recentlyList", recentlyList);
+												totalInfo.put("sanctinsExpirationList", sanctinsExpirationList);
+												totalInfo.put("plist", plist);
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+
+		close(con);
+		return totalInfo;
+	}
+
+	public ArrayList<HashMap<String, Object>> selectStatisticInfo() {
+		// TODO Auto-generated method stub
+		Connection con = getConnection();
+		ArrayList<HashMap<String, Object>> totalInfo = null;
+
+		totalInfo = new UserDAO().selectStatisticInfo(con);
+		if (totalInfo != null) {
+			int cnt = new UserDAO().selectStatisticInfoByJoinMember(con, totalInfo);
+			if (cnt == 0) {
+				totalInfo = null;
+			}
+		}
 		close(con);
 		
-		return ah;
+		return totalInfo;
 	}
 
 }

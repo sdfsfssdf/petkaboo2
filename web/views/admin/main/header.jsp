@@ -6,7 +6,7 @@
 <!DOCTYPE>
 <html>
 <style>
-	body{
+	.headerDiv{
 		background-color:#ffffff;
 		margin-left:0px;
 		margin-top:0px;
@@ -144,17 +144,18 @@
 <title>Insert title here</title>
 </head>
 <body>
+<div class="headerDiv">
 <div class="admin_header">
 	<div class="top_01">
-		<h1><a href="">펫카부<span>관리자</span></a></h1>
+		<h1><a href="<%=request.getContextPath()%>/adminMain.me">펫카부<span>관리자</span></a></h1>
 		<ul>
 			<li>
-				<a href="">내 홈페이지</a>
+				<a href="<%=request.getContextPath()%>/index.jsp">내 홈페이지</a>
 			</li>
 			<li>
-				<a href="">관리자메인</a>
+				<a href="<%=request.getContextPath()%>/adminMain.me">관리자메인</a>
 			</li>
-			<li class="logout"><a href="">로그아웃</a></li>
+			<li class="logout"><a href="<%=request.getContextPath()%>/logout.me">로그아웃</a></li>
 		</ul>
 	</div>
 </div>
@@ -166,11 +167,12 @@
 				<li><a class="menu" href="<%=request.getContextPath()%>/selectList.me">회원관리</a></li>
 				<li><a class="menu" href="<%=request.getContextPath()%>/selectMain.pe">결제관리</a></li>
 				<li><a class="menu" href="">거래관리</a></li>
-				<li><a class="menu" href="">통계/현황</a></li>
+				<li><a class="menu" href="<%=request.getContextPath()%>/statistics.me">통계/현황</a></li>
 				<li id="search-bar" class="pull-right" >
-					<form class="navbar-form navbar-left" role="search">
+					<form class="navbar-form navbar-left" role="search" action="<%=request.getContextPath()%>/searchMember.me" mehtod="get">
 						<div class="form-group">
-							<input type="text" class="form-control" placeholder="회원정보 혹은 거래번호">
+							<input type="hidden" value="userNo" name="status">
+							<input type="text" class="form-control" placeholder="회원번호로 빠른 회원 검색" name="value">
 						</div>
 						<button type="submit" class ="btn btn-default"><span class="glyphicon glyphicon-search"></span></button>
 					</form>
@@ -187,6 +189,6 @@
 		
 	<%} %>
 </div>
-
+</div>
 </body>
 </html>
