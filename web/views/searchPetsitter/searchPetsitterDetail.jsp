@@ -55,7 +55,9 @@
 }
 #buttons {
 	display:inline-block;
-	
+}
+#buttonArea td{
+	padding:2px;
 }
 
 .pre-order, .modify{
@@ -119,10 +121,9 @@
 				</td>
 			</tr>
 		</table>
-		<table id="serviceDetail" name="serviceDetail">
+		<table id="serviceDetail">
 			<tr>
 				<th width="100px">서비스 종류</th>
-				<th width="200px">예약가능 요일</th>
 				<th width="150px">시작 가능일</th>
 				<th width="150px">종료일</th>
 				<th width="100px">서비스가격</th>			
@@ -140,47 +141,42 @@
 				%>
 				<%= contract_type %>				
 				</td>
-				<td><%= p.getContract_days() %></td>
 				<td><%= p.getContract_start() %></td>
 				<td><%= p.getContract_end() %></td>
 				<td><%= p.getService_charge() %></td>
 			</tr>
 		</table>
-		<div name="space"></div>
+		<div id="space"></div>
 		<br>
-		<div class="buttons" id="buttons" name="buttons">
+		<div class="buttons" id="buttons">
+		<table id="buttonArea">
+			<tr>
+			<td>
 		<form class="orderInfo" id="orderInfo" name="orderInfo" method="post" action="<%=request.getContextPath()%>/selectOne.do">
-		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		<input type="text" id="revLevel" name="revLevel" value="1" size=15px;>
-		<input type="text" id="no" name="no"  size=15px; value="<%= p.getPet_service_regno() %>">
+		<input type="hidden" id="revLevel" name="revLevel" value="1" size=15px;>
+		<input type="hidden" id="no" name="no"  size=15px; value="<%= p.getPet_service_regno() %>">
 		<button class="pre-order" id="pre-order" onclick="submit()" style="background:#9bcdf7; color:white; border-style:#9bcdf7;">예약하기</button>
-		</form>
+		</form></td>
 		<%
 			if(loginUser != null && loginUser.getUser_no() == p.getUser_no()){
 				Gson gson = new Gson();
 				String psi = gson.toJson(p);
 				System.out.println("psi: " + psi);
 		%>
-		<br>
-		<br>
-	
-		<div>
-			<form id="psInfo" name="psInfo" action="<%=request.getContextPath()%>/views/myPage/petSitterServiceUpdateDetailForm.jsp" method="POST">
-			<input type="hidden" id="psi" name="psi" maxlength="1000" value='<%= psi %>'>
-		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		<td>
+		<form id="psInfo" name="psInfo" action="<%=request.getContextPath()%>/views/myPage/petSitterServiceUpdateDetailForm.jsp" method="POST">
+		<input type="hidden" id="psi" name="psi" maxlength="1000" value='<%= psi %>'>
 		<button class="modify" name="modify" id="modify" onclick="modify()" style="background:#9bcdf7; color:white; border-style:#9bcdf7;">수정하기</button>
-			</form>
-		</div>
-		<% }else{ %>
-		nothing to do
+		</form>
+		</td>
+		</tr>
+		</table>
 		<% } %>
 		</div>			
 		</div>
 		<!-- fixed 창 -->
 			<%@ include file="../common/fixed.jsp"%>
-<!-- footer -->
+		<!-- footer -->
 				<%@ include file="/views/common/footer.jsp" %>
 		
 <script>

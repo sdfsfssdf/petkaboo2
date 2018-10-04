@@ -99,7 +99,6 @@ hr{
 			<th width="100px">서비스번호</th>
 			<th width="100px">동물카테고리</th>
 			<th width="100px">서비스 종류</th>
-			<th width="200px">예약가능 요일</th>
 			<th width="150px">시작 가능일</th>
 			<th width="150px">종료일</th>
 			<th width="100px">서비스가격</th>
@@ -132,7 +131,6 @@ hr{
 				}
 			%>
 			<%= contract_type %></td>
-			<td><%= p.getContract_days() %></td>
 			<td><%= p.getContract_start() %></td>
 			<td><%= p.getContract_end() %></td>
 			<td><%= p.getService_charge() %></td>
