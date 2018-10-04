@@ -128,7 +128,7 @@ public class ContractMainService {
 		
 		if(step1 > 0){
 			// 1단계 성공시
-			step2 = new ContractS2Dao().insertPayment(con, contractno, user_no, fullPrice);			
+			step2 = new ContractS2Dao().insertPayhistory(con, contractno, user_no, fullPrice);			
 			if(step2 > 0){
 				// 2단계 성공시
 				step3 = new ContractS2Dao().proceedCybermoney(con, contractno, user_no, fullPrice);
@@ -166,13 +166,29 @@ public class ContractMainService {
 	}
 
 	public int endContract(int user_no, int client_user_no, int psrno, int contractNo) {
+		int step1 = 0;
+		int step2 = 0;
+		int step3 = 0;
 		int result = 0;
 		Connection con = getConnection();
 		
-		result = new ContractS2Dao().endContract(con, user_no, client_user_no, psrno, contractNo);
+		step1 = new ContractS2Dao().endContract(con, user_no, client_user_no, psrno, contractNo);
 		
-		if(result >0){
-			commit(con);
+		if(step1 > 0){
+			// 계약 상태 변경이 성공하면 해당 계약의 사이버머니를 조회
+			step2 = new ContractS2Dao().refundStep1(con, client_user_no, contractNo);
+			if(step2 > 0){
+				// 얻어온 사이버 머니 만큼 펫시터의 테이블에 추가
+				step3 = new ContractS2Dao().increaseMoney(con, user_no, step2);
+				if(step3 > 0){
+					commit(con);
+					result = step1 + step3;
+				}else{
+					rollback(con);
+				}
+			}else{
+				rollback(con);
+			}
 		}else{
 			rollback(con);
 		}
