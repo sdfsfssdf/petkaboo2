@@ -146,7 +146,8 @@ display: inline-block;
 	
 	<div class="content-right"></div>
 	</div>
-	
+	<!-- fixed 창 -->
+			<%@ include file="../common/fixed.jsp"%>
 
 	<% } %>
 	<%@ include file="/views/common/footer.jsp" %>
