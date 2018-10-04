@@ -45,7 +45,7 @@ public class InsertNicknameServlet extends HttpServlet {
 		
 		String finalPath = "images\\profileImagesUpload\\";
 		
-		MultipartRequest mr = new MultipartRequest(request, AbsolutePath + finalPath, 1024*768, "UTF-8", new MyFileRenamePolicy());
+		MultipartRequest mr = new MultipartRequest(request, AbsolutePath + finalPath, 1024*1024*768, "UTF-8", new MyFileRenamePolicy());
 		
 		String name = mr.getParameter("profile");
 		String upload =  mr.getFilesystemName("profile");
