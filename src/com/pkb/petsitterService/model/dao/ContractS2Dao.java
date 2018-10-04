@@ -492,6 +492,8 @@ public class ContractS2Dao {
 			if(rset.next()){				
 				step1 = rset.getInt("pay_amount");
 			}
+			
+			System.out.println("step1은: " + step1);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
