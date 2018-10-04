@@ -27,18 +27,42 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>펫시터 등록 서비스 수정</title>
 <style>
+.content-left {
+	width: 15%;
+	float: left;
+	border: 1px solid transparent;
+}
+
+.content-right {
+	width: 15%;
+	float: left;
+	border: 1px solid transparent;
+}
+
+.content-center {
+	width: 70%;
+	float: left;
+	/* text-align:center; */
+	margin: 0 auto;
+	margin-top:80px;
+}
 .contentArea{
 	margin-top:10px;
 	margin-left:10px;
 	text-align:center;
 }
-#insertTable{
+ #insertTable{
 	display:inline-block;
-	border:1px dotted black;
-}
+	border:1px solid #9bcdf7;
+	
+} 
 th, tr, td{
-	border:1px dotted black;
+	/* border:1px solid #9bcdf7; */
 	padding:10px;
+}
+
+th,  td{
+ border:1px solid #9bcdf7; 
 }
 </style>
 </head>
@@ -60,7 +84,7 @@ th, tr, td{
 		window.location.href = '<%=request.getContextPath()%>/index.jsp';
 	</script>
 	<% } else { %>
-	<%@ include file="/views/common/sidemenubar.jsp"%>
+	<div class="content-left"><%@ include file="/views/common/sidemenubar.jsp"%></div>	
 	<% 
 		// PetCategory DB 조회
 		Properties prop = new Properties();
@@ -130,9 +154,20 @@ th, tr, td{
 		// System.out.println("fileName: " + fileName);
 		
 	%>
+	
+	<div class="content-center">
+	<hr
+						style="border: thin solid lightgray !important; display: inline-block !important; width: 100% !important;" />
+				
+				<br>
+				<!-- 펫시터 서비스 등록정보 수정 -->
+				&nbsp;&nbsp;&nbsp;&nbsp;<span
+					style="text-align: left; font-size: 17px; font-weight: bold; ">펫시터 서비스 등록정보 수정</span>
+				<hr
+					style="border: thin solid lightgray !important; display: inline-block !important; width: 100% !important;" />
+	<br><br><br>
 	<div class="contentArea">
-		<h2><b>펫시터 서비스 업데이트</b></h2>
-		<p>등록한 펫시터 서비스 상세 내용을 수정할 수 있습니다.</p>
+		
 		<div id="insertFormArea">
 			<form id="insertForm" method="post" action="<%=request.getContextPath()%>/UpdatePetService.do">
 				<table id="insertTable">
@@ -250,10 +285,12 @@ th, tr, td{
 		<br>
 		<div class="btnsArea" align="center">
 			&nbsp;
-			<button type="submit" id="submit" onclick="insertService()" class="btn btn-success write">수정하기</button>
+			<button type="submit" id="submit" onclick="insertService()" class="btn btn-success write" style="background-color:#9bcdf7; border:1px solid #9bcdf7; color:white;">수정하기</button>
 			&nbsp;
-			<button type="button" class="btn btn-danger cancel">취소하기</button>
+			<button type="button" class="btn btn-danger cancel" style="background-color:white; color:#9bcdf7; border:1px solid #9bcdf7;">취소하기</button>
 		</div>
+		</div>
+		
 	<script>
 		function insertService(){
 			var address = $("#address").text();
@@ -296,6 +333,10 @@ th, tr, td{
 			}
 	</script>
 	<% } %>
-
+<div class="content-right"></div>
+	<!-- fixed 창 -->
+			<%@ include file="../common/fixed.jsp"%>
+			<!-- footer -->
+				<%@ include file="/views/common/footer.jsp" %>
 </body>
 </html>

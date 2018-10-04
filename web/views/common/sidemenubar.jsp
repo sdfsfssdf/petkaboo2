@@ -127,9 +127,7 @@ cursor:pointer;
 							<div class="title">펫시터 관리</div>
 							<ul class="sub">
 								<li><a href="<%=request.getContextPath()%>/views/myPage/petSitterServiceInsertForm.jsp">펫시터 서비스 등록</a></li>
-								<li><a href="<%=request.getContextPath()%>/search.do?user_no=<%=loginUser.getUser_no()%>">펫시터 정보 수정</a></li>
-								<li><a href="#">수입 현황</a></li>
-								<li><a href="#">돌봄일지</a></li>
+								<li><a href="<%=request.getContextPath()%>/search.do?user_no=<%=loginUser.getUser_no()%>">등록 펫시터 서비스 목록</a></li>
 								<li>
 								<form class="psContractManage" action="<%=request.getContextPath()%>/psContract.do" method="post">
 								<input type="hidden" name="user_no" value="<%= loginUser.getUser_no() %>">

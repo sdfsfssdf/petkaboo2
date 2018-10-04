@@ -125,14 +125,21 @@ img{
 }
 
 .content-center {
-	width: 80%;
+	width: 70%;
 	float: left;
 	/* text-align:center; */
 	margin: 0 auto;
+	margin-top:80px;
 }
 
 .checkApplyDiv{
 	margin:0;
+}
+
+.applyBody{
+	font-size:11px;
+	text-align:center;
+	
 }
 
 </style>
@@ -444,10 +451,21 @@ img{
 		cal.add(Calendar.DATE, 1);
 		String endDate = sdf.format(cal.getTime());		
 	%>
+	<div class="content-left"><%@ include file="/views/common/sidemenubar.jsp"%></div>
+	<div class="content-center">
+	<hr
+						style="border: thin solid lightgray !important; display: inline-block !important; width: 100% !important;" />
+				
+				<br>
+				<!-- 펫시터 서비스 등록정보 수정 -->
+				&nbsp;&nbsp;&nbsp;&nbsp;<span
+					style="text-align: left; font-size: 17px; font-weight: bold; ">선택하신 서비스 및 펫시터 정보입니다.</span>
+				<hr
+					style="border: thin solid lightgray !important; display: inline-block !important; width: 100% !important;" />
+	<br><br><br>
 	<div class="applyBody">
 		<div id="petsitterInfo">
-		<h2>선택하신 펫시터 및 서비스 정보입니다</h2>
-		<hr>
+
 		<table id="petsitterInfoTable">
 			<tr>
 				<th width="100px">펫시터 닉네임</th>
@@ -509,6 +527,7 @@ img{
 				<th width="150px">종료일</th>
 				<th width="50px">상태</th>			
 			</tr>
+			<br>
 			<tr>
 				<input type="hidden" name="clientUserno" value="<%= loginUser.getUser_no() %>">
 				<input type="hidden" name="psUserno" value="<%= p.getUser_no() %>">
@@ -528,10 +547,18 @@ img{
 				<td>정상</td>
 			</tr>		
 		</table>
+		<br><br><br>
 		<button>펫시팅 요청 보내기</button>
+		
 		</form>
 		</div>
 	</div>
+	</div>
 	<% } %>
+	<div class="content-right"></div>
+	<!-- fixed 창 -->
+			<%@ include file="../common/fixed.jsp"%>
+			<!-- footer -->
+				<%@ include file="/views/common/footer.jsp" %>
 </body>
 </html>

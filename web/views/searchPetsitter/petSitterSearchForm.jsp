@@ -90,6 +90,8 @@
 		font-size:14px;
 	}
 }
+
+
 </style>
 </head>
 <body>
@@ -121,7 +123,7 @@
 	<input class="searchBar" name="searchKeyword" type="text"  style="font-size:14px; width:600px; height:35px; font-color:#999;" placeholder="원하는 펫시팅 조건을 검색해 보세요" area-label="원하는 펫시팅 조건을 검색해 보세요" autocomplete="off">
 	</div>
 	<div id="goSearch" style="height:35px; width:80px; background-color:white; "onclick="goSearch()">
-	<p style="font-size:14px; font-weight:bold;  vertical-align:middle;">검색</p>
+	<p style="font-size:14px; font-weight:bold;  vertical-align:middle; color:#89c5f5;">검색</p>
 	</div>
 	</div>
 	</div>

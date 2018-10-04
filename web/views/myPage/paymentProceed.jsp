@@ -17,14 +17,14 @@
 <title>최종 결제 확인</title>
 <style>
 .content-left {
-	width: 20%;
+	width: 15%;
 	float: left;
 	border: 1px solid transparent;
 	
 }
 
 .content-right {
-	width: 20%;
+	width: 15%;
 	float: left;
 	height:350px;
 	border: 1px solid transparent;
@@ -32,12 +32,11 @@
 }
 
 .content-center {
-	width: 60%;
+	width: 70%;
 	float: left;
-	height:350px;
-	margin-top:150px;
+	margin-top:65px;
 	align:center;
-	margin-left:250px;
+	
 }
 
 .wrap{
@@ -46,8 +45,9 @@
 }
 
 .paymentProceedDiv{
-	width:100%;
+/* 	width:100%; */
 	align:center;
+	margin-left:30%;
 
 }
 
@@ -93,8 +93,18 @@ display: inline-block;
 		
 	<div class="content-left"><%@ include file="../common/sidemenubar.jsp"%></div>
 	<div class="content-center">
-
+	<hr
+						style="border: thin solid lightgray !important; display: inline-block !important; width: 100% !important;" />
+				
+				<br>
+				<!-- 결제 진행 -->
+				&nbsp;&nbsp;&nbsp;&nbsp;<span
+					style="text-align: left; font-size: 17px; font-weight: bold; ">결제 진행</span>
+				<hr
+					style="border: thin solid lightgray !important; display: inline-block !important; width: 100% !important;" />
+	<br><br>
 	<div class="paymentProceedDiv"  >
+	
 <table id="paymentProceedInfoTable" rules="none" style="border:2px dashed #9bcdf7; ">
 			<tr >
 				<td><br><br>&nbsp;&nbsp;&nbsp;&nbsp;<b><%= c.getPetNickname() %></b> 펫시터와의 계약을 결제합니다<br><br>
