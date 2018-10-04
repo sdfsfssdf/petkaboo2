@@ -126,7 +126,7 @@ public class PaymentDao2 {
 		return inquiry;
 
 	}
-
+	
 	public int selectListInquiryCount(Connection con, int user_no, String pay_date, String pay_method) {
 		Statement stmt = null;
 		ResultSet rs = null;

@@ -2010,12 +2010,12 @@ public class UserDAO {
 		HashMap<String,Object> info = null;
 		ResultSet rs = null;
 		String query = prop.getProperty("selectStatisticInfoByJoinMember");
-		int cnt = 0;
+		Integer cnt = null;
 		try {
 			stmt = con.createStatement();
 			
 			rs = stmt.executeQuery(query);
-		
+			cnt = 0;
 			while(rs.next()){
 				info = new HashMap<String,Object>();
 				info.put("count", 1);
@@ -2033,6 +2033,36 @@ public class UserDAO {
 			close(rs);
 		}
 		return cnt;
+	}
+
+	public HashMap<String, Object> totalMemberCounts(Connection con) {
+		Statement stmt = null;
+		ResultSet rs = null;
+		HashMap<String,Object> hmap = null;
+		String query = prop.getProperty("totalMemberCountsByType");
+		
+		try {
+			stmt = con.createStatement();
+			rs = stmt.executeQuery(query);
+			
+			hmap = new HashMap<String,Object>();
+			if(rs.next()){
+				hmap.put("total", rs.getInt(1));
+				hmap.put("rest", rs.getInt(2));
+				hmap.put("nomal", rs.getInt(3));
+				hmap.put("withdrawal", rs.getInt(4));
+				hmap.put("sanctions", rs.getInt(5));
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(rs);
+			close(stmt);
+		}
+
+		return hmap;
 	}
 
 }
