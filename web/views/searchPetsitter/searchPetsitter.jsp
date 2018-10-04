@@ -209,7 +209,7 @@ button:hover{
 </style>
 <!-- services와 clusterer, drawing 라이브러리 불러오기 -->
 <script type="text/javascript"
-	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=7fe9ccb116e5c90860fd1bde084cf5a1&libraries=services,clusterer,drawing"></script>
+	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=7fe9ccb116e5c90860fd1bde084cf5a1&libraries=services"></script>
 <link rel="stylesheet"
 	href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
 	integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU"
@@ -230,107 +230,13 @@ button:hover{
 
 
 <body>
-<script>
 
-var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
-mapOption = {
-    center: new daum.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
-    level: 3 // 지도의 확대 레벨
-};  
-
-//지도를 생성합니다    
-var map = new daum.maps.Map(mapContainer, mapOption); 
-</script>	
-	<%-- window.onload = function test1() {
-		navigator.geolocation.getCurrentPosition(function(position) {
-			/* 			alert("위도 : " + position.coords.latitude + "\n" + "경도 : "
-			 + position.coords.longitude); */
-
-			var lat = position.coords.latitude;
-			var lon = position.coords.longitude;
-			
-			var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
-			    mapOption = {
-			        center: new daum.maps.LatLng(lat, lon), // 지도의 중심좌표
-			        level: 3 // 지도의 확대 레벨
-			    };  
-
-			// 지도를 생성합니다    
-			var map = new daum.maps.Map(mapContainer, mapOption); 
-
-			
-			var geocoder = new daum.maps.services.Geocoder();
-			
-			
-				var listData = [
-					<%for(int i =0; i< list.size(); i++){%>
-				    {
-				        groupAddress: <%=list.get(i).getAddress()%>, 
-				    }<%if(i<list.size()-1){%>,<%}%>
-				    <%}%>
-				];
-			    
-			for (var i=0; i < listData.length ; i++) {
-			// 주소로 좌표를 검색합니다
-			geocoder.addressSearch(listData[i].groupAddress, function(result, status) {
-
-			    // 정상적으로 검색이 완료됐으면 
-			     if (status === daum.maps.services.Status.OK) {
-
-			        var coords = new daum.maps.LatLng(result[0].y, result[0].x);
-
-			        // 결과값으로 받은 위치를 마커로 표시합니다
-			        var marker = new daum.maps.Marker({
-			            map: map,
-			            position: coords
-			        });
-
-			        // 인포윈도우로 장소에 대한 설명을 표시합니다
-			        var infowindow = new daum.maps.InfoWindow({
-			            content: result[0].y + "," + result[0].x
-			        });
-			        infowindow.open(map, marker);
-
-			        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
-			        map.setCenter(coords);
-			    } 
-			})
-
-			};    
-
-	</script>
-	 --%>
 	<%@include file="/views/common/menubar.jsp"%>
 	<div class="SearchFormArea">
 		<%@ include file="petSitterSearchForm.jsp" %>
 	</div>
 	<div class="SearchBodyArea">
-	
-	<!-- 
-	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=발급받은 APP KEY를 넣으시면 됩니다.">
-	</script>
-	<script>
-		var container = document.getElementById('map');
-		var options = {
-						center : new daum.maps.LatLng(33.450701, 126.570667), level : 3
-					  };
-		var map = new daum.maps.Map(container, options);
-	</script>
-	 -->
-	  
-	</div>	
-	<!-- <button id="test">위도 경도 변환 사용해보기.</button>
-	<script>
-		$(function(){
-			$('#test').click(function(){
-				location.href="<%=request.getContextPath()%>/test.pe";
-			})
-		})
 
-	</script>
-	 -->
-	 
-	 
 	 <div class=content-left></div>
 
 			<div class="content-center1">
@@ -476,42 +382,36 @@ var map = new daum.maps.Map(mapContainer, mapOption);
 	</script>
 
 	<div id="map" style="width:500px;height:400px;"></div>
-	<script>
-		function init()
-		{
-			window.navigator.geolocation.getCurrentPosition(current_position);	
-		}
-		function current_position(position){
-			var latitude = position.coords.latitude;
-			var longitude = position.coords.longitude;
-			console.log(latitude);
-			console.log(longitude);
-			
-			var centre = new daum.maps.LatLng(latitude,longitude);
-		}
-		window.addEventListener("load",init);
-	</script>
-
 	<script type="text/javascript"
-	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=7fe9ccb116e5c90860fd1bde084cf5a1"></script>
+			src="//dapi.kakao.com/v2/maps/sdk.js?appkey=7fe9ccb116e5c90860fd1bde084cf5a1"></script>
 	<script>
-	
-var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
-			mapOption = {
-			center: new daum.maps.LatLng(33.450701, 126.570667),
-	        level: 3 // 지도의 확대 레벨
-    	};  
-
+      function init()
+      {
+         window.navigator.geolocation.getCurrentPosition(current_position);   
+      }
+      function current_position(position){
+         var latitude = position.coords.latitude;
+         var longitude = position.coords.longitude;
+       
+         showPosition(latitude, longitude);
+      }
+      window.addEventListener("load",init);
+   
+		
+	function showPosition(latitude, longitude){
+	var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+         mapOption = {
+         center: new daum.maps.LatLng(latitude, longitude),
+          level: 5 // 지도의 확대 레벨
+       };  
 // 지도를 생성합니다    
 var map = new daum.maps.Map(mapContainer, mapOption); 
-
+	
 // 주소-좌표 변환 객체를 생성합니다
 var geocoder = new daum.maps.services.Geocoder();
 
-
-<%for (int i = 0 ; i < list.size(); i ++ ) {%>
-geocoder.addressSearch('<%=list.get(i).getAddress() %>', function(result, status) {
-
+<%for (int i = 0; i < list.size(); i++) {%>
+geocoder.addressSearch('<%=list.get(i).getAddress()%>', function(result, status) {
 
     // 정상적으로 검색이 완료됐으면 
      if (status === daum.maps.services.Status.OK) {
@@ -526,17 +426,15 @@ geocoder.addressSearch('<%=list.get(i).getAddress() %>', function(result, status
         // 인포윈도우로 장소에 대한 설명을 표시합니다
         
         var infowindow = new daum.maps.InfoWindow({
-
-            content: '<%=list.get(i).getNickname()%>'
-
-        });
-        infowindow.open(map, marker);
-
-        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
-        map.setCenter(centre);
-    } 
-})
-<%}%>
+        	content: '<%=list.get(i).getNickname()%>',
+        	disableAutoPan: true	
+        	});
+			infowindow.open(map, marker);
+			
+			}
+			})
+		<%}%>
+	}
 	</script>
 </body>
 </html>
