@@ -150,10 +150,9 @@ img{
 	<% } else if(c != null && errorCode != null && errorCode.equals("alreadyExist")){ %>
 	<script>
 		alert('이미 해당 펫시터 서비스에 계약 신청을 한 상태입니다!');
+		window.location.href = '<%=request.getContextPath()%>/index.jsp';
 	</script>
-		
 		<!-- 1 -->
-	
 		<br />
 		<br />
 		<h2 style="text-align: center; margin-top: 100px;">
@@ -168,7 +167,7 @@ img{
 		<div class="content-left"></div>
 		<div class="content-center">
 		<!-- fixed 창 -->
-			<%@ include file="../common/fixed.jsp"%>
+		<%@ include file="../common/fixed.jsp"%>
 		<div class="ApplyInfoDiv">
 		<div class="checkApplyDiv">
 		
@@ -265,18 +264,12 @@ img{
 		</div>
 	</div>
 	</div>
-	
 	<div class="content-right"></div>
 	<%@ include file="/views/common/footer.jsp" %>
-	
 	<% } else if(checkApply != null && checkApply.equals("y") && c != null) { %>
-	
-	
-
 	<!-- 2 -->
 		<br />
 		<br />
-		
 		
 		<h2 style="text-align: center; margin-top: 100px;">
 			<span style="color: rgb(228, 100, 18);"> <strong>
@@ -321,10 +314,8 @@ img{
 					<div style="float:left; margin-left:35px "><img width="180px" height="180px" border-radius="100px" display="inline-block" src="https://scontent.cdninstagram.com/vp/d432a9c5818f68d1dcfd3860935145f2/5BDCF333/t51.2885-15/sh0.08/e35/p640x640/34982645_1703252956454507_5788207006821122048_n.jpg" alt="" /></div>
 						&nbsp;&nbsp;<label>&nbsp;&nbsp;닉네임&nbsp;&nbsp;:&nbsp;&nbsp;<%=c.getPetNickname() %><br><br><br>&nbsp;&nbsp;주소&nbsp;&nbsp;:&nbsp;&nbsp;<%
 					String addressSplit = c.getPetAddress();
-					String address;
 					int index = addressSplit.indexOf("^");
-					address = addressSplit.substring(0, index);
-				
+					String address = addressSplit.substring(0, index);
 					%> <%=address %><br><br><br>&nbsp;&nbsp;연락처&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;&nbsp;<%=c.getPetPhone() %></label>
 					<br>
 					<label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>

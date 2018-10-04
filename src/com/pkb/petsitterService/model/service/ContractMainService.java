@@ -128,7 +128,7 @@ public class ContractMainService {
 		
 		if(step1 > 0){
 			// 1단계 성공시
-			step2 = new ContractS2Dao().insertPayhistory(con, contractno, user_no, fullPrice);			
+			step2 = new ContractS2Dao().insertPayment(con, contractno, user_no, fullPrice);			
 			if(step2 > 0){
 				// 2단계 성공시
 				step3 = new ContractS2Dao().proceedCybermoney(con, contractno, user_no, fullPrice);
@@ -170,6 +170,62 @@ public class ContractMainService {
 		Connection con = getConnection();
 		
 		result = new ContractS2Dao().endContract(con, user_no, client_user_no, psrno, contractNo);
+		
+		if(result >0){
+			commit(con);
+		}else{
+			rollback(con);
+		}
+		
+		close(con);
+		
+		return result;
+	}
+
+	public int refundProceed(int contractNo, int user_no) {
+		Connection con = getConnection();
+		int result = 0;
+		int step1 = 0;
+		int step2 = 0;
+		int step3 = 0;
+		int step4 = 0;
+		int step5 = 0;
+		
+		step1 = new ContractS2Dao().refundStep1(con, contractNo, user_no);
+		
+		if(step1 > 0){
+			// 1단계 성공시
+			step2 = new ContractS2Dao().refundStep2(con, contractNo, user_no, step1);			
+			if(step2 > 0){
+				// 2단계 성공시
+				step3 = new ContractS2Dao().insertPayhistory(con, contractNo, user_no, step1);
+				if(step3 > 0){
+					// 3단계 성공시
+					step4 = new ContractS2Dao().insertContractmoney(con, contractNo, user_no, step1);
+					if(step4 > 0){
+						// 4단계 성공시
+						step5 = new ContractS2Dao().updateRefundService(con, contractNo, user_no, step1);
+						if(step5 > 0){
+							// 5단계 성공시 커밋
+							commit(con);
+							result = step1 + step2 + step3 + step4 + step5;
+						}else{
+							rollback(con);
+						}
+					}else{
+						rollback(con);
+					}
+				}else{
+					rollback(con);
+				}
+			}else{
+				// 2단계 실패시
+				rollback(con);
+			}	
+		}else{
+			// 1단계 실패시
+			rollback(con);
+		}
 		
 		close(con);
 		

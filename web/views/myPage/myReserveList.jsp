@@ -1,3 +1,4 @@
+<%@page import="java.sql.Date"%>
 <%@page import="com.pkb.reservation.model.vo.Contract"%>
 <%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -42,7 +43,8 @@
 				<th width="150px">시작일</th>
 				<th width="150px">종료일</th>
 				<th width="100px">계약요청일</th>
-				<th width="50px">상태</th>			
+				<th width="50px">상태</th>
+				<th width="100px">환불</th>			
 			</tr>
 	<% for (Contract c : cList) { %>
 		<tr>
@@ -56,7 +58,11 @@
 			<td><%= c.getContract_start() %></td>
 			<td><%= c.getContract_end() %></td>
 			<td><%= c.getContract_date() %></td>
-			<% if(c.getService_status() != null && c.getService_status().equals("W")) { %>
+			<% if(c.getContract_status() != null && c.getContract_status().equals("W")) { %>
+			<td>수락 대기 중</td>
+			<% } else if(c.getContract_status() != null && c.getContract_status().equals("C")) { %>
+			<td><font color="red"><b>취소</b></font></td>
+			<% } else if(c.getService_status() != null && c.getService_status().equals("W")) { %>
 			<td>
 			<form id="paymentReq" action="<%=request.getContextPath()%>/paymentReq.do" method="post">
 			<input type="hidden" id="pst_user_no" name="pst_user_no" value="<%= c.getPet_user_no() %>">
@@ -65,10 +71,40 @@
 			<input type="hidden" id="contractNo" name="contractNo" value="<%= c.getContract_no() %>">			
 			<button>결제요청</button>
 			</form></td>
-			<% } else { %>
-			<td><%= c.getContract_status() %></td>
+			<% } else if(c.getService_status() != null && c.getService_status().equals("X")) {%>
+				<td>서비스 종료</td>
+			<% } else if(c.getService_status() != null && c.getService_status().equals("F")) { %>
+				<td><font color="blue"><b>환불 처리 중</b></font></td>
+			<% } else if(c.getService_status() != null && c.getService_status().equals("E")) { 
+				java.util.Date utilDate = new java.util.Date();
+				Date sqlDateToday = new java.sql.Date(utilDate.getTime());
+				Date endContract = c.getContract_end();
+				Date startContract = c.getContract_start();
+				int dateResult = sqlDateToday.compareTo(startContract);
+					if(dateResult > 0){ %>
+					<% dateResult = sqlDateToday.compareTo(endContract); %>
+						<% if(dateResult > 0){ %>
+						<td>서비스 완료</td>
+						<% } else { %>
+						<td>결제 완료. 서비스 진행 중</td>
+						<% } %>
+					<% } else { %>
+						<td>결제완료. 서비스 진행 대기 중</td>
+					<% } %>
 			<% } %>
-		</tr>	
+			<% if (c.getService_status() != null && (c.getService_status().equals("P") || c.getService_status().equals("E"))){ %>
+				<td>
+					<form name="refundReq" method="post" action="refundReq.do">
+					<input type="hidden" name="contractNo" value="<%= c.getContract_no() %>">
+					<button>환불</button>
+					</form>
+				</td>
+			<% }else{ %>
+				<td>
+					<b>환불 불가</b>
+				</td>
+			<% } %>
+		</tr>
 	<% } %>
 	</table>
 	</div>
