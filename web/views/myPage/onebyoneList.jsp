@@ -114,7 +114,7 @@ if(loginUser != null){ %>
 	
 	<%@ include file="../common/sidemenubar.jsp"%>
 	<div class="contentArea">
-		<h2>내 질문내역</h2>
+		<h2>내 질문내역</h2><br>
 		<p>나의 1:1 문의내역을 확인할 수 있습니다.</p>
 		<br>
 		<div class="container">

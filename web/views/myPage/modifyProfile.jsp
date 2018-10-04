@@ -276,8 +276,7 @@ margin-top:20px;
 				<br>
 				<!-- 프로필 수정 -->
 				&nbsp;&nbsp;&nbsp;&nbsp;<span
-					style="text-align: left; font-size: 17px; font-weight: bold;">프로필
-					수정</span>
+					style="text-align: left; font-size: 17px; font-weight: bold;">프로필 관리</span>
 				<hr
 					style="border: thin solid lightgray !important; display: inline-block !important; width: 100% !important;" />
 				<div class="center-content1">
