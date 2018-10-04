@@ -150,6 +150,8 @@ public class PaymentDao2 {
 				} else if(pay_date.equals("year")){
 					sb.append(
 							"WHERE TO_CHAR(PAY_DATE,'YYYYmmdd') BETWEEN TO_CHAR(SYSDATE-365,'YYYYmmdd') AND TO_CHAR(SYSDATE,'YYYYmmdd') ");
+				} else if(pay_date.equals("today")){
+					
 				}
 			}
 

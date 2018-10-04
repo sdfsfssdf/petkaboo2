@@ -49,6 +49,15 @@ public class SelectCyberMoneyHistoryServlet extends HttpServlet {
 		if (request.getParameter("currentPage") != null) {
 			pg.setCurrentPage(Integer.parseInt(request.getParameter("currentPage")));
 		}
+		
+		System.out.println(pay_date);
+		if(pay_date == null){
+			pay_date = "today";
+		}
+		
+		if(pay_method == null){
+			pay_method = "all";
+		}
 
 		pg.setListCount(new PaymentService2().selectListInquiryCount(loginUser.getUser_no(),pay_date,pay_method));
 
