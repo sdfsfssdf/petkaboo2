@@ -174,7 +174,7 @@
 									<td><%=totalList.get(i).get("email") %></td>
 									<td align="left">
 										<% 
-											SimpleDateFormat format = new SimpleDateFormat("YYYY-mm-dd");
+											SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 											String tempStartDate = totalList.get(i).get("contract_start").substring(0,totalList.get(i).get("contract_start").indexOf(" "));
 											String tempEndDate = totalList.get(i).get("contract_end").substring(0,totalList.get(i).get("contract_end").indexOf(" "));
 											String tempRequestDate = totalList.get(i).get("pay_date").substring(0,totalList.get(i).get("contract_end").indexOf(" "));

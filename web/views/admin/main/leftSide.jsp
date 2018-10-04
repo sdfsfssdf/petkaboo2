@@ -1,5 +1,10 @@
+<%@page import="java.text.SimpleDateFormat"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%
+	String ip = (String)request.getAttribute("ip");
+%>
+
 <!DOCTYPE>
 <html>
 <head>
@@ -123,9 +128,8 @@ $(function(){
 					<input type="text" name="rtcInput" size="15" readonly="readonly" />
 				</form>
 		</div>
-		<div class="three">최종로그인</div>
-		<div class="four">접속IP <p name="ipArea" id="ipArea"></p></div>
-		<div class="five">보안경고</div>
+		<div class="three">최종로그인<p></p></div>
+		<div class="four">접속IP <p name="ipArea" id="ipArea"><%=ip %></p></div>
 		<div class="six">
 			<h3>오늘의 펫카부</h3>
 		</div>

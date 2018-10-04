@@ -273,6 +273,7 @@
 			<p>세부 사유</p>
 			<textarea class="form-control" id="reasonTextArea" rows="10" readonly></textarea>	
 		</div>
+	<%@include file="../../common/footer.jsp" %>
 	</div>
 </body>
 </html>
