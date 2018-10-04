@@ -378,41 +378,20 @@ th, td {
 						<br><br>
 						
 						<table class=mclist>
+						
 							<tr>
 								<th>거래일시</th>
-								<th>분류</th>
-								<th>내용</th>
 								<th>금액</th>
-								<th>비고</th>
 							</tr>
+							<%if(list != null) { 
+							for(int i = 0 ; i < list.size();i++){ %>
 							<tr>
-								<td>20180901</td>
-								<td>Griffin</td>
-								<td>Griffin</td>
-								<td>Griffin</td>
-								<td>$100</td>
+								
+								<td><%=list.get(i).getPay_date() %></td>
+								<td><%=list.get(i).getPay_amount() %></td>
 							</tr>
-							<tr>
-								<td>20180902</td>
-								<td>Griffin</td>
-								<td>Griffin</td>
-								<td>Griffin</td>
-								<td>$150</td>
-							</tr>
-							<tr>
-								<td>20180903</td>
-								<td>Swanson</td>
-								<td>Griffin</td>
-								<td>Griffin</td>
-								<td>$300</td>
-							</tr>
-							<tr>
-								<td>20180904</td>
-								<td>Brown</td>
-								<td>Griffin</td>
-								<td>Griffin</td>
-								<td>$250</td>
-							</tr>
+							
+							<%} }%>
 						</table>
 						
 					</form>
