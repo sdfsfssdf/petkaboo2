@@ -713,9 +713,14 @@ public class UserService {
 			if (cnt != 0) {
 				HashMap<String,Object> mMap = new UserDAO().totalMemberCounts(con);
 				if(mMap != null){
-					totalMap = new HashMap<String,Object>();
-					totalMap.put("totalInfo", totalInfo);
-					totalMap.put("mMap", mMap);
+					ArrayList<HashMap<String,Object>> pList = new UserDAO().paymentStatics(con);
+					
+					if(pList != null){
+						totalMap = new HashMap<String,Object>();
+						totalMap.put("totalInfo", totalInfo);
+						totalMap.put("mMap", mMap);
+						totalMap.put("plist",pList);
+					}
 				}
 			}
 		}
