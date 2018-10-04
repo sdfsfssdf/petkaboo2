@@ -169,6 +169,14 @@
 	}
 	
 	System.out.println(tempList);
+	
+	int[][] result = new int[12][5];
+	for(int i = 0 ; i < tempList.size(); i ++ ) {
+		result[i%12][i/12] = Integer.parseInt(tempList.get(i).get("amount").toString()); 
+	}
+	
+	
+	
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -225,17 +233,17 @@
 <br>
 <div class="container">
   <ul class="nav nav-tabs">
-    <li class="active"><a data-toggle="tab" href="#home">회원통계</a></li>
-    <li><a data-toggle="tab" href="#menu1">Menu 1</a></li>
-    <li><a data-toggle="tab" href="#menu2">Menu 2</a></li>
-    <li><a data-toggle="tab" href="#menu3">Menu 3</a></li>
+    <li class="active"><a data-toggle="tab" href="#home">회원 통계</a></li>
+    <li><a data-toggle="tab" href="#menu1">매출 통계</a></li>
+    <li><a data-toggle="tab" href="#menu2">추가 예정</a></li>
+    <li><a data-toggle="tab" href="#menu3">추가 예정</a></li>
   </ul>
 
   <div class="tab-content">
     <div id="home" class="tab-pane fade in active">
       <div id="Nwagon" style="display:inline-block">
       <br><br>
-<label>회원 상태 추이</label></div>
+<label>회원 상태 추이</label> ( 1주일간 )</div>
 <script>
 	var options = {
 		'legend':{
@@ -315,15 +323,15 @@
 </script>
     </div>
     <div id="menu1" class="tab-pane fade">
-      <label>올해의 결제 현황</label>
-      
+      <br><br>
+      <label>올해의 결제 현황</label> ( 단위 10만 )
       
       
      <div id="Nwagon3"></div>
 <script>
 	var options = {
 		'legend': {
-			names: ['01','02','03','04','05','06','07','08','09' , '10','11','12'],
+			names: ['1월','2월','3월','4월','5월','6월','7월','8월','9월' , '10월','11월','12월'],
 			hrefs: [
 
 			]
@@ -331,240 +339,20 @@
 		'dataset': {
 			title: 'Playing time per day',
 			values: [
-				
-				<% for(int i = 0 ; i < tempList.size(); i ++ ) {%>
+				<%for(int i = 0 ; i < result.length ; i ++) { %>
 					[
-						<%if (i % 12 == 0 ) { %>
-							<%if(i / 12 == 0) { %>
-								<%= tempList.get(i).get("amount") %>
-								,
-							<%} else if ( i / 12 == 1 ) {%>
-								<%= tempList.get(i).get("amount") %>
-								,
-							<%} else if ( i/ 12 == 2) {%>
-								<%= tempList.get(i).get("amount") %>
-								,
-							<%} else if ( i / 12 == 3) { %>
-								<%= tempList.get(i).get("amount") %>
-								,
-							<%} else if ( i / 12 == 4) { %>
-								<%= tempList.get(i).get("amount") %>
-							<%} %>
+					<%for(int j = 0 ; j < result[i].length; j ++){%>
+						<%=(double)result[i][j]/100000%>
+						<%if( j != result[i].length-1) { %>
+							,
 						<%}%>
-					],
-					
-					[
-						<%if (i % 12 == 1 ) { %>
-						<%if(i / 12 == 0) { %>
-						<%= tempList.get(i).get("amount") %>
-						,
-					<%} else if ( i / 12 == 1 ) {%>
-						<%= tempList.get(i).get("amount") %>
-						,
-					<%} else if ( i/ 12 == 2) {%>
-						<%= tempList.get(i).get("amount") %>
-						,
-					<%} else if ( i / 12 == 3) { %>
-						<%= tempList.get(i).get("amount") %>
-						,
-					<%} else if ( i / 12 == 4) { %>
-						<%= tempList.get(i).get("amount") %>
-					<%} %>
-						<%}%>
-					],
-					[
-						<%if (i % 12 == 2 ) { %>
-						<%if(i / 12 == 0) { %>
-						<%= tempList.get(i).get("amount") %>
-						,
-					<%} else if ( i / 12 == 1 ) {%>
-						<%= tempList.get(i).get("amount") %>
-						,
-					<%} else if ( i/ 12 == 2) {%>
-						<%= tempList.get(i).get("amount") %>
-						,
-					<%} else if ( i / 12 == 3) { %>
-						<%= tempList.get(i).get("amount") %>
-						,
-					<%} else if ( i / 12 == 4) { %>
-						<%= tempList.get(i).get("amount") %>
-					<%} %>
-						<%}%>
-					],
-					[
-						<%if (i % 12 == 3 ) { %>
-						<%if(i / 12 == 0) { %>
-						<%= tempList.get(i).get("amount") %>
-						,
-					<%} else if ( i / 12 == 1 ) {%>
-						<%= tempList.get(i).get("amount") %>
-						,
-					<%} else if ( i/ 12 == 2) {%>
-						<%= tempList.get(i).get("amount") %>
-						,
-					<%} else if ( i / 12 == 3) { %>
-						<%= tempList.get(i).get("amount") %>
-						,
-					<%} else if ( i / 12 == 4) { %>
-						<%= tempList.get(i).get("amount") %>
-					<%} %>
-						<%}%>
-					],
-					[
-						<%if (i % 12 == 4 ) { %>
-						<%if(i / 12 == 0) { %>
-						<%= tempList.get(i).get("amount") %>
-						,
-					<%} else if ( i / 12 == 1 ) {%>
-						<%= tempList.get(i).get("amount") %>
-						,
-					<%} else if ( i/ 12 == 2) {%>
-						<%= tempList.get(i).get("amount") %>
-						,
-					<%} else if ( i / 12 == 3) { %>
-						<%= tempList.get(i).get("amount") %>
-						,
-					<%} else if ( i / 12 == 4) { %>
-						<%= tempList.get(i).get("amount") %>
-					<%} %>
-						<%}%>
-					],
-					[
-						<%if (i % 12 == 5 ) { %>
-						<%if(i / 12 == 0) { %>
-						<%= tempList.get(i).get("amount") %>
-						,
-					<%} else if ( i / 12 == 1 ) {%>
-						<%= tempList.get(i).get("amount") %>
-						,
-					<%} else if ( i/ 12 == 2) {%>
-						<%= tempList.get(i).get("amount") %>
-						,
-					<%} else if ( i / 12 == 3) { %>
-						<%= tempList.get(i).get("amount") %>
-						,
-					<%} else if ( i / 12 == 4) { %>
-						<%= tempList.get(i).get("amount") %>
-					<%} %>
-						<%}%>
-					],
-					[
-						<%if (i % 12 == 6 ) { %>
-						<%if(i / 12 == 0) { %>
-						<%= tempList.get(i).get("amount") %>
-						,
-					<%} else if ( i / 12 == 1 ) {%>
-						<%= tempList.get(i).get("amount") %>
-						,
-					<%} else if ( i/ 12 == 2) {%>
-						<%= tempList.get(i).get("amount") %>
-						,
-					<%} else if ( i / 12 == 3) { %>
-						<%= tempList.get(i).get("amount") %>
-						,
-					<%} else if ( i / 12 == 4) { %>
-						<%= tempList.get(i).get("amount") %>
-					<%} %>
-						<%}%>
-					],
-					[
-						<%if (i % 12 == 7 ) { %>
-						<%if(i / 12 == 0) { %>
-						<%= tempList.get(i).get("amount") %>
-						,
-					<%} else if ( i / 12 == 1 ) {%>
-						<%= tempList.get(i).get("amount") %>
-						,
-					<%} else if ( i/ 12 == 2) {%>
-						<%= tempList.get(i).get("amount") %>
-						,
-					<%} else if ( i / 12 == 3) { %>
-						<%= tempList.get(i).get("amount") %>
-						,
-					<%} else if ( i / 12 == 4) { %>
-						<%= tempList.get(i).get("amount") %>
-					<%} %>
-						<%}%>
-					],
-					[
-						<%if (i % 12 == 8 ) { %>
-						<%if(i / 12 == 0) { %>
-						<%= tempList.get(i).get("amount") %>
-						,
-					<%} else if ( i / 12 == 1 ) {%>
-						<%= tempList.get(i).get("amount") %>
-						,
-					<%} else if ( i/ 12 == 2) {%>
-						<%= tempList.get(i).get("amount") %>
-						,
-					<%} else if ( i / 12 == 3) { %>
-						<%= tempList.get(i).get("amount") %>
-						,
-					<%} else if ( i / 12 == 4) { %>
-						<%= tempList.get(i).get("amount") %>
-					<%} %>
-						<%}%>
-					],
-					[
-						<%if (i % 12 == 9 ) { %>
-						<%if(i / 12 == 0) { %>
-						<%= tempList.get(i).get("amount") %>
-						,
-					<%} else if ( i / 12 == 1 ) {%>
-						<%= tempList.get(i).get("amount") %>
-						,
-					<%} else if ( i/ 12 == 2) {%>
-						<%= tempList.get(i).get("amount") %>
-						,
-					<%} else if ( i / 12 == 3) { %>
-						<%= tempList.get(i).get("amount") %>
-						,
-					<%} else if ( i / 12 == 4) { %>
-						<%= tempList.get(i).get("amount") %>
-					<%} %>
-						<%}%>
-					],
-					[
-						<%if (i % 12 == 10 ) { %>
-						<%if(i / 12 == 0) { %>
-						<%= tempList.get(i).get("amount") %>
-						,
-					<%} else if ( i / 12 == 1 ) {%>
-						<%= tempList.get(i).get("amount") %>
-						,
-					<%} else if ( i/ 12 == 2) {%>
-						<%= tempList.get(i).get("amount") %>
-						,
-					<%} else if ( i / 12 == 3) { %>
-						<%= tempList.get(i).get("amount") %>
-						,
-					<%} else if ( i / 12 == 4) { %>
-						<%= tempList.get(i).get("amount") %>
-					<%} %>
-						<%}%>
-					],
-					[
-						<%if (i % 12 == 11 ) { %>
-						<%if(i / 12 == 0) { %>
-						<%= tempList.get(i).get("amount") %>
-						,
-					<%} else if ( i / 12 == 1 ) {%>
-						<%= tempList.get(i).get("amount") %>
-						,
-					<%} else if ( i/ 12 == 2) {%>
-						<%= tempList.get(i).get("amount") %>
-						,
-					<%} else if ( i / 12 == 3) { %>
-						<%= tempList.get(i).get("amount") %>
-						,
-					<%} else if ( i / 12 == 4) { %>
-						<%= tempList.get(i).get("amount") %>
-					<%} %>
-						<%}%>
+					<%}%>
 					]
-				
-				<%} %>
-				
+					<%if(i != result.length -1) {%>
+						,
+					<%}%>
+					
+				<%}%>
 				
 				//[5,7,2,2,4], [2,5,7], [7,2,3], [6,1,5], [5,3,8], [8,3,1], [6,3,9], [6,2,6], [8,2,4],[5,7,2,2,4],[5,7,2,2,4],[5,7,2,2,4]
 			],
@@ -584,14 +372,14 @@
       
       
     </div>
-    <div id="menu2" class="tab-pane fade">
+   <!--  <div id="menu2" class="tab-pane fade">
       <h3>결제 / 거래 통계</h3>
       <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.</p>
     </div>
     <div id="menu3" class="tab-pane fade">
       <h3>Menu 3</h3>
       <p>Eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
-    </div>
+    </div> -->
   </div>
 </div>
 

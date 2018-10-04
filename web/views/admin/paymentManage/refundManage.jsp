@@ -110,14 +110,20 @@
 											String tempEndDate = todayList.get(i).get("contract_end").substring(0,todayList.get(i).get("contract_end").indexOf(" "));
 											String tempRequestDate = todayList.get(i).get("pay_date").substring(0,todayList.get(i).get("contract_end").indexOf(" "));
 											
+											System.out.println(tempStartDate + " / 1요청일");
+											System.out.println(tempEndDate + " / 1시작일");
+											System.out.println(tempRequestDate + " / 1종료일");
+											
 											Date requestDate = format.parse(tempRequestDate);
 											Date endDate = format.parse(tempEndDate);
 											Date startDate = format.parse(tempStartDate);
-											
+											System.out.println(requestDate + " / 요청일");
+											System.out.println(startDate + " / 시작일");
+											System.out.println(endDate + " / 종료일");
 											long checkStartDate = (requestDate.getTime() - startDate.getTime())/ (24 * 60 * 60 * 1000);
 											long remainDate = (endDate.getTime()-requestDate.getTime()) / (24 * 60 * 60 * 1000);
 											
-											
+											System.out.println(remainDate + " /");
 										%>
 									계약 포인트 : <span style="color:green"><%=todayList.get(i).get("pay_amount") %></span><br>
 									<%if(checkStartDate < 0) {%>
@@ -140,7 +146,7 @@
 											<div style="width:70px;background:orange; color:white">환불대기</div>
 											<div style="margin-top:5px">
 												<button style="background:green; color:white">환불처리</button>
-												<button style="background:darkgray; color:white" onclick="refusal(<%=totalList.get(i).get("pay_no")%>)">환불거절</button>
+												<button style="background:darkgray; color:white" onclick="refusal(<%=todayList.get(i).get("pay_no")%>)">환불거절</button>
 											</div>
 										<%} else { %>
 											<div style="width:70px;background:red; color:white">환불</div>
