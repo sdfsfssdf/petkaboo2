@@ -33,7 +33,7 @@ public class StatisticsServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		ArrayList<HashMap<String,Object>> statisticInfo = new UserService().selectStatisticInfo();
+		HashMap<String,Object> statisticInfo = new UserService().selectStatisticInfo();
 		
 		String page = "";
 		if (statisticInfo != null) {
