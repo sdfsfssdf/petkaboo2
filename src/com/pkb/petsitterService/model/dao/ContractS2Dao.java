@@ -547,6 +547,27 @@ public class ContractS2Dao {
 		return result;
 	}
 
+	public int increaseMoney(Connection con, int user_no, int step2) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String query = prop.getProperty("increaseMoney");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, step2);
+			pstmt.setInt(2, user_no);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}	
+		
+		return result;		
+	}
+
 	
 
 
