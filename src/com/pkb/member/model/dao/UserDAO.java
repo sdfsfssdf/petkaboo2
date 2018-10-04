@@ -2018,12 +2018,12 @@ public class UserDAO {
 			cnt = 0;
 			while(rs.next()){
 				info = new HashMap<String,Object>();
-				info.put("count", 1);
+				info.put("count", rs.getInt(1));
 				info.put("type","M");
-				info.put("date", 3);
+				info.put("date", rs.getString(2));
 				cnt ++;
 				totalInfo.add(info);
-				
+				System.out.println(totalInfo);
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
