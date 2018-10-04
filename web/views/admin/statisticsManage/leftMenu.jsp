@@ -34,13 +34,13 @@
       <div class="myMenu_left">
          <br>
          <br>
-            <div class="text">전체현황</div>
+           <!--  <div class="text">전체현황</div>
             <br>
             <div class="text">회원현황</div>
             <br>
             <div class="text">거래현황</div>
             <br>
-            <div class="text">결제현황</div>
+            <div class="text">결제현황</div> -->
       </div>
    </div>
 </body>
