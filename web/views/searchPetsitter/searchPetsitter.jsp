@@ -258,7 +258,7 @@ button:hover{
 								profileImage = "/images/profileImagesUpload/profileBasicImage.png";
 							}
 						%>
-						<img height="200px;" src="<%=request.getContextPath()%><%= profileImage %>">
+						<img style="height:200px;width:300px" src="<%=request.getContextPath()%><%= profileImage %>">
 						</div>
 						</td>
 					</tr>

@@ -281,7 +281,7 @@
 				[0, 83,5,1] */
 				
 				],
-			colorset: ['#DC143C','#2EB400','#FE9A2E','#A4A4A4'],
+			colorset: ['#DC143C','#2EB400','#FE9A2E','#0040FF'],
 			fields:['탈퇴', '가입','제재','휴면']
 		},
 		'chartDiv' : 'Nwagon',
@@ -302,7 +302,7 @@
 		'dataset':{
 			title: 'Web accessibility status',
 			values:[<%=mMap.get("withdrawal")%>, <%=mMap.get("nomal")%> , <%=mMap.get("sanctions")%>, <%=mMap.get("rest")%>],
-			colorset: ['#DC143C','#2EB400','#FE9A2E','#A4A4A4'],
+			colorset: ['#DC143C','#2EB400','#FE9A2E','#0040FF'],
 			fields: ['탈퇴', '정상','제재','휴면'],
 		},
 		'donut_width' : 35,
