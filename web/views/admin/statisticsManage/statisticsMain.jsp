@@ -6,6 +6,7 @@
 	HashMap<String,Object> totalMap = (HashMap<String,Object>)request.getAttribute("info");
 	ArrayList<HashMap<String,Object>> totalInfo = (ArrayList<HashMap<String,Object>>)totalMap.get("totalInfo");
 	HashMap<String,Object> mMap = (HashMap<String,Object>)totalMap.get("mMap");
+	ArrayList<HashMap<String,Object>> plist = (ArrayList<HashMap<String,Object>>)totalMap.get("plist");
 	Date today = new Date();
 	Calendar[] cal = new Calendar[6];
 	String[] dates = new String[7]; 
@@ -38,8 +39,6 @@
 			middleInfo.add(temp);
 			System.out.print(temp + " / ");
 		}
-		System.out.println("");
-		System.out.println("-----------------------------------");
 		transInfo.add(middleInfo);
 	}
 	
@@ -131,6 +130,45 @@
 	}
 	System.out.println(transInfo);
 	
+	
+	// 수입 통계에 필요한 데이터 초기화 
+	HashMap<String,Object> tempMap = null;
+	ArrayList<HashMap<String,Object>> tempList = new ArrayList<HashMap<String,Object>>();
+	for(int i = 0; i < 5 ; i ++){
+		for(int j = 0 ; j < 12 ; j ++){
+			tempMap = new HashMap<String,Object>();
+			tempMap.put("amount", 0);
+			if(i == 0) {
+				tempMap.put("method", "A");
+			} else if ( i == 1){
+				tempMap.put("method", "U");
+			} else if ( i ==2) {
+				tempMap.put("method", "R");
+			} else if ( i == 3) {
+				tempMap.put("method", "K");
+			} else if ( i == 4) {
+				tempMap.put("method", "C");
+			}
+			if(j < 9){
+				tempMap.put("date", "0"+(j+1));
+			} else {
+				tempMap.put("date", (j+1));
+			}
+			tempList.add(tempMap);
+		}
+	}
+	
+	// 통계에 필요한 DB 값과 임시데이터 동기화
+	for(int i = 0 ; i < tempList.size(); i ++) {
+		for(int j = 0 ; j < plist.size(); j ++) {
+			if(tempList.get(i).get("date").equals(plist.get(j).get("date"))
+					&& tempList.get(i).get("method").equals(plist.get(j).get("method"))){
+				tempList.get(i).put("amount", plist.get(j).get("amount"));
+			}
+		}
+	}
+	
+	System.out.println(tempList);
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -144,7 +182,7 @@
 	.outer{
 		float:left;
 		width:1000px;
-		height:1000px;
+		height:600px;
 		color:black;
 		margin-left:20px;
 		margin-right:auto;
@@ -168,7 +206,7 @@
 	}
 	
 	.leftWrapArea{
-      height:1250px !important;      
+      height:600px !important;      
 }
 </style>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -180,10 +218,23 @@
 	<div class="outer">
 		<div class="first-row">
 			<div class="table1">
-			<h3>회원 통계</h3>
-			<p>회원의 가입/탈퇴/제재/휴면의 추이를 확인할 수 있습니다.</p>
-			<hr>
-<div id="Nwagon" style="display:inline-block">
+			<h3>펫카부 통계</h3>
+			<p>회원관련 통계, 수입통계, 거래통게를 확인할 수 있습니다.</p>
+		
+<br>
+<br>
+<div class="container">
+  <ul class="nav nav-tabs">
+    <li class="active"><a data-toggle="tab" href="#home">회원통계</a></li>
+    <li><a data-toggle="tab" href="#menu1">Menu 1</a></li>
+    <li><a data-toggle="tab" href="#menu2">Menu 2</a></li>
+    <li><a data-toggle="tab" href="#menu3">Menu 3</a></li>
+  </ul>
+
+  <div class="tab-content">
+    <div id="home" class="tab-pane fade in active">
+      <div id="Nwagon" style="display:inline-block">
+      <br><br>
 <label>회원 상태 추이</label></div>
 <script>
 	var options = {
@@ -262,30 +313,279 @@
 	};
 	Nwagon.chart(options);
 </script>
-
-
-<div class="container">
-  <h2>Dynamic Tabs</h2>
-  <p>To make the tabs toggleable, add the data-toggle="tab" attribute to each link. Then add a .tab-pane class with a unique ID for every tab and wrap them inside a div element with class .tab-content.</p>
-
-  <ul class="nav nav-tabs">
-    <li class="active"><a data-toggle="tab" href="#home">Home</a></li>
-    <li><a data-toggle="tab" href="#menu1">Menu 1</a></li>
-    <li><a data-toggle="tab" href="#menu2">Menu 2</a></li>
-    <li><a data-toggle="tab" href="#menu3">Menu 3</a></li>
-  </ul>
-
-  <div class="tab-content">
-    <div id="home" class="tab-pane fade in active">
-      <h3>HOME</h3>
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
     </div>
     <div id="menu1" class="tab-pane fade">
-      <h3>Menu 1</h3>
-      <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+      <label>올해의 결제 현황</label>
+      
+      
+      
+     <div id="Nwagon3"></div>
+<script>
+	var options = {
+		'legend': {
+			names: ['01','02','03','04','05','06','07','08','09' , '10','11','12'],
+			hrefs: [
+
+			]
+		},
+		'dataset': {
+			title: 'Playing time per day',
+			values: [
+				
+				<% for(int i = 0 ; i < tempList.size(); i ++ ) {%>
+					[
+						<%if (i % 12 == 0 ) { %>
+							<%if(i / 12 == 0) { %>
+								<%= tempList.get(i).get("amount") %>
+								,
+							<%} else if ( i / 12 == 1 ) {%>
+								<%= tempList.get(i).get("amount") %>
+								,
+							<%} else if ( i/ 12 == 2) {%>
+								<%= tempList.get(i).get("amount") %>
+								,
+							<%} else if ( i / 12 == 3) { %>
+								<%= tempList.get(i).get("amount") %>
+								,
+							<%} else if ( i / 12 == 4) { %>
+								<%= tempList.get(i).get("amount") %>
+							<%} %>
+						<%}%>
+					],
+					
+					[
+						<%if (i % 12 == 1 ) { %>
+						<%if(i / 12 == 0) { %>
+						<%= tempList.get(i).get("amount") %>
+						,
+					<%} else if ( i / 12 == 1 ) {%>
+						<%= tempList.get(i).get("amount") %>
+						,
+					<%} else if ( i/ 12 == 2) {%>
+						<%= tempList.get(i).get("amount") %>
+						,
+					<%} else if ( i / 12 == 3) { %>
+						<%= tempList.get(i).get("amount") %>
+						,
+					<%} else if ( i / 12 == 4) { %>
+						<%= tempList.get(i).get("amount") %>
+					<%} %>
+						<%}%>
+					],
+					[
+						<%if (i % 12 == 2 ) { %>
+						<%if(i / 12 == 0) { %>
+						<%= tempList.get(i).get("amount") %>
+						,
+					<%} else if ( i / 12 == 1 ) {%>
+						<%= tempList.get(i).get("amount") %>
+						,
+					<%} else if ( i/ 12 == 2) {%>
+						<%= tempList.get(i).get("amount") %>
+						,
+					<%} else if ( i / 12 == 3) { %>
+						<%= tempList.get(i).get("amount") %>
+						,
+					<%} else if ( i / 12 == 4) { %>
+						<%= tempList.get(i).get("amount") %>
+					<%} %>
+						<%}%>
+					],
+					[
+						<%if (i % 12 == 3 ) { %>
+						<%if(i / 12 == 0) { %>
+						<%= tempList.get(i).get("amount") %>
+						,
+					<%} else if ( i / 12 == 1 ) {%>
+						<%= tempList.get(i).get("amount") %>
+						,
+					<%} else if ( i/ 12 == 2) {%>
+						<%= tempList.get(i).get("amount") %>
+						,
+					<%} else if ( i / 12 == 3) { %>
+						<%= tempList.get(i).get("amount") %>
+						,
+					<%} else if ( i / 12 == 4) { %>
+						<%= tempList.get(i).get("amount") %>
+					<%} %>
+						<%}%>
+					],
+					[
+						<%if (i % 12 == 4 ) { %>
+						<%if(i / 12 == 0) { %>
+						<%= tempList.get(i).get("amount") %>
+						,
+					<%} else if ( i / 12 == 1 ) {%>
+						<%= tempList.get(i).get("amount") %>
+						,
+					<%} else if ( i/ 12 == 2) {%>
+						<%= tempList.get(i).get("amount") %>
+						,
+					<%} else if ( i / 12 == 3) { %>
+						<%= tempList.get(i).get("amount") %>
+						,
+					<%} else if ( i / 12 == 4) { %>
+						<%= tempList.get(i).get("amount") %>
+					<%} %>
+						<%}%>
+					],
+					[
+						<%if (i % 12 == 5 ) { %>
+						<%if(i / 12 == 0) { %>
+						<%= tempList.get(i).get("amount") %>
+						,
+					<%} else if ( i / 12 == 1 ) {%>
+						<%= tempList.get(i).get("amount") %>
+						,
+					<%} else if ( i/ 12 == 2) {%>
+						<%= tempList.get(i).get("amount") %>
+						,
+					<%} else if ( i / 12 == 3) { %>
+						<%= tempList.get(i).get("amount") %>
+						,
+					<%} else if ( i / 12 == 4) { %>
+						<%= tempList.get(i).get("amount") %>
+					<%} %>
+						<%}%>
+					],
+					[
+						<%if (i % 12 == 6 ) { %>
+						<%if(i / 12 == 0) { %>
+						<%= tempList.get(i).get("amount") %>
+						,
+					<%} else if ( i / 12 == 1 ) {%>
+						<%= tempList.get(i).get("amount") %>
+						,
+					<%} else if ( i/ 12 == 2) {%>
+						<%= tempList.get(i).get("amount") %>
+						,
+					<%} else if ( i / 12 == 3) { %>
+						<%= tempList.get(i).get("amount") %>
+						,
+					<%} else if ( i / 12 == 4) { %>
+						<%= tempList.get(i).get("amount") %>
+					<%} %>
+						<%}%>
+					],
+					[
+						<%if (i % 12 == 7 ) { %>
+						<%if(i / 12 == 0) { %>
+						<%= tempList.get(i).get("amount") %>
+						,
+					<%} else if ( i / 12 == 1 ) {%>
+						<%= tempList.get(i).get("amount") %>
+						,
+					<%} else if ( i/ 12 == 2) {%>
+						<%= tempList.get(i).get("amount") %>
+						,
+					<%} else if ( i / 12 == 3) { %>
+						<%= tempList.get(i).get("amount") %>
+						,
+					<%} else if ( i / 12 == 4) { %>
+						<%= tempList.get(i).get("amount") %>
+					<%} %>
+						<%}%>
+					],
+					[
+						<%if (i % 12 == 8 ) { %>
+						<%if(i / 12 == 0) { %>
+						<%= tempList.get(i).get("amount") %>
+						,
+					<%} else if ( i / 12 == 1 ) {%>
+						<%= tempList.get(i).get("amount") %>
+						,
+					<%} else if ( i/ 12 == 2) {%>
+						<%= tempList.get(i).get("amount") %>
+						,
+					<%} else if ( i / 12 == 3) { %>
+						<%= tempList.get(i).get("amount") %>
+						,
+					<%} else if ( i / 12 == 4) { %>
+						<%= tempList.get(i).get("amount") %>
+					<%} %>
+						<%}%>
+					],
+					[
+						<%if (i % 12 == 9 ) { %>
+						<%if(i / 12 == 0) { %>
+						<%= tempList.get(i).get("amount") %>
+						,
+					<%} else if ( i / 12 == 1 ) {%>
+						<%= tempList.get(i).get("amount") %>
+						,
+					<%} else if ( i/ 12 == 2) {%>
+						<%= tempList.get(i).get("amount") %>
+						,
+					<%} else if ( i / 12 == 3) { %>
+						<%= tempList.get(i).get("amount") %>
+						,
+					<%} else if ( i / 12 == 4) { %>
+						<%= tempList.get(i).get("amount") %>
+					<%} %>
+						<%}%>
+					],
+					[
+						<%if (i % 12 == 10 ) { %>
+						<%if(i / 12 == 0) { %>
+						<%= tempList.get(i).get("amount") %>
+						,
+					<%} else if ( i / 12 == 1 ) {%>
+						<%= tempList.get(i).get("amount") %>
+						,
+					<%} else if ( i/ 12 == 2) {%>
+						<%= tempList.get(i).get("amount") %>
+						,
+					<%} else if ( i / 12 == 3) { %>
+						<%= tempList.get(i).get("amount") %>
+						,
+					<%} else if ( i / 12 == 4) { %>
+						<%= tempList.get(i).get("amount") %>
+					<%} %>
+						<%}%>
+					],
+					[
+						<%if (i % 12 == 11 ) { %>
+						<%if(i / 12 == 0) { %>
+						<%= tempList.get(i).get("amount") %>
+						,
+					<%} else if ( i / 12 == 1 ) {%>
+						<%= tempList.get(i).get("amount") %>
+						,
+					<%} else if ( i/ 12 == 2) {%>
+						<%= tempList.get(i).get("amount") %>
+						,
+					<%} else if ( i / 12 == 3) { %>
+						<%= tempList.get(i).get("amount") %>
+						,
+					<%} else if ( i / 12 == 4) { %>
+						<%= tempList.get(i).get("amount") %>
+					<%} %>
+						<%}%>
+					]
+				
+				<%} %>
+				
+				
+				//[5,7,2,2,4], [2,5,7], [7,2,3], [6,1,5], [5,3,8], [8,3,1], [6,3,9], [6,2,6], [8,2,4],[5,7,2,2,4],[5,7,2,2,4],[5,7,2,2,4]
+			],
+			colorset: ['#30a1ce', '#58FA82', "#DC143C","#FAAC58","#5882FA"],
+			fields: ['총 거래 금액', '사용 금액', '환불 금액','출금 금액','충전 금액']
+		},
+		'chartDiv': 'Nwagon3',
+		'chartType': 'multi_column',
+		'chartSize': { width: 700, height: 300 },
+		'maxValue': 10,
+		'increment': 1
+	};
+	Nwagon.chart(options);
+</script>
+      
+      
+      
+      
     </div>
     <div id="menu2" class="tab-pane fade">
-      <h3>Menu 2</h3>
+      <h3>결제 / 거래 통계</h3>
       <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.</p>
     </div>
     <div id="menu3" class="tab-pane fade">
@@ -298,5 +598,6 @@
 
 
 </div></div></div>
+<%@include file="../../common/footer.jsp" %>
 </body>
 </html>

@@ -2065,4 +2065,34 @@ public class UserDAO {
 		return hmap;
 	}
 
+	public ArrayList<HashMap<String,Object>> paymentStatics(Connection con) {
+		Statement stmt = null;
+		ResultSet rs = null;
+		ArrayList<HashMap<String,Object>> totalList = null;
+		HashMap<String,Object> pmap = null;
+		String query = prop.getProperty("paymentStatistc");
+		
+		try {
+			stmt = con.createStatement();
+			rs = stmt.executeQuery(query);
+			totalList = new ArrayList<HashMap<String,Object>>();
+			
+			while(rs.next()){
+				pmap = new HashMap<String,Object>();
+				pmap.put("amount", rs.getInt(1));
+				pmap.put("date", rs.getString(2));
+				pmap.put("method", rs.getString(3));
+				
+				totalList.add(pmap);
+			}
+			
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return totalList;
+	}
+
 }

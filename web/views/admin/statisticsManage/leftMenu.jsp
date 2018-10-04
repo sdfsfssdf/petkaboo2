@@ -9,7 +9,7 @@
    .leftWrapArea{
       display: inline-block;
       width:210px;
-      height:720px;
+      height:300px;
       float:left;
       background:lightgray;
    }
