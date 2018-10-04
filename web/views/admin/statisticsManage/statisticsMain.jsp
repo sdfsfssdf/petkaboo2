@@ -3,7 +3,9 @@
     pageEncoding="UTF-8" import="java.util.*, com.pkb.board.model.vo.*"%>
 
 <%
-	ArrayList<HashMap<String,Object>> totalInfo = (ArrayList<HashMap<String,Object>>)request.getAttribute("info");
+	HashMap<String,Object> totalMap = (HashMap<String,Object>)request.getAttribute("info");
+	ArrayList<HashMap<String,Object>> totalInfo = (ArrayList<HashMap<String,Object>>)totalMap.get("totalInfo");
+	HashMap<String,Object> mMap = (HashMap<String,Object>)totalMap.get("mMap");
 	Date today = new Date();
 	Calendar[] cal = new Calendar[6];
 	String[] dates = new String[7]; 
@@ -151,7 +153,7 @@
 	}
 	.table1{
 		float:left;
-		width:1000px;
+		width:1200px;
 		margin-top:20px;
 		marign-left:auto;
 		margin-right:auto;
@@ -175,8 +177,11 @@
 	<div class="outer">
 		<div class="first-row">
 			<div class="table1">
-			<h4>회원 통계</h4>
-<div id="Nwagon"></div>
+			<h3>회원 통계</h3>
+			<p>회원의 가입/탈퇴/제재/휴면의 추이를 확인할 수 있습니다.</p>
+			<hr>
+<div id="Nwagon" style="display:inline-block">
+<label>회원 상태 추이</label></div>
 <script>
 	var options = {
 		'legend':{
@@ -228,15 +233,36 @@
 		'chartDiv' : 'Nwagon',
 		'chartType' : 'jira',
 		'chartSize' : {width:700, height:300},
-		'maxValue' : 10,
-		'increment' : 2
+		'maxValue' : 50,
+		'increment' : 5
 	};
 	Nwagon.chart(options);
 </script>
 
-<%for(int i = 0; i < dates.length; i ++ ) { %>
-<%=dates[i] %><br>
-<%} %>
+
+
+<div id="Nwagon2" style="display:inline-block">
+<label>전체 회원 현황</label></div>
+<script>
+	var options = {
+		'dataset':{
+			title: 'Web accessibility status',
+			values:[<%=mMap.get("withdrawal")%>, <%=mMap.get("nomal")%> , <%=mMap.get("sanctions")%>, <%=mMap.get("rest")%>],
+			colorset: ['#DC143C','#2EB400','#FE9A2E','#A4A4A4'],
+			fields: ['탈퇴', '정상','제재','휴면'],
+		},
+		'donut_width' : 35,
+		'core_circle_radius':50,
+		'chartDiv': 'Nwagon2',
+		'chartType': 'donut',
+		'chartSize': {width:300, height:300}
+	};
+	Nwagon.chart(options);
+</script>
+
+
+
+
 </div></div></div>
 </body>
 </html>

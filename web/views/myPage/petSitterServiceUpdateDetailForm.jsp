@@ -197,31 +197,11 @@ th, tr, td{
 						<label>서비스 종류</label>
 						</td>
 						<td>
+						<input type="hidden" name="contract_days" id="contract_days" value="everyday">	
 						<input type="radio" name="contract_type" value="v" id="v">
 						<label for="v">방문</label>
 						<input type="radio" name="contract_type" value="c" id="c">
 						<label for="c">위탁</label>
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<label>예약가능 요일 </label>
-						</td>
-						<td>
-							<input type="checkbox" name="contract_days" id="mon" value="mon">
-							<label for="mon">월</label>
-							<input type="checkbox" name="contract_days" id="tues" value="tues">
-							<label for="tues">화</label>
-							<input type="checkbox" name="contract_days" id="wed" value="wed">
-							<label for="wed">수</label>
-							<input type="checkbox" name="contract_days" id="thurs" value="thurs">
-							<label for="thurs">목</label>
-							<input type="checkbox" name="day" id="fri" value="fri">
-							<label for="fri">금</label>
-							<input type="checkbox" name="contract_days" id="sat" value="sat">
-							<label for="sat">토</label>
-							<input type="checkbox" name="contract_days" id="sun" value="sun">
-							<label for="sun">일</label>
 						</td>
 					</tr>
 					<tr>

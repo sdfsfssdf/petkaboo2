@@ -701,21 +701,27 @@ public class UserService {
 		return totalInfo;
 	}
 
-	public ArrayList<HashMap<String, Object>> selectStatisticInfo() {
+	public HashMap<String,Object> selectStatisticInfo() {
 		// TODO Auto-generated method stub
 		Connection con = getConnection();
+		HashMap<String,Object> totalMap = null;
 		ArrayList<HashMap<String, Object>> totalInfo = null;
 
 		totalInfo = new UserDAO().selectStatisticInfo(con);
 		if (totalInfo != null) {
 			int cnt = new UserDAO().selectStatisticInfoByJoinMember(con, totalInfo);
-			if (cnt == 0) {
-				totalInfo = null;
+			if (cnt != 0) {
+				HashMap<String,Object> mMap = new UserDAO().totalMemberCounts(con);
+				if(mMap != null){
+					totalMap = new HashMap<String,Object>();
+					totalMap.put("totalInfo", totalInfo);
+					totalMap.put("mMap", mMap);
+				}
 			}
 		}
 		close(con);
 		
-		return totalInfo;
+		return totalMap;
 	}
 
 }
