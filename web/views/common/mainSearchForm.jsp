@@ -8,7 +8,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <style>
 	.searchbody{
-		margin-top:10px;
+		margin-top:30px;
 		background-color:#89c5f5;
 		height:400px;
 		padding:10%;

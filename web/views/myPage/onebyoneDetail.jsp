@@ -60,7 +60,6 @@
 </head>
 <body>
 
-	<h1 align="center" id="logo">로고</h1>
 	
 	<%@ include file="../common/menubar.jsp"%>
 	
@@ -113,17 +112,18 @@
 			<br>
 			<div class="content">
 				<textarea class="form-control" rows="20" cols="30" id="comment"
-					value="" readOnly><%=b.getArticle_contents()%></textarea>
+					value="" style="background-color:white;"readOnly><%=b.getArticle_contents()%></textarea>
 			</div>
 			<br>
 			<div class="btns" align="center">
-				<button type="submit" class="btn btn-success write">수정하기</button>
+				<button type="submit" class="btn btn-success write" style="background:#9bcdf7; color:white; border:1px solid #9bcdf7;">수정하기</button>
 				&nbsp;
 				<button type="button" class="btn btn-danger cancel"
-					onclick="location.href='<%=request.getContextPath()%>/selectOnebyOneList.bo'">취소하기</button>
+					onclick="location.href='<%=request.getContextPath()%>/selectOnebyOneList.bo'" style="background:white; color:#9bcdf7; border:1px solid #9bcdf7;">취소하기</button>
 			</div>
 		</form>
 	</div>
+		<%@ include file="/views/common/footer.jsp" %>
 	<%
 		} else {
 	%>

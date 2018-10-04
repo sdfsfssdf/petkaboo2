@@ -11,7 +11,7 @@
 		background-color:#89c5f5;
 		height:300px;
 		padding:1%;
-		margin-top:10px;
+		margin-top:30px;
 		margin-bottom:50px;
 	}
 	.center-searchArea{

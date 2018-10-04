@@ -127,14 +127,14 @@ a:hover, a:active, a:focus {
 }
 
 
-#footer {
+/* #footer {
 	float: left;
 	width: 100%;
 	height: 250px;
 	margin: 100px 0 30px 0;
 	background: #e1e1e1
 }
-
+ */
 .row {
 	width: 100%;
 	height: 300px; 
@@ -146,15 +146,16 @@ a:hover, a:active, a:focus {
 }
 
 .element {
-	width: 45%;
+	width: 44.9%;
 	height: 280px;
 	margin: 0 15px 0px 0px;
 	padding: 15px;
 	/* display: inline-block; */
 	float:left;
 /* 	border: 1px solid black; */
-	background-color: #eee;
+
 	margin-left:30px;
+	font-size:13px;
 }
 
 .circleimg {
@@ -180,44 +181,30 @@ a:hover, a:active, a:focus {
 	width: 15%;
 	height: 30px;
 	float: left;
-	background-color: #eee;
+
 	margin-top: 170px;
 }
 
-#modifyprofile {
-	display: inline-block;
-	text-align: center;
-	vertical-align: middle;
-	text-decoration: none;
-	font-size: 15px;
-	color: white;
-	border: none;
-	border-radius: 0.5em;
-	width: 80px;
-	height: 30px;
-	background-color: #cfb7af;
-	font-family: 'Jua', sans-serif;
-}
 
 .info {
 	width: 80%;
 	height: 200px;
 	float: left;
-	background-color: #eee;
+
 }
 
 .mname, .memail, .maddress {
 	width: 100%;
 	display: inline-block;
 	text-align: left;
-	background-color: #eee;
+	
 	float:left;
 }
 
 .modipass {
 	width: 100%;
 	text-align: left;
-	background-color: #eee;
+	
 	margin-top: 50px;
 }
 .mlicense, .midentify, .mphone {
@@ -225,7 +212,7 @@ a:hover, a:active, a:focus {
 	height:40px;
 	display: inline-block;
 	text-align: left;
-	background-color: #eee;
+	
 
 
 }
@@ -234,14 +221,30 @@ a:hover, a:active, a:focus {
 	height:150px;
 	width:130px;
 }
+
+#modifyprofile{
+display: inline-block;
+    padding: 6px 12px;
+    margin-bottom: 0;
+    width:80px;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.42857143;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    touch-action: manipulation;
+    cursor: pointer;
+user-select: none;
+border: 1px solid transparent;
+    border-radius: 4px;
+}
 </style>
 </head>
 <body>
 
 	<div id="wrap">
-		<div id="header">
-			<h1 align="center">펫카부</h1>
-		</div>
+
 		<div id="container1">
 
 			<!-- 메뉴파일 -->
@@ -261,14 +264,13 @@ a:hover, a:active, a:focus {
 			<!-- 센터 컨텐츠 -->
 			<div class="content-center">
 
-				<br> <br>
+				<br> <br><br>
 				<!-- 마이페이지 타이틀부분 -->
-				<div class="title">
-					<h3 align="center"
-						style="font-weight: bold; font-family: 'Jua', sans-serif;">마이페이지</h3>
+		
+					
 					<hr
 						style="border: thin solid lightgray !important; display: inline-block !important; width: 100% !important;" />
-				</div>
+				
 				<br>
 				<!-- 개인정보 관리-->
 				&nbsp;&nbsp;&nbsp;&nbsp;<span
@@ -280,12 +282,12 @@ a:hover, a:active, a:focus {
 					<!-- 상단 -->
 					<div class="row">
 						<!-- 프로필 수정 -->
-						<div class="element">
+						<div class="element" style="background-color:white; border:1.5px dashed #9bcdf7;">
 							<p style="text-align: left; font-size: 17px; font-weight: bold;">프로필
 								수정</p>
 							<br>
 							<!-- 사진부분 -->
-							<div class=circleimg>
+							<div class=circleimg >
 								<%if(fileName != null) {%>
 								<Img class=profileImg style="width:180px;height:180px; border-radius:150px" src="<%=request.getContextPath()%>/images/profileImagesUpload/<%=fileName%>">
  								<%} else{ %>
@@ -293,48 +295,48 @@ a:hover, a:active, a:focus {
  								<%} %>
  							</div>
 							<!-- 닉네임 -->
-							<div class=nicknamespan>
+							<div class=nicknamespan style="background-color:white;">
 								<span style="text-align: left">닉네임 : </span>&nbsp;<input
 									type="text" name="nimknamespann" size="20" maxlength="30"
-									style="width: 100px; color: black; margin: 0; padding: 0; height: 35px; border-width: 0; background-color: #eee;"
+									style="width: 100px; color: black; margin: 0; padding: 0; height: 35px; border-width: 0;"
 									<% if(loginUser != null){%>
 									value="<%=loginUser.getNickname()%>"
 									<% } %> readonly>
 							</div>
 							<!-- 수정버튼 -->
-							<div class=modibutton>
-								<button id=modifyprofile onclick="moidfyProfile()">수정하기</button>
+							<div class=modibutton >
+								<button id=modifyprofile onclick="moidfyProfile()" style="background:#9bcdf7; color:white; border-style:#9bcdf7;">수정하기</button>
 							</div>
 						</div>
 						<!-- 개인정보수정 -->
-						<div class="element">
+						<div class="element" style="background-color:white; border:1.5px dashed #9bcdf7;">
 							<p style="text-align: left; font-size: 17px; font-weight: bold;">개인정보
 								수정</p>
 							<br>
 							<!-- 개인정보 표시부분 -->
 							<div class=info>
-								<div class=mname>
+								<div class=mname style="background-color:white;">
 									<span style="text-align: left">이름 : </span>&nbsp;<input
 										type="text" name="nimknamespann" size="15" maxlength="10"
-										style="width: 50px; color: black; margin: 0; padding: 0; height: 35px; border-width: 0; background-color: #eee;"
+										style="width: 50px; color: black; margin: 0; padding: 0; height: 35px; border-width: 0;"
 									
 										<% if(loginUser != null){%>
 											value="<%=loginUser.getUser_name()%>"
 										<% } %> readonly>
 								</div>
 			
-								<div class=memail>
+								<div class=memail style="background-color:white;">
 									<span style="text-align: left">이메일 : </span>&nbsp;<input
 										type="text" name="nimknamespann" size="20" maxlength="15"
-										style="width: 200px; color: black; margin: 0; padding: 0; height: 35px; border-width: 0; background-color: #eee;"
+										style="width: 200px; color: black; margin: 0; padding: 0; height: 35px; border-width: 0; "
 										<% if(loginUser != null){%>
 											value="<%=loginUser.getEmail()%>"
 										<% } %> readonly>
 								</div>
-								<div class=maddress>
+								<div class=maddress style="background-color:white;">
 									<span style="text-align: left">주소  </span>&nbsp;<input
 										type="text" name="nimknamespann" size="80" maxlength="100"
-										style="width: 400px; color: black; margin: 0; padding: 0; height: 35px; border-width: 0; background-color: #eee;"	
+										style="width: 400px; color: black; margin: 0; padding: 0; height: 35px; border-width: 0; "	
 								 		<% 
 								 			String[] fullAdd = null;
 											String address = null;
@@ -352,10 +354,10 @@ a:hover, a:active, a:focus {
 										>
 										
 								</div>
-								<div class=macc>
+								<div class=macc style="background-color:white;">
 									<span style="text-align: left">계좌  </span>&nbsp;<input
 										type="text" name="nimknamespann" size="80" maxlength="60"
-										style="width: 350px; color: black; margin: 0; padding: 0; height: 35px; border-width: 0; background-color: #eee;"	
+										style="width: 350px; color: black; margin: 0; padding: 0; height: 35px; border-width: 0;"	
 										<% 
 											String accNo = "";
 											String bankName = "";
@@ -375,7 +377,7 @@ a:hover, a:active, a:focus {
 							</div>
 							<!-- 수정버튼 -->
 							<div class=modibutton>
-								<button id=modifyprofile onclick="location.href='/pkb/views/myPage/modifyMemberInfo.jsp'">수정하기</button>
+								<button id=modifyprofile onclick="location.href='/pkb/views/myPage/modifyMemberInfo.jsp'"style="background:#9bcdf7; color:white; border-style:#9bcdf7;">수정하기</button>
 							</div>
 						</div>
 					</div>
@@ -384,7 +386,7 @@ a:hover, a:active, a:focus {
 					<div class="row">
 
 
-						<div class="element">
+						<div class="element" style="background-color:white; border:1.5px dashed #9bcdf7;">
 							<p style="text-align: left; font-size: 17px; font-weight: bold;">비밀번호
 								변경</p>
 
@@ -394,7 +396,7 @@ a:hover, a:active, a:focus {
 							</div>
 
 						</div>
-						<div class="element">
+						<div class="element" style="background-color:white; border:1.5px dashed #9bcdf7;">
 							<p style="text-align: left; font-size: 17px; font-weight: bold;">인증하기</p>
 							<br>
 						
@@ -402,21 +404,21 @@ a:hover, a:active, a:focus {
 								<div class=mlicense>
 									<a href="/pkb/views/myPage/licenseIdentify.jsp">자격증 인증하기</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input
 										type="text" name="license" size="80" maxlength="60"
-										style="width: 300px; color: black; margin: 0; padding: 0; height: 35px; border-width: 0; background-color: #eee;"
+										style="width: 300px; color: black; margin: 0; padding: 0; height: 35px; border-width: 0; "
 										value="미인증" readonly="">
 								</div>
 								<br>
 								<div class=midentify>
 									<a href="/pkb/views/myPage/nameIdentify.jsp">실명 인증하기</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input
 										type="text" name="identify" size="80" maxlength="60"
-										style="width: 300px; color: black; margin: 0; padding: 0; height: 35px; border-width: 0; background-color: #eee;"
+										style="width: 300px; color: black; margin: 0; padding: 0; height: 35px; border-width: 0;"
 										value="미인증" readonly="">
 								</div>
 								
 								<div class=mphone>
 									<a href="#">휴대폰 인증하기</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input
 										type="text" name="phone" size="80" maxlength="60"
-										style="width: 300px; color: black; margin: 0; padding: 0; height: 35px; border-width: 0; background-color: #eee;"
+										style="width: 300px; color: black; margin: 0; padding: 0; height: 35px; border-width: 0;"
 										value=<%if(loginUser.getPhone()!=null){%>
 										"인증"<%}else{%>
 										"미인증"
@@ -454,9 +456,7 @@ a:hover, a:active, a:focus {
 
 
 			<!-- footer -->
-			<div id="footer">
-				<h1>footer</h1>
-			</div>
+			<%@ include file="/views/common/footer.jsp" %>
 		</div>
 	</div>
 	<script>

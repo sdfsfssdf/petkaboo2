@@ -11,8 +11,9 @@
 <title>PETKABOO - Find Petsitter for your lovely pets</title>
 <style>
 .menubarOuter {
-	margin-top:15px;
+	margin-top:35px;
 	padding:15px;
+	
 }
 #upperLogo {
 	text-align:center;
@@ -26,6 +27,7 @@
 	height:20px;
 	color:#6f6f6f;
 	
+	
 }
 
 
@@ -35,7 +37,6 @@
 	/* 좌측 여백 없애기 */
 	padding-left:0px;
 	/* 우측 정렬 하기 */
-	float:left;
 	font-size:10px;
 	color:#6f6f6f;
 }
@@ -46,7 +47,7 @@
 	/* 테두리와 메뉴 간격 벌리기. padding: 위 오른쪽 아래 왼쪽; */
 	padding: 0px 10px 0px 10px;
 	/* 메뉴와 테두리 사이 간격 벌리기. margin: 위 오른쪽 아래 왼쪽; */
-	margin: 5px 0px 5px 0px;
+	margin: 30px 0px 5px 0px;
 	}
 	
 #upperMenu ul li:first-child {
@@ -115,9 +116,9 @@ outline-style: none;
 			}
 		%>
 		</div>
-		<a href="index.jsp">
+		<a href="/pkb/index.jsp">
 		<div id="upperLogo" style="margin-top:40px; margin-bottom:50px;">
-		 	<img src="./images/mainPageImgs/Logo.png" width="19%;" />
+		 	<img src="/pkb/images/mainPageImgs/Logo.png" width="19%;" />
 		</div>
 		</a>
 		<div class="upperMenu" id="upperMenu">

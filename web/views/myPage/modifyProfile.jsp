@@ -125,13 +125,13 @@ a:hover, a:active, a:focus {
 	margin-top: 30px;
 }
 
-#footer {
+/* #footer {
 	float: left;
 	width: 100%;
 	height: 250px;
 	margin: 100px 0 30px 0;
 	background: #e1e1e1
-}
+} */
 
 
 .lookup1 {
@@ -148,25 +148,26 @@ a:hover, a:active, a:focus {
 
 .rechbutton {
 	display: inline-block;
-	text-align: center;
-	vertical-align: middle;
-	text-decoration: none;
-	font-size: 17px;
-	color: white;
-	border: none;
-	border-radius: 0.5em;
-	width: 118px;
-	height: 38px;
-	line-height: 38px;
-	background-color: #cfb7af;
-	font-family: 'Jua', sans-serif;
+    padding: 6px 12px;
+    margin-bottom: 0;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.42857143;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    touch-action: manipulation;
+    cursor: pointer;
+user-select: none;
+border: 1px solid transparent;
+    border-radius: 4px;
 }
 
-.rechbutton:hover {
+/* .rechbutton:hover {
 	color: black;
 	opacity: 0.7;
 	font-family: 'Jua', sans-serif;
-}
+} */
 
 .notice {
 	text-align: center;
@@ -222,31 +223,28 @@ margin-top:20px;
 }
 #modify, #delete, #submit, #cancel {
 	display: inline-block;
-	text-align: center;
-	vertical-align: middle;
-	text-decoration: none;
-	font-size: 17px;
-	color: white;
-	border: none;
-	border-radius: 0.5em;
-	width: 118px;
-	height: 38px;
-	line-height: 38px;
-	background-color: #cfb7af;
-	font-family: 'Jua', sans-serif;
+	width:80px;
+    padding: 6px 12px;
+    margin-bottom: 0;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.42857143;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    touch-action: manipulation;
+    cursor: pointer;
+	user-select: none;
+	border: 1px solid transparent;
+    border-radius: 4px;
 }
-#modify:hover, #delete:hover. #submit:hover, #cancel:hover {
-	color: black;
-	opacity: 0.7;
-	font-family: 'Jua', sans-serif;
-}
+
+
 </style>
 </head>
 <body>
 	<div id="wrap">
-		<div id="header">
-			<h1 align="center">펫카부</h1>
-		</div>
+		
 		<div id="container1">
 
 			<!-- 메뉴파일 -->
@@ -267,15 +265,14 @@ margin-top:20px;
 			<!-- 센터 컨텐츠 -->
 			<div class="content-center">
 
-				<br> <br>
+				<br> <br><br>
 
 				<!-- 마이페이지 타이틀부분 -->
-				<div class="title">
-					<h3 align="center"
-						style="font-weight: bold; font-family: 'Jua', sans-serif;">마이페이지</h3>
+			
+					
 					<hr
 						style="border: thin solid lightgray !important; display: inline-block !important; width: 100% !important;" />
-				</div>
+				
 				<br>
 				<!-- 프로필 수정 -->
 				&nbsp;&nbsp;&nbsp;&nbsp;<span
@@ -325,8 +322,8 @@ margin-top:20px;
 					</table>
 					
 					<div class=submitandcancle>
-					<button type="submit" id="submit" style="font-weight:lighter">적용</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					<button id="cancel" onclick="modifyMemberInfoMain" style="font-weight:lighter">취소</button>
+					<button type="submit" id="submit" style="background:#9bcdf7; color:white; border-style:#9bcdf7;">적용</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<button id="cancel" onclick="modifyMemberInfoMain" style="background:white; color:#9bcdf7; border:1px solid #9bcdf7;">취소</button>
 					</div>
 					</form>	
 				</div>
@@ -360,9 +357,7 @@ margin-top:20px;
 
 
 			<!-- footer -->
-			<div id="footer">
-				<h1>footer</h1>
-			</div>
+		<%@ include file="/views/common/footer.jsp" %>
 		</div>
 	</div>
 		<script>

@@ -71,12 +71,37 @@ th {
 .pagingArea{
 	margin-left:30%;
 }
+
+button{
+	border-style:none;
+	background:white;
+	color:black;
+	
+}
+
+button:hover{
+color:#9bcdf7;
+}
+
+button:active{
+	outline:none;
+}
+
+btn-success:active{
+outline:none;
+}
+
+th{
+background-color:#9bcdf7;
+border-style:none;
+color:white;
+}
 </style>
 </head>
 <body>
 
 
-	<h1 align="center" id="logo">로고</h1>
+
 
 	<%@ include file="../common/menubar.jsp"%>
 	<%@ include file="../common/oldMenubar.jsp"%>
@@ -94,7 +119,7 @@ if(loginUser != null){ %>
 		<br>
 		<div class="container">
 			<table class="table table-hover" id="listArea">
-				<tr>
+				<tr >
 				   
 					<th class="first">글번호</th>
 					<th class="second">제목</th>
@@ -117,6 +142,9 @@ if(loginUser != null){ %>
 		</div>
 		<!-- 페이지처리 -->
 		<div class="pagingArea">
+		    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		    &nbsp;&nbsp;&nbsp;&nbsp;
 		    <button onclick="location.href='<%=request.getContextPath()%>/selectOnebyOneList.bo?currentPage=1'"><<</button>
 			<% if(currentPage <= 1 ){ %>
 			<button disabled><</button>
@@ -149,8 +177,8 @@ if(loginUser != null){ %>
 		
 		
 		
-		<div class="searchArea">
-			<form name="searchOne" method="get" action="./onebyoneList.jsp">
+		<div class="searchArea" style="text-align:right; width:85%">
+<!-- 			<form name="searchOne">
 			<select class="form-control" id="searchCondition"
 				name="searchCondition">
 				<option>----</option>
@@ -159,13 +187,16 @@ if(loginUser != null){ %>
 				<option value="date">작성일</option>
 			</select> <input type="search" class="form-control search">
 			<button type="submit" class="btn btn-default">검색하기</button>
+			</form> -->
+			<button onclick="location.href='/pkb/views/myPage/onebyoneQNAWrite.jsp'"
+				class="btn btn-success" style="border:1px solid #9bcdf7; color:white; background-color:#9bcdf7;">작성하기</button>
 			
-			<button onclick="location.href='onebyoneQNAWrite.jsp'"
-				class="btn btn-success">작성하기</button>
-			</form>
 		</div>
+		
 
 	</div>
+	<%@ include file="/views/common/footer.jsp" %>
+	
 	
 	<script>
 		$(function(){

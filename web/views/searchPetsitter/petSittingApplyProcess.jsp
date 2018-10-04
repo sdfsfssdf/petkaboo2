@@ -24,6 +24,118 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
 <meta charset="UTF-8">
 <title>PetSitter Service Apply</title>
+
+<style>#container {
+	position: absolute;
+	left: 0;
+	top: 0;
+	right: 0;
+	bottom: 0;
+}
+
+#header {
+	float: left;
+	width: 100%;
+	height: 150px;
+	_border: 1px solid blue;
+	background-color: white;
+}
+
+.body {
+	margin-top: 1%;
+	margin-left: 10%;
+	margin-right: 10%;
+	display: block;
+	/* border: 1px solid black; */
+}
+
+
+.PSid {
+	width: 90%;
+	height: 400px;
+	float:left;
+	margin-top: 50px;
+	margin-left: 5%;
+	margin-right: 5%;
+	border:2px dashed #9bcdf7;
+	background:white;
+	color:black;
+	border-radius:10px;
+}
+
+.RsvDetailed{
+	width: 90%;
+	height: 500px;
+	
+	display: inline-block;
+	margin-left: 5%;
+	margin-right: 5%;
+	margin-bottom:5%;
+	margin-top:5%;
+	
+	border:2px dashed #9bcdf7;
+	background:white;
+	color:black;
+	border-radius:10px;
+	
+}
+img{
+	border-radius:100px;
+}
+.icon {
+	width: 13%;
+	margin-left: 3.7%;
+	margin-right: 2.5%;
+	margin-top:4%;
+	margin-bottom:0;
+}
+.status-icon {
+	width: 80%;
+	height: 220px;
+	background: white;
+	border:2px solid #9bcdf7;
+	display: inline-block;
+	margin-left: 5%;
+	margin-right: 0;
+	border-radius:10px;
+}
+
+.RsvStatement {
+	width: 80%;
+	height: 70%;
+	background:white
+	float:left;
+	margin-left: 5%;
+	margin-right: 5%;
+	border:2px solid #9bcdf7;
+	color:black;
+	border-radius:10px;
+}
+
+.content-left {
+	width: 15%;
+	float: left;
+	border: 1px solid transparent;
+}
+
+.content-right {
+	width: 15%;
+	float: left;
+	border: 1px solid transparent;
+}
+
+.content-center {
+	width: 80%;
+	float: left;
+	/* text-align:center; */
+	margin: 0 auto;
+}
+
+.checkApplyDiv{
+	margin:0;
+}
+
+</style>
 </head>
 <body>
 	<!-- menubar include -->
@@ -39,25 +151,243 @@
 	<script>
 		alert('이미 해당 펫시터 서비스에 계약 신청을 한 상태입니다!');
 	</script>
+		
+		<!-- 1 -->
+	
+		<br />
+		<br />
+		<h2 style="text-align: center; margin-top: 100px;">
+			<span style="color: rgb(228, 100, 18);"> <strong>
+					신청완료</strong>
+			</span>
+		</h2>
+		<br />
+		<br />
+		<br />
+		<br />
+		<div class="content-left"></div>
+		<div class="content-center">
+		<!-- fixed 창 -->
+			<%@ include file="../common/fixed.jsp"%>
 		<div class="ApplyInfoDiv">
-		<table>
-			<tr>
-				<td>다음과 같은 정보로 펫시팅 서비스를 신청한 상태입니다.</td>
-			</tr>
-			<tr>
-				<td><b><%= c.getPetNickname() %></b> 펫시터</td>
-				<td><b>계약 신청일:</b> <%= c.getContract_date() %></td>
-				<td><b>계약 시작 희망일:</b> <%= c.getContract_start() %></td>
-				<td><b>계약 종료 희망일:</b> <%= c.getContract_end() %></td>
-			</tr>
-			<tr>
-				<td>이 div에서 취소 페이지로 갈 수 있게 설정</td>
-			</tr>
-		</table>
+		<div class="checkApplyDiv">
+		
+		<div class="status-icon">
+				<img class="icon"
+					src="https://cdn0.iconfinder.com/data/icons/business-381/500/business-work_13-512.png">
+				<img class="icon"
+					src="https://cdn3.iconfinder.com/data/icons/luchesa-vol-9/128/Light-512.png">
+				<img class="icon"
+					src="https://cdn3.iconfinder.com/data/icons/luchesa-vol-9/128/Light-512.png">
+				<img class="icon"
+					src="https://cdn3.iconfinder.com/data/icons/luchesa-vol-9/128/Light-512.png">
+				<img class="icon"
+					src="https://cdn3.iconfinder.com/data/icons/luchesa-vol-9/128/Light-512.png">
+				
+			</div>
+		<br /><br /><br />
+			<br />
+			
+			<div class="RsvStatement">
+				<div class="PSid">
+						<br>
+						<br>
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label>다음과 같은 정보로 펫시팅 서비스를 신청한 상태입니다.</label>
+						<br>
+						<br>
+						<br>
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label>펫시터 정보</label><br><br>
+					
+					<div style="float:left; margin-left:35px "><img width="180px" height="180px" border-radius="100px" display="inline-block" src="https://scontent.cdninstagram.com/vp/d432a9c5818f68d1dcfd3860935145f2/5BDCF333/t51.2885-15/sh0.08/e35/p640x640/34982645_1703252956454507_5788207006821122048_n.jpg" alt="" /></div>
+						&nbsp;&nbsp;<label>&nbsp;&nbsp;닉네임&nbsp;&nbsp;:&nbsp;&nbsp;<%=c.getPetNickname() %><br><br><br>&nbsp;&nbsp;주소&nbsp;&nbsp;:&nbsp;&nbsp;<%
+					String addressSplit = c.getPetAddress();
+					String address;
+					int index = addressSplit.indexOf("^");
+					address = addressSplit.substring(0, index);
+				
+					%> <%=address %><br><br><br>&nbsp;&nbsp;연락처&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;&nbsp;<%=c.getPetPhone() %></label>
+					<br>
+					<label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+								<label>&nbsp;&nbsp;&nbsp;&nbsp;</label>
+								<br />
+				<br />
+				<br />
+				</div>
+			
+				
+				<div class="RsvDetailed">
+					<br />
+					<br />
+					<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label>&nbsp;&nbsp;&nbsp;&nbsp;계약신청일 &nbsp;&nbsp;:&nbsp;&nbsp;<%=c.getContract_date() %></label><input
+									type="text" name="contract_date" size='18'
+									style="background-color: transparent; border-style: none;"
+									readonly onfocus="this.blur();">
+					<br />
+					<br />
+					<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label>&nbsp;&nbsp;&nbsp;&nbsp;주소&nbsp;&nbsp;:&nbsp;&nbsp;<%
+					String addressSplit2 = c.getUserAddress();
+					String address2;
+					int index2 = addressSplit.indexOf("^");
+					address2 = addressSplit.substring(0, index);
+				
+					%><%=address2 %> </label><input
+									type="text" name="useraddress" size='18'
+									style="background-color: transparent; border-style: none;"
+									readonly onfocus="this.blur();">
+					<br />
+					<br />
+					<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label>&nbsp;&nbsp;&nbsp;&nbsp;계약 시작 희망일&nbsp;&nbsp;:&nbsp;&nbsp;<%=c.getContract_start() %></label><input
+									type="text" name="contract_start" size='18'
+									style="background-color: transparent; border-style: none;"
+									readonly onfocus="this.blur();">
+					<br />
+					<br />
+					<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label>&nbsp;&nbsp;&nbsp;&nbsp;계약 종료 희망일&nbsp;&nbsp;:&nbsp;&nbsp;<%=c.getContract_end() %></label><input
+									type="text" name="contract_end" size='18'
+									style="background-color: transparent; border-style: none;"
+									readonly onfocus="this.blur();">
+					<br />
+					<br />
+					<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label>&nbsp;&nbsp;&nbsp;&nbsp;신청자&nbsp;&nbsp;:&nbsp;&nbsp;<%=c.getUserName() %></label><input
+									type="text" name="user_name" size='18'
+									style="background-color: transparent; border-style: none;"
+									readonly onfocus="this.blur();">
+					<br />
+					
+					<br /><br /><br />
+				</div>
+			</div>
+		</div>
 	</div>
+	</div>
+	
+	<div class="content-right"></div>
+	<%@ include file="/views/common/footer.jsp" %>
+	
 	<% } else if(checkApply != null && checkApply.equals("y") && c != null) { %>
-	<div class="checkApplyDiv">
-		<table>
+	
+	
+
+	<!-- 2 -->
+		<br />
+		<br />
+		
+		
+		<h2 style="text-align: center; margin-top: 100px;">
+			<span style="color: rgb(228, 100, 18);"> <strong>
+					신청완료</strong>
+			</span>
+		</h2>
+		<br />
+		<br />
+		<br />
+		<br />
+		<div class="content-left"></div>
+	<div class="content-center">
+		<div class="ApplyInfoDiv">
+		<div class="checkApplyDiv">
+		
+		<div class="status-icon">
+				<img class="icon"
+					src="https://cdn0.iconfinder.com/data/icons/business-381/500/business-work_13-512.png">
+				<img class="icon"
+					src="https://cdn3.iconfinder.com/data/icons/luchesa-vol-9/128/Light-512.png">
+				<img class="icon"
+					src="https://cdn3.iconfinder.com/data/icons/luchesa-vol-9/128/Light-512.png">
+				<img class="icon"
+					src="https://cdn3.iconfinder.com/data/icons/luchesa-vol-9/128/Light-512.png">
+				<img class="icon"
+					src="https://cdn3.iconfinder.com/data/icons/luchesa-vol-9/128/Light-512.png">
+				
+			</div>
+		<br /><br /><br />
+			<br />
+			
+			<div class="RsvStatement">
+				<div class="PSid">
+						<br>
+						<br>
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label>다음과 같은 정보로 펫시팅 서비스를 신청한 상태입니다.</label>
+						<br>
+						<br>
+						<br>
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label>펫시터 정보</label><br><br>
+					
+					<div style="float:left; margin-left:35px "><img width="180px" height="180px" border-radius="100px" display="inline-block" src="https://scontent.cdninstagram.com/vp/d432a9c5818f68d1dcfd3860935145f2/5BDCF333/t51.2885-15/sh0.08/e35/p640x640/34982645_1703252956454507_5788207006821122048_n.jpg" alt="" /></div>
+						&nbsp;&nbsp;<label>&nbsp;&nbsp;닉네임&nbsp;&nbsp;:&nbsp;&nbsp;<%=c.getPetNickname() %><br><br><br>&nbsp;&nbsp;주소&nbsp;&nbsp;:&nbsp;&nbsp;<%
+					String addressSplit = c.getPetAddress();
+					String address;
+					int index = addressSplit.indexOf("^");
+					address = addressSplit.substring(0, index);
+				
+					%> <%=address %><br><br><br>&nbsp;&nbsp;연락처&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;&nbsp;<%=c.getPetPhone() %></label>
+					<br>
+					<label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+								<label>&nbsp;&nbsp;&nbsp;&nbsp;</label>
+								<br />
+				<br />
+				<br />
+				</div>
+			
+				
+				<div class="RsvDetailed">
+					<br />
+					<br />
+					<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label>&nbsp;&nbsp;&nbsp;&nbsp;계약신청일 &nbsp;&nbsp;:&nbsp;&nbsp;<%=c.getContract_date() %></label><input
+									type="text" name="contract_date" size='18'
+									style="background-color: transparent; border-style: none;"
+									readonly onfocus="this.blur();">
+					<br />
+					<br />
+					<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label>&nbsp;&nbsp;&nbsp;&nbsp;주소&nbsp;&nbsp;:&nbsp;&nbsp;<%
+					String addressSplit2 = c.getUserAddress();
+					String address2;
+					int index2 = addressSplit.indexOf("^");
+					address2 = addressSplit.substring(0, index);
+				
+					%><%=address2 %> </label><input
+									type="text" name="useraddress" size='18'
+									style="background-color: transparent; border-style: none;"
+									readonly onfocus="this.blur();">
+					<br />
+					<br />
+					<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label>&nbsp;&nbsp;&nbsp;&nbsp;계약 시작 희망일&nbsp;&nbsp;:&nbsp;&nbsp;<%=c.getContract_start() %></label><input
+									type="text" name="contract_start" size='18'
+									style="background-color: transparent; border-style: none;"
+									readonly onfocus="this.blur();">
+					<br />
+					<br />
+					<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label>&nbsp;&nbsp;&nbsp;&nbsp;계약 종료 희망일&nbsp;&nbsp;:&nbsp;&nbsp;<%=c.getContract_end() %></label><input
+									type="text" name="contract_end" size='18'
+									style="background-color: transparent; border-style: none;"
+									readonly onfocus="this.blur();">
+					<br />
+					<br />
+					<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label>&nbsp;&nbsp;&nbsp;&nbsp;신청자&nbsp;&nbsp;:&nbsp;&nbsp;<%=c.getUserName() %></label><input
+									type="text" name="user_name" size='18'
+									style="background-color: transparent; border-style: none;"
+									readonly onfocus="this.blur();">
+					<br />
+					
+					<br /><br /><br />
+				</div>
+			</div>
+		</div>
+	</div>
+	</div>
+			<div class="content-right"></div>
+			<%@ include file="/views/common/footer.jsp" %>
+	<%-- 	<table>
 			<tr>
 				<td>다음과 같은 정보로 펫시팅 서비스를 신청하는데 성공했습니다.</td>
 			</tr>
@@ -70,7 +400,7 @@
 			<tr>
 				<td><b>이 div에서는 더 이상 할 것이 없음</b></td>
 			</tr>
-		</table>
+		</table> --%>
 	</div>
 	<% } else if(c != null && c.getService_status().equals("W")) { %>
 	<div id="paymentDiv">

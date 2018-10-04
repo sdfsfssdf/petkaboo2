@@ -122,13 +122,13 @@ a:hover, a:active, a:focus {
 	margin-top: 30px;
 }
 
-#footer {
+/* #footer {
 	float: left;
 	width: 100%;
 	height: 250px;
 	margin: 100px 0 30px 0;
 	background: #e1e1e1
-}
+} */
 
 
 .lookup1 {
@@ -145,25 +145,27 @@ a:hover, a:active, a:focus {
 
 .rechbutton {
 	display: inline-block;
-	text-align: center;
-	vertical-align: middle;
-	text-decoration: none;
-	font-size: 17px;
-	color: white;
-	border: none;
-	border-radius: 0.5em;
-	width: 118px;
-	height: 38px;
-	line-height: 38px;
-	background-color: #cfb7af;
-	font-family: 'Jua', sans-serif;
+    padding: 6px 12px;
+    margin-bottom: 0;
+    width:80px;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.42857143;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    touch-action: manipulation;
+    cursor: pointer;
+	user-select: none;
+	border: 1px solid transparent;
+    border-radius: 4px;
 }
 
-.rechbutton:hover {
+/* .rechbutton:hover {
 	color: black;
 	opacity: 0.7;
 	font-family: 'Jua', sans-serif;
-}
+} */
 
 .notice {
 	text-align: center;
@@ -222,18 +224,20 @@ border: 1px solid black; */
 
 #modify, #delete, #submit, #cancel {
 	display: inline-block;
-	text-align: center;
-	vertical-align: middle;
-	text-decoration: none;
-	font-size: 17px;
-	color: white;
-	border: none;
-	border-radius: 0.5em;
-	width: 118px;
-	height: 38px;
-	line-height: 38px;
-	background-color: #cfb7af;
-	font-family: 'Jua', sans-serif;
+    padding: 6px 12px;
+    margin-bottom: 0;
+    width:80px;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.42857143;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    touch-action: manipulation;
+    cursor: pointer;
+	user-select: none;
+	border: 1px solid transparent;
+    border-radius: 4px;
 }
 
 
@@ -291,7 +295,7 @@ border: 1px solid black; */
 	margin-top: 10px;
 }
 
-#modify:hover, #delete:hover . #submit:hover, #cancel:hover {
+/* #modify:hover, #delete:hover . #submit:hover, #cancel:hover {
 	color: black;
 	opacity: 0.7;
 	font-family: 'Jua', sans-serif;
@@ -305,21 +309,23 @@ border: 1px solid black; */
 	background-color: #cfb7af;
 	font-family: 'Jua', sans-serif;
 }
-
+ */
 #submitphone, #cancelphone, #identify, #modifypassword {
 	display: inline-block;
-	text-align: center;
-	vertical-align: middle;
-	text-decoration: none;
-	font-size: 15px;
-	color: white;
-	border: none;
-	border-radius: 0.5em;
-	width: 80px;
-	height: 30px;
-	
-	background-color: #cfb7af;
-	font-family: 'Jua', sans-serif;
+    padding: 6px 12px;
+    margin-bottom: 0;
+    width:80px;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.42857143;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    touch-action: manipulation;
+    cursor: pointer;
+	user-select: none;
+	border: 1px solid transparent;
+    border-radius: 4px;
 }
 
 
@@ -341,9 +347,7 @@ border: 1px solid black; */
 
 
 	<div id="wrap">
-		<div id="header">
-			<h1 align="center">펫카부</h1>
-		</div>
+
 		<div id="container1">
 
 			<!-- 메뉴파일 -->
@@ -364,19 +368,19 @@ border: 1px solid black; */
 			<!-- 센터 컨텐츠 -->
 			<div class="content-center">
 
-				<br> <br>
+				<br> <br><br>
 
 				<!-- 마이페이지 타이틀부분 -->
-				<div class="title">
-					<h3 align="center"
-						style="font-weight: bold; font-family: 'Jua', sans-serif;">마이페이지</h3>
+
+					
 					<hr
 						style="border: thin solid lightgray !important; display: inline-block !important; width: 100% !important;" />
-				</div>
+		
 
 
 
 				<br>
+				
 
 
 				<!-- 개인정보 수정 -->
@@ -411,15 +415,16 @@ border: 1px solid black; */
 										     	%>
 										     	
 										     	<span style="align:left;">현재번호 :<%=phone %></span>
+										     	<br><br>
 										     	<span style="margin= 0px 0px 0px 0px">바꿀 번호 : </span>
 										     	<input type="text" style="align:left;" id="ineedyou" name="rphone" placeholder="010-0000-0000형식으로 입력해주세요">
 										        <input type="hidden" name="sphone1" value="010">
 										        <input type="hidden" name="sphone2" value="6551">
 										        <input type="hidden" name="sphone3" value="5979">
 										        <input type="hidden" name="name" value="<%=name%>">
-										        
-										        <input type="submit" id="send" style="background-color: #cfb7af;
-															color:white; border-radius: 0.5em; width:50px; border:none; height:30px; font-family: 'Jua', sans-serif;"value="전송">
+										        &nbsp;&nbsp;
+										        <input type="submit" id="send" style="background-color: #9bcdf7;
+															color:white; border-radius: 3px; width:60px; border:none; height:30px; "value="전송">
 										     	</div>
 										    </form>
 											
@@ -427,14 +432,16 @@ border: 1px solid black; */
 										<form method="post" action="<%=request.getContextPath()%>/smsCheck.sc">
 										<div class="phone3">
 											<p style="font-size: 15px">인증번호 입력</p>
-											<input type="text" id="code" name="inputNum" size='20' maxlength='20' style="width: 300px; height: 30px; margin: 0; color: black; border-width: 1px">
+											<input type="text" id="code" name="inputNum" size='20' maxlength='20' style="width: 300px; height: 30px; margin: 0; color: black; border-width: 1px"> <br>
+											
 										</div>
 										<div class=submitandcancle>
+										
 											<button type="submit" id="submit" onclick="#"
-												style="font-weight: lighter">수정하기</button>
-											&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+												style="background-color: #9bcdf7; color:white;">수정하기</button>
+											&nbsp;&nbsp;&nbsp;
 											<button type="submit" id="cancel" onclick="#"
-												style="font-weight: lighter">취소하기</button>
+												style="background-color: white; color:#9bcdf7; border:1px solid #9bcdf7;" >취소하기</button>
 										</div>
 									</form>
 									</div>
@@ -457,16 +464,16 @@ border: 1px solid black; */
 											value="<%=loginUser.getAddress()%>"
 										<% }} %>	 readonly><br>
 				<form method="get" action="<%=request.getContextPath()%>/modifyAdd.ma">			
-				<input type="text" id="postcode"  name="postcode" style="width: 100px; height: 30px;" placeholder="우편번호">
-				<input type="button" onclick="sample6_execDaumPostcode()" style="background-color: #cfb7af;
-															color:white; border-radius: 0.5em; width:100px; border:none; height:30px; font-family: 'Jua', sans-serif;" value="주소 찾기"><br>
+				<input type="text" id="postcode"  name="postcode" style="width: 100px; height: 30px;" placeholder="우편번호">&nbsp;&nbsp;
+				<input type="button" onclick="sample6_execDaumPostcode()" style="background-color: #9bcdf7; color:white;
+															border-radius: 3px; width:90px; border-style:none; height:30px; font-family: inherited" value="주소 찾기"><br>
 				<input type="text" id="address"  name="address" value="<%=loginUser.getAddress() %>" style="width: 300px; height: 30px;"  placeholder="주소" >
 				<input type="text" id="addressDetail" name="addressDetail" style="width: 300px; height: 30px;"  placeholder="상세주소">
 					<div class=submitandcancle>
-						<button type="submit" id="submit" style="font-weight: lighter">적용</button>
-						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<button type="submit" id="submit" style="background-color:#9bcdf7; color:white;">적용</button>
+						&nbsp;&nbsp;&nbsp;
 						<button type="submit" id="cancel" onclick="#"
-							style="font-weight: lighter">취소</button>
+							style="background-color:white; color:#9bcdf7; border:1px solid #9bcdf7;">취소</button>
 					</div>
 				</form>
 								</div>
@@ -477,7 +484,7 @@ border: 1px solid black; */
 							<td colspan="2" width=800px; height=70px>
 							<div class="modifypassword" align="left">
 							<button id="modifypassword" onclick="location.href='modifyPassword.jsp'"
-									style="font-weight: lighter">변경하기</button>
+									style="background-color: #9bcdf7;color:white;">변경하기</button>
 							</div>
 							</td>
 						</tr>
@@ -491,9 +498,9 @@ border: 1px solid black; */
 								<option value="신한">신한</option>
 								<option value="농협">농협</option>
 							</select>
-							<input type="text" name="acc" style="height:30px; width:200px; margin:0px;">
-							<button type="submit" style="background-color: #cfb7af;
-															color:white; border-radius: 0.5em; width:50px; border:none; height:30px; font-family: 'Jua', sans-serif;">적용</button>
+							<input type="text" name="acc" style="height:30px; width:200px; margin:0px;">&nbsp;
+							<button type="submit" style="background-color: #9bcdf7;
+															color:white; border-radius: 3px; width:60px; border:none; height:30px;">적용</button>
 							</form>
 							</div>
 						</tr>
@@ -529,9 +536,7 @@ border: 1px solid black; */
 
 
 			<!-- footer -->
-			<div id="footer">
-				<h1>footer</h1>
-			</div>
+		<%@ include file="/views/common/footer.jsp" %>
 		</div>
 	</div>
 <script src="https://ssl.daumcdn.net/dmaps/map_js_init/postcode.v2.js"></script>

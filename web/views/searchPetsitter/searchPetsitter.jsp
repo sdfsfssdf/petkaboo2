@@ -185,6 +185,7 @@ float:left;
 .content-center1 {
 	width: 50%;
 	float: left;
+	height:1200px;
 	/* text-align:center; */
 	margin: 0 auto;
 }
@@ -192,6 +193,7 @@ float:left;
 .content-center2 {
 	width: 30%;
 	float: left;
+	height:1200px;
 	/* text-align:center; */
 	margin: 0 auto;
 }
@@ -463,6 +465,12 @@ var map = new daum.maps.Map(mapContainer, mapOption);
 </div>
 
 <div class=content-right></div>
+<!-- fixed 창 -->
+			<%@ include file="../common/fixed.jsp"%>
+
+<!-- footer -->
+				<%@ include file="/views/common/footer.jsp" %>
+
 
 	<script>
 		$('#myModal').on('shown.bs.modal', function() {

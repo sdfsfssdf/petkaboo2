@@ -84,5 +84,9 @@
 	</table>
 	</div>
 	<% } } %>
+	
+<!-- footer -->
+				<%@ include file="/views/common/footer.jsp" %>
+	
 </body>
 </html>

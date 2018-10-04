@@ -20,10 +20,19 @@
 	width: 60%;
 	margin-top: 80px;
 }
+
+.write:hover, .cancle:hover{
+	border:0;
+	outline:0;
+}
+.write:active, .cancle:active{
+	border:0;
+	outline:0;
+}
 </style>
 </head>
 <body>
-	<h1 align="center" id="logo">로고</h1>
+	
 	<%@ include file="../common/menubar.jsp"%>
 	
 	<%@ include file="../common/oldMenubar.jsp"%>
@@ -40,6 +49,7 @@
 	<%@ include file="../common/sidemenubar.jsp"%>
 	<div class="contentArea">
 		<h2>1:1 문의</h2>
+		<br>
 		<p>관리자에게 1:1 문의를 신청할 수 있습니다.</p>
 		<br>
 		<!-- 20180914-1 -->
@@ -58,12 +68,15 @@
 			</div>
 			<br>
 			<div class="btns" align="center">
-				<button type="submit" class="btn btn-success write">작성하기</button>
+				<button type="submit" class="btn btn-success write" style="background:#9bcdf7; color:white; border:1px solid #9bcdf7;" >작성하기</button>
 				&nbsp;
-				<button type="button" class="btn btn-danger cancel">취소하기</button>
+				<button type="button" class="btn btn-danger cancel" style="background:white; color:#9bcdf7; border:1px solid #9bcdf7;">취소하기</button>
 			</div>
 		</form>
 	</div>
+	
+		<%@ include file="/views/common/footer.jsp" %>
+	
 	<%
 		} else {
 	%>

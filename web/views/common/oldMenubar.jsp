@@ -7,15 +7,15 @@
 <title>헤더 상단메뉴</title>
 <style>
 .menubar>li>div>a:-webkit-any-link {
-	cursor: pointer;
+/* 	cursor: pointer; */
 	text-decoration: none;
 	transition: top 1s ease-out;
-	color: black;
-	margin: 1px 1px 1px 1px;
+	color: white;
+	/* margin: 1px 1px 1px 1px; */
 }
 
 .menubar>li>div>a:hover {
-	color: rgb(207, 183, 175);
+	color: white;
 }
 
 .depth-02 {
@@ -25,24 +25,26 @@
 
 .menubar {
 	text-align: center;
-	font-size: 15px;
+	font-size: 1px;
 }
 
 .menubar>li>div:hover {
-	border:1px solid black;
+	border:1px solid white;
    border-radius:30px;
+   color:white;
 }
 
 .menubar>li>div {
-	border:1px solid rgba(0,0,0,0);
+	border:1px solid white;
    border-radius:30px;
 }
 
 .menubar>li {
-	margin: 1.5%;
+/* 	margin: 1.5%; */
 	display: inline-flex;
 	text-align: -webkit-match-parent;
 	font-size: 12px;
+	color:white;
 }
 </style>
 </head>
@@ -55,28 +57,28 @@
 
 			<ul class="menubar">
 				<li><div>
-						<a href="<%=request.getContextPath()%>/index.jsp">HOME</a>
+						<%-- <a href="<%=request.getContextPath()%>/index.jsp">HOME</a> --%>
 					</div></li>
 				<li><div>
-						<a href="/w.jsp">SERVICE</a>
+						<!-- <a href="/w.jsp">SERVICE</a> -->
 					</div></li>
 				<li><div>
-						<a href="<%=request.getContextPath()%>/PetSitter.all">PETSITTER</a>
+						<%-- <a href="<%=request.getContextPath()%>/PetSitter.all">PETSITTER</a> --%>
 					</div></li>
 				<li><div>
-						<a href="/">STEP</a>
+						<!-- <a href="/">STEP</a> -->
 					</div></li>
 				<li><div>
-						<a href="/">RESERVATION</a>
+						<!-- <a href="/">RESERVATION</a> -->
 					</div></li>
 				<li><div>
-						<a href="01_reviews.jsp">VOICE</a>
+						<!-- <a href="01_reviews.jsp">VOICE</a> -->
 					</div></li>
 				<li><div>
-						<a href="/">FAQ</a>
+						<!-- <a href="/">FAQ</a> -->
 					</div></li>
 				<li><div>
-						<a href="05_companyInfo.jsp">INTRODUCE</a>
+						<!-- <a href="05_companyInfo.jsp">INTRODUCE</a> -->
 					</div></li>
 			</ul>
 

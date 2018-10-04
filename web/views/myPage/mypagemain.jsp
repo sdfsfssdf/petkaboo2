@@ -133,7 +133,7 @@ a:hover, a:active, a:focus {
 .center-content1 {
 	float: left;
 	width: 100%;
-	height: 400px;
+	height: 300px;
 	margin-top: 30px;
 	margin-bottom: 30px;
 	/* 	background: #edeef0;
@@ -144,7 +144,7 @@ a:hover, a:active, a:focus {
 .center-content2 {
 	float: left;
 	width: 100%;
-	height: 200px;
+	height: 150px;
 	margin-bottom: 0px;
 	/* background: #edeef0;
 	border: 1px solid black; */
@@ -173,13 +173,6 @@ a:hover, a:active, a:focus {
 	margin-top: 30px;
 }
 
-#footer {
-	float: left;
-	width: 100%;
-	height: 250px;
-	margin: 100px 0 30px 0;
-	background: #e1e1e1
-}
 
 /* 충전내역 사용내역탭 */
 .container {
@@ -201,27 +194,41 @@ a:hover, a:active, a:focus {
 	text-align: center;
 }
 
-.rechbutton {
-	display: inline-block;
-	text-align: center;
-	vertical-align: middle;
-	text-decoration: none;
-	font-size: 17px;
-	color: white;
-	border: none;
-	border-radius: 0.5em;
-	width: 118px;
-	height: 38px;
-	line-height: 38px;
-	background-color: #cfb7af;
-	font-family: 'Jua', sans-serif;
-}
+ #clickrecharge {
+	 display: inline-block;
+    padding: 6px 12px;
+    margin-bottom: 0;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.42857143;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    touch-action: manipulation;
+    cursor: pointer;
+	user-select: none;
+	border: 1px solid transparent;
+    border-radius: 4px;}
+    
+button{
+    font-family: inherit;
+} 
 
-.rechbutton:hover {
-	color: black;
-	opacity: 0.7;
-	font-family: 'Jua', sans-serif;
-}
+.searchuse{ display: inline-block;
+    padding: 6px 12px;
+    margin-bottom: 0;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.42857143;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    touch-action: manipulation;
+    cursor: pointer;
+	user-select: none;
+	border: 1px solid transparent;
+    border-radius: 4px;}
+
 
 .notice {
 	text-align: center;
@@ -275,7 +282,8 @@ th, td {
 
 				<!-- 마이페이지 타이틀부분 -->
 				<div class="title">
-					<h3 align="center" style="font-weight: bold; font-family: 'Jua', sans-serif;">마이페이지</h3>
+				<br>
+					<!-- <h3 align="center" style="font-weight: bold; font-family: 'Jua', sans-serif;">마이페이지</h3> -->
 					<hr
 						style="border: thin solid lightgray !important; display: inline-block !important; width: 100% !important;" />
 				</div>
@@ -283,10 +291,14 @@ th, td {
 
 
 				<br>
-
+				<br>
+					
 
 				<!-- 보유포인트, 충전하기 -->
 				<div class="center-content1">
+				<br>
+			
+			
 					<span style="text-align:center; font-size:17px; font-weight:bold;">거래내역</p>
 					<br> <br>
 					<div class="point">
@@ -300,7 +312,7 @@ th, td {
 							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 							<input type="hidden" name="user_no" value="<%=loginUser.getUser_no() %>">
 							<input type="hidden" name="check" value=1>
-							<label>충전할 금액 </label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							<label>충전할 금액</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 							<input type="text" value="" name="paid_amount" id="paid_amount">
 							<input type="hidden" id="imp_uid" name="imp_uid">&nbsp;&nbsp;원&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 							<input type="hidden" id="pay_type" name="pay_type">
@@ -316,38 +328,16 @@ th, td {
 						value="cash" name="howToPS" />&nbsp;무통장 입금&nbsp; </label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 				
 				
-					<button id="clickrecharge">충전하기</button>
+					<button id="clickrecharge" style="border:1px solid #9bcdf7; background:#9bcdf7; color:white;">충전하기</button>
 						
 						
 					</div>
 
 
-					<br> <br>
 
-					<!-- <div class="notice">
-						<span class="noticespan">공지사항</span> <br> <br> <br>
-						<form action="">
-							<table align="center" class="noticetable">
-								<tr>
-									<th>글번호</th>
-									<th>글제목</th>
-									<th>등록일자</th>
-								</tr>
-								<tr>
-									<td>1</td>
-									<td></td>
-									<td></td>
-								</tr>
-								<tr>
-									<td>2</td>
-									<td></td>
-									<td></td>
-								</tr>
-							</table>
-						</form>
-					</div> -->
+			
 				</div>
-
+		
 
 				<!-- 충전내역 사용내역 탭 -->
 				<div class="center-content2">
@@ -355,22 +345,26 @@ th, td {
 					<div class="container">
 
 						
-						<div class="tab-content">
+						<div class="tab-content" style="text-align:left;">
 									<br>
-
+<br><br>
+								
 									<form class="lookup1" action="<%=request.getContextPath()%>/selectCyberMoneyHistory.pm">
+										
+								
 										<span>조회기간</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
 										<input type="radio" name="pay_date" value="today" checked>오늘&nbsp;&nbsp;&nbsp;&nbsp;
 										<input type="radio" name="pay_date" value="week">일주일&nbsp;&nbsp;&nbsp;&nbsp;
 										<input type="radio" name="pay_date" value="month">1개월&nbsp;&nbsp;&nbsp;&nbsp;
 										<input type="radio" name="pay_date" value="year">일년&nbsp;&nbsp;&nbsp;&nbsp;
-										<button type="submit">검색하기</button>
+										
 								<br>
-
+								<br>
 										<span>조회내용</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
 										<input type="radio" name="pay_method" value="all" checked>전체&nbsp;&nbsp;&nbsp;&nbsp;
 										<input type="radio" name="pay_method" value="recharge">충전내역만&nbsp;&nbsp;&nbsp;&nbsp;
 										<input type="radio" name="pay_method" value="use">사용내역만&nbsp;&nbsp;&nbsp;&nbsp;
+									<button type="submit" class="searchuse" style="border:1px solid #9bcdf7; background:#9bcdf7; color:white;">검색하기</button>
 									</form>
 
 						</div>
@@ -381,6 +375,8 @@ th, td {
 
 				<div class="center-content3">
 					<form action="">
+						<br><br>
+						
 						<table class=mclist>
 							<tr>
 								<th>거래일시</th>
@@ -424,22 +420,21 @@ th, td {
 				</div>
 
 				<!-- 구분선 -->
-				<br> <br> <br> <br> <br>
+				
 				<hr
-					style="border: thin dashed gray; ! important; display: inline-block !important; width: 100% !important;" />
-
+						style="border: thin solid lightgray !important; display: inline-block !important; width: 100% !important;" />
 
 
 				<div class="bottom-content">
 					<br>
 					<div class="bottom-content1">
-						<img src="../images/info1.png" width="65%" height="250px">
+						<img src="/pkb/images/myPageImgs/info1.png" width="65%" height="250px">
 					</div>
 
 
 
 					<div class="bottom-content1">
-						<img src="../images/info2.png" width="65%" height="250px">
+						<img src="/pkb/images/myPageImgs/info1.png" width="65%" height="250px">
 					</div>
 				</div>
 
@@ -452,12 +447,10 @@ th, td {
 
 			
 			<!-- footer -->
-			<div id="footer">
-				<h1>footer</h1>
-			</div>
+				<%@ include file="/views/common/footer.jsp" %>
 		</div>
 	</div>
-	<div id="id01" class="w3-modal">
+<!-- 	<div id="id01" class="w3-modal">
   <div class="w3-modal-content">
     <div class="w3-container">
       <span onclick="document.getElementById('id01').style.display='none'" 
@@ -465,7 +458,7 @@ th, td {
       <p>Some text in the Modal..</p>
       <p>Some text in the Modal..</p>
     </div>
-  </div>
+  </div> -->
   
 
   <!-- 페이지 처리 -->
