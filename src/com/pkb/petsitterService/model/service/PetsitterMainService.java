@@ -5,6 +5,7 @@ import static com.pkb.common.JDBCTemplate.*;
 import java.sql.Connection;
 import java.util.ArrayList;
 
+import com.pkb.petsitterService.model.dao.PetsitterApplyDao;
 import com.pkb.petsitterService.model.dao.PetsitterContractDao;
 import com.pkb.petsitterService.model.dao.PetsitterDiaryDao;
 import com.pkb.petsitterService.model.dao.PetsitterServiceDao;
@@ -143,5 +144,31 @@ public class PetsitterMainService {
 		close(con);
 		
 		return c;
+	}
+
+	public int applyPetsitter(int user_no) {
+		Connection con = getConnection();
+		int result = 0;
+		int step1 = 0;
+		int step2 = 0;
+		
+		step1 = new PetsitterApplyDao().insertOne(con, user_no);
+		
+		if(step1 > 0){
+			// 1단계 성공
+			step2 = new PetsitterApplyDao().insertHistory(con, user_no);
+			if(step2 > 0){
+				commit(con);
+				result = step1 + step2;
+			}else{
+				rollback(con);
+			}
+		}else{
+			rollback(con);
+		}
+		
+		close(con);
+		
+		return result;
 	}
 }

@@ -124,7 +124,7 @@ outline-style: none;
 		<ul class="menu">
 			<li><a href="<%=request.getContextPath()%>/index.jsp">HOME</a></li>
 			<li><a href="<%=request.getContextPath()%>/PetSitter.all">펫시터 찾기</a></li>
-			<li><a href="https://goo.gl/forms/U9POJ4cUc5Chg2Aq2" target="_blank">펫시터 지원</a></li>
+			<li><a href="<%=request.getContextPath()%>/views/page/ApplyPetsitter.jsp">펫시터 지원</a></li>
 			<li><a href="#">자주하는 질문</a></li>
 		</ul> 
 		</div>

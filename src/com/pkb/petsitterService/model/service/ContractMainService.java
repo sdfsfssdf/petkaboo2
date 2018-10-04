@@ -165,4 +165,15 @@ public class ContractMainService {
 		return result;
 	}
 
+	public int endContract(int user_no, int client_user_no, int psrno, int contractNo) {
+		int result = 0;
+		Connection con = getConnection();
+		
+		result = new ContractS2Dao().endContract(con, user_no, client_user_no, psrno, contractNo);
+		
+		close(con);
+		
+		return result;
+	}
+
 }
