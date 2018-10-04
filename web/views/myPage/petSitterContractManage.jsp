@@ -68,10 +68,11 @@
 				<input type="submit" name="acceptReq" value="취소">
 			</form>
 			</td>
-			<% } else if (c.getService_status().equals("E")) {
+			<% } else if (c.getService_status() != null && c.getService_status().equals("E")) {
 				java.util.Date utilDate = new java.util.Date();
 				Date sqlDateToday = new java.sql.Date(utilDate.getTime());
 				Date endContract = c.getContract_end();
+				Date startContract = c.getContract_start();
 				int dateResult = sqlDateToday.compareTo(endContract);
 					if(dateResult > 0){ %>
 					<td>
@@ -84,18 +85,27 @@
 						</form>
 					</td>
 			<% 		} else {	%>
+			<%		dateResult = sqlDateToday.compareTo(startContract); %>
+			<%			if(dateResult > 0) { %>
 					<td><b>결제완료. 펫시팅 진행 중</b></td>
+			<%  } else { %>
+					<td><b>결제완료. 펫시팅 진행 대기 중</b></td>
 			<% } %>
-			<% } else if (c.getService_status().equals("F")){%>
+			<% } %>
+			<% } else if (c.getService_status() != null && c.getService_status().equals("F")){%>
 				<td>
 					<b>환불 대기 중</b>
 				</td>
-			<% } else if (c.getService_status().equals("R")){%>
+			<% } else if (c.getService_status() != null && c.getService_status().equals("R")){%>
 				<td>
 					<b>환불 완료</b>
 				</td>
-			<% } else if(c.getService_status().equals("X")) { %>
+			<% } else if(c.getService_status() != null && c.getService_status().equals("X")) { %>
 			<td><b>종료</b></td>
+			<% } else if(c.getContract_status() !=null && c.getContract_status().equals("C")) { %>
+			<td><b>취소</b></td>
+			<% } else if(c.getService_status() != null && c.getService_status().equals("W")) { %>
+			<td><b>결제 대기중</b></td>
 			<% } else {%>
 			<td><%= c.getContract_status() %></td>
 			<% } %>

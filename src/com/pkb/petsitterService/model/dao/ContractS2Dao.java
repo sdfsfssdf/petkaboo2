@@ -69,7 +69,6 @@ public class ContractS2Dao {
 	public Contract selectOne(Connection con, int parseInt, int parseInt2) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
-		int result  = 0;
 		Contract c = null;
 		
 		String query = prop.getProperty("selectOneContract");
@@ -475,6 +474,80 @@ public class ContractS2Dao {
 		
 		return result;
 	}
+
+	public int refundStep1(Connection con, int contractNo, int user_no) {
+		int step1 = 0;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String query = prop.getProperty("refundStep1");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, contractNo);
+			pstmt.setInt(2, user_no);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()){				
+				step1 = rset.getInt("pay_amount");
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}		
+		
+		return step1;
+	}
+
+	public int refundStep2(Connection con, int contractNo, int user_no, int step1) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String query = prop.getProperty("insertPayment");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			
+			pstmt.setInt(1, user_no);
+			pstmt.setInt(2, step1);
+			pstmt.setString(3, "F");
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}				
+		
+		return result;
+	}
+
+	public int updateRefundService(Connection con, int contractNo, int user_no, int step1) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String query = prop.getProperty("updateService");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, "F");
+			pstmt.setInt(2, contractNo);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}	
+		
+		return result;
+	}
+
+	
 
 
 

@@ -9,19 +9,21 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.pkb.member.model.vo.User;
 import com.pkb.petsitterService.model.service.ContractMainService;
+import com.pkb.reservation.model.vo.Contract;
 
 /**
- * Servlet implementation class PaymentProceed
+ * Servlet implementation class RefundRequest
  */
-@WebServlet("/PaymentProceed.do")
-public class PaymentProceed extends HttpServlet {
+@WebServlet("/refundReq.do")
+public class RefundRequest extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public PaymentProceed() {
+    public RefundRequest() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -30,16 +32,31 @@ public class PaymentProceed extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int contractno = Integer.parseInt(request.getParameter("contractno"));
-		int user_no = Integer.parseInt(request.getParameter("user_no"));
-		int fullPrice = Integer.parseInt(request.getParameter("fullPrice"));
+		User loginUser = null;
 		String page = "";
-		int result = new ContractMainService().paymentProceed(contractno, user_no, fullPrice);
+		int contractNo = 0;
+		int user_no = 0;
+		
+		if(request.getSession().getAttribute("loginUser") != null && request.getParameter("contractNo") != null){
+			// 세션으로 받아올 loginUser & contractNo정보가 있다면
+			loginUser = (User)request.getSession().getAttribute("loginUser");
+			contractNo = Integer.parseInt(request.getParameter("contractNo"));
+			user_no = loginUser.getUser_no();
+		} else {
+			// 없다면 바로 에러 페이지로 넘김
+			page = "views/common/errorPage.jsp";
+			request.setAttribute("msg", "비정상적인 접근!");
+			RequestDispatcher view = request.getRequestDispatcher(page);
+			view.forward(request, response);
+			return;
+		}
+				
+		int result = new ContractMainService().refundProceed(contractNo, user_no);
 		
 		if(result > 0){
-			System.out.println("결제 성공!");
+			System.out.println("환불 신청 성공!");
 			page = "/psContract.do";
-			request.setAttribute("payment", "OK");
+			request.setAttribute("refund", "apply");
 			RequestDispatcher view = request.getRequestDispatcher(page);
 			view.forward(request, response);			
 		}else{
@@ -48,7 +65,7 @@ public class PaymentProceed extends HttpServlet {
 			RequestDispatcher view = request.getRequestDispatcher(page);
 			view.forward(request, response);
 		}
-	
+
 	}
 
 	/**

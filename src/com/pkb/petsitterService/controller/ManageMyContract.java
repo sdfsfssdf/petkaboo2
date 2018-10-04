@@ -60,6 +60,10 @@ public class ManageMyContract extends HttpServlet {
 			user_no = Integer.parseInt(request.getAttribute("user_no").toString());
 		}
 		
+		if((request.getAttribute("payment") != null && request.getAttribute("payment").toString().equals("OK")) || (request.getAttribute("refund") != null && request.getAttribute("refund").toString().equals("apply"))){
+			request_client_list = 1;
+		}
+		
 		if(request.getParameter("request_client_list") == null){
 			System.out.println("넘겨 받은 값 중에서 request_client_list가 없다");
 		}else{
@@ -73,6 +77,8 @@ public class ManageMyContract extends HttpServlet {
 		if(request_client_list != 1)
 		{
 			cList = new ContractMainService().selectList(user_no);
+		} else if(request.getAttribute("payment") != null && request.getAttribute("payment").toString().equals("OK")){
+			cList = new ContractMainService().selectMyList(user_no);
 		} else {
 			cList = new ContractMainService().selectMyList(user_no);
 		}
