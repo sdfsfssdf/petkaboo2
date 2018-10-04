@@ -14,27 +14,62 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Petsitting Service Update</title>
 <style>
-#MyPetsitterInfoheader{
-	text-align:center;
-}
-hr{
-	width:50%;
-	border:1px solid black;
-}
-#MyPetsitterInfoTable{
-	margin-top:1%;
-	margin-right:5%;
-	margin-left:20%;
-	width:auto;
-	border:1px solid black;
-}
+
 #MyPetsitterInfoTable th{
 	text-align:center;
-	background:black;
-	color:white;
+	
 }
-#MyPetsitterInfoTable td{
-	text-align:center;
+button{display: inline-block;
+    padding: 6px 12px;
+    margin-bottom: 0;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.42857143;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    touch-action: manipulation;
+    cursor: pointer;
+	user-select: none;
+	border: 1px solid transparent;
+    border-radius: 4px;
+    }
+.content-left {
+	width: 15%;
+	float: left;
+	border: 1px solid transparent;
+}
+
+.content-right {
+	width: 15%;
+	float: left;
+	border: 1px solid transparent;
+}
+
+.content-center {
+	width: 70%;
+	float: left;
+	/* text-align:center; */
+	margin: 0 auto;
+	margin-top:80px;
+}
+
+tr{
+border : 1px solid #eee;
+height:40px;
+text-align:center;
+color:white;
+background-color:#9bcdf7;
+}
+.myContractInfoTable{
+
+}
+td{
+width:10%;
+color:black;
+text-align:center;
+background-color:white;
+
 }
 </style>
 </head>
@@ -53,11 +88,23 @@ hr{
 		window.location.href = '<%=request.getContextPath()%>/index.jsp';
 	</script>
 	<% } else { %>
-	<%@ include file="/views/common/sidemenubar.jsp"%>
-	<div class="MyPetsitterInfoheader" id="MyPetsitterInfoheader">
+	
+	<div class="content-left"><%@ include file="/views/common/sidemenubar.jsp"%></div>
+	<!-- <div class="MyPetsitterInfoheader" id="MyPetsitterInfoheader">
 		<h2><b>내 펫시터 등록 정보 및 진행 상황</b></h2>
 		<hr>
-	</div>
+	</div> -->
+	<div class="content-center">
+	<hr
+						style="border: thin solid lightgray !important; display: inline-block !important; width: 100% !important;" />
+				
+				<br>
+				<!-- 내 펫시터 등록 정보 및 진행 상황 -->
+				&nbsp;&nbsp;&nbsp;&nbsp;<span
+					style="text-align: left; font-size: 17px; font-weight: bold; ">펫시터 서비스 등록 정보 및 진행 상황</span>
+				<hr
+					style="border: thin solid lightgray !important; display: inline-block !important; width: 100% !important;" />
+	<br><br>
 		<% 
 		// PetCategory DB 조회
 		Properties prop = new Properties();
@@ -139,13 +186,19 @@ hr{
 					<!-- button 영역 차후 수정 -->
 					<input type="hidden" name="contractno" value="<%= p.getPet_service_regno()%>">
 					<input type="hidden" name="user_no" value="<%= loginUser.getUser_no() %>">
-					<button>계약상태 조회</button>
+					<button style="background:#9bcdf7; color:white; border:1px solid #9bcdf7;">계약상태 조회</button>
 				</form>
 			</td>
 		</tr>
 		<% } %>
 	</table>
 	</div>
+	</div>
+	<!-- fixed 창 -->
+			<%@ include file="../common/fixed.jsp"%>
+	<div class="content-right"></div>
+		<!-- footer -->
+				<%@ include file="/views/common/footer.jsp" %>
 	<script>
 		$(function(){
 			$(".MyPetsitterInfoTable td").click(function(){

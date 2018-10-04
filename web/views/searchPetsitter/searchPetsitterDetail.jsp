@@ -25,7 +25,8 @@
 <style>
 #topArea{
 	width:100%;
-	display:inline-block;
+	/* display:inline-block; */
+	float:left;
 	text-align:center;
 	margin-top:140px;
 	height:500px;
@@ -77,9 +78,49 @@
     border-radius: 4px;
 
 }
+
+
+.content-left {
+	width: 15%;
+	float: left;
+	border: 1px solid transparent;
+}
+
+.content-right {
+	width: 15%;
+	float: left;
+	border: 1px solid transparent;
+}
+
+.content-center {
+	width: 70%;
+	float: left;
+	/* text-align:center; */
+	margin: 0 auto;
+	margin-top:60px;
+	height:1200px;
+}
+
+tr{
+height:50px;
+}
 </style>
 <body>
 	<%@include file="/views/common/menubar.jsp"%>
+	
+			<div class="content-left"><%@ include file="/views/common/sidemenubar.jsp"%></div>
+			<div class="content-center">
+				<hr
+						style="border: thin solid lightgray !important; display: inline-block !important; width: 100% !important;" />
+				
+				<br>
+				<!-- 펫시터 상세정보 -->
+				&nbsp;&nbsp;&nbsp;&nbsp;<span
+					style="text-align: left; font-size: 17px; font-weight: bold; ">펫시터 상세정보</span>
+				<hr
+					style="border: thin solid lightgray !important; display: inline-block !important; width: 100% !important;" />
+
+			
 	<div class="topArea" id="topArea" name="topArea">
 		<table id="servicePhoto" name="servicePhoto">
 			<tr>
@@ -122,7 +163,7 @@
 			</tr>
 		</table>
 		<table id="serviceDetail">
-			<tr>
+			<tr >
 				<th width="100px">서비스 종류</th>
 				<th width="150px">시작 가능일</th>
 				<th width="150px">종료일</th>
@@ -146,7 +187,7 @@
 				<td><%= p.getService_charge() %></td>
 			</tr>
 		</table>
-		<div id="space"></div>
+		
 		<br>
 		<div class="buttons" id="buttons">
 		<table id="buttonArea">
@@ -176,10 +217,12 @@
 		<% } %>
 		</div>			
 		</div>
+		</div>
+		<div class="content-right"></div>
+		
 		<!-- fixed 창 -->
 			<%@ include file="../common/fixed.jsp"%>
-		<!-- footer -->
-				<%@ include file="/views/common/footer.jsp" %>
+		 
 		
 <script>
 	function submit(){
@@ -190,5 +233,6 @@
 		$("#psInfo").submit();
 	}
 </script>
+
 </body>
 </html>

@@ -15,6 +15,62 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
 <meta charset="UTF-8">
 <title>내 펫시터 예약 목록</title>
+<style>
+
+button{
+ display: inline-block;
+    padding: 6px 12px;
+    margin-bottom: 0;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.42857143;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    touch-action: manipulation;
+    cursor: pointer;
+	user-select: none;
+	border: 1px solid transparent;
+    border-radius: 4px;
+}
+
+.content-left {
+	width: 15%;
+	float: left;
+	border: 1px solid transparent;
+}
+
+.content-right {
+	width: 15%;
+	float: left;
+	border: 1px solid transparent;
+}
+
+.content-center {
+	width: 70%;
+	float: left;
+	/* text-align:center; */
+	margin: 0 auto;
+	margin-top:80px;
+}
+
+tr{
+border : 1px solid #eee;
+height:40px;
+text-align:center;
+color:white;
+background-color:#9bcdf7;
+}
+.myContractInfoTable{
+
+}
+td{
+width:10%;
+color:black;
+background-color:white;
+
+}
+</style>
 </head>
 <body>
 	<%@ include file="/views/common/menubar.jsp"%>
@@ -26,14 +82,26 @@
 		window.location.href = '<%=request.getContextPath()%>/index.jsp';
 	</script>
 	<% } else {%>
-	<%@ include file="/views/common/sidemenubar.jsp"%>
+	<div class="content-left"><%@ include file="/views/common/sidemenubar.jsp"%></div>
 	<% if (cList == null) { %>
 	<div class="error">
 	<h2>유효한 계약 정보가 아직 없습니다</h2>
 	</div>
 	<% } else { %>	
-	<div class="content-left"></div>
+	
+	
+
 	<div class="content-center">
+	<hr
+						style="border: thin solid lightgray !important; display: inline-block !important; width: 100% !important;" />
+				
+				<br>
+				<!-- 내 펫시터 예약 목록 -->
+				&nbsp;&nbsp;&nbsp;&nbsp;<span
+					style="text-align: left; font-size: 17px; font-weight: bold; ">내 펫시터 예약 목록</span>
+				<hr
+					style="border: thin solid lightgray !important; display: inline-block !important; width: 100% !important;" />
+	<br><br>
 	<div class="myContractDiv">
 		<table id="myContractInfoTable">
 			<tr>
@@ -69,7 +137,7 @@
 			<input type="hidden" id="psrno" name="psrno" value="<%= c.getPet_service_regno() %>">
 			<input type="hidden" id="user_no" name="user_no" value="<%= loginUser.getUser_no() %>">
 			<input type="hidden" id="contractNo" name="contractNo" value="<%= c.getContract_no() %>">			
-			<button>결제요청</button>
+			<button style="background-color:#9bcdf7; color:white; border:1px solid #9bcdf7;">결제요청</button>
 			</form></td>
 			<% } else if(c.getService_status() != null && c.getService_status().equals("X")) {%>
 				<td>서비스 종료</td>
@@ -109,6 +177,8 @@
 	</table>
 	</div>
 	</div>
+	<!-- fixed 창 -->
+			<%@ include file="../common/fixed.jsp"%>
 	<div class="content-right"></div>
 	<% }%>
 	<!-- footer -->

@@ -32,11 +32,33 @@
 }
 #insertTable{
 	display:inline-block;
-	border:1px dotted black;
+		border:1px solid #9bcdf7;
 }
 th, tr, td{
-	border:1px dotted black;
+	/* border:1px solid #9bcdf7; */
 	padding:10px;
+}
+th,  td{
+ border:1px solid #9bcdf7; 
+}
+.content-left {
+	width: 15%;
+	float: left;
+	border: 1px solid transparent;
+}
+
+.content-right {
+	width: 15%;
+	float: left;
+	border: 1px solid transparent;
+}
+
+.content-center {
+	width: 70%;
+	float: left;
+	/* text-align:center; */
+	margin: 0 auto;
+	margin-top:80px;
 }
 </style>
 </head>
@@ -50,7 +72,7 @@ th, tr, td{
 		window.location.href = '<%=request.getContextPath()%>/index.jsp';
 	</script>
 	<% } else {%>
-	<%@ include file="/views/common/sidemenubar.jsp"%>
+	<div class="content-left"><%@ include file="/views/common/sidemenubar.jsp"%></div>	
 	<% 
 		// PetCategory DB 조회
 		Properties prop = new Properties();
@@ -120,9 +142,19 @@ th, tr, td{
 		} // if문의 끝
 
 	%>
+	<div class="content-center">
+	<hr
+						style="border: thin solid lightgray !important; display: inline-block !important; width: 100% !important;" />
+				
+				<br>
+				<!-- 펫시터 서비스 등록 -->
+				&nbsp;&nbsp;&nbsp;&nbsp;<span
+					style="text-align: left; font-size: 17px; font-weight: bold; ">펫시터 서비스 등록</span>
+				<hr
+					style="border: thin solid lightgray !important; display: inline-block !important; width: 100% !important;" />
+	<br><br><br>
 	<div class="contentArea">
-		<h2><b>펫시터 서비스 등록</b></h2>
-		<p>펫시터 서비스를 등록할 수 있습니다.</p>
+		
 		<div id="insertFormArea">
 			<form id="insertForm" method="post" action="<%=request.getContextPath()%>/insertPetService.do">
 				<table id="insertTable">
@@ -237,9 +269,11 @@ th, tr, td{
 		<br>
 		<div class="btnsArea" align="center">
 			&nbsp;
-			<button type="submit" id="submit" onclick="insertService()" class="btn btn-success write">등록하기</button>
+			<button type="submit" id="submit" onclick="insertService()" class="btn btn-success write" style="background-color:#9bcdf7; border:1px solid #9bcdf7; color:white;">등록하기</button>
 			&nbsp;
-			<button type="button" class="btn btn-danger cancel">취소하기</button>
+			<button type="button" class="btn btn-danger cancel" style="background-color:white; color:#9bcdf7; border:1px solid #9bcdf7;">취소하기</button>
+		</div>
+		
 		</div>
 	<script>
 		function insertService(){
@@ -283,6 +317,10 @@ th, tr, td{
 			}
 	</script>
 	<% } %>
-
+<div class="content-right"></div>
+<!-- fixed 창 -->
+			<%@ include file="../common/fixed.jsp"%>
+			<!-- footer -->
+				<%@ include file="/views/common/footer.jsp" %>
 </body>
 </html>

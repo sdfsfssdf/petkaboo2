@@ -17,6 +17,44 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
 <meta charset="UTF-8">
 <title>Petsitter Contract Management</title>
+<style>
+.content-left {
+	width: 15%;
+	float: left;
+	border: 1px solid transparent;
+}
+
+.content-right {
+	width: 15%;
+	float: left;
+	border: 1px solid transparent;
+}
+
+.content-center {
+	width: 70%;
+	float: left;
+	/* text-align:center; */
+	margin: 0 auto;
+	margin-top:80px;
+}
+
+tr{
+border : 1px solid #eee;
+height:40px;
+text-align:center;
+color:white;
+background-color:#9bcdf7;
+}
+.myContractInfoTable{
+
+}
+td{
+width:10%;
+color:black;
+background-color:white;
+
+}
+</style>
 </head>
 <body>
 	<%@ include file="/views/common/menubar.jsp"%>
@@ -28,12 +66,23 @@
 		window.location.href = '<%=request.getContextPath()%>/index.jsp';
 	</script>
 	<% } else {%>
-	<%@ include file="/views/common/sidemenubar.jsp"%>
+	<div class="content-left"><%@ include file="/views/common/sidemenubar.jsp"%></div>
 	<% if (cList == null) { %>
 	<div class="error">
 	<h2>유효한 계약 정보가 아직 없습니다</h2>
 	</div>
 	<% } else { %>	
+	<div class="content-center">
+	<hr
+						style="border: thin solid lightgray !important; display: inline-block !important; width: 100% !important;" />
+				
+				<br>
+				<!-- 내 계약 현황 -->
+				&nbsp;&nbsp;&nbsp;&nbsp;<span
+					style="text-align: left; font-size: 17px; font-weight: bold; ">내 계약 현황</span>
+				<hr
+					style="border: thin solid lightgray !important; display: inline-block !important; width: 100% !important;" />
+	<br><br>
 	<div class="myContractDiv">
 		<table id="myContractInfoTable">
 			<tr>
@@ -113,9 +162,13 @@
 	<% } %>
 	</table>
 	</div>
+	</div>
+	<!-- fixed 창 -->
+			<%@ include file="../common/fixed.jsp"%>
+	<div class="content-right"></div>
 	<% } %>
 
-	
+	<!-- footer -->
 				<%@ include file="/views/common/footer.jsp" %>
 	
 	<% } %>

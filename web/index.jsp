@@ -87,7 +87,7 @@
 					<div class="center-content1">
 						<a>
 						<div class="center-content1-1">
-							<img src="images/mainPageImgs/menu1.png" width="75%" height="150px">
+							<img src="images/mainPageImgs/menu1.png"  width="75%" height="150px">
 							<p style="font-size:16px">SERVICE</p>
 							<p style="font-size:14px">서비스 소개</p>
 						</div>
