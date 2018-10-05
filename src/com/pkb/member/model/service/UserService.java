@@ -679,9 +679,6 @@ public class UserService {
 												totalInfo.put("memberCount", memberCount);
 												totalInfo.put("petsitterCount", petsitterCount);
 												totalInfo.put("incomList", incomeList);
-												for(int i = 0 ; i < incomeList.size(); i ++){
-													System.out.println(incomeList.get(i));
-												}
 												totalInfo.put("newMemberCount", newMemberCount);
 												totalInfo.put("loginDate", loginDate);
 												totalInfo.put("todayInfo", todayInfo);

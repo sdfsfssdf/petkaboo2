@@ -377,9 +377,9 @@ public class PaymentDao {
 				}
 			}
 			if (sb != null) {
-				query = query + sb.toString() + " ORDER BY P.PAY_DATE DESC";
+				query = query + sb.toString() ;
 			} else {
-				query = query + " ORDER BY P.PAY_DATE DESC";
+				query = query  ;
 			}
 			System.out.println(query);
 			rs = stmt.executeQuery(query);
@@ -551,10 +551,10 @@ public class PaymentDao {
 			}
 
 			if (sb != null) {
-				query = query + sb.toString() + " ORDER BY P.PAY_DATE DESC)) WHERE RNUM BETWEEN " + startRow + " AND "
+				query = query + sb.toString() + " )) WHERE RNUM BETWEEN " + startRow + " AND "
 						+ endRow;
 			} else {
-				query = query + " ORDER BY P.PAY_DATE DESC)) WHERE RNUM BETWEEN " + startRow + " AND " + endRow;
+				query = query + ")) WHERE RNUM BETWEEN " + startRow + " AND " + endRow;
 			}
 
 			System.out.println(query);
