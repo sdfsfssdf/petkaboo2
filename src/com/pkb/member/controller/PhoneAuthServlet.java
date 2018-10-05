@@ -36,8 +36,6 @@ public class PhoneAuthServlet extends HttpServlet {
 		User loginUser = (User)request.getSession().getAttribute("loginUser");
 		String rphone = request.getParameter("rphone");
 		String email = loginUser.getEmail();
-		System.out.println("이값이 들어와야해"+smsNumber);
-		System.out.println("번호..." + rphone);
 		int result = new UserService().insertSms(smsNumber, email);
 		
 		

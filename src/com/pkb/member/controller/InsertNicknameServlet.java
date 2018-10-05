@@ -95,7 +95,6 @@ public class InsertNicknameServlet extends HttpServlet {
 				session.setAttribute("loginUser", u);
 				session.setAttribute("profile", profile);
 				if(fileName == null){
-					System.out.println("fileName 은 널이 아니라구");
 					fileName = "profileBasicImage.png";
 				}
 				session.setAttribute("fileName", fileName);

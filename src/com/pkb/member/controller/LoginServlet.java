@@ -31,7 +31,6 @@ public class LoginServlet extends HttpServlet {
 		String email = request.getParameter("email");
 		String user_pwd = request.getParameter("user_pwd");
 		String ip = request.getParameter("ip");
-		System.out.println("아이피 들어옴>?" + ip);
 		User loginUser = null;
 		HttpURLConnection urlcon = (HttpURLConnection)new URL("http://ip2c.org/"+ip).openConnection();
 		urlcon.setDefaultUseCaches(false);

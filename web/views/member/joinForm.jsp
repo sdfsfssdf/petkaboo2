@@ -182,8 +182,9 @@ background:#72b9f3;border: 1px solid white; font-weight:bold; color:white;"
 								$('#pwd').focus();
 								return;			
 					 }else{
-						//if($('#email').val() != "" && $('#pwd').val() != "" && ($('#pwd').val().length() > 6 ||$('#pwd').val().length() < 20)){
+						if($('#email').val() != "" && $('#pwd').val() != "" && ($('#pwd').val().length() > 6 ||$('#pwd').val().length() < 20)){
 						$("#joinForm").attr('action','/pkb/join.me').submit();
+						}
 						}
 					}
 				}
