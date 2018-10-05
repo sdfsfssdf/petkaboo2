@@ -8,6 +8,7 @@ import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import com.pkb.member.model.dao.UserDAO;
 import com.pkb.payment.model.dao.PaymentDao3;
 import com.pkb.payment.model.vo.Payment;
 public class PaymentService3 {
@@ -82,6 +83,35 @@ public class PaymentService3 {
 		int count = new PaymentDao3().getRefundListCound(con);
 		close(con);
 		return count;
+	}
+
+	public int refundApproval(int totalAmount, int refundAmount, int user_no, int petsitter_no, int rate, int payment_no) {
+		Connection con = getConnection();
+		int result = 0;
+		int result2 = 0;
+		int result3 = 0;
+		result = new PaymentDao3().refundApproval(con, refundAmount, user_no);
+		if(result > 0) {
+			result2 = new PaymentDao3().refundApproval(con,(int)((totalAmount-refundAmount)*((100-rate)*0.01)), petsitter_no);
+			if(result2 > 0){
+				result3= new PaymentDao3().updateRefundPaymentStatus(con,payment_no);
+				
+				if(result3 > 0){
+					
+					commit(con);
+				} else {
+					rollback(con);
+				}
+			} else {
+				rollback(con);
+			}
+		} else {
+			rollback(con);
+		}
+		close(con);
+		
+		return result2;
+		
 	}
 
 }

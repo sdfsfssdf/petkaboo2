@@ -105,7 +105,7 @@
 									<td><%=todayList.get(i).get("email") %></td>
 									<td align="left">
 										<% 
-											SimpleDateFormat format = new SimpleDateFormat("YYYY-mm-dd");
+											SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 											String tempStartDate = todayList.get(i).get("contract_start").substring(0,todayList.get(i).get("contract_start").indexOf(" "));
 											String tempEndDate = todayList.get(i).get("contract_end").substring(0,todayList.get(i).get("contract_end").indexOf(" "));
 											String tempRequestDate = todayList.get(i).get("pay_date").substring(0,todayList.get(i).get("contract_end").indexOf(" "));
@@ -135,7 +135,7 @@
 									남은 서비스일 : <%=remainDate %>  <br>
 									동물 마리 수 : <%=todayList.get(i).get("pet_count") %><br>
 									환불 포인트 : <span style="color:red"><%=remainDate * Integer.parseInt(todayList.get(i).get("pet_count")) * Integer.parseInt(todayList.get(i).get("service_charge")) %></span>
-									<input type="hidden" name="refundAmount" value="<%=remainDate * Integer.parseInt(todayList.get(i).get("pet_count")) * Integer.parseInt(todayList.get(i).get("service_charge")) %>">
+									
 									 <%} %>
 									</td>
 									<td><%=todayList.get(i).get("pay_date") %></td>
@@ -145,8 +145,16 @@
 										<%if(todayList.get(i).get("pay_method").equals("F")) {%>
 											<div style="width:70px;background:orange; color:white">환불대기</div>
 											<div style="margin-top:5px">
+												<form method="post" action="<%=request.getContextPath()%>/refundApproval.pa">
+												<input type="hidden" name="totalAmount" value="<%=todayList.get(i).get("pay_amount") %>" >
+												<input type="hidden" name="refundAmount" value="<%=remainDate * Integer.parseInt(todayList.get(i).get("pet_count")) * Integer.parseInt(todayList.get(i).get("service_charge")) %>">
+												<input type="hidden" name="user_no" value="<%=todayList.get(i).get("user_no")%>">
+												<input type="hidden" name="petsitter_no" value="<%=todayList.get(i).get("petsitter_no")%>">
+												<input type="hidden" name="rate" value="<%=todayList.get(i).get("fee_rate")%>">
+												<input type="hidden" name="payment_no" value="<%=todayList.get(i).get("pay_no") %>">
 												<button style="background:green; color:white">환불처리</button>
-												<button style="background:darkgray; color:white" onclick="refusal(<%=todayList.get(i).get("pay_no")%>)">환불거절</button>
+												</form>
+												<%-- <button style="background:darkgray; color:white" onclick="refusal(<%=todayList.get(i).get("pay_no")%>)">환불거절</button> --%>
 											</div>
 										<%} else { %>
 											<div style="width:70px;background:red; color:white">환불</div>
@@ -215,8 +223,15 @@
 										<%if(totalList.get(i).get("pay_method").equals("F")) {%>
 											<div style="width:70px;background:orange; color:white">환불대기</div>
 											<div style="margin-top:5px">
-												<button type="submit" style="background:green; color:white">환불처리</button>
-												<button type="button" style="background:darkgray; color:white" onclick="refusal(<%=totalList.get(i).get("pay_no")%>)">환불거절</button>
+												<form method="post" action="<%=request.getContextPath()%>/refundApproval.pa">
+												<input type="hidden" name="totalAmount" value="<%=totalList.get(i).get("pay_amount") %>" >
+												<input type="hidden" name="refundAmount" value="<%=remainDate * Integer.parseInt(totalList.get(i).get("pet_count")) * Integer.parseInt(totalList.get(i).get("service_charge")) %>">
+												<input type="hidden" name="user_no" value="<%=totalList.get(i).get("user_no")%>">
+												<input type="hidden" name="petsitter_no" value="<%=totalList.get(i).get("petsitter_no")%>">
+												<input type="hidden" name="rate" value="<%=totalList.get(i).get("fee_rate")%>">
+												<input type="hidden" name="payment_no" value="<%=totalList.get(i).get("pay_no") %>">
+												<button style="background:green; color:white">환불처리</button>
+												</form>
 											</div>
 										<%} else { %>
 											<div style="width:70px;background:red; color:white">환불</div>
@@ -228,7 +243,7 @@
 					</table>
 					<script>
 						function refusal(num){
-							console.log(num);
+							location.href="<%=request.getContextPath()%>/refundRefusal.pa?num="+num;
 						}
 					</script>
 					<!-- 페이지 처리 -->

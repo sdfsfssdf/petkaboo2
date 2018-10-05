@@ -214,8 +214,20 @@
 	}
 	
 	.leftWrapArea{
-      height:600px !important;      
+      height:600px !important;  
+      }
+      .box {
+    display:inline-block;
+    margin: 0 auto;
+    width:100px;
+    height: 50px;
 }
+.shadow {
+  box-shadow: 5px 5px 3px -3px lightgray;
+}
+
+
+
 </style>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
@@ -228,7 +240,7 @@
 			<div class="table1">
 			<h3>펫카부 통계</h3>
 			<p>회원관련 통계, 수입통계, 거래통게를 확인할 수 있습니다.</p>
-		
+			
 <br>
 <br>
 <div class="container">
@@ -243,7 +255,13 @@
     <div id="home" class="tab-pane fade in active">
       <div id="Nwagon" style="display:inline-block">
       <br><br>
-<label>회원 상태 추이</label> ( 1주일간 )</div>
+<label>회원 상태 추이</label> ( 1주일간 ) 
+<!-- <div style="margin-left:50px;" class="box shadow"></div> -->
+<!-- <div class="box shadow"></div>
+<div class="box shadow"></div>
+<div class="box shadow"></div> -->
+
+</div>
 <script>
 	var options = {
 		'legend':{

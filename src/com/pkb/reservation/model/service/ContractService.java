@@ -7,6 +7,7 @@ import static com.pkb.common.JDBCTemplate.rollback;
 
 import java.sql.Connection;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import com.pkb.reservation.model.dao.ContractDao;
 import com.pkb.reservation.model.vo.Contract;
@@ -50,4 +51,30 @@ public class ContractService {
 
 
 
+	public HashMap<String, Object> selectreservationMainInfo(int i, int j) {
+		Connection con = getConnection();
+		
+		HashMap<String,Object> totalMap = null;
+		ArrayList<Integer> countList = new ContractDao().getCountReservationStatus(con);
+		
+		if(countList != null) {
+			ArrayList<HashMap<String,Object>> totalList = new ContractDao().selectTotalList(con,i,j);
+			if(totalList != null){
+				totalMap = new HashMap<String,Object>();
+				totalMap.put("list", totalList);
+				totalMap.put("counts", countList);
+			}
+		}
+		
+		return totalMap;
+	}
+
+
+
+	public int getListCount() {
+		Connection con = getConnection();
+		ArrayList<Integer> countList = new ContractDao().getCountReservationStatus(con);
+		close(con);
+		return countList.get(0);
+	}
 }

@@ -2095,4 +2095,11 @@ public class UserDAO {
 		return totalList;
 	}
 
+	public int refundRefusal(Connection con, int num) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String query = prop.getProperty("refundRefusal");
+		return 0;
+	}
+
 }
