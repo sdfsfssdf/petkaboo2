@@ -85,7 +85,7 @@
 					<a href="../member/joinForm.jsp" style="color:white">회원가입 </a>&nbsp;&nbsp;
 					<div class="form-group">
 					<br>				
-						<div class="g-signin2" data-onsuccess="onSignIn" style="width:226px"></div>
+						<!-- <div class="g-signin2" data-onsuccess="onSignIn" style="width:226px"></div> -->
 					<!-- 	<script>
 						if(this.value === 'Login'){
 							googleAuthObj.signIn().then(function(){
@@ -98,7 +98,7 @@
 							});
 						}
 						</script> -->
-						<script>
+					<!-- 	<script>
 							function onSignIn(googleUser) {
 							  var profile = googleUser.getBasicProfile();
 							  var id = profile.getId()); // Do not send to your backend! Use an ID token instead.
@@ -112,7 +112,7 @@
 							      console.log('User signed out.');
 							    });
 							  }
-						</script>
+						</script> -->
 					</div>
 				</form>
 			</div>

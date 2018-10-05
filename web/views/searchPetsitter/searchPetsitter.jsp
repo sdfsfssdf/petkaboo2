@@ -375,7 +375,7 @@ button:hover{
 			<%@ include file="../common/fixed.jsp"%>
 
 <!-- footer -->
-				<%@ include file="/views/common/footer.jsp" %>
+			
 
 
 	<script>
@@ -444,5 +444,6 @@ geocoder.addressSearch('<%=list.get(i).getAddress()%>', function(result, status)
 		<%}%>
 	}
 	</script>
+		
 </body>
 </html>

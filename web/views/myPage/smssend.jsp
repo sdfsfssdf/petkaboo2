@@ -196,13 +196,9 @@
                         //발송결과 알림
         if(Result.equals("success")) {
         	 alert = "인증번호를 발송하였습니다.";
-             //alert += " 잔여건수는 "+ Count+"건 입니다."; */
              page2 = "/phone.au";
-            //request.setAttribute("name", name);
-            //request.setAttribute("phoneNum", phoneNum);
             RequestDispatcher view = request.getRequestDispatcher(page2);
      		view.forward(request, response);
- 			//new UserService().phone(msg);
         }
         else if(Result.equals("reserved")) {
             alert = "성공적으로 예약되었습니다";
