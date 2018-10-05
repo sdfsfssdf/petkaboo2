@@ -82,39 +82,19 @@ public class InsertRechargeServlet extends HttpServlet {
 			
 			CyberMoney cm = new PaymentService().searchCyberMoney(user_no);
 			
+			RequestDispatcher view = request.getRequestDispatcher(page);
+			User loginUser = (User)session.getAttribute("loginUser");
 			if(cm != null){
-				/*String check2 = "check";
-				page = "views/myPage/mypagemain.jsp";*/
+				loginUser.setMoney(cm.getMoney());
 				request.setAttribute("cm", cm);
-				response.sendRedirect("/pkb/views/status/rechargeOk.jsp");
-				/*request.setAttribute("check", check2);*/
+				page="views/myPage/mypagemain.jsp";
+				request.getRequestDispatcher(page).forward(request, response);
+				
 			}else{
 				page="views/common/errorPage";
 				request.setAttribute("msg", "충전 실패");
 			}
 			
-			
-			//보유한 금액이 증가한 후에 액션을 어떻게.. alert창 띄운 후에 select?겠지?? 
-		/*	
-			request.setAttribute("py", py);
-			page = "views/status/requestPayment.jsp";*/
-			
-			/*String check ="Y";*/
-			//check=" + check + 
-			
-			//response.sendRedirect(request.getContextPath() + "/selectRecPay.rp?user_no=" + user_no);
-			
-			/*
-			PrintWriter out = response.getWriter();
-
-			out.println("<script>");
-
-			out.println("alert('충전이 완료되었습니다'); location.href='/selectRecPay.rp?check=0';");
-
-
-			out.println("</script>");*/
-	
-			//response.sendRedirect(request.getContextPath()+ "/selectRecharge.rc");
 				
 		}else{
 			request.setAttribute("msg", "충전 실패!");

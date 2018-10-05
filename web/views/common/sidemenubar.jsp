@@ -131,7 +131,7 @@ cursor:pointer;
 								<li>
 								<form class="psContractManage" action="<%=request.getContextPath()%>/psContract.do" method="post">
 								<input type="hidden" name="user_no" value="<%= loginUser.getUser_no() %>">
-								<button class="lookcont" style="border-style:none; background-color:transparent; font-size:16px">계약 현황 보기</button>
+								<button class="lookcont" style="border-style:none; background-color:transparent; font-size:16px; font-family: 'Jua', sans-serif;">계약 현황 보기</button>
 								</form>
 								</li>
 							</ul>

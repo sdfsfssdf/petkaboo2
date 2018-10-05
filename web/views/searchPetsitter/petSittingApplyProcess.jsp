@@ -142,6 +142,23 @@ img{
 	
 }
 
+button{
+display: inline-block;
+    padding: 6px 12px;
+    margin-bottom: 0;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.42857143;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    touch-action: manipulation;
+    cursor: pointer;
+	user-select: none;
+	border: 1px solid transparent;
+    border-radius: 4px;
+}
+
 </style>
 </head>
 <body>
@@ -171,7 +188,7 @@ img{
 		<br />
 		<br />
 		<br />
-		<div class="content-left"></div>
+		<div class="content-left"><%@ include file="../common/sidemenubar.jsp" %></div>
 		<div class="content-center">
 		<!-- fixed 창 -->
 		<%@ include file="../common/fixed.jsp"%>
@@ -287,7 +304,7 @@ img{
 		<br />
 		<br />
 		<br />
-		<div class="content-left"></div>
+		<div class="content-left"><%@ include file="../common/sidemenubar.jsp" %></div>
 	<div class="content-center">
 		<div class="ApplyInfoDiv">
 		<div class="checkApplyDiv">
@@ -456,7 +473,7 @@ img{
 	<hr
 						style="border: thin solid lightgray !important; display: inline-block !important; width: 100% !important;" />
 				
-				<br>
+			
 				<!-- 펫시터 서비스 등록정보 수정 -->
 				&nbsp;&nbsp;&nbsp;&nbsp;<span
 					style="text-align: left; font-size: 17px; font-weight: bold; ">선택하신 서비스 및 펫시터 정보입니다.</span>
@@ -534,9 +551,9 @@ img{
 				<input type="hidden" name="psrno" value="<%= p.getPet_service_regno() %>">
 				<td><input type="text" name="clientName" placeholder="<%= loginUser.getUser_name() %>" value="<%= loginUser.getUser_name() %>" readonly></td>
 				<td><input type="text" name="clientPhone" placeholder="<%= loginUser.getPhone() %>" value="<%= loginUser.getPhone() %>"></td>
-				<td><input type="text" name="clientAddress" placeholder="<%= loginUser.getAddress() %>" value="<%= loginUser.getAddress() %>"></td>
+				<td><input type="text" name="clientAddress" placeholder="<%= loginUser.getAddress() %>" value="<%= loginUser.getAddress() %>" size="40px"></td>
 				<td><%= pc.getCategoryName() %></td>
-				<td> <input type="number" id="request_count" name="request_count"></td>
+				<td> <input type="number" id="request_count" name="request_count" size="10px"></td>
 				<td><%= contract_type %></td>
 				<td>
 				<input type="date" id="request_start" name="request_start" value="<%= startDate %>">
@@ -548,7 +565,7 @@ img{
 			</tr>		
 		</table>
 		<br><br><br>
-		<button>펫시팅 요청 보내기</button>
+		<button style="background-color:#9bcdf7; color:white; border:1px solid #9bcdf7;">펫시팅 요청 보내기</button>
 		
 		</form>
 		</div>
