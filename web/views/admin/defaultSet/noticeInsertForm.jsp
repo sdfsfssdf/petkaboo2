@@ -46,7 +46,7 @@
 							<input class="form-control" type="text" value="admin" readonly name="writer">
 							<input type="hidden">
 							<!-- 로그인 기능 완성되면 수정해야할 부분 -->
-							<input type="hidden" value="3" name="userNo">
+							<input type="hidden" value="3" name="userNo" value="<%=loginUser.getUser_no()%>">
 						</td>
 					</tr>
 

@@ -164,7 +164,7 @@ background-color:white;
 				<td>
 					<form name="refundReq" method="post" action="refundReq.do">
 					<input type="hidden" name="contractNo" value="<%= c.getContract_no() %>">
-					<button>환불</button>
+					<button style="background-color:#9bcdf7; color:white; border:1px solid #9bcdf7;">환불</button>
 					</form>
 				</td>
 			<% }else{ %>
