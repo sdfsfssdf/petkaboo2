@@ -220,6 +220,8 @@ public class PaymentDao3 {
 				hmap.put("pet_count", rs.getInt("pet_count")+"");
 				hmap.put("service_charge", rs.getInt("service_charge")+"");
 				hmap.put("pay_method", rs.getString("pay_method"));
+				hmap.put("petsitter_no", rs.getInt("PETSITTER_NO")+"");
+				hmap.put("fee_rate", rs.getInt("FEE_RATE")+"");
 				totalList.add(hmap);
 			}
 		} catch (SQLException e) {
@@ -287,6 +289,8 @@ public class PaymentDao3 {
 				hmap.put("pet_count", rs.getInt("pet_count")+"");
 				hmap.put("service_charge", rs.getInt("service_charge")+"");
 				hmap.put("pay_method", rs.getString("pay_method"));
+				hmap.put("petsitter_no", rs.getInt("PETSITTER_NO")+"");
+				hmap.put("fee_rate", rs.getInt("FEE_RATE")+"");
 				totalList.add(hmap);
 			}
 		} catch (SQLException e) {
@@ -297,5 +301,50 @@ public class PaymentDao3 {
 			close(pstmt);
 		}
 		return totalList;
+	}
+
+	public int refundApproval(Connection con, int refundAmount, int user_no) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String query = prop.getProperty("refundApproval");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, refundAmount);
+			pstmt.setInt(2, user_no);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		
+		return result;
+	}
+
+	public int updateRefundPaymentStatus(Connection con, int payment_no) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String query= prop.getProperty("updateRefundPaymentStatus");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, payment_no);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		
+		return result;
 	}
 }

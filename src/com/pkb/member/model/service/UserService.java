@@ -679,6 +679,9 @@ public class UserService {
 												totalInfo.put("memberCount", memberCount);
 												totalInfo.put("petsitterCount", petsitterCount);
 												totalInfo.put("incomList", incomeList);
+												for(int i = 0 ; i < incomeList.size(); i ++){
+													System.out.println(incomeList.get(i));
+												}
 												totalInfo.put("newMemberCount", newMemberCount);
 												totalInfo.put("loginDate", loginDate);
 												totalInfo.put("todayInfo", todayInfo);
@@ -727,6 +730,21 @@ public class UserService {
 		close(con);
 		
 		return totalMap;
+	}
+
+	public int refundRefusal(int num) {
+		Connection con = getConnection();
+		int result = new UserDAO().refundRefusal(con,num);
+		
+		if(result > 0) {
+			commit(con);
+		} else {
+			rollback(con);
+		}
+		
+		close(con);
+		
+		return result;
 	}
 
 }

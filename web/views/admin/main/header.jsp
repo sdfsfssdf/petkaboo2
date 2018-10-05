@@ -166,7 +166,7 @@
 				<li><a class="menu" href="<%=request.getContextPath()%>/caaList.caa">기본설정</a></li>
 				<li><a class="menu" href="<%=request.getContextPath()%>/selectList.me">회원관리</a></li>
 				<li><a class="menu" href="<%=request.getContextPath()%>/selectMain.pe">결제관리</a></li>
-				<li><a class="menu" href="">거래관리</a></li>
+				<li><a class="menu" href="<%=request.getContextPath()%>/selectMainInfo.re">거래관리</a></li>
 				<li><a class="menu" href="<%=request.getContextPath()%>/statistics.me">통계/현황</a></li>
 				<li id="search-bar" class="pull-right" >
 					<form class="navbar-form navbar-left" role="search" action="<%=request.getContextPath()%>/searchMember.me" mehtod="get">

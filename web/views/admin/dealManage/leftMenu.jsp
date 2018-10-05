@@ -34,13 +34,13 @@
       <div class="myMenu_left">
          <br>
          <br>
-            <div class="text">펫시팅 대기</div>
+            <!-- <div class="text">펫시팅 대기</div>
             <br>
             <div class="text">계약대기</div>
             <br>
             <div class="text">펫시팅 중</div>
             <br>
-            <div class="text">펫시팅 종료</div>
+            <div class="text">펫시팅 종료</div> -->
       </div>
    </div>
 </body>
